@@ -4,15 +4,16 @@ namespace Raylib;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
+using System.Drawing;
 
 /// <summary> Shader </summary>
 [StructLayout(LayoutKind.Sequential)]
-public struct Shader
+public unsafe struct Shader
 {
     /// <summary> Shader program id </summary>
-    public uint /*unsigned int*/ Id;
+    public uint /* unsigned int */ Id;
     /// <summary> Shader locations array (RL_MAX_SHADER_LOCATIONS) </summary>
-    public IntPtr /*int **/ Locs;
+    public IntPtr /* int * */ Locs;
 }
-#pragma warning restore CA1711,IDE0005
 
+#pragma warning restore CA1711,IDE0005

@@ -25,4 +25,3 @@ public enum ShaderUniformDataType
     ShaderUniformSampler2d = 8,
 }
 #pragma warning restore CA1711
-

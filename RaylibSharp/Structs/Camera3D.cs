@@ -4,21 +4,22 @@ namespace Raylib;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
+using System.Drawing;
 
 /// <summary> Camera, defines position/orientation in 3d space </summary>
 [StructLayout(LayoutKind.Sequential)]
-public struct Camera3D
+public unsafe struct Camera3D
 {
     /// <summary> Camera position </summary>
-    public Vector3 /*Vector3*/ Position;
+    public Vector3 /* Vector3 */ Position;
     /// <summary> Camera target it looks-at </summary>
-    public Vector3 /*Vector3*/ Target;
+    public Vector3 /* Vector3 */ Target;
     /// <summary> Camera up vector (rotation over its axis) </summary>
-    public Vector3 /*Vector3*/ Up;
+    public Vector3 /* Vector3 */ Up;
     /// <summary> Camera field-of-view aperture in Y (degrees) in perspective, used as near plane width in orthographic </summary>
-    public float /*float*/ Fovy;
+    public float /* float */ Fovy;
     /// <summary> Camera projection: CAMERA_PERSPECTIVE or CAMERA_ORTHOGRAPHIC </summary>
-    public int /*int*/ Projection;
+    public int /* int */ Projection;
 }
-#pragma warning restore CA1711,IDE0005
 
+#pragma warning restore CA1711,IDE0005

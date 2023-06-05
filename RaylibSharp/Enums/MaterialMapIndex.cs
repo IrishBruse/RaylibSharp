@@ -29,4 +29,3 @@ public enum MaterialMapIndex
     MaterialMapBrdf = 10,
 }
 #pragma warning restore CA1711
-

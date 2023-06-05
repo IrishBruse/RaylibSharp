@@ -59,4 +59,3 @@ public enum ShaderLocationIndex
     ShaderLocMapBrdf = 25,
 }
 #pragma warning restore CA1711
-

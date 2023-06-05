@@ -4,17 +4,18 @@ namespace Raylib;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
+using System.Drawing;
 
 /// <summary> MaterialMap </summary>
 [StructLayout(LayoutKind.Sequential)]
-public struct MaterialMap
+public unsafe struct MaterialMap
 {
     /// <summary> Material map texture </summary>
-    public Texture2D /*Texture2D*/ Texture;
+    public Texture /* Texture2D */ Texture;
     /// <summary> Material map color </summary>
-    public Color /*Color*/ Color;
+    public Color /* Color */ Color;
     /// <summary> Material map value </summary>
-    public float /*float*/ Value;
+    public float /* float */ Value;
 }
-#pragma warning restore CA1711,IDE0005
 
+#pragma warning restore CA1711,IDE0005

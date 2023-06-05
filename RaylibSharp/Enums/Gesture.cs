@@ -29,4 +29,3 @@ public enum Gesture
     PinchOut = 512,
 }
 #pragma warning restore CA1711
-

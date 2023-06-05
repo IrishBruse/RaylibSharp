@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaylibSharp", "RaylibSharp\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaylibSharpGenerator", "RaylibSharpGenerator\RaylibSharpGenerator.csproj", "{4212092F-A53E-4644-A242-1CC064C73E25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example.csproj", "{1B2BB0A5-E6C7-4C91-BE3D-98D58214A63A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{4212092F-A53E-4644-A242-1CC064C73E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4212092F-A53E-4644-A242-1CC064C73E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4212092F-A53E-4644-A242-1CC064C73E25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B2BB0A5-E6C7-4C91-BE3D-98D58214A63A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B2BB0A5-E6C7-4C91-BE3D-98D58214A63A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B2BB0A5-E6C7-4C91-BE3D-98D58214A63A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B2BB0A5-E6C7-4C91-BE3D-98D58214A63A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

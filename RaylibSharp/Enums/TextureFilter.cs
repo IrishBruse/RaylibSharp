@@ -19,4 +19,3 @@ public enum TextureFilter
     Anisotropic16x = 5,
 }
 #pragma warning restore CA1711
-

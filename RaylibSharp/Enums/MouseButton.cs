@@ -21,4 +21,3 @@ public enum MouseButton
     Back = 6,
 }
 #pragma warning restore CA1711
-

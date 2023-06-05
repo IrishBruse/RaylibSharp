@@ -4,43 +4,44 @@ namespace Raylib;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
+using System.Drawing;
 
 /// <summary> Matrix, 4x4 components, column major, OpenGL style, right-handed </summary>
 [StructLayout(LayoutKind.Sequential)]
-public struct Matrix
+public unsafe struct Matrix
 {
     /// <summary> Matrix first row (4 components) </summary>
-    public float /*float*/ M0;
+    public float /* float */ M0;
     /// <summary> Matrix first row (4 components) </summary>
-    public float /*float*/ M4;
+    public float /* float */ M4;
     /// <summary> Matrix first row (4 components) </summary>
-    public float /*float*/ M8;
+    public float /* float */ M8;
     /// <summary> Matrix first row (4 components) </summary>
-    public float /*float*/ M12;
+    public float /* float */ M12;
     /// <summary> Matrix second row (4 components) </summary>
-    public float /*float*/ M1;
+    public float /* float */ M1;
     /// <summary> Matrix second row (4 components) </summary>
-    public float /*float*/ M5;
+    public float /* float */ M5;
     /// <summary> Matrix second row (4 components) </summary>
-    public float /*float*/ M9;
+    public float /* float */ M9;
     /// <summary> Matrix second row (4 components) </summary>
-    public float /*float*/ M13;
+    public float /* float */ M13;
     /// <summary> Matrix third row (4 components) </summary>
-    public float /*float*/ M2;
+    public float /* float */ M2;
     /// <summary> Matrix third row (4 components) </summary>
-    public float /*float*/ M6;
+    public float /* float */ M6;
     /// <summary> Matrix third row (4 components) </summary>
-    public float /*float*/ M10;
+    public float /* float */ M10;
     /// <summary> Matrix third row (4 components) </summary>
-    public float /*float*/ M14;
+    public float /* float */ M14;
     /// <summary> Matrix fourth row (4 components) </summary>
-    public float /*float*/ M3;
+    public float /* float */ M3;
     /// <summary> Matrix fourth row (4 components) </summary>
-    public float /*float*/ M7;
+    public float /* float */ M7;
     /// <summary> Matrix fourth row (4 components) </summary>
-    public float /*float*/ M11;
+    public float /* float */ M11;
     /// <summary> Matrix fourth row (4 components) </summary>
-    public float /*float*/ M15;
+    public float /* float */ M15;
 }
-#pragma warning restore CA1711,IDE0005
 
+#pragma warning restore CA1711,IDE0005

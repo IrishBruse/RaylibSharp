@@ -227,4 +227,3 @@ public enum KeyboardKey
     KeyVolumeDown = 25,
 }
 #pragma warning restore CA1711
-

@@ -4,15 +4,16 @@ namespace Raylib;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
+using System.Drawing;
 
 /// <summary> Sound </summary>
 [StructLayout(LayoutKind.Sequential)]
-public struct Sound
+public unsafe struct Sound
 {
     /// <summary> Audio stream </summary>
-    public AudioStream /*AudioStream*/ Stream;
+    public AudioStream /* AudioStream */ Stream;
     /// <summary> Total number of frames (considering channels) </summary>
-    public uint /*unsigned int*/ Framecount;
+    public uint /* unsigned int */ Framecount;
 }
-#pragma warning restore CA1711,IDE0005
 
+#pragma warning restore CA1711,IDE0005

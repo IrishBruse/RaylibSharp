@@ -4,15 +4,17 @@ namespace Raylib;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
+using System.Drawing;
 
 /// <summary> Bone, skeletal animation bone </summary>
 [StructLayout(LayoutKind.Sequential)]
-public struct BoneInfo
+public unsafe struct BoneInfo
 {
     /// <summary> Bone name </summary>
-    public fixed sbyte /*char[32]*/ Name[32];
+    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+    public string /* char[32] */ Name;
     /// <summary> Bone parent </summary>
-    public int /*int*/ Parent;
+    public int /* int */ Parent;
 }
-#pragma warning restore CA1711,IDE0005
 
+#pragma warning restore CA1711,IDE0005

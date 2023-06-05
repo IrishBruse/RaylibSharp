@@ -4,23 +4,24 @@ namespace Raylib;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
+using System.Drawing;
 
 /// <summary> NPatchInfo, n-patch layout info </summary>
 [StructLayout(LayoutKind.Sequential)]
-public struct NPatchInfo
+public unsafe struct NPatchInfo
 {
     /// <summary> Texture source rectangle </summary>
-    public Rectangle /*Rectangle*/ Source;
+    public Rectangle /* Rectangle */ Source;
     /// <summary> Left border offset </summary>
-    public int /*int*/ Left;
+    public int /* int */ Left;
     /// <summary> Top border offset </summary>
-    public int /*int*/ Top;
+    public int /* int */ Top;
     /// <summary> Right border offset </summary>
-    public int /*int*/ Right;
+    public int /* int */ Right;
     /// <summary> Bottom border offset </summary>
-    public int /*int*/ Bottom;
+    public int /* int */ Bottom;
     /// <summary> Layout of the n-patch: 3x3, 1x3 or 3x1 </summary>
-    public int /*int*/ Layout;
+    public int /* int */ Layout;
 }
-#pragma warning restore CA1711,IDE0005
 
+#pragma warning restore CA1711,IDE0005

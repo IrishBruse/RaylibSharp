@@ -4,17 +4,18 @@ namespace Raylib;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
+using System.Drawing;
 
 /// <summary> File path list </summary>
 [StructLayout(LayoutKind.Sequential)]
-public struct FilePathList
+public unsafe struct FilePathList
 {
     /// <summary> Filepaths max entries </summary>
-    public uint /*unsigned int*/ Capacity;
+    public uint /* unsigned int */ Capacity;
     /// <summary> Filepaths entries count </summary>
-    public uint /*unsigned int*/ Count;
+    public uint /* unsigned int */ Count;
     /// <summary> Filepaths entries </summary>
-    public IntPtr /*char ***/ Paths;
+    public IntPtr /* char ** */ Paths;
 }
-#pragma warning restore CA1711,IDE0005
 
+#pragma warning restore CA1711,IDE0005

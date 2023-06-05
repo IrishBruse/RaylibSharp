@@ -13,4 +13,3 @@ public enum NPatchLayout
     NpatchThreePatchHorizontal = 2,
 }
 #pragma warning restore CA1711
-

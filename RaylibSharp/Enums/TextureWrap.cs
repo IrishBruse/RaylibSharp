@@ -15,4 +15,3 @@ public enum TextureWrap
     MirrorClamp = 3,
 }
 #pragma warning restore CA1711
-

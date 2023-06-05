@@ -13,4 +13,3 @@ public enum FontType
     FontSdf = 2,
 }
 #pragma warning restore CA1711
-

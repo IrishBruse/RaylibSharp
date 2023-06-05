@@ -19,4 +19,3 @@ public enum CubemapLayout
     Panorama = 5,
 }
 #pragma warning restore CA1711
-

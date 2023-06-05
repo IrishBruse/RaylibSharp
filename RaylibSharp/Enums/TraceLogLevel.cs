@@ -23,4 +23,3 @@ public enum TraceLogLevel
     LogNone = 7,
 }
 #pragma warning restore CA1711
-

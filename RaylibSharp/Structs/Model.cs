@@ -4,29 +4,30 @@ namespace Raylib;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
+using System.Drawing;
 
 /// <summary> Model, meshes, materials and animation data </summary>
 [StructLayout(LayoutKind.Sequential)]
-public struct Model
+public unsafe struct Model
 {
     /// <summary> Local transform matrix </summary>
-    public Matrix /*Matrix*/ Transform;
+    public Matrix /* Matrix */ Transform;
     /// <summary> Number of meshes </summary>
-    public int /*int*/ Meshcount;
+    public int /* int */ Meshcount;
     /// <summary> Number of materials </summary>
-    public int /*int*/ Materialcount;
+    public int /* int */ Materialcount;
     /// <summary> Meshes array </summary>
-    public IntPtr /*Mesh **/ Meshes;
+    public IntPtr /* Mesh * */ Meshes;
     /// <summary> Materials array </summary>
-    public IntPtr /*Material **/ Materials;
+    public IntPtr /* Material * */ Materials;
     /// <summary> Mesh material number </summary>
-    public IntPtr /*int **/ Meshmaterial;
+    public IntPtr /* int * */ Meshmaterial;
     /// <summary> Number of bones </summary>
-    public int /*int*/ Bonecount;
+    public int /* int */ Bonecount;
     /// <summary> Bones information (skeleton) </summary>
-    public IntPtr /*BoneInfo **/ Bones;
+    public IntPtr /* BoneInfo * */ Bones;
     /// <summary> Bones base transformation (pose) </summary>
-    public IntPtr /*Transform **/ Bindpose;
+    public IntPtr /* Transform * */ Bindpose;
 }
-#pragma warning restore CA1711,IDE0005
 
+#pragma warning restore CA1711,IDE0005

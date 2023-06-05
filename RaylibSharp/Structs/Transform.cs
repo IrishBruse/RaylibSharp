@@ -4,17 +4,18 @@ namespace Raylib;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
+using System.Drawing;
 
 /// <summary> Transform, vertex transformation data </summary>
 [StructLayout(LayoutKind.Sequential)]
-public struct Transform
+public unsafe struct Transform
 {
     /// <summary> Translation </summary>
-    public Vector3 /*Vector3*/ Translation;
+    public Vector3 /* Vector3 */ Translation;
     /// <summary> Rotation </summary>
-    public Quaternion /*Quaternion*/ Rotation;
+    public Quaternion /* Quaternion */ Rotation;
     /// <summary> Scale </summary>
-    public Vector3 /*Vector3*/ Scale;
+    public Vector3 /* Vector3 */ Scale;
 }
-#pragma warning restore CA1711,IDE0005
 
+#pragma warning restore CA1711,IDE0005

@@ -37,4 +37,3 @@ public enum ConfigFlags
     FlagInterlacedHint = 65536,
 }
 #pragma warning restore CA1711
-

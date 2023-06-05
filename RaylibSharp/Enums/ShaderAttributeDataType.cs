@@ -15,4 +15,3 @@ public enum ShaderAttributeDataType
     ShaderAttribVec4 = 3,
 }
 #pragma warning restore CA1711
-

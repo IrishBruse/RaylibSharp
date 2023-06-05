@@ -4,15 +4,16 @@ namespace Raylib;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
+using System.Drawing;
 
 /// <summary> BoundingBox </summary>
 [StructLayout(LayoutKind.Sequential)]
-public struct BoundingBox
+public unsafe struct BoundingBox
 {
     /// <summary> Minimum vertex box-corner </summary>
-    public Vector3 /*Vector3*/ Min;
+    public Vector3 /* Vector3 */ Min;
     /// <summary> Maximum vertex box-corner </summary>
-    public Vector3 /*Vector3*/ Max;
+    public Vector3 /* Vector3 */ Max;
 }
-#pragma warning restore CA1711,IDE0005
 
+#pragma warning restore CA1711,IDE0005

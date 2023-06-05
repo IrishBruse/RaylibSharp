@@ -17,4 +17,3 @@ public enum CameraMode
     CameraThirdPerson = 4,
 }
 #pragma warning restore CA1711
-

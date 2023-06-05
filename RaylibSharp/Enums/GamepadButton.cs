@@ -43,4 +43,3 @@ public enum GamepadButton
     RightThumb = 17,
 }
 #pragma warning restore CA1711
-

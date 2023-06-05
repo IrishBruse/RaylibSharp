@@ -29,4 +29,3 @@ public enum MouseCursor
     NotAllowed = 10,
 }
 #pragma warning restore CA1711
-

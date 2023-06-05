@@ -11,4 +11,3 @@ public enum CameraProjection
     CameraOrthographic = 1,
 }
 #pragma warning restore CA1711
-

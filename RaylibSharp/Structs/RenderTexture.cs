@@ -4,17 +4,18 @@ namespace Raylib;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
+using System.Drawing;
 
 /// <summary> RenderTexture, fbo for texture rendering </summary>
 [StructLayout(LayoutKind.Sequential)]
-public struct RenderTexture
+public unsafe struct RenderTexture
 {
     /// <summary> OpenGL framebuffer object id </summary>
-    public uint /*unsigned int*/ Id;
+    public uint /* unsigned int */ Id;
     /// <summary> Color buffer attachment texture </summary>
-    public Texture /*Texture*/ Texture;
+    public Texture /* Texture */ Texture;
     /// <summary> Depth buffer attachment texture </summary>
-    public Texture /*Texture*/ Depth;
+    public Texture /* Texture */ Depth;
 }
-#pragma warning restore CA1711,IDE0005
 
+#pragma warning restore CA1711,IDE0005

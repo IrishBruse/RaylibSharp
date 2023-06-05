@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Globalization;
 using Raylib;
 using Raylib.Generator;
+using System.Runtime.InteropServices;
 
 public partial class RaylibApi
 {
@@ -22,13 +23,13 @@ public partial class RaylibApi
     public Alias[] Aliases { get; set; }
 
     [JsonPropertyName("enums")]
-    public Enum[] Enums { get; set; }
+    public EnumDef[] Enums { get; set; }
 
     [JsonPropertyName("callbacks")]
-    public Callback[] Callbacks { get; set; }
+    public Function[] Callbacks { get; set; }
 
     [JsonPropertyName("functions")]
-    public Callback[] Functions { get; set; }
+    public Function[] Functions { get; set; }
 }
 
 public partial class Alias
@@ -43,7 +44,7 @@ public partial class Alias
     public string Description { get; set; }
 }
 
-public partial class Callback
+public partial class Function
 {
     [JsonPropertyName("name")]
     public string Name { get; set; }
@@ -68,7 +69,7 @@ public partial class Param
     public string Name { get; set; }
 }
 
-public partial class Enum
+public partial class EnumDef
 {
     [JsonPropertyName("name")]
     public string Name { get; set; }

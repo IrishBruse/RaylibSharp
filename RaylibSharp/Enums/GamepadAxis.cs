@@ -19,4 +19,3 @@ public enum GamepadAxis
     RightTrigger = 5,
 }
 #pragma warning restore CA1711
-
