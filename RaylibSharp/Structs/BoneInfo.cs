@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -12,9 +12,9 @@ public unsafe struct BoneInfo
 {
     /// <summary> Bone name </summary>
     [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-    public string /* char[32] */ Name;
+    public string Name;
     /// <summary> Bone parent </summary>
-    public int /* int */ Parent;
+    public int Parent;
 }
 
 #pragma warning restore CA1711,IDE0005

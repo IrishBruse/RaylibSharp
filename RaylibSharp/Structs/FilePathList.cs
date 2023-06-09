@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -11,11 +11,11 @@ using System.Drawing;
 public unsafe struct FilePathList
 {
     /// <summary> Filepaths max entries </summary>
-    public uint /* unsigned int */ Capacity;
+    public uint Capacity;
     /// <summary> Filepaths entries count </summary>
-    public uint /* unsigned int */ Count;
+    public uint Count;
     /// <summary> Filepaths entries </summary>
-    public IntPtr /* char ** */ Paths;
+    public IntPtr Paths;
 }
 
 #pragma warning restore CA1711,IDE0005

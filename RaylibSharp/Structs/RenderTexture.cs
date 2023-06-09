@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -11,11 +11,11 @@ using System.Drawing;
 public unsafe struct RenderTexture
 {
     /// <summary> OpenGL framebuffer object id </summary>
-    public uint /* unsigned int */ Id;
+    public uint Id;
     /// <summary> Color buffer attachment texture </summary>
-    public Texture /* Texture */ Texture;
+    public Texture Texture;
     /// <summary> Depth buffer attachment texture </summary>
-    public Texture /* Texture */ Depth;
+    public Texture Depth;
 }
 
 #pragma warning restore CA1711,IDE0005

@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -11,15 +11,15 @@ using System.Drawing;
 public unsafe struct Texture
 {
     /// <summary> OpenGL texture id </summary>
-    public uint /* unsigned int */ Id;
+    public uint Id;
     /// <summary> Texture base width </summary>
-    public int /* int */ Width;
+    public int Width;
     /// <summary> Texture base height </summary>
-    public int /* int */ Height;
+    public int Height;
     /// <summary> Mipmap levels, 1 by default </summary>
-    public int /* int */ Mipmaps;
+    public int Mipmaps;
     /// <summary> Data format (PixelFormat type) </summary>
-    public int /* int */ Format;
+    public int Format;
 }
 
 #pragma warning restore CA1711,IDE0005

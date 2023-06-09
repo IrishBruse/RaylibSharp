@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -11,23 +11,23 @@ using System.Drawing;
 public unsafe struct Model
 {
     /// <summary> Local transform matrix </summary>
-    public Matrix /* Matrix */ Transform;
+    public Matrix4x4 Transform;
     /// <summary> Number of meshes </summary>
-    public int /* int */ Meshcount;
+    public int Meshcount;
     /// <summary> Number of materials </summary>
-    public int /* int */ Materialcount;
+    public int Materialcount;
     /// <summary> Meshes array </summary>
-    public IntPtr /* Mesh * */ Meshes;
+    public IntPtr Meshes;
     /// <summary> Materials array </summary>
-    public IntPtr /* Material * */ Materials;
+    public IntPtr Materials;
     /// <summary> Mesh material number </summary>
-    public IntPtr /* int * */ Meshmaterial;
+    public IntPtr Meshmaterial;
     /// <summary> Number of bones </summary>
-    public int /* int */ Bonecount;
+    public int Bonecount;
     /// <summary> Bones information (skeleton) </summary>
-    public IntPtr /* BoneInfo * */ Bones;
+    public IntPtr Bones;
     /// <summary> Bones base transformation (pose) </summary>
-    public IntPtr /* Transform * */ Bindpose;
+    public IntPtr Bindpose;
 }
 
 #pragma warning restore CA1711,IDE0005

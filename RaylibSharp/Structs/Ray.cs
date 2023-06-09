@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -11,9 +11,9 @@ using System.Drawing;
 public unsafe struct Ray
 {
     /// <summary> Ray position (origin) </summary>
-    public Vector3 /* Vector3 */ Position;
+    public Vector3 Position;
     /// <summary> Ray direction </summary>
-    public Vector3 /* Vector3 */ Direction;
+    public Vector3 Direction;
 }
 
 #pragma warning restore CA1711,IDE0005

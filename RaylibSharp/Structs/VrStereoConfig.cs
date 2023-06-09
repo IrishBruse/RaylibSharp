@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -11,25 +11,25 @@ using System.Drawing;
 public unsafe struct VrStereoConfig
 {
     /// <summary> VR projection matrices (per eye) </summary>
-    public Matrix /* Matrix[2] */ Projection1;
+    public Matrix Projection1;
     /// <summary> VR projection matrices (per eye) </summary>
-    public Matrix /* Matrix[2] */ Projection;
+    public Matrix Projection2;
     /// <summary> VR view offset matrices (per eye) </summary>
-    public Matrix /* Matrix[2] */ Viewoffset1;
+    public Matrix Viewoffset1;
     /// <summary> VR view offset matrices (per eye) </summary>
-    public Matrix /* Matrix[2] */ Viewoffset;
+    public Matrix Viewoffset2;
     /// <summary> VR left lens center </summary>
-    public Vector2 /* float[2] */ Leftlenscenter;
+    public Vector2 Leftlenscenter;
     /// <summary> VR right lens center </summary>
-    public Vector2 /* float[2] */ Rightlenscenter;
+    public Vector2 Rightlenscenter;
     /// <summary> VR left screen center </summary>
-    public Vector2 /* float[2] */ Leftscreencenter;
+    public Vector2 Leftscreencenter;
     /// <summary> VR right screen center </summary>
-    public Vector2 /* float[2] */ Rightscreencenter;
+    public Vector2 Rightscreencenter;
     /// <summary> VR distortion scale </summary>
-    public Vector2 /* float[2] */ Scale;
+    public Vector2 Scale;
     /// <summary> VR distortion scale in </summary>
-    public Vector2 /* float[2] */ Scalein;
+    public Vector2 Scalein;
 }
 
 #pragma warning restore CA1711,IDE0005

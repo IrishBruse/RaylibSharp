@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -11,13 +11,13 @@ using System.Drawing;
 public unsafe struct Camera2D
 {
     /// <summary> Camera offset (displacement from target) </summary>
-    public Vector2 /* Vector2 */ Offset;
+    public Vector2 Offset;
     /// <summary> Camera target (rotation and zoom origin) </summary>
-    public Vector2 /* Vector2 */ Target;
+    public Vector2 Target;
     /// <summary> Camera rotation in degrees </summary>
-    public float /* float */ Rotation;
+    public float Rotation;
     /// <summary> Camera zoom (scaling), should be 1.0f by default </summary>
-    public float /* float */ Zoom;
+    public float Zoom;
 }
 
 #pragma warning restore CA1711,IDE0005

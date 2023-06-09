@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -11,16 +11,16 @@ using System.Drawing;
 public unsafe struct ModelAnimation
 {
     /// <summary> Number of bones </summary>
-    public int /* int */ Bonecount;
+    public int Bonecount;
     /// <summary> Number of animation frames </summary>
-    public int /* int */ Framecount;
+    public int Framecount;
     /// <summary> Bones information (skeleton) </summary>
-    public IntPtr /* BoneInfo * */ Bones;
+    public IntPtr Bones;
     /// <summary> Poses array by frame </summary>
-    public IntPtr /* Transform ** */ Frameposes;
+    public IntPtr Frameposes;
     /// <summary> Animation name </summary>
     [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-    public string /* char[32] */ Name;
+    public string Name;
 }
 
 #pragma warning restore CA1711,IDE0005

@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -11,9 +11,9 @@ using System.Drawing;
 public unsafe struct Sound
 {
     /// <summary> Audio stream </summary>
-    public AudioStream /* AudioStream */ Stream;
+    public AudioStream Stream;
     /// <summary> Total number of frames (considering channels) </summary>
-    public uint /* unsigned int */ Framecount;
+    public uint Framecount;
 }
 
 #pragma warning restore CA1711,IDE0005

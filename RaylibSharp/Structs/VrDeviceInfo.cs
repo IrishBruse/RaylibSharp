@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -11,25 +11,25 @@ using System.Drawing;
 public unsafe struct VrDeviceInfo
 {
     /// <summary> Horizontal resolution in pixels </summary>
-    public int /* int */ Hresolution;
+    public int Hresolution;
     /// <summary> Vertical resolution in pixels </summary>
-    public int /* int */ Vresolution;
+    public int Vresolution;
     /// <summary> Horizontal size in meters </summary>
-    public float /* float */ Hscreensize;
+    public float Hscreensize;
     /// <summary> Vertical size in meters </summary>
-    public float /* float */ Vscreensize;
+    public float Vscreensize;
     /// <summary> Screen center in meters </summary>
-    public float /* float */ Vscreencenter;
+    public float Vscreencenter;
     /// <summary> Distance between eye and display in meters </summary>
-    public float /* float */ Eyetoscreendistance;
+    public float Eyetoscreendistance;
     /// <summary> Lens separation distance in meters </summary>
-    public float /* float */ Lensseparationdistance;
+    public float Lensseparationdistance;
     /// <summary> IPD (distance between pupils) in meters </summary>
-    public float /* float */ Interpupillarydistance;
+    public float Interpupillarydistance;
     /// <summary> Lens distortion constant parameters </summary>
-    public Vector4 /* float[4] */ Lensdistortionvalues;
+    public Vector4 Lensdistortionvalues;
     /// <summary> Chromatic aberration correction parameters </summary>
-    public Vector4 /* float[4] */ Chromaabcorrection;
+    public Vector4 Chromaabcorrection;
 }
 
 #pragma warning restore CA1711,IDE0005

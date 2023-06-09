@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -11,11 +11,11 @@ using System.Drawing;
 public unsafe struct Material
 {
     /// <summary> Material shader </summary>
-    public Shader /* Shader */ Shader;
+    public Shader Shader;
     /// <summary> Material maps array (MAX_MATERIAL_MAPS) </summary>
-    public IntPtr /* MaterialMap * */ Maps;
+    public IntPtr Maps;
     /// <summary> Material generic parameters (if required) </summary>
-    public Vector4 /* float[4] */ Params;
+    public Vector4 Params;
 }
 
 #pragma warning restore CA1711,IDE0005

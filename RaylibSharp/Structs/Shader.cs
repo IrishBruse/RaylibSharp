@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -11,9 +11,9 @@ using System.Drawing;
 public unsafe struct Shader
 {
     /// <summary> Shader program id </summary>
-    public uint /* unsigned int */ Id;
+    public uint Id;
     /// <summary> Shader locations array (RL_MAX_SHADER_LOCATIONS) </summary>
-    public IntPtr /* int * */ Locs;
+    public IntPtr Locs;
 }
 
 #pragma warning restore CA1711,IDE0005

@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -11,17 +11,17 @@ using System.Drawing;
 public unsafe struct Font
 {
     /// <summary> Base size (default chars height) </summary>
-    public int /* int */ Basesize;
+    public int Basesize;
     /// <summary> Number of glyph characters </summary>
-    public int /* int */ Glyphcount;
+    public int Glyphcount;
     /// <summary> Padding around the glyph characters </summary>
-    public int /* int */ Glyphpadding;
+    public int Glyphpadding;
     /// <summary> Texture atlas containing the glyphs </summary>
-    public Texture /* Texture2D */ Texture;
+    public Texture Texture;
     /// <summary> Rectangles in texture for the glyphs </summary>
-    public IntPtr /* Rectangle * */ Recs;
+    public IntPtr Recs;
     /// <summary> Glyphs info data </summary>
-    public IntPtr /* GlyphInfo * */ Glyphs;
+    public IntPtr Glyphs;
 }
 
 #pragma warning restore CA1711,IDE0005

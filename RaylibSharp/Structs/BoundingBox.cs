@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -11,9 +11,9 @@ using System.Drawing;
 public unsafe struct BoundingBox
 {
     /// <summary> Minimum vertex box-corner </summary>
-    public Vector3 /* Vector3 */ Min;
+    public Vector3 Min;
     /// <summary> Maximum vertex box-corner </summary>
-    public Vector3 /* Vector3 */ Max;
+    public Vector3 Max;
 }
 
 #pragma warning restore CA1711,IDE0005

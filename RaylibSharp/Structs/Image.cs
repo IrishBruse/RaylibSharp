@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -11,15 +11,15 @@ using System.Drawing;
 public unsafe struct Image
 {
     /// <summary> Image raw data </summary>
-    public IntPtr /* void * */ Data;
+    public IntPtr Data;
     /// <summary> Image base width </summary>
-    public int /* int */ Width;
+    public int Width;
     /// <summary> Image base height </summary>
-    public int /* int */ Height;
+    public int Height;
     /// <summary> Mipmap levels, 1 by default </summary>
-    public int /* int */ Mipmaps;
+    public int Mipmaps;
     /// <summary> Data format (PixelFormat type) </summary>
-    public int /* int */ Format;
+    public int Format;
 }
 
 #pragma warning restore CA1711,IDE0005

@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -11,13 +11,13 @@ using System.Drawing;
 public unsafe struct RayCollision
 {
     /// <summary> Did the ray hit something? </summary>
-    public bool /* bool */ Hit;
+    public bool Hit;
     /// <summary> Distance to the nearest hit </summary>
-    public float /* float */ Distance;
+    public float Distance;
     /// <summary> Point of the nearest hit </summary>
-    public Vector3 /* Vector3 */ Point;
+    public Vector3 Point;
     /// <summary> Surface normal of hit </summary>
-    public Vector3 /* Vector3 */ Normal;
+    public Vector3 Normal;
 }
 
 #pragma warning restore CA1711,IDE0005

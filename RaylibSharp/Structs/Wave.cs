@@ -1,4 +1,4 @@
-namespace Raylib;
+namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005
 
@@ -11,15 +11,15 @@ using System.Drawing;
 public unsafe struct Wave
 {
     /// <summary> Total number of frames (considering channels) </summary>
-    public uint /* unsigned int */ Framecount;
+    public uint Framecount;
     /// <summary> Frequency (samples per second) </summary>
-    public uint /* unsigned int */ Samplerate;
+    public uint Samplerate;
     /// <summary> Bit depth (bits per sample): 8, 16, 32 (24 not supported) </summary>
-    public uint /* unsigned int */ Samplesize;
+    public uint Samplesize;
     /// <summary> Number of channels (1-mono, 2-stereo, ...) </summary>
-    public uint /* unsigned int */ Channels;
+    public uint Channels;
     /// <summary> Buffer data pointer </summary>
-    public IntPtr /* void * */ Data;
+    public IntPtr Data;
 }
 
 #pragma warning restore CA1711,IDE0005
