@@ -11,13 +11,13 @@ using System.Drawing;
 public unsafe struct VrStereoConfig
 {
     /// <summary> VR projection matrices (per eye) </summary>
-    public Matrix Projection1;
+    public Matrix4x4 Projection1;
     /// <summary> VR projection matrices (per eye) </summary>
-    public Matrix Projection2;
+    public Matrix4x4 Projection2;
     /// <summary> VR view offset matrices (per eye) </summary>
-    public Matrix Viewoffset1;
+    public Matrix4x4 Viewoffset1;
     /// <summary> VR view offset matrices (per eye) </summary>
-    public Matrix Viewoffset2;
+    public Matrix4x4 Viewoffset2;
     /// <summary> VR left lens center </summary>
     public Vector2 Leftlenscenter;
     /// <summary> VR right lens center </summary>
