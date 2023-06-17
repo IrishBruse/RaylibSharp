@@ -12,7 +12,7 @@ public unsafe struct BoneInfo
 {
     /// <summary> Bone name </summary>
     [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-    public string Name;
+    public fixed char Name[32];
     /// <summary> Bone parent </summary>
     public int Parent;
 }

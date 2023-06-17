@@ -8,7 +8,9 @@
 
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
 
-        <RootNamespace>Raylib.Generator</RootNamespace>
+        <NoWarn>CA1311</NoWarn>
+
+        <RootNamespace>RaylibSharp.Generator</RootNamespace>
     </PropertyGroup>
 
 </Project>

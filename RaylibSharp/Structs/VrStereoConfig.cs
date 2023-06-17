@@ -19,17 +19,17 @@ public unsafe struct VrStereoConfig
     /// <summary> VR view offset matrices (per eye) </summary>
     public Matrix4x4 Viewoffset2;
     /// <summary> VR left lens center </summary>
-    public Vector2 Leftlenscenter;
+    public fixed float Leftlenscenter[2];
     /// <summary> VR right lens center </summary>
-    public Vector2 Rightlenscenter;
+    public fixed float Rightlenscenter[2];
     /// <summary> VR left screen center </summary>
-    public Vector2 Leftscreencenter;
+    public fixed float Leftscreencenter[2];
     /// <summary> VR right screen center </summary>
-    public Vector2 Rightscreencenter;
+    public fixed float Rightscreencenter[2];
     /// <summary> VR distortion scale </summary>
-    public Vector2 Scale;
+    public fixed float Scale[2];
     /// <summary> VR distortion scale in </summary>
-    public Vector2 Scalein;
+    public fixed float Scalein[2];
 }
 
 #pragma warning restore CA1711,IDE0005

@@ -7,20 +7,28 @@
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
-        <NoWarn>IDE0130,CA1069</NoWarn>
+        <NoWarn>IDE0130,CA1069,CS8795</NoWarn>
 
-        <RootNamespace>Raylib</RootNamespace>
+        <RootNamespace>RaylibSharp</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
+        <!-- Runtime flag disable dynamic code generation -->
         <RuntimeHostConfigurationOption Include="System.Runtime.CompilerServices.RuntimeFeature.IsDynamicCodeSupported" Value="false" Trim="true" />
+        <!-- Put Attribute on assembly -->
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.DisableRuntimeMarshalling"/>
 
         <Content Include="runtimes\**">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
             <Pack>true</Pack>
             <PackagePath>runtimes</PackagePath>
         </Content>
-    </ItemGroup>
 
+        <Content Include="runtimes/win-x64/native/raylib.dll">
+            <Pack>false</Pack>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <Link>\raylib.dll</Link>
+        </Content>
+    </ItemGroup>
 
 </Project>

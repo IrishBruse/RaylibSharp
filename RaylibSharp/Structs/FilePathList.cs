@@ -15,7 +15,7 @@ public unsafe struct FilePathList
     /// <summary> Filepaths entries count </summary>
     public uint Count;
     /// <summary> Filepaths entries </summary>
-    public IntPtr Paths;
+    public sbyte** Paths;
 }
 
 #pragma warning restore CA1711,IDE0005

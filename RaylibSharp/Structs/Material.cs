@@ -13,9 +13,9 @@ public unsafe struct Material
     /// <summary> Material shader </summary>
     public Shader Shader;
     /// <summary> Material maps array (MAX_MATERIAL_MAPS) </summary>
-    public IntPtr Maps;
+    public MaterialMap* Maps;
     /// <summary> Material generic parameters (if required) </summary>
-    public Vector4 Params;
+    public fixed float Params[4];
 }
 
 #pragma warning restore CA1711,IDE0005

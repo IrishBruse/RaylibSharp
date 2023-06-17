@@ -13,7 +13,7 @@ public unsafe struct MaterialMap
     /// <summary> Material map texture </summary>
     public Texture Texture;
     /// <summary> Material map color </summary>
-    public Color Color;
+    public uint Color;
     /// <summary> Material map value </summary>
     public float Value;
 }

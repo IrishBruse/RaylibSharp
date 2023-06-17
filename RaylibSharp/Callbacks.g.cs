@@ -1,4 +1,5 @@
-namespace Raylib;
+namespace RaylibSharp;
+
 /// <summary> Logging: Redirect trace log messages </summary>
 public delegate void TraceLogCallback(int /* int */ logLevel, string /* const char * */ text, params object[] /* va_list */ args);
 

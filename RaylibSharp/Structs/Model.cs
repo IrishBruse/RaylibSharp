@@ -17,17 +17,17 @@ public unsafe struct Model
     /// <summary> Number of materials </summary>
     public int Materialcount;
     /// <summary> Meshes array </summary>
-    public IntPtr Meshes;
+    public Mesh* Meshes;
     /// <summary> Materials array </summary>
-    public IntPtr Materials;
+    public Material* Materials;
     /// <summary> Mesh material number </summary>
-    public IntPtr Meshmaterial;
+    public int* Meshmaterial;
     /// <summary> Number of bones </summary>
     public int Bonecount;
     /// <summary> Bones information (skeleton) </summary>
-    public IntPtr Bones;
+    public BoneInfo* Bones;
     /// <summary> Bones base transformation (pose) </summary>
-    public IntPtr Bindpose;
+    public Transform* Bindpose;
 }
 
 #pragma warning restore CA1711,IDE0005

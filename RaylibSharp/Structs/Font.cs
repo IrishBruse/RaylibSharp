@@ -19,9 +19,9 @@ public unsafe struct Font
     /// <summary> Texture atlas containing the glyphs </summary>
     public Texture Texture;
     /// <summary> Rectangles in texture for the glyphs </summary>
-    public IntPtr Recs;
+    public Rectangle* Recs;
     /// <summary> Glyphs info data </summary>
-    public IntPtr Glyphs;
+    public GlyphInfo* Glyphs;
 }
 
 #pragma warning restore CA1711,IDE0005

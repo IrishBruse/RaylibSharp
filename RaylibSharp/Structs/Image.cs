@@ -11,7 +11,7 @@ using System.Drawing;
 public unsafe struct Image
 {
     /// <summary> Image raw data </summary>
-    public IntPtr Data;
+    public void* Data;
     /// <summary> Image base width </summary>
     public int Width;
     /// <summary> Image base height </summary>

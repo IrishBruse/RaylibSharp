@@ -13,7 +13,7 @@ public unsafe struct Shader
     /// <summary> Shader program id </summary>
     public uint Id;
     /// <summary> Shader locations array (RL_MAX_SHADER_LOCATIONS) </summary>
-    public IntPtr Locs;
+    public int* Locs;
 }
 
 #pragma warning restore CA1711,IDE0005

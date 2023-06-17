@@ -1,4 +1,4 @@
-namespace Raylib.Generator;
+namespace RaylibSharp.Generator;
 
 #pragma warning disable
 
@@ -7,20 +7,18 @@ using System;
 
 using System.Text.Json;
 using System.Globalization;
-using Raylib;
-using Raylib.Generator;
 using System.Runtime.InteropServices;
 
 public partial class RaylibApi
 {
     [JsonPropertyName("defines")]
-    public Alias[] Defines { get; set; }
+    public Fields[] Defines { get; set; }
 
     [JsonPropertyName("structs")]
     public Struct[] Structs { get; set; }
 
     [JsonPropertyName("aliases")]
-    public Alias[] Aliases { get; set; }
+    public Fields[] Aliases { get; set; }
 
     [JsonPropertyName("enums")]
     public EnumDef[] Enums { get; set; }
@@ -32,7 +30,7 @@ public partial class RaylibApi
     public Function[] Functions { get; set; }
 }
 
-public partial class Alias
+public partial class Fields
 {
     [JsonPropertyName("type")]
     public string Type { get; set; }
@@ -102,7 +100,7 @@ public partial class Struct
     public string Description { get; set; }
 
     [JsonPropertyName("fields")]
-    public Alias[] Fields { get; set; }
+    public Fields[] Fields { get; set; }
 }
 
 public partial class Welcome

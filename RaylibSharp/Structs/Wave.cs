@@ -19,7 +19,7 @@ public unsafe struct Wave
     /// <summary> Number of channels (1-mono, 2-stereo, ...) </summary>
     public uint Channels;
     /// <summary> Buffer data pointer </summary>
-    public IntPtr Data;
+    public void* Data;
 }
 
 #pragma warning restore CA1711,IDE0005

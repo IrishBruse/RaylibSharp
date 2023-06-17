@@ -15,12 +15,12 @@ public unsafe struct ModelAnimation
     /// <summary> Number of animation frames </summary>
     public int Framecount;
     /// <summary> Bones information (skeleton) </summary>
-    public IntPtr Bones;
+    public BoneInfo* Bones;
     /// <summary> Poses array by frame </summary>
-    public IntPtr Frameposes;
+    public Transform** Frameposes;
     /// <summary> Animation name </summary>
     [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-    public string Name;
+    public fixed char Name[32];
 }
 
 #pragma warning restore CA1711,IDE0005

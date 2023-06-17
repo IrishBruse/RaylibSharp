@@ -27,9 +27,9 @@ public unsafe struct VrDeviceInfo
     /// <summary> IPD (distance between pupils) in meters </summary>
     public float Interpupillarydistance;
     /// <summary> Lens distortion constant parameters </summary>
-    public Vector4 Lensdistortionvalues;
+    public fixed float Lensdistortionvalues[4];
     /// <summary> Chromatic aberration correction parameters </summary>
-    public Vector4 Chromaabcorrection;
+    public fixed float Chromaabcorrection[4];
 }
 
 #pragma warning restore CA1711,IDE0005

@@ -19,7 +19,7 @@ public unsafe struct Music
     /// <summary> Type of music context (audio filetype) </summary>
     public int Ctxtype;
     /// <summary> Audio context data, depends on type </summary>
-    public IntPtr Ctxdata;
+    public void* Ctxdata;
 }
 
 #pragma warning restore CA1711,IDE0005
