@@ -58,4 +58,5 @@ public enum ShaderLocationIndex
     /// <summary> Shader location: sampler2d texture: brdf </summary>
     ShaderLocMapBrdf = 25,
 }
+
 #pragma warning restore CA1711

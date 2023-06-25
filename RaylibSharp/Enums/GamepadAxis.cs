@@ -18,4 +18,5 @@ public enum GamepadAxis
     /// <summary> Gamepad back trigger right, pressure level: [1..-1] </summary>
     RightTrigger = 5,
 }
+
 #pragma warning restore CA1711

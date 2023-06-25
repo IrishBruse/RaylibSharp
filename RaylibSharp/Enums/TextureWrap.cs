@@ -14,4 +14,5 @@ public enum TextureWrap
     /// <summary> Mirrors and clamps to border the texture in tiled mode </summary>
     MirrorClamp = 3,
 }
+
 #pragma warning restore CA1711

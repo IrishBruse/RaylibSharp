@@ -22,4 +22,5 @@ public enum BlendMode
     /// <summary> Blend textures using custom rgb/alpha separate src/dst factors (use rlSetBlendFactorsSeparate()) </summary>
     BlendCustomSeparate = 7,
 }
+
 #pragma warning restore CA1711

@@ -1,17 +1,29 @@
 namespace RaylibSharp;
 
-#pragma warning disable CA1711,IDE0005
+#pragma warning disable CA1711,IDE0005,CA1051
 
 using System.Runtime.InteropServices;
 using System.Numerics;
 using System.Drawing;
+using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> MaterialMap </summary>
-[StructLayout(LayoutKind.Sequential)]
-public unsafe struct MaterialMap
+public unsafe partial struct MaterialMap
 {
     /// <summary> Material map texture </summary>
     public Texture Texture;
+    /// <summary> Material map color </summary>
+    public Color Color;
+    /// <summary> Material map value </summary>
+    public float Value;
+}
+
+/// <summary> MaterialMap </summary>
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct UnmanagedMaterialMap
+{
+    /// <summary> Material map texture </summary>
+    public UnmanagedTexture Texture;
     /// <summary> Material map color </summary>
     public uint Color;
     /// <summary> Material map value </summary>

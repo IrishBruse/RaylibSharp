@@ -93,14 +93,6 @@ public class FunctionProcessor
             {
                 sb.AppendLine($"    [return: {Utility.ColorMarshal}]");
             }
-            else if (type == "Mesh")
-            {
-                sb.AppendLine($"    [return: {Utility.MeshMarshal}]");
-            }
-            else if (type == "ModelAnimation")
-            {
-                sb.AppendLine($"    [return: {Utility.ModelAnimationMarshal}]");
-            }
 
             if (type == "void")
             {
@@ -152,7 +144,11 @@ public class FunctionProcessor
 
         string type = Utility.ConvertTypeFunction(p.Type);
 
-        if (type == "string")
+        if (type == "bool")
+        {
+            return $"[{Utility.BoolMarshal}] {type} {p.Name}";
+        }
+        else if (type == "string")
         {
             return $"[{Utility.StringMarshal}] {type} {p.Name}";
         }
@@ -160,18 +156,7 @@ public class FunctionProcessor
         {
             return $"[{Utility.ColorMarshal}] {type} {p.Name}";
         }
-        else if (type == "Mesh")
-        {
-            return $"[{Utility.MeshMarshal}] {type} {p.Name}";
-        }
-        else if (type == "ModelAnimation")
-        {
-            return $"[{Utility.ModelAnimationMarshal}] {type} {p.Name}";
-        }
-        else if (type == "bool")
-        {
-            return $"[{Utility.BoolMarshal}] {type} {p.Name}";
-        }
+
 
         return $"{type} {p.Name}";
     }

@@ -42,4 +42,5 @@ public enum GamepadButton
     /// <summary> Gamepad joystick pressed button right </summary>
     RightThumb = 17,
 }
+
 #pragma warning restore CA1711

@@ -20,9 +20,4 @@ internal static unsafe class Vector2Marshaller
             Y = managed.Y,
         };
     }
-
-    public static Vector2 ConvertToManaged(nint unmanaged)
-    {
-        throw new NotImplementedException();
-    }
 }

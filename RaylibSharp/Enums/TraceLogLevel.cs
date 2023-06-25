@@ -22,4 +22,5 @@ public enum TraceLogLevel
     /// <summary> Disable logging </summary>
     LogNone = 7,
 }
+
 #pragma warning restore CA1711

@@ -12,4 +12,5 @@ public enum FontType
     /// <summary> SDF font generation, requires external shader </summary>
     FontSdf = 2,
 }
+
 #pragma warning restore CA1711

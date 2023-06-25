@@ -683,11 +683,11 @@ public static unsafe partial class Raylib
 
     /// <summary> Update camera position for selected mode </summary>
     [LibraryImport("raylib")]
-    public static partial void UpdateCamera(IntPtr camera, int mode);
+    public static partial void UpdateCamera(ref Camera3D camera, int mode);
 
     /// <summary> Update camera movement/rotation </summary>
     [LibraryImport("raylib")]
-    public static partial void UpdateCameraPro(IntPtr camera, Vector3 movement, Vector3 rotation, float zoom);
+    public static partial void UpdateCameraPro(ref Camera3D camera, Vector3 movement, Vector3 rotation, float zoom);
 
     /// <summary> Set texture and rectangle to be used on shapes drawing </summary>
     [LibraryImport("raylib")]
@@ -1597,7 +1597,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Load model from generated mesh (default material) </summary>
     [LibraryImport("raylib")]
-    public static partial Model LoadModelFromMesh([MarshalUsing(typeof(MeshMarshaller))] Mesh mesh);
+    public static partial Model LoadModelFromMesh(Mesh mesh);
 
     /// <summary> Check if a model is ready </summary>
     [LibraryImport("raylib")]
@@ -1650,28 +1650,28 @@ public static unsafe partial class Raylib
 
     /// <summary> Update mesh vertex data in GPU for a specific buffer index </summary>
     [LibraryImport("raylib")]
-    public static partial void UpdateMeshBuffer([MarshalUsing(typeof(MeshMarshaller))] Mesh mesh, int index, IntPtr data, int dataSize, int offset);
+    public static partial void UpdateMeshBuffer(Mesh mesh, int index, IntPtr data, int dataSize, int offset);
 
     /// <summary> Unload mesh data from CPU and GPU </summary>
     [LibraryImport("raylib")]
-    public static partial void UnloadMesh([MarshalUsing(typeof(MeshMarshaller))] Mesh mesh);
+    public static partial void UnloadMesh(Mesh mesh);
 
     /// <summary> Draw a 3d mesh with material and transform </summary>
     [LibraryImport("raylib")]
-    public static partial void DrawMesh([MarshalUsing(typeof(MeshMarshaller))] Mesh mesh, Material material, Matrix4x4 transform);
+    public static partial void DrawMesh(Mesh mesh, Material material, Matrix4x4 transform);
 
     /// <summary> Draw multiple mesh instances with material and different transforms </summary>
     [LibraryImport("raylib")]
-    public static partial void DrawMeshInstanced([MarshalUsing(typeof(MeshMarshaller))] Mesh mesh, Material material, IntPtr transforms, int instances);
+    public static partial void DrawMeshInstanced(Mesh mesh, Material material, IntPtr transforms, int instances);
 
     /// <summary> Export mesh data to file, returns true on success </summary>
     [LibraryImport("raylib")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool ExportMesh([MarshalUsing(typeof(MeshMarshaller))] Mesh mesh, [MarshalAs(UnmanagedType.LPStr)] string fileName);
+    public static partial bool ExportMesh(Mesh mesh, [MarshalAs(UnmanagedType.LPStr)] string fileName);
 
     /// <summary> Compute mesh bounding box limits </summary>
     [LibraryImport("raylib")]
-    public static partial BoundingBox GetMeshBoundingBox([MarshalUsing(typeof(MeshMarshaller))] Mesh mesh);
+    public static partial BoundingBox GetMeshBoundingBox(Mesh mesh);
 
     /// <summary> Compute mesh tangents </summary>
     [LibraryImport("raylib")]
@@ -1679,57 +1679,46 @@ public static unsafe partial class Raylib
 
     /// <summary> Generate polygonal mesh </summary>
     [LibraryImport("raylib")]
-    [return: MarshalUsing(typeof(MeshMarshaller))]
     public static partial Mesh GenMeshPoly(int sides, float radius);
 
     /// <summary> Generate plane mesh (with subdivisions) </summary>
     [LibraryImport("raylib")]
-    [return: MarshalUsing(typeof(MeshMarshaller))]
     public static partial Mesh GenMeshPlane(float width, float length, int resX, int resZ);
 
     /// <summary> Generate cuboid mesh </summary>
     [LibraryImport("raylib")]
-    [return: MarshalUsing(typeof(MeshMarshaller))]
     public static partial Mesh GenMeshCube(float width, float height, float length);
 
     /// <summary> Generate sphere mesh (standard sphere) </summary>
     [LibraryImport("raylib")]
-    [return: MarshalUsing(typeof(MeshMarshaller))]
     public static partial Mesh GenMeshSphere(float radius, int rings, int slices);
 
     /// <summary> Generate half-sphere mesh (no bottom cap) </summary>
     [LibraryImport("raylib")]
-    [return: MarshalUsing(typeof(MeshMarshaller))]
     public static partial Mesh GenMeshHemiSphere(float radius, int rings, int slices);
 
     /// <summary> Generate cylinder mesh </summary>
     [LibraryImport("raylib")]
-    [return: MarshalUsing(typeof(MeshMarshaller))]
     public static partial Mesh GenMeshCylinder(float radius, float height, int slices);
 
     /// <summary> Generate cone/pyramid mesh </summary>
     [LibraryImport("raylib")]
-    [return: MarshalUsing(typeof(MeshMarshaller))]
     public static partial Mesh GenMeshCone(float radius, float height, int slices);
 
     /// <summary> Generate torus mesh </summary>
     [LibraryImport("raylib")]
-    [return: MarshalUsing(typeof(MeshMarshaller))]
     public static partial Mesh GenMeshTorus(float radius, float size, int radSeg, int sides);
 
     /// <summary> Generate trefoil knot mesh </summary>
     [LibraryImport("raylib")]
-    [return: MarshalUsing(typeof(MeshMarshaller))]
     public static partial Mesh GenMeshKnot(float radius, float size, int radSeg, int sides);
 
     /// <summary> Generate heightmap mesh from image data </summary>
     [LibraryImport("raylib")]
-    [return: MarshalUsing(typeof(MeshMarshaller))]
     public static partial Mesh GenMeshHeightmap(Image heightmap, Vector3 size);
 
     /// <summary> Generate cubes-based map mesh from image data </summary>
     [LibraryImport("raylib")]
-    [return: MarshalUsing(typeof(MeshMarshaller))]
     public static partial Mesh GenMeshCubicmap(Image cubicmap, Vector3 cubeSize);
 
     /// <summary> Load materials from model file </summary>
@@ -1763,11 +1752,11 @@ public static unsafe partial class Raylib
 
     /// <summary> Update model animation pose </summary>
     [LibraryImport("raylib")]
-    public static partial void UpdateModelAnimation(Model model, [MarshalUsing(typeof(ModelAnimationMarshaller))] ModelAnimation anim, int frame);
+    public static partial void UpdateModelAnimation(Model model, ModelAnimation anim, int frame);
 
     /// <summary> Unload animation data </summary>
     [LibraryImport("raylib")]
-    public static partial void UnloadModelAnimation([MarshalUsing(typeof(ModelAnimationMarshaller))] ModelAnimation anim);
+    public static partial void UnloadModelAnimation(ModelAnimation anim);
 
     /// <summary> Unload animation array data </summary>
     [LibraryImport("raylib")]
@@ -1776,7 +1765,7 @@ public static unsafe partial class Raylib
     /// <summary> Check model animation skeleton match </summary>
     [LibraryImport("raylib")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool IsModelAnimationValid(Model model, [MarshalUsing(typeof(ModelAnimationMarshaller))] ModelAnimation anim);
+    public static partial bool IsModelAnimationValid(Model model, ModelAnimation anim);
 
     /// <summary> Check collision between two spheres </summary>
     [LibraryImport("raylib")]
@@ -1803,7 +1792,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Get collision info between ray and mesh </summary>
     [LibraryImport("raylib")]
-    public static partial RayCollision GetRayCollisionMesh(Ray ray, [MarshalUsing(typeof(MeshMarshaller))] Mesh mesh, Matrix4x4 transform);
+    public static partial RayCollision GetRayCollisionMesh(Ray ray, Mesh mesh, Matrix4x4 transform);
 
     /// <summary> Get collision info between ray and triangle </summary>
     [LibraryImport("raylib")]

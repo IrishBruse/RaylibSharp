@@ -12,4 +12,5 @@ public enum NPatchLayout
     /// <summary> Npatch layout: 3x1 tiles </summary>
     NpatchThreePatchHorizontal = 2,
 }
+
 #pragma warning restore CA1711

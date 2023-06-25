@@ -226,4 +226,5 @@ public enum Key
     /// <summary> Key: Android volume down button </summary>
     VolumeDown = 25,
 }
+
 #pragma warning restore CA1711

@@ -18,4 +18,5 @@ public enum TextureFilter
     /// <summary> Anisotropic filtering 16x </summary>
     Anisotropic16x = 5,
 }
+
 #pragma warning restore CA1711

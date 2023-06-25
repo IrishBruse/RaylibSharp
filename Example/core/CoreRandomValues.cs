@@ -1,5 +1,4 @@
 using static RaylibSharp.Raylib;
-using static Utility;
 
 public static partial class Example
 {

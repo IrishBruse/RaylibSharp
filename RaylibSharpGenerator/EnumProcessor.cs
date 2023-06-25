@@ -33,11 +33,16 @@ public static class EnumProcessor
                 {
                     name = name[e.Name.Length..];
                 }
+                else if (name.StartsWith("Camera", true, CultureInfo.CurrentCulture))
+                {
+                    name = name[6..];
+                }
                 sb.AppendLine($"    /// <summary> {value.Description} </summary>");
                 sb.AppendLine($"    {name} = {value.Value},");
             }
 
             sb.AppendLine("}");
+            sb.AppendLine();
             sb.AppendLine("#pragma warning restore CA1711");
 
             File.WriteAllText("../RaylibSharp/Enums/" + e.Name + ".cs", sb.ToString());

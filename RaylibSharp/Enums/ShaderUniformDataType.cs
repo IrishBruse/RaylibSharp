@@ -24,4 +24,5 @@ public enum ShaderUniformDataType
     /// <summary> Shader uniform type: sampler2d </summary>
     ShaderUniformSampler2d = 8,
 }
+
 #pragma warning restore CA1711

@@ -10,18 +10,20 @@ public partial class ExampleGenerator
         "core_basic_window",
         "core_input_keys",
         "core_random_values",
-        "core_drop_files"
+        "core_drop_files",
+        "core_2d_camera",
     };
 
     public static void Emit()
     {
         IEnumerable<string> files = Directory.GetFiles("./examples/", "*.c", SearchOption.AllDirectories).ToList();
 
-        foreach (string cFile in files)
+        foreach (string f in files)
         {
+            string cFile = f;
             string name = Path.GetFileNameWithoutExtension(cFile);
 
-            if (!cFile.Contains("core"))
+            if (!name.StartsWith("core"))
             {
                 continue;
             }
@@ -31,8 +33,7 @@ public partial class ExampleGenerator
                 continue;
             }
 
-            string csFile = Path.Join("..", "Example", cFile).Replace("/examples", "");
-            csFile = csFile.Replace(name, Utility.ToPascalCase(name)) + "s";
+            string csFile = $"../Example/temp/{Utility.ToPascalCase(name)}.c";
 
             GenerateExample(cFile, csFile);
         }
@@ -50,14 +51,16 @@ public partial class ExampleGenerator
             "using System.Numerics;",
             "using RaylibSharp;",
             "using static RaylibSharp.Raylib;",
-            "using static Utility;",
             "",
         };
 
         List<string> output = new()
         {
+            "// " + inputFile,
+            "// " + outputFile,
+            "",
             string.Join("\n", fileHeader),
-            "public static partial class Example\n{"
+            "public static partial class Example\n{",
         };
 
         bool headerRemoved = false;
@@ -122,6 +125,27 @@ public partial class ExampleGenerator
                 line.Replace(isKeyMatch.Value, $"{isKeyMatch.Groups[1].Value}(Key.{Utility.ToPascalCase(isKeyMatch.Groups[2].Value)})");
             }
 
+            Match isVector2Match = Vector2Replace().Match(trimmed);
+
+            if (isVector2Match.Groups.Count > 1)
+            {
+                line.Replace(isVector2Match.Value, $"new({isVector2Match.Groups[1].Value})");
+            }
+
+            Match isVector3Match = Vector3Replace().Match(trimmed);
+
+            if (isVector3Match.Groups.Count > 1)
+            {
+                line.Replace(isVector3Match.Value, $"new({isVector3Match.Groups[1].Value})");
+            }
+
+            Match isColorMatch = ColorReplace().Match(trimmed);
+
+            if (isColorMatch.Groups.Count > 1)
+            {
+                line.Replace(isColorMatch.Value, $"Color.FromArgb({isColorMatch.Groups[1].Value})");
+            }
+
             foreach (string color in Utility.Colors)
             {
                 if (trimmed.Contains(color.ToUpper()))
@@ -148,4 +172,15 @@ public partial class ExampleGenerator
 
     [GeneratedRegex(@"(IsKey\w+)\(KEY_(.*)\)")] // IsKeyDown(KEY_RIGHT)
     private static partial Regex IsKeyConstEnumReplace();
+
+
+    [GeneratedRegex(@"\(Vector3\)\{(.*,.*,.*)\}")] // (Vector3){ , , }
+    private static partial Regex Vector3Replace();
+
+    [GeneratedRegex(@"\(Color\)\{(.*,.*,.*,.*)\}")] // (Color){ , , , }
+    private static partial Regex ColorReplace();
+
+
+    [GeneratedRegex(@"\(Vector2\)\{(.*,.*)\}")] // (Vector2){ , }
+    private static partial Regex Vector2Replace();
 }

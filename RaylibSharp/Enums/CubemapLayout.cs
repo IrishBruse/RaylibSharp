@@ -18,4 +18,5 @@ public enum CubemapLayout
     /// <summary> Layout is defined by a panorama image (equirrectangular map) </summary>
     Panorama = 5,
 }
+
 #pragma warning restore CA1711

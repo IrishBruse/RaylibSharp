@@ -6,8 +6,9 @@ namespace RaylibSharp;
 public enum CameraProjection
 {
     /// <summary> Perspective projection </summary>
-    CameraPerspective = 0,
+    Perspective = 0,
     /// <summary> Orthographic projection </summary>
-    CameraOrthographic = 1,
+    Orthographic = 1,
 }
+
 #pragma warning restore CA1711

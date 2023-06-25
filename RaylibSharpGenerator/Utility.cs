@@ -60,6 +60,8 @@ public class Utility
             "unsigned int" => "uint",
             "unsigned int*" => "uint*",
 
+            "Camera*" => "ref Camera3D",
+
             "const char*" => "string",
 
             _ => HandleFunctionTypeConversions(t),
@@ -79,41 +81,6 @@ public class Utility
         return type;
     }
 
-    public static string ConvertTypeStruct(string t)
-    {
-        t = t.Replace(" *", "*");
-
-        return t switch
-        {
-            // "void*" => "IntPtr",
-            // "float*" => "float[]",
-            "unsigned char*" => "byte*",
-            "unsigned short*" => "short*",
-            "unsigned int" => "uint",
-            "unsigned int*" => "uint*",
-
-            "char**" => "sbyte**",
-
-            // "float[2]" => "Vector2",
-            // "float[4]" => "Vector4",
-
-            // "char[32]" => "string",
-
-            _ => ConvertTypeRemoveAlias(t),
-        };
-    }
-
-    private static string HandleStructTypeConversions(string t)
-    {
-        if (t.EndsWith("*"))
-        {
-            return "IntPtr";
-        }
-
-        return t;
-    }
-
-
     public static string ConvertTypeRemoveAlias(string t)
     {
         return t switch
@@ -127,7 +94,6 @@ public class Utility
             _ => t,
         };
     }
-
 
     public static string ToPascalCase(string name)
     {

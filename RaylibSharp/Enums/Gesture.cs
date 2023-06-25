@@ -28,4 +28,5 @@ public enum Gesture
     /// <summary> Pinch out gesture </summary>
     PinchOut = 512,
 }
+
 #pragma warning restore CA1711

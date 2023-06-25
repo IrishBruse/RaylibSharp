@@ -13,8 +13,8 @@ internal class Program
         RaylibApi api = JsonSerializer.Deserialize<RaylibApi>(jsonString)!;
 
         // EmitCallbacks(api);
-        // EnumProcessor.Emit(api);
-        // StructProcessor.Emit(api);
+        EnumProcessor.Emit(api);
+        StructProcessor.Emit(api);
         FunctionProcessor.Emit(api);
 
         ExampleGenerator.Emit();

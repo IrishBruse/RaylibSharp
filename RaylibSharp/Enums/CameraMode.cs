@@ -6,14 +6,15 @@ namespace RaylibSharp;
 public enum CameraMode
 {
     /// <summary> Custom camera </summary>
-    CameraCustom = 0,
+    Custom = 0,
     /// <summary> Free camera </summary>
-    CameraFree = 1,
+    Free = 1,
     /// <summary> Orbital camera </summary>
-    CameraOrbital = 2,
+    Orbital = 2,
     /// <summary> First person camera </summary>
-    CameraFirstPerson = 3,
+    FirstPerson = 3,
     /// <summary> Third person camera </summary>
-    CameraThirdPerson = 4,
+    ThirdPerson = 4,
 }
+
 #pragma warning restore CA1711

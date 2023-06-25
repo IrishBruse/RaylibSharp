@@ -25,7 +25,8 @@ public static partial class Example
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             // Update
-            if (IsFileDropped())
+            bool drop = IsFileDropped();
+            if (drop)
             {
                 FilePathList droppedFiles = LoadDroppedFiles();
 

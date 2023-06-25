@@ -48,4 +48,5 @@ public enum PixelFormat
     /// <summary> 2 bpp </summary>
     CompressedAstc8x8Rgba = 21,
 }
+
 #pragma warning restore CA1711

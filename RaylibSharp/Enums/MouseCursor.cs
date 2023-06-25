@@ -28,4 +28,5 @@ public enum MouseCursor
     /// <summary> The operation-not-allowed shape </summary>
     NotAllowed = 10,
 }
+
 #pragma warning restore CA1711

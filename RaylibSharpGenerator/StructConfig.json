@@ -1,0 +1,26 @@
+{
+    "Shader": {
+        "UnmanagedAttribute": true
+    },
+    "FilePathList": {
+        "UnmanagedAttribute": true,
+        "AdditionalProperties": [
+            "internal sbyte** PathsPtr;"
+        ]
+    },
+    "Font": {
+        "UnmanagedAttribute": true
+    },
+    "Mesh": {
+        "UnmanagedAttribute": true
+    },
+    "Model": {
+        "UnmanagedAttribute": true
+    },
+    "Material": {
+        "UnmanagedAttribute": true
+    },
+    "ModelAnimation": {
+        "UnmanagedAttribute": true
+    }
+}

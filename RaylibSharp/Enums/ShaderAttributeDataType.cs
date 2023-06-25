@@ -14,4 +14,5 @@ public enum ShaderAttributeDataType
     /// <summary> Shader attribute type: vec4 (4 float) </summary>
     ShaderAttribVec4 = 3,
 }
+
 #pragma warning restore CA1711

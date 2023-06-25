@@ -36,4 +36,5 @@ public enum ConfigFlags
     /// <summary> Set to try enabling interlaced video format (for V3D) </summary>
     FlagInterlacedHint = 65536,
 }
+
 #pragma warning restore CA1711

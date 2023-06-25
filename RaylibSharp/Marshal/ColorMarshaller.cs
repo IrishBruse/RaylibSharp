@@ -3,7 +3,8 @@ namespace RaylibSharp;
 using System.Drawing;
 using System.Runtime.InteropServices.Marshalling;
 
-[CustomMarshaller(typeof(Color), MarshalMode.Default, typeof(ColorMarshaller))]
+[CustomMarshaller(typeof(Color), MarshalMode.ManagedToUnmanagedIn, typeof(ColorMarshaller))]
+[CustomMarshaller(typeof(Color), MarshalMode.ManagedToUnmanagedOut, typeof(ColorMarshaller))]
 internal static unsafe class ColorMarshaller
 {
     internal struct UnmanagedColor
@@ -27,6 +28,6 @@ internal static unsafe class ColorMarshaller
 
     public static Color ConvertToManaged(UnmanagedColor unmanaged)
     {
-        throw new NotImplementedException();
+        return Color.FromArgb(unmanaged.R, unmanaged.G, unmanaged.B, unmanaged.A);
     }
 }

@@ -20,4 +20,5 @@ public enum MouseButton
     /// <summary> Mouse button back (advanced mouse device) </summary>
     Back = 6,
 }
+
 #pragma warning restore CA1711
