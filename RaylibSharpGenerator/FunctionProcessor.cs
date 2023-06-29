@@ -4,7 +4,7 @@ using System.Text;
 
 public class FunctionProcessor
 {
-    private static readonly bool DebugOutput;
+    private const bool DebugOutput = false;
 
     private static readonly string[] Exclude = {
 

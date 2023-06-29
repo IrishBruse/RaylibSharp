@@ -8,11 +8,21 @@ internal static unsafe class FontMarshaller
 {
     public static UnmanagedFont ConvertToUnmanaged(Font managed)
     {
-        return new();
+        return new()
+        {
+            Basesize = managed.Basesize,
+            Glyphcount = managed.Glyphcount,
+            Glyphpadding = managed.Glyphpadding,
+        };
     }
 
     public static Font ConvertToManaged(UnmanagedFont unmanaged)
     {
-        return new();
+        return new()
+        {
+            Basesize = unmanaged.Basesize,
+            Glyphcount = unmanaged.Glyphcount,
+            Glyphpadding = unmanaged.Glyphpadding,
+        };
     }
 }

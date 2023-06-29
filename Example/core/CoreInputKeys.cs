@@ -45,13 +45,15 @@ public static partial class Example
 
             // Draw
             BeginDrawing();
+            {
 
-            ClearBackground(RayWhite);
+                ClearBackground(RayWhite);
 
-            DrawText("move the ball with arrow keys", 10, 10, 20, DarkGray);
+                DrawText("move the ball with arrow keys", 10, 10, 20, DarkGray);
 
-            DrawCircleV(ballPosition, 50, Maroon);
+                DrawCircleV(ballPosition, 50, Maroon);
 
+            }
             EndDrawing();
         }
 

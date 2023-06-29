@@ -1,5 +1,4 @@
 using System.Drawing;
-using System.Numerics;
 
 using RaylibSharp;
 
@@ -33,12 +32,12 @@ public static partial class Example
 
             spacing += (int)buildings[i].Width;
 
-            buildColors[i] = Color.FromArgb(GetRandomValue(200, 240), GetRandomValue(200, 240), GetRandomValue(200, 250), 255);
+            buildColors[i] = Color.FromArgb(255, GetRandomValue(200, 240), GetRandomValue(200, 240), GetRandomValue(200, 250));
         }
 
         Camera2D camera = new();
-        camera.Target = new Vector2(player.X + 20.0f, player.Y + 20.0f);
-        camera.Offset = new Vector2(screenWidth / 2.0f, screenHeight / 2.0f);
+        camera.Target = new(player.X + 20.0f, player.Y + 20.0f);
+        camera.Offset = new(screenWidth / 2.0f, screenHeight / 2.0f);
         camera.Rotation = 0.0f;
         camera.Zoom = 1.0f;
 
@@ -77,7 +76,6 @@ public static partial class Example
                 camera.Rotation = 40;
             }
             else if (camera.Rotation < -40)
-
             {
                 camera.Rotation = -40;
             }
@@ -103,41 +101,45 @@ public static partial class Example
 
             // Draw
             BeginDrawing();
-
-            ClearBackground(RayWhite);
-
-            BeginMode2D(camera);
-
-            DrawRectangle(-6000, 320, 13000, 8000, DarkGray);
-
-            for (int i = 0; i < MAX_BUILDINGS; i++)
             {
-                DrawRectangleRec(buildings[i], buildColors[i]);
+
+                ClearBackground(RayWhite);
+
+                BeginMode2D(camera);
+                {
+
+                    DrawRectangle(-6000, 320, 13000, 8000, DarkGray);
+
+                    for (int i = 0; i < MAX_BUILDINGS; i++)
+                    {
+                        DrawRectangleRec(buildings[i], buildColors[i]);
+                    }
+
+                    DrawRectangleRec(player, Red);
+
+                    DrawLine((int)camera.Target.X, -screenHeight * 10, (int)camera.Target.X, screenHeight * 10, Green);
+                    DrawLine(-screenWidth * 10, (int)camera.Target.Y, screenWidth * 10, (int)camera.Target.Y, Green);
+
+                }
+                EndMode2D();
+
+                DrawText("SCREEN AREA", 640, 10, 20, Red);
+
+                DrawRectangle(0, 0, screenWidth, 5, Red);
+                DrawRectangle(0, 5, 5, screenHeight - 10, Red);
+                DrawRectangle(screenWidth - 5, 5, 5, screenHeight - 10, Red);
+                DrawRectangle(0, screenHeight - 5, screenWidth, 5, Red);
+
+                DrawRectangle(10, 10, 250, 113, Fade(SkyBlue, 0.5f));
+                DrawRectangleLines(10, 10, 250, 113, Blue);
+
+                DrawText("Free 2d camera controls:", 20, 20, 10, Black);
+                DrawText("- Right/Left to move Offset", 40, 40, 10, DarkGray);
+                DrawText("- Mouse Wheel to Zoom in-out", 40, 60, 10, DarkGray);
+                DrawText("- A / S to Rotate", 40, 80, 10, DarkGray);
+                DrawText("- R to reset Zoom and Rotation", 40, 100, 10, DarkGray);
+
             }
-
-            DrawRectangleRec(player, Red);
-
-            DrawLine((int)camera.Target.X, -screenHeight * 10, (int)camera.Target.X, screenHeight * 10, Green);
-            DrawLine(-screenWidth * 10, (int)camera.Target.Y, screenWidth * 10, (int)camera.Target.Y, Green);
-
-            EndMode2D();
-
-            DrawText("SCREEN AREA", 640, 10, 20, Red);
-
-            DrawRectangle(0, 0, screenWidth, 5, Red);
-            DrawRectangle(0, 5, 5, screenHeight - 10, Red);
-            DrawRectangle(screenWidth - 5, 5, 5, screenHeight - 10, Red);
-            DrawRectangle(0, screenHeight - 5, screenWidth, 5, Red);
-
-            DrawRectangle(10, 10, 250, 113, Fade(SkyBlue, 0.5f));
-            DrawRectangleLines(10, 10, 250, 113, Blue);
-
-            DrawText("Free 2d camera controls:", 20, 20, 10, Black);
-            DrawText("- Right/Left to move Offset", 40, 40, 10, DarkGray);
-            DrawText("- Mouse Wheel to Zoom in-out", 40, 60, 10, DarkGray);
-            DrawText("- A / S to Rotate", 40, 80, 10, DarkGray);
-            DrawText("- R to reset Zoom and Rotation", 40, 100, 10, DarkGray);
-
             EndDrawing();
         }
 

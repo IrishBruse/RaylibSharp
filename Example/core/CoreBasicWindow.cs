@@ -21,11 +21,13 @@ public static partial class Example
 
             // Draw
             BeginDrawing();
+            {
 
-            ClearBackground(RayWhite);
+                ClearBackground(RayWhite);
 
-            DrawText("Congrats! You created your first window!", 190, 200, 20, LightGray);
+                DrawText("Congrats! You created your first window!", 190, 200, 20, LightGray);
 
+            }
             EndDrawing();
         }
 

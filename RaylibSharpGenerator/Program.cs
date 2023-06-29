@@ -17,7 +17,7 @@ internal class Program
         StructProcessor.Emit(api);
         FunctionProcessor.Emit(api);
 
-        ExampleGenerator.Emit();
+        ExampleProcessor.Emit();
     }
 
     private static void EmitEnums(RaylibApi api)

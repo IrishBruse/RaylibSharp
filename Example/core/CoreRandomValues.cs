@@ -34,13 +34,15 @@ public static partial class Example
 
             // Draw
             BeginDrawing();
+            {
 
-            ClearBackground(RayWhite);
+                ClearBackground(RayWhite);
 
-            DrawText("Every 2 seconds a new random value is generated:", 130, 100, 20, Maroon);
+                DrawText("Every 2 seconds a new random value is generated:", 130, 100, 20, Maroon);
 
-            DrawText(randValue.ToString(), 360, 180, 80, LightGray);
+                DrawText(TextFormat("%i", randValue), 360, 180, 80, LightGray);
 
+            }
             EndDrawing();
         }
 

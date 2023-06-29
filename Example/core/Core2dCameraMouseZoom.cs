@@ -28,7 +28,7 @@ public static partial class Example
             if (IsMouseButtonDown(MouseButton.Right))
             {
                 Vector2 delta = GetMouseDelta();
-                delta *= -1.0f / camera.Zoom;
+                delta = delta * -1.0f / camera.Zoom;
 
                 camera.Target += delta;
             }
@@ -59,28 +59,29 @@ public static partial class Example
 
             // Draw
             BeginDrawing();
-            ClearBackground(Black);
-
-            BeginMode2D(camera);
-
-            // just so we have something in the XY plane
-            for (int x = -50; x <= 50; x++)
             {
-                DrawLine(x * 50, 1250, x * 50, -1250, White);
+                ClearBackground(Black);
+
+                BeginMode2D(camera);
+                {
+
+                    // Draw the 3d grid, rotated 90 degrees and centered around 0,0
+                    // just so we have something in the XY plane
+
+
+
+                    DrawGrid(100, 50);
+
+
+                    // Draw a reference circle
+                    DrawCircle(100, 100, 50, Yellow);
+
+                }
+                EndMode2D();
+
+                DrawText("Mouse right button drag to move, mouse wheel to zoom", 10, 10, 20, White);
+
             }
-
-            for (int y = -25; y <= 25; y++)
-            {
-                DrawLine(-2500, y * 50, 2500, y * 50, White);
-            }
-
-            // Draw a reference circle
-            DrawCircle(100, 100, 50, Yellow);
-
-            EndMode2D();
-
-            DrawText("Mouse right button drag to move, mouse wheel to zoom", 10, 10, 20, White);
-
             EndDrawing();
         }
 

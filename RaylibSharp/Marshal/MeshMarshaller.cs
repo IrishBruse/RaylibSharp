@@ -8,11 +8,19 @@ internal static unsafe class MeshMarshaller
 {
     public static Mesh ConvertToManaged(UnmanagedMesh unmanaged)
     {
-        return new();
+        return new()
+        {
+            Vertexcount = unmanaged.Vertexcount,
+            Trianglecount = unmanaged.Trianglecount,
+        };
     }
 
     public static UnmanagedMesh ConvertToUnmanaged(Mesh managed)
     {
-        return new();
+        return new()
+        {
+            Vertexcount = managed.Vertexcount,
+            Trianglecount = managed.Trianglecount,
+        };
     }
 }
