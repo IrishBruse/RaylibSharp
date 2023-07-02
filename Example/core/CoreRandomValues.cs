@@ -1,9 +1,9 @@
 using static RaylibSharp.Raylib;
 
-public static partial class Example
+public static partial class CoreRandomValues
 {
     // Program main entry point
-    public static int CoreRandomValues()
+    public static int Example()
     {
         // Initialization
         const int screenWidth = 800;

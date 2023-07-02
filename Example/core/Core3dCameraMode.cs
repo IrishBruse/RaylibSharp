@@ -4,10 +4,10 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static partial class Example
+public static partial class Core3dCameraMode
 {
     // Program main entry point
-    public static int Core3dCameraMode()
+    public static int Example()
     {
         // Initialization
         const int screenWidth = 800;

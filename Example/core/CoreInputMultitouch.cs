@@ -2,12 +2,12 @@ using System.Numerics;
 
 using static RaylibSharp.Raylib;
 
-public static partial class Example
+public static partial class CoreInputMultitouch
 {
     private static readonly int MAX_TOUCH_POINTS = 10;
 
     // Program main entry point
-    public static int CoreInputMultitouch()
+    public static int Example()
     {
         // Initialization
         const int screenWidth = 800;

@@ -1,7 +1,8 @@
 using static RaylibSharp.Raylib;
 
-public static partial class CoreBasicWindow
+public static partial class CoreInputMouseWheel
 {
+
     // Program main entry point
     public static int Example()
     {
@@ -9,7 +10,10 @@ public static partial class CoreBasicWindow
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+        InitWindow(screenWidth, screenHeight, "raylib [core] example - input mouse wheel");
+
+        int boxPositionY = (screenHeight / 2) - 40;
+        int scrollSpeed = 4;            // Scrolling speed in pixels
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
@@ -17,7 +21,7 @@ public static partial class CoreBasicWindow
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             // Update
-            // TODO: Update your variables here
+            boxPositionY -= (int)GetMouseWheelMove() * scrollSpeed;
 
             // Draw
             BeginDrawing();
@@ -25,7 +29,10 @@ public static partial class CoreBasicWindow
 
                 ClearBackground(RayWhite);
 
-                DrawText("Congrats! You created your first window!", 190, 200, 20, LightGray);
+                DrawRectangle((screenWidth / 2) - 40, boxPositionY, 80, 80, Maroon);
+
+                DrawText("Use mouse wheel to move the cube up and down!", 10, 10, 20, Gray);
+                DrawText(TextFormat("Box position Y: %03i", boxPositionY), 10, 40, 20, LightGray);
 
             }
             EndDrawing();

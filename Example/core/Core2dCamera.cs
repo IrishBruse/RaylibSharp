@@ -4,12 +4,12 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static partial class Example
+public static partial class Core2dCamera
 {
     private static readonly int MAX_BUILDINGS = 100;
 
     // Program main entry point
-    public static int Core2dCamera()
+    public static int Example()
     {
         // Initialization
         const int screenWidth = 800;

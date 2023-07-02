@@ -6,10 +6,10 @@ using static RaylibSharp.Raylib;
 
 using Camera = RaylibSharp.Camera3D;
 
-public static partial class Example
+public static partial class Core3dPicking
 {
     // Program main entry point
-    public static int Core3dPicking()
+    public static int Example()
     {
         // Initialization
         const int screenWidth = 800;

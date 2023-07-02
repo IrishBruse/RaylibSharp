@@ -4,10 +4,10 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static partial class Example
+public static partial class CoreInputKeys
 {
     // Program main entry point
-    public static int CoreInputKeys()
+    public static int Example()
     {
         // Initialization
         const int screenWidth = 800;

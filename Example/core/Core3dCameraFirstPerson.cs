@@ -7,12 +7,12 @@ using static RaylibSharp.Raylib;
 
 using Camera = RaylibSharp.Camera3D;
 
-public static partial class Example
+public static partial class Core3dCameraFirstPerson
 {
     private static readonly int MAX_COLUMNS = 20;
 
     // Program main entry point
-    public static int Core3dCameraFirstPerson()
+    public static int Example()
     {
         // Initialization
         const int screenWidth = 800;
@@ -88,8 +88,8 @@ public static partial class Example
                     camera.Up = new(0.0f, 1.0f, 0.0f);
                     camera.Projection = CameraProjection.Orthographic;
                     camera.Fovy = 20.0f; // near plane width in CameraProjection.Orthographic
-                    CameraYaw(ref camera, -135 * DEG2RAD, true);
-                    CameraPitch(ref camera, -45 * DEG2RAD, true, true, false);
+                    camera.Yaw(-135 * DEG2RAD, true);
+                    camera.Pitch(-45 * DEG2RAD, true, true, false);
                 }
                 else if (camera.Projection == CameraProjection.Orthographic)
                 {
@@ -106,27 +106,16 @@ public static partial class Example
             // Update camera computes movement internally depending on the camera mode
             // Some default standard keyboard/mouse inputs are hardcoded to simplify use
             // For advance camera controls, it's reecommended to compute camera movement manually
-            UpdateCamera(ref camera, cameraMode);                  // Update camera
+            camera.Update(cameraMode);
 
-            /*
             // Camera PRO usage example (EXPERIMENTAL)
             // This new camera function allows custom movement/rotation values to be directly provided
             // as input parameters, with this approach, rcamera module is internally independent of raylib inputs
-            UpdateCameraPro(ref camera,
-            (Vector3){
-            (IsKeyDown(Key.W) || iskeydown(keyUp))*0.1f -      // Move forward-backward
-            (IsKeyDown(Key.S) || iskeydown(keyDown))*0.1f,
-            (IsKeyDown(Key.D) || iskeydown(keyRight))*0.1f -   // Move right-left
-            (IsKeyDown(Key.A) || iskeydown(keyLeft))*0.1f,
-            0.0f                                                // Move up-down
-            },
-            (Vector3){
-            GetMouseDelta().X*0.05f,                            // Rotation: yaw
-            GetMouseDelta().Y*0.05f,                            // Rotation: pitch
-            0.0f                                                // Rotation: roll
-            },
-            GetMouseWheelMove()*2.0f);                              // Move to target (zoom)
-            */
+
+            // Vector3 input = new(0);
+            // input.X = ((IsKeyDown(Key.W) || IsKeyDown(Key.Up)) ? .1f : 0) - ((IsKeyDown(Key.S) || IsKeyDown(Key.Down)) ? .1f : 0);
+            // input.Y = ((IsKeyDown(Key.D) || IsKeyDown(Key.Right)) ? .1f : 0) - ((IsKeyDown(Key.A) || IsKeyDown(Key.Left)) ? .1f : 0);
+            // UpdateCameraPro(ref camera, input, new(GetMouseDelta() * .05f, 0), GetMouseWheelMove() * 2.0f);
 
             // Draw
             BeginDrawing();
@@ -135,26 +124,26 @@ public static partial class Example
                 ClearBackground(RayWhite);
 
                 BeginMode3D(camera);
-
-                DrawPlane(new(0.0f, 0.0f, 0.0f), new(32.0f, 32.0f), LightGray); // Draw ground
-                DrawCube(new(-16.0f, 2.5f, 0.0f), 1.0f, 5.0f, 32.0f, Blue);     // Draw a blue wall
-                DrawCube(new(16.0f, 2.5f, 0.0f), 1.0f, 5.0f, 32.0f, Lime);      // Draw a green wall
-                DrawCube(new(0.0f, 2.5f, 16.0f), 32.0f, 5.0f, 1.0f, Gold);      // Draw a yellow wall
-
-                // Draw some cubes around
-                for (int i = 0; i < MAX_COLUMNS; i++)
                 {
-                    DrawCube(positions[i], 2.0f, heights[i], 2.0f, colors[i]);
-                    DrawCubeWires(positions[i], 2.0f, heights[i], 2.0f, Maroon);
-                }
+                    DrawPlane(new(0.0f, 0.0f, 0.0f), new(32.0f, 32.0f), LightGray); // Draw ground
+                    DrawCube(new(-16.0f, 2.5f, 0.0f), 1.0f, 5.0f, 32.0f, Blue);     // Draw a blue wall
+                    DrawCube(new(16.0f, 2.5f, 0.0f), 1.0f, 5.0f, 32.0f, Lime);      // Draw a green wall
+                    DrawCube(new(0.0f, 2.5f, 16.0f), 32.0f, 5.0f, 1.0f, Gold);      // Draw a yellow wall
 
-                // Draw player cube
-                if (cameraMode == CameraMode.ThirdPerson)
-                {
-                    DrawCube(camera.Target, 0.5f, 0.5f, 0.5f, Purple);
-                    DrawCubeWires(camera.Target, 0.5f, 0.5f, 0.5f, DarkPurple);
-                }
+                    // Draw some cubes around
+                    for (int i = 0; i < MAX_COLUMNS; i++)
+                    {
+                        DrawCube(positions[i], 2.0f, heights[i], 2.0f, colors[i]);
+                        DrawCubeWires(positions[i], 2.0f, heights[i], 2.0f, Maroon);
+                    }
 
+                    // Draw player cube
+                    if (cameraMode == CameraMode.ThirdPerson)
+                    {
+                        DrawCube(camera.Target, 0.5f, 0.5f, 0.5f, Purple);
+                        DrawCubeWires(camera.Target, 0.5f, 0.5f, 0.5f, DarkPurple);
+                    }
+                }
                 EndMode3D();
 
                 // Draw info boxes
@@ -172,15 +161,29 @@ public static partial class Example
                 DrawRectangleLines(600, 5, 195, 100, Blue);
 
                 DrawText("Camera status:", 610, 15, 10, Black);
-                DrawText(TextFormat("- Mode: %s", (cameraMode == CameraMode.Free) ? "FREE" :
-                (cameraMode == CameraMode.FirstPerson) ? "FIRST_PERSON" :
-                (cameraMode == CameraMode.ThirdPerson) ? "THIRD_PERSON" :
-                (cameraMode == CameraMode.Orbital) ? "ORBITAL" : "CUSTOM"), 610, 30, 10, Black);
-                DrawText(TextFormat("- Projection: %s", (camera.Projection == CameraProjection.Perspective) ? "PERSPECTIVE" :
-                (camera.Projection == CameraProjection.Orthographic) ? "ORTHOGRAPHIC" : "CUSTOM"), 610, 45, 10, Black);
-                DrawText(TextFormat("- Position: (%06.3f, %06.3f, %06.3f)", camera.Position.X, camera.Position.Y, camera.Position.Z), 610, 60, 10, Black);
-                DrawText(TextFormat("- Target: (%06.3f, %06.3f, %06.3f)", camera.Target.X, camera.Target.Y, camera.Target.Z), 610, 75, 10, Black);
-                DrawText(TextFormat("- Up: (%06.3f, %06.3f, %06.3f)", camera.Up.X, camera.Up.Y, camera.Up.Z), 610, 90, 10, Black);
+                {
+                    string mode = cameraMode switch
+                    {
+                        CameraMode.Free => "Free",
+                        CameraMode.FirstPerson => "First Person",
+                        CameraMode.ThirdPerson => "Third Person",
+                        CameraMode.Orbital => "Orbital",
+                        _ => "Unknown"
+                    };
+
+                    string projection = camera.Projection switch
+                    {
+                        CameraProjection.Perspective => "Perspective",
+                        CameraProjection.Orthographic => "Orthographic",
+                        _ => "Unknown"
+                    };
+
+                    DrawText("- Mode: " + mode, 610, 30, 10, Black);
+                    DrawText("- Projection: " + projection, 610, 45, 10, Black);
+                    DrawText("- Position: (" + camera.Position.ToString("0.00") + ")", 610, 60, 10, Black);
+                    DrawText("- Target: (" + camera.Target.ToString("0.00") + ")", 610, 75, 10, Black);
+                    DrawText("- Up: (" + camera.Up.ToString("0.00") + ")", 610, 90, 10, Black);
+                }
 
             }
             EndDrawing();

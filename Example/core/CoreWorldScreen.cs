@@ -6,10 +6,10 @@ using static RaylibSharp.Raylib;
 
 using Camera = RaylibSharp.Camera3D;
 
-public static partial class Example
+public static partial class CoreWorldScreen
 {
     // Program main entry point
-    public static int CoreWorldScreen()
+    public static int Example()
     {
         // Initialization
         const int screenWidth = 800;
@@ -26,7 +26,6 @@ public static partial class Example
         camera.Projection = CameraProjection.Perspective;             // Camera projection type
 
         Vector3 cubePosition = new(0.0f, 0.0f, 0.0f);
-        Vector2 cubeScreenPosition = new(0.0f, 0.0f);
 
         DisableCursor();                    // Limit cursor to relative movement inside the window
 
@@ -39,7 +38,7 @@ public static partial class Example
             UpdateCamera(ref camera, CameraMode.ThirdPerson);
 
             // Calculate cube screen space position (with a little offset to be in top)
-            cubeScreenPosition = GetWorldToScreen(new(cubePosition.X, cubePosition.Y + 2.5f, cubePosition.Z), camera);
+            Vector2 cubeScreenPosition = GetWorldToScreen(new(cubePosition.X, cubePosition.Y + 2.5f, cubePosition.Z), camera);
 
             // Draw
             BeginDrawing();

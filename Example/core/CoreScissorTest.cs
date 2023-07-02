@@ -4,10 +4,10 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static partial class Example
+public static partial class CoreScissorTest
 {
     // Program main entry point
-    public static int CoreScissorTest()
+    public static int Example()
     {
         // Initialization
         const int screenWidth = 800;

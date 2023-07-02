@@ -5,10 +5,10 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static partial class Example
+public static partial class CoreInputMouse
 {
     // Program main entry point
-    public static int CoreInputMouse()
+    public static int Example()
     {
         // Initialization
         const int screenWidth = 800;
