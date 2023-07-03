@@ -134,7 +134,8 @@ public static class StructProcessor
             sb.AppendLine($"[NativeMarshalling(typeof({s.Name}Marshaller))]");
         }
 
-        sb.AppendLine($"public unsafe partial struct {s.Name}");
+        string defType = config.UseAsClass ? "class" : "struct";
+        sb.AppendLine($"public unsafe partial {defType} {s.Name}");
         sb.AppendLine("{");
 
         foreach (Fields field in s.Fields)
@@ -157,6 +158,10 @@ public static class StructProcessor
                 sb.AppendLine($"    /// <summary> {field.Description} </summary>");
 
                 string type = ConvertManagedTypeStruct(field.Type);
+                if (field.Name == "projection" && s.Name == "Camera3D")
+                {
+                    type = "CameraProjection";
+                }
 
                 sb.AppendLine($"    public {type} {pascalName};");
             }

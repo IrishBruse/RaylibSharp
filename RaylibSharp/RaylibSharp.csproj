@@ -7,7 +7,9 @@
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
-        <NoWarn>IDE0130,CA1069,CS8795</NoWarn>
+        <NoWarn>IDE0130,CA1069,CS8795,CA1401</NoWarn>
+
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
         <RootNamespace>RaylibSharp</RootNamespace>
     </PropertyGroup>
@@ -31,4 +33,7 @@
         </Content>
     </ItemGroup>
 
+    <ItemGroup>
+        <EmbeddedResource Include="../Icon.png" />
+    </ItemGroup>
 </Project>

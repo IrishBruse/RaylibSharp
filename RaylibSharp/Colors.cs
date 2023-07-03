@@ -2,6 +2,7 @@ namespace RaylibSharp;
 
 using System.Drawing;
 
+/// <summary> Raylib Class containing all functions </summary>
 public static unsafe partial class Raylib
 {
     /// <summary> LightGray from Raylibs color pallet  </summary>

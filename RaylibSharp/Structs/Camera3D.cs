@@ -19,7 +19,7 @@ public unsafe partial struct Camera3D
     /// <summary> Camera field-of-view aperture in Y (degrees) in perspective, used as near plane width in orthographic </summary>
     public float Fovy;
     /// <summary> Camera projection: CAMERA_PERSPECTIVE or CAMERA_ORTHOGRAPHIC </summary>
-    public int Projection;
+    public CameraProjection Projection;
 }
 
 /// <summary> Camera, defines position/orientation in 3d space </summary>

@@ -1,0 +1,103 @@
+{
+    "Excluded": [
+        // Have C# alternatives
+        "DirectoryExists",
+        "FileExists",
+        "GetApplicationDirectory",
+        "GetDirectoryPath",
+        "GetFileExtension",
+        "GetFileName",
+        "GetFileNameWithoutExt",
+        "GetPrevDirectoryPath",
+        "GetRandomValue",
+        "GetWorkingDirectory",
+        "IsFileExtension",
+        "LoadDirectoryFiles",
+        "LoadDirectoryFilesEx",
+        "SaveFileText",
+        "SetRandomSeed",
+        "UnloadDirectoryFiles",
+
+        // Text
+        "TextFormat",
+        "TextIsEqual",
+
+        // Unsure
+        "MemAlloc",
+        "MemRealloc",
+        "MemFree",
+        "CompressData",
+        "DecompressData",
+        "EncodeDataBase64",
+        "DecodeDataBase64",
+
+        "TraceLog", // Errors
+
+        // Manually implemented
+        "SetTraceLogCallback",
+        "InitWindow"
+    ],
+    "DebugOutput": false,
+    "FunctionTypeConversion": {
+        "LoadFontFromMemory": {
+            "fileData": "[MarshalAs(UnmanagedType.LPArray)] byte[] fileData"
+        },
+        "LoadImageFromMemory": {
+            "fileData": "[MarshalAs(UnmanagedType.LPArray)] byte[] fileData"
+        },
+        "SetConfigFlags": {
+            "flags": "WindowFlag flags"
+        },
+        "UpdateCamera": {
+            "mode": "CameraMode mode"
+        },
+        "BeginBlendMode": {
+            "mode": "BlendMode mode"
+        },
+        "IsMouseButtonPressed": {
+            "button": "MouseButton button"
+        },
+        "IsMouseButtonDown": {
+            "button": "MouseButton button"
+        },
+        "IsMouseButtonReleased": {
+            "button": "MouseButton button"
+        },
+        "IsMouseButtonUp": {
+            "button": "MouseButton button"
+        },
+        "IsWindowState": {
+            "flag": "WindowFlag flag"
+        },
+        "SetWindowState": {
+            "flags": "WindowFlag flags"
+        },
+        "ClearWindowState": {
+            "flags": "WindowFlag flags"
+        },
+        "IsGamepadButtonDown": {
+            "button": "GamepadButton button"
+        },
+        "GetGamepadAxisMovement": {
+            "axis": "GamepadAxis axis"
+        },
+        "GetGamepadButtonPressed": {
+            "_": "GamepadButton"
+        },
+        "IsKeyReleased": {
+            "key": "Key key"
+        },
+        "IsKeyUp": {
+            "key": "Key key"
+        },
+        "IsKeyPressed": {
+            "key": "Key key"
+        },
+        "IsKeyDown": {
+            "key": "Key key"
+        },
+        "SetExitKey": {
+            "key": "Key key"
+        }
+    }
+}

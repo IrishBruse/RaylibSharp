@@ -1,49 +1,16 @@
 namespace RaylibSharp.Generator;
 
 using System.Text;
+using System.Text.Json;
 
 public class FunctionProcessor
 {
+    private static FunctionConfig config;
     private const bool DebugOutput = false;
-
-    private static readonly string[] Exclude = {
-
-        // Have C# alternatives
-        "DirectoryExists",
-        "FileExists",
-        "GetApplicationDirectory",
-        "GetDirectoryPath",
-        "GetFileExtension",
-        "GetFileName",
-        "GetFileNameWithoutExt",
-        "GetPrevDirectoryPath",
-        "GetRandomValue",
-        "GetWorkingDirectory",
-        "IsFileExtension",
-        "LoadDirectoryFiles",
-        "LoadDirectoryFilesEx",
-        "SaveFileText",
-        "SetRandomSeed",
-        "TextFormat",
-        "UnloadDirectoryFiles",
-        // Have C# alternatives
-
-        // Unsure
-        "MemAlloc",
-        "MemRealloc",
-        "MemFree",
-
-        "CompressData",
-        "DecompressData",
-        "EncodeDataBase64",
-        "DecodeDataBase64",
-
-        // WIP currently have errors
-        "TraceLog",
-    };
 
     public static void Emit(RaylibApi api)
     {
+        config = JsonSerializer.Deserialize<FunctionConfig>(File.ReadAllText("./FunctionConfig.jsonc"), new JsonSerializerOptions { ReadCommentHandling = JsonCommentHandling.Skip })!;
         StringBuilder sb = new();
 
         sb.AppendLine($"namespace RaylibSharp;");
@@ -58,7 +25,7 @@ public class FunctionProcessor
 
         foreach (Function f in api.Functions)
         {
-            if (Exclude.Contains(f.Name))
+            if (config.Excluded.Contains(f.Name))
             {
                 continue;
             }
@@ -73,6 +40,14 @@ public class FunctionProcessor
             }
 
             string type = Utility.ConvertTypeFunction(f.ReturnType);
+
+            if (config.FunctionTypeConversion.TryGetValue(f.Name, out Dictionary<string, string>? conversion))
+            {
+                if (conversion.TryGetValue("_", out string? newReturnType))
+                {
+                    type = newReturnType;
+                }
+            }
 
             string debug = string.Join(" ", f.Params?.Select(p => p.Type + " " + p.Name) ?? Array.Empty<string>());
             if (debug.Length > 0 && DebugOutput)
@@ -108,37 +83,16 @@ public class FunctionProcessor
         sb.AppendLine("}");
         sb.AppendLine();
 
-        File.WriteAllText("../RaylibSharp/Raylib.g.cs", sb.ToString());
+        File.WriteAllText("../RaylibSharp/Raylib.cs", sb.ToString());
     }
 
     private static string EmitParameter(Param p, Function f)
     {
-        if (f.Name == "LoadFontFromMemory" || f.Name == "LoadImageFromMemory")
+        if (config.FunctionTypeConversion.TryGetValue(f.Name, out Dictionary<string, string>? conversion))
         {
-            if (p.Name == "fileData")
+            if (conversion.TryGetValue(p.Name, out string? newParam))
             {
-                return $"[MarshalAs(UnmanagedType.LPArray)] byte[] {p.Name}";
-            }
-        }
-        else if (f.Name == "SetConfigFlags")
-        {
-            if (p.Name == "flags")
-            {
-                return $"ConfigFlags {p.Name}";
-            }
-        }
-        else if (f.Name == "IsKeyReleased" || f.Name == "IsKeyUp" || f.Name == "IsKeyPressed" || f.Name == "IsKeyDown" || f.Name == "SetExitKey")
-        {
-            if (p.Name == "key")
-            {
-                return $"Key {p.Name}";
-            }
-        }
-        else if (f.Name == "IsMouseButtonDown")
-        {
-            if (p.Name == "button")
-            {
-                return $"MouseButton {p.Name}";
+                return newParam;
             }
         }
 
@@ -155,6 +109,14 @@ public class FunctionProcessor
         else if (type == "Color")
         {
             return $"[{Utility.ColorMarshal}] {type} {p.Name}";
+        }
+        else if (type == "Camera3D")
+        {
+            return $"[{Utility.Camera3DMarshal}] {type} {p.Name}";
+        }
+        else if (type == "Camera2D")
+        {
+            return $"[{Utility.Camera2DMarshal}] {type} {p.Name}";
         }
 
 

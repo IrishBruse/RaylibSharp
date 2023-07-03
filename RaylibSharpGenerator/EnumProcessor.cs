@@ -15,6 +15,10 @@ public static class EnumProcessor
             {
                 e.Name = "Key";
             }
+            else if (e.Name == "ConfigFlags")
+            {
+                e.Name = "WindowFlag";
+            }
 
             sb.Clear();
             sb.AppendLine($"namespace RaylibSharp;");
@@ -37,6 +41,11 @@ public static class EnumProcessor
                 {
                     name = name[6..];
                 }
+                else if (e.Name == "WindowFlag")
+                {
+                    name = name[4..];
+                }
+
                 sb.AppendLine($"    /// <summary> {value.Description} </summary>");
                 sb.AppendLine($"    {name} = {value.Value},");
             }
