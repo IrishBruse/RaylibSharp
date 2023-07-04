@@ -1,36 +1,3 @@
-// https://github.com/mpaland/printf
-
-// \author (c) Marco Paland (info@paland.com)
-//             2014-2019, PALANDesign Hannover, Germany
-//
-// \license The MIT License (MIT)
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-//
-// \brief Tiny printf, sprintf and (v)snprintf implementation, optimized for speed on
-//        embedded systems with a very limited resources. These routines are thread
-//        safe and reentrant!
-//        Use this instead of the bloated standard/newlib printf cause these use
-//        malloc for printf (and may not be thread safe).
-
-// Adapted to C# by Ethan Conneely
-
 namespace RaylibSharp;
 
 using System.Text;
@@ -40,7 +7,82 @@ public unsafe partial class Raylib
     [Obsolete("Please use C# string interpolation instead of this function", false)]
     public static string TextFormat(string format, params object[] args)
     {
-        return format;
+        StringBuilder sb = new();
+        int arg = 0;
+        for (int i = 0; i < format.Length; i++)
+        {
+            if (format[i] != '%')
+            {
+                sb.Append(format[i]);
+                continue;
+            }
+
+            i++;
+
+            int zeros = 0;
+            int decimals = 0;
+            char c = '0';
+
+            if (format[i] == '0')
+            {
+                i++;
+
+                zeros = int.Parse(format[i++].ToString());
+                _ = format[i++];  // .
+                decimals = int.Parse(format[i++].ToString());
+            }
+            else if (char.IsNumber(format[i]))
+            {
+                c = ' ';
+            }
+
+            switch (char.ToLower(format[i]))
+            {
+                case 'i':
+                case 'd':
+                sb.Append(IntParser((int)args[arg], zeros, decimals, c));
+                break;
+
+                case 's':
+                sb.Append((string)args[arg]);
+                break;
+
+                case 'f':
+                sb.Append(FloatParser((float)args[arg], zeros, decimals, c));
+                break;
+
+                default:
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Error.WriteLine("Unhandled format: " + format[i]);
+                Console.ResetColor();
+                break;
+            }
+
+            arg++;
+        }
+
+        return sb.ToString();
+    }
+
+    private static string IntParser(int val, int zeros, int decimals, char c)
+    {
+        // int pre = zeros - decimals - 1 - (val < 0 ? 1 : 0);
+        return val.ToString();
+    }
+
+    private static string FloatParser(double val, int zeros, int decimals, char c)
+    {
+        int pre;
+        if (zeros < decimals)
+        {
+            pre = 1;
+        }
+        else
+        {
+            pre = zeros - decimals - 1 - (val < 0 ? 1 : 0);
+        }
+        string format = new string(c, pre) + "." + new string(c, decimals);
+        return val.ToString(format).PadRight(decimals, c);
     }
 
     /// <summary> Text formatting with variables (sprintf() style) </summary>
@@ -49,14 +91,7 @@ public unsafe partial class Raylib
     {
         string format = new(formatPtr);
 
-        // if (!format.StartsWith("TEXTURE: [ID"))
-        // {
-        //     return "";
-        // }
-
         StringBuilder sb = new();
-
-        // Console.WriteLine(format);
 
         for (int i = 0; i < format.Length; i++)
         {
@@ -68,15 +103,29 @@ public unsafe partial class Raylib
 
             i++;
 
+            int zeros = 0;
+            int decimals = 0;
+            char c = '0';
+
             if (format[i] == '0')
             {
                 i++;
 
+                zeros = int.Parse(format[i++].ToString());
+                _ = format[i++];  // .
+                char d = format[i++];
+                if (d == '0')
+                {
+                    decimals = int.Parse(format[i++].ToString());
+                }
+                else
+                {
+                    decimals = int.Parse(d.ToString());
+                }
             }
-            else if (char.IsAsciiDigit(format[i]))
+            else if (char.IsNumber(format[i]))
             {
-                i++;
-
+                c = ' ';
             }
 
             switch (char.ToLower(format[i]))
@@ -85,10 +134,7 @@ public unsafe partial class Raylib
                 case 'd':
                 {
                     int* iptr = (int*)argsPtr;
-
                     sb.Append(*iptr);
-                    // Console.WriteLine("%i " + *iptr);
-
                     iptr += 2;
                     argsPtr = (nint)iptr;
                 }
@@ -108,7 +154,6 @@ public unsafe partial class Raylib
                     }
 
                     sb.Append(str);
-                    // Console.WriteLine("%s " + str);
 
                     argsPtr = (nint)((int*)argsPtr + 2);
                 }
@@ -116,12 +161,9 @@ public unsafe partial class Raylib
 
                 case 'f':
                 {
-                    float* ptr = (float*)argsPtr;
-
-                    sb.Append(*ptr);
-                    // Console.WriteLine("%s "+*fptr);
+                    double* ptr = (double*)argsPtr;
+                    sb.Append(FloatParser(*ptr, zeros, decimals, c));
                     ptr++;
-
                     argsPtr = (nint)ptr;
                 }
                 break;

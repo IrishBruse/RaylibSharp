@@ -48,7 +48,7 @@ public static unsafe partial class Raylib
         SetWindowIcon(LoadImageFromMemory(".png", data, data.Length));
     }
 
-    /// <inheritdoc/>
+    /// <summary> Check if a key is being pressed </summary>
     public static bool IsKeyDown(char key)
     {
         return IsKeyDown((Key)(int)key);

@@ -17,7 +17,7 @@ public static unsafe partial class Raylib
         string nativeSprintf = Snprintf(textPtr, argsPtr);
         string mySprintf = SprintF(text, argsPtr);
 
-        if (String.Compare(nativeSprintf, mySprintf, StringComparison.Ordinal) == 0)
+        if (string.Equals(nativeSprintf, mySprintf, StringComparison.Ordinal))
         {
             Console.WriteLine(nativeSprintf);
             Console.WriteLine(mySprintf);
