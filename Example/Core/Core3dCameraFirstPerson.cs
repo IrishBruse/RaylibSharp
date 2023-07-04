@@ -178,13 +178,20 @@ public static partial class Core3dCameraFirstPerson
                         _ => "Unknown"
                     };
 
-                    DrawText("- Mode: " + mode, 610, 30, 10, Black);
-                    DrawText("- Projection: " + projection, 610, 45, 10, Black);
-                    DrawText("- Position: (" + camera.Position.ToString("0.00") + ")", 610, 60, 10, Black);
-                    DrawText("- Target: (" + camera.Target.ToString("0.00") + ")", 610, 75, 10, Black);
-                    DrawText("- Up: (" + camera.Up.ToString("0.00") + ")", 610, 90, 10, Black);
-                }
+                    // Better c# way
+                    // DrawText("- Mode: " + mode, 610, 30, 10, Black);
+                    // DrawText("- Projection: " + projection, 610, 45, 10, Black);
+                    // DrawText("- Position: (" + camera.Position.ToString("0.000") + ")", 610, 60, 10, Black);
+                    // DrawText("- Target: (" + camera.Target.ToString("0.000") + ")", 610, 75, 10, Black);
+                    // DrawText("- Up: (" + camera.Up.ToString("0.000") + ")", 610, 90, 10, Black);
 
+                    // Faithful to raylib example source
+                    DrawText(TextFormat("- Mode: %s", mode), 610, 30, 10, Black);
+                    DrawText(TextFormat("- Projection: %s", projection), 610, 45, 10, Black);
+                    DrawText(TextFormat("- Position: (%06.3f, %06.3f, %06.3f)", camera.Position.X, camera.Position.Y, camera.Position.Z), 610, 60, 10, Black);
+                    DrawText(TextFormat("- Target: (%06.3f, %06.3f, %06.3f)", camera.Target.X, camera.Target.Y, camera.Target.Z), 610, 75, 10, Black);
+                    DrawText(TextFormat("- Up: (%06.3f, %06.3f, %06.3f)", camera.Up.X, camera.Up.Y, camera.Up.Z), 610, 90, 10, Black);
+                }
             }
             EndDrawing();
         }
