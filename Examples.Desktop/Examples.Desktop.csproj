@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+
+        <StripSymbols>true</StripSymbols>
+        <PublishAot>true</PublishAot>
+
+        <ApplicationIcon>../Icon.ico</ApplicationIcon>
+        <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Examples\Examples.csproj" />
+    </ItemGroup>
+</Project>
