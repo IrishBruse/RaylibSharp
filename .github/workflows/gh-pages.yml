@@ -35,9 +35,8 @@ jobs:
                   cd RaylibRepo
                   emcmake cmake -B artifacts -D BUILD_EXAMPLES=Off -D PLATFORM=Web
                   cmake --build artifacts
-                  cp artifacts/raylib/libraylib.a $GITHUB_WORKSPACE/DotnetRaylibWasmRepo/DotnetRaylibWasm/raylib.a
 
             - uses: actions/download-artifact@v3
               with:
                   name: my-artifact
-                  path: $GITHUB_WORKSPACE/DotnetRaylibWasmRepo/DotnetRaylibWasm/raylib.a
+                  path: $GITHUB_WORKSPACE/RaylibRepo/artifacts/raylib/libraylib.a
