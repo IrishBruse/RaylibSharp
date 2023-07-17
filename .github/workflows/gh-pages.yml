@@ -11,17 +11,18 @@ jobs:
             - name: Setup .NET7
               uses: actions/setup-dotnet@v3
               with:
-                  dotnet-version: "7.x"
+                  dotnet-version: "7.0.100"
 
             - name: Install wasm-tools
-              run: dotnet workload install wasm-tools
+              run: |
+                  dotnet workload install wasm-tools
 
             - name: Checkout raylib
               uses: actions/checkout@v3
               with:
-                  ref: master
+                  ref: 4.2.0
                   repository: raysan5/raylib
-                  path: raylib
+                  path: RaylibRepo
 
             - name: Setup emsdk
               uses: mymindstorm/setup-emsdk@v11
@@ -31,11 +32,15 @@ jobs:
 
             - name: Build raylib for Web
               run: |
-                  cd raylib
-                  emcmake cmake -B artifacts -D BUILD_EXAMPLES=Off -D PLATFORM=Web
+                  cd RaylibRepo
+                  emcmake cmake \
+                    -B artifacts \
+                    -D BUILD_EXAMPLES=Off \
+                    -D PLATFORM=Web
                   cmake --build artifacts
+                  cp artifacts/raylib/libraylib.a $GITHUB_WORKSPACE/RaylibSharp/RaylibSharp/raylib.a
 
             - uses: actions/download-artifact@v3
               with:
-                  name: my-artifact
-                  path: RaylibSharp/raylib/artifacts/raylib/libraylib.a
+                  name: raylib.a
+                  path: $GITHUB_WORKSPACE/RaylibRepo/artifacts/raylib/libraylib.a
