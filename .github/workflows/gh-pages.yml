@@ -24,8 +24,9 @@ jobs:
                     -D BUILD_EXAMPLES=Off \
                     -D PLATFORM=Web
                   cmake --build artifacts
+                  pwd
 
             - uses: actions/download-artifact@v3
               with:
                   name: libraylib.a
-                  path: artifacts/raylib/libraylib.a
+                  path: raylib/artifacts/raylib/libraylib.a
