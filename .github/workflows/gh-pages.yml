@@ -22,7 +22,7 @@ jobs:
               with:
                   ref: master
                   repository: raysan5/raylib
-                  path: RaylibRepo
+                  path: $GITHUB_WORKSPACE/raylib
 
             - name: Setup emsdk
               uses: mymindstorm/setup-emsdk@v11
@@ -39,4 +39,4 @@ jobs:
             - uses: actions/download-artifact@v3
               with:
                   name: my-artifact
-                  path: $GITHUB_WORKSPACE/repo/RaylibRepo/artifacts/raylib/libraylib.a
+                  path: $GITHUB_WORKSPACE/raylib/artifacts/raylib/libraylib.a
