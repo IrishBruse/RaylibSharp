@@ -6,7 +6,7 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v3
               with:
-                  path: repo
+                  path: RaylibSharp
 
             - name: Setup .NET7
               uses: actions/setup-dotnet@v3
@@ -14,8 +14,7 @@ jobs:
                   dotnet-version: "7.x"
 
             - name: Install wasm-tools
-              run: |
-                  dotnet workload install wasm-tools
+              run: dotnet workload install wasm-tools
 
             - name: Checkout raylib
               uses: actions/checkout@v3
