@@ -42,4 +42,4 @@ jobs:
             - uses: actions/download-artifact@v3
               with:
                   name: raylib.a
-                  path: repo/RaylibRepo/artifacts/raylib/libraylib.a
+                  path: RaylibRepo/artifacts/raylib/libraylib.a
