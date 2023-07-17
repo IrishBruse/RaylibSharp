@@ -3,26 +3,12 @@ jobs:
     gh-pages:
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout repository
-              uses: actions/checkout@v3
-              with:
-                  path: repo
-
-            - name: Setup .NET7
-              uses: actions/setup-dotnet@v3
-              with:
-                  dotnet-version: "7.0.100"
-
-            - name: Install wasm-tools
-              run: |
-                  dotnet workload install wasm-tools
-
             - name: Checkout raylib
               uses: actions/checkout@v3
               with:
-                  ref: 4.2.0
+                  ref: master
                   repository: raysan5/raylib
-                  path: RaylibRepo
+                  path: raylib
 
             - name: Setup emsdk
               uses: mymindstorm/setup-emsdk@v11
@@ -32,7 +18,7 @@ jobs:
 
             - name: Build raylib for Web
               run: |
-                  cd RaylibRepo
+                  cd raylib
                   emcmake cmake \
                     -B artifacts \
                     -D BUILD_EXAMPLES=Off \
@@ -42,4 +28,4 @@ jobs:
             - uses: actions/download-artifact@v3
               with:
                   name: raylib.a
-                  path: RaylibRepo/artifacts/raylib/libraylib.a
+                  path: raylib/artifacts/raylib/libraylib.a
