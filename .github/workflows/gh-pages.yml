@@ -43,4 +43,4 @@ jobs:
             - uses: actions/download-artifact@v3
               with:
                   name: raylib.a
-                  path: $GITHUB_WORKSPACE/RaylibRepo/artifacts/raylib/libraylib.a
+                  path: $GITHUB_WORKSPACE/RaylibSharp/RaylibSharp/RaylibRepo/artifacts/raylib/libraylib.a
