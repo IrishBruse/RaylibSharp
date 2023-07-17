@@ -38,9 +38,8 @@ jobs:
                     -D BUILD_EXAMPLES=Off \
                     -D PLATFORM=Web
                   cmake --build artifacts
-                  cp artifacts/raylib/libraylib.a $GITHUB_WORKSPACE/RaylibSharp/RaylibSharp/raylib.a
 
             - uses: actions/download-artifact@v3
               with:
                   name: raylib.a
-                  path: $GITHUB_WORKSPACE/RaylibSharp/RaylibSharp/RaylibRepo/artifacts/raylib/libraylib.a
+                  path: RaylibSharp/RaylibRepo/artifacts/raylib/libraylib.a
