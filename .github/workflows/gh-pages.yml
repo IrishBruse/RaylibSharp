@@ -39,4 +39,4 @@ jobs:
             - uses: actions/download-artifact@v3
               with:
                   name: my-artifact
-                  path: RaylibSharp/RaylibSharp/raylib/artifacts/raylib/libraylib.a
+                  path: RaylibSharp/raylib/artifacts/raylib/libraylib.a
