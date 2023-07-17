@@ -26,7 +26,7 @@ jobs:
                   cmake --build artifacts
                   pwd
 
-            - uses: actions/download-artifact@v3
+            - uses: actions/upload-artifact@v3
               with:
                   name: libraylib.a
                   path: raylib/artifacts/raylib/libraylib.a
