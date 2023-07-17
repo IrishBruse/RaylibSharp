@@ -27,5 +27,5 @@ jobs:
 
             - uses: actions/download-artifact@v3
               with:
-                  name: raylib.a
+                  name: libraylib.a
                   path: artifacts/raylib/libraylib.a
