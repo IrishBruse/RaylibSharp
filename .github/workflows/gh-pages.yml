@@ -32,7 +32,7 @@ jobs:
 
             - name: Build raylib for Web
               run: |
-                  cd raylib
+                  cd $GITHUB_WORKSPACE/raylib
                   emcmake cmake -B artifacts -D BUILD_EXAMPLES=Off -D PLATFORM=Web
                   cmake --build artifacts
 
