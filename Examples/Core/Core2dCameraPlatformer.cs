@@ -6,7 +6,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static class Core2dCameraPlatformer
+public class Core2dCameraPlatformer : ExampleHelper
 {
     private static readonly int G = 400;
     private static readonly float PLAYER_JUMP_SPD = 350.0f;
@@ -147,7 +147,7 @@ public static class Core2dCameraPlatformer
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

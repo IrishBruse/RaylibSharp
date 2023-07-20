@@ -2,7 +2,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static class CoreBasicScreenManager
+public class CoreBasicScreenManager : ExampleHelper
 {
 
     // Types and Structures Definition
@@ -132,7 +132,7 @@ public static class CoreBasicScreenManager
 
         // TODO: Unload all loaded data (textures, fonts, audio) here!
 
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

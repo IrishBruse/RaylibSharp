@@ -18,7 +18,7 @@ public unsafe partial struct Ray
 
 /// <summary> Ray, ray for raycasting </summary>
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct UnmanagedRay
+internal unsafe struct UnmanagedRay
 {
     /// <summary> Ray position (origin) </summary>
     public Vector3 Position;

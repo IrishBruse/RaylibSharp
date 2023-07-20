@@ -25,15 +25,13 @@
             <Pack>true</Pack>
             <PackagePath>runtimes</PackagePath>
         </Content>
-
-        <Content Include="runtimes/win-x64/native/raylib.dll">
-            <Pack>false</Pack>
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-            <Link>\raylib.dll</Link>
-        </Content>
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="../Icon.png" />
+        <Content Include="runtimes\**" PackagePath="runtimes" Visible="false" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="../Icon.png" LogicalName="RaylibSharp.Icon.png" />
     </ItemGroup>
 </Project>

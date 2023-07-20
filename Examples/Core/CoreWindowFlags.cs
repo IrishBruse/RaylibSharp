@@ -4,7 +4,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static class CoreWindowFlags
+public class CoreWindowFlags : ExampleHelper
 {
     // Program main entry point
     public static int Example()
@@ -333,7 +333,7 @@ public static class CoreWindowFlags
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

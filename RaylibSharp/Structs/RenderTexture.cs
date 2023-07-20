@@ -20,14 +20,14 @@ public unsafe partial struct RenderTexture
 
 /// <summary> RenderTexture, fbo for texture rendering </summary>
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct UnmanagedRenderTexture
+internal unsafe struct UnmanagedRenderTexture
 {
     /// <summary> OpenGL framebuffer object id </summary>
     public uint Id;
     /// <summary> Color buffer attachment texture </summary>
-    public UnmanagedTexture Texture;
+    public Texture Texture;
     /// <summary> Depth buffer attachment texture </summary>
-    public UnmanagedTexture Depth;
+    public Texture Depth;
 }
 
 #pragma warning restore CA1711,IDE0005

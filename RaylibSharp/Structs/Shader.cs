@@ -19,7 +19,7 @@ public unsafe partial struct Shader
 
 /// <summary> Shader </summary>
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct UnmanagedShader
+internal unsafe struct UnmanagedShader
 {
     /// <summary> Shader program id </summary>
     public uint Id;

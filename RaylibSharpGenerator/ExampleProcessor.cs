@@ -27,6 +27,9 @@ public partial class ExampleProcessor
         "CoreDropFiles",
         "CoreWindowFlags",
         "CoreInputGamepad",
+        "CoreCustomLogging",
+        "CoreInputGestures",
+        "CoreSmoothPixelperfect",
     };
 
     public static void Emit()
@@ -38,10 +41,10 @@ public partial class ExampleProcessor
             string cFile = f;
             string name = Path.GetFileNameWithoutExtension(cFile);
 
-            if (!name.StartsWith("core"))
-            {
-                continue;
-            }
+            // if (!name.StartsWith("core"))
+            // {
+            //     continue;
+            // }
 
             if (name == "examples_template")
             {
@@ -49,7 +52,7 @@ public partial class ExampleProcessor
             }
 
             string pascalName = Utility.ToPascalCase(name);
-            string csFile = $"../Example/temp/{pascalName}.c";
+            string csFile = $"../Examples/temp/{pascalName}.c";
 
             if (Exclude.Contains(pascalName))
             {

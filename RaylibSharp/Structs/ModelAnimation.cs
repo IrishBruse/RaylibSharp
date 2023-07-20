@@ -25,7 +25,7 @@ public unsafe partial struct ModelAnimation
 
 /// <summary> ModelAnimation </summary>
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct UnmanagedModelAnimation
+internal unsafe struct UnmanagedModelAnimation
 {
     /// <summary> Number of bones </summary>
     public int Bonecount;

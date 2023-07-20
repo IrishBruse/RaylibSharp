@@ -17,6 +17,8 @@
         "SaveFileText",
         "SetRandomSeed",
         "UnloadDirectoryFiles",
+        "LoadFileData",
+        "UnloadFileData",
 
         // Text
         "TextFormat",
@@ -32,6 +34,8 @@
         "DecodeDataBase64",
 
         "TraceLog", // Errors
+
+        "GetMouseWheelMove", // Unnecessary
 
         // Manually implemented
         "SetTraceLogCallback",
@@ -98,6 +102,28 @@
         },
         "SetExitKey": {
             "key": "Key key"
+        },
+        "GetGestureDetected": {
+            "_": "Gesture"
+        },
+        "SetMouseCursor": {
+            "cursor": "MouseCursor cursor"
+        },
+        "LoadFileText": {
+            "_": "string"
+        },
+        "SetTraceLogLevel": {
+            "logLevel": "TraceLogLevel logLevel"
+        },
+        "SetTextureFilter": {
+            "filter": "TextureFilter filter"
+        },
+        "SetShaderValue": {
+            "uniformType": "ShaderUniformDataType uniformType"
+        },
+        "LoadShader": {
+            "vsFileName": "[MarshalAs(UnmanagedType.LPStr)] string? vsFileName",
+            "fsFileName": "[MarshalAs(UnmanagedType.LPStr)] string? fsFileName"
         }
     }
 }

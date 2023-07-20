@@ -20,10 +20,10 @@ public unsafe partial struct MaterialMap
 
 /// <summary> MaterialMap </summary>
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct UnmanagedMaterialMap
+internal unsafe struct UnmanagedMaterialMap
 {
     /// <summary> Material map texture </summary>
-    public UnmanagedTexture Texture;
+    public Texture Texture;
     /// <summary> Material map color </summary>
     public uint Color;
     /// <summary> Material map value </summary>

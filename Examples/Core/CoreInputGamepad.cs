@@ -4,7 +4,7 @@ using static RaylibSharp.Raylib;
 
 using Texture2D = RaylibSharp.Texture;
 
-public static class CoreInputGamepad
+public class CoreInputGamepad : ExampleHelper
 {
     private const string XBOX360_NAME_ID = "Xbox 360 Controller";
     private const string PS3_NAME_ID = "PLAYSTATION(R)3 Controller";
@@ -268,7 +268,7 @@ public static class CoreInputGamepad
         UnloadTexture(texPs3Pad);
         UnloadTexture(texXboxPad);
 
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

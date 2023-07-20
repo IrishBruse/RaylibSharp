@@ -44,6 +44,14 @@ public static class EnumProcessor
                 else if (e.Name == "WindowFlag")
                 {
                     name = name[4..];
+                    if (name.StartsWith("Window"))
+                    {
+                        name = name[6..];
+                    }
+                }
+                else if (e.Name == "TraceLogLevel")
+                {
+                    name = name[3..];
                 }
 
                 sb.AppendLine($"    /// <summary> {value.Description} </summary>");

@@ -1,4 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
+    <Choose>
+        <When Condition=" $(Configuration) == 'Debug' ">
+        </When>
+    </Choose>
+
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net7.0</TargetFramework>
@@ -11,7 +16,18 @@
         <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Wasm' ">
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+
+        <StripSymbols>true</StripSymbols>
+        <PublishAot>true</PublishAot>
+
+        <ApplicationIcon>../Icon.ico</ApplicationIcon>
+    </PropertyGroup>
+
     <ItemGroup>
-        <ProjectReference Include="..\Examples\Examples.csproj" />
+        <ProjectReference Include="../Examples/Examples.csproj" />
     </ItemGroup>
 </Project>

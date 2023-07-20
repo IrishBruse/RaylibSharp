@@ -18,7 +18,7 @@ public unsafe partial struct BoneInfo
 
 /// <summary> Bone, skeletal animation bone </summary>
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct UnmanagedBoneInfo
+internal unsafe struct UnmanagedBoneInfo
 {
     /// <summary> Bone name </summary>
     public fixed char Name[32];

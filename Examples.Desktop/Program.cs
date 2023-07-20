@@ -1,18 +1,11 @@
-namespace Example;
-
-using System;
-using System.Drawing;
+namespace Examples.Desktop;
 using System.IO;
-using System.Numerics;
-using System.Reflection;
-
-using RaylibSharp;
 
 public static class Program
 {
     public static void Main()
     {
-        Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
-        Examples.ExamplePicker.Run();
+        Directory.SetCurrentDirectory(System.AppContext.BaseDirectory);
+        ExamplePicker.Run();
     }
 }

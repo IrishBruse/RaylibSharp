@@ -2,7 +2,7 @@ using System.Numerics;
 
 using static RaylibSharp.Raylib;
 
-public static class CoreInputMultitouch
+public class CoreInputMultitouch : ExampleHelper
 {
     private static readonly int MAX_TOUCH_POINTS = 10;
 
@@ -60,7 +60,7 @@ public static class CoreInputMultitouch
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

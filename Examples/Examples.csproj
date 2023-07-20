@@ -4,12 +4,6 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
 
-        <StripSymbols>true</StripSymbols>
-        <PublishAot>true</PublishAot>
-
-        <ApplicationIcon>../Icon.ico</ApplicationIcon>
-        <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-
         <NoWarn>IDE0055,CA1050,CA1051</NoWarn>
     </PropertyGroup>
 
@@ -21,5 +15,18 @@
 
     <ItemGroup>
         <ProjectReference Include="../RaylibSharp/RaylibSharp.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <LinkerArg Include="/NODEFAULTLIB:ucrt.lib" />
+        <LinkerArg Include="/NODEFAULTLIB:LIBCMT" />
+
+        <NativeLibrary Include="Shell32.lib" Condition="$(RuntimeIdentifier.StartsWith('win'))" />
+        <NativeLibrary Include="Gdi32.lib" Condition="$(RuntimeIdentifier.StartsWith('win'))" />
+        <NativeLibrary Include="winmm.lib" Condition="$(RuntimeIdentifier.StartsWith('win'))" />
+
+        <NativeLibrary Include="raylib.lib" Condition="$(RuntimeIdentifier.StartsWith('win'))" />
+        <NativeLibrary Include="raylib.a" Condition="!$(RuntimeIdentifier.StartsWith('win'))" />
+        <DirectPInvoke Include="raylib" />
     </ItemGroup>
 </Project>

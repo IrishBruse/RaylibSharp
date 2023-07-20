@@ -24,7 +24,6 @@ jobs:
                     -D BUILD_EXAMPLES=Off \
                     -D PLATFORM=Web
                   cmake --build artifacts
-                  pwd
 
             - uses: actions/upload-artifact@v3
               with:

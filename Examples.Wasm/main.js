@@ -1,20 +1,42 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
 import { dotnet } from "./dotnet.js";
 
-const { getConfig, getAssemblyExports } = await dotnet
+await dotnet
     .withDebugging(1)
-    .withDiagnosticTracing(false)
+    .withDiagnosticTracing(true)
     .withApplicationArgumentsFromQuery()
     .create();
 
-console.log(getConfig());
-console.log(getAssemblyExports());
+globalThis.dotnetwasm = dotnet;
 
-dotnet.instance.Module["canvas"] = document.getElementById("canvas");
+let canvas = document.getElementById("canvas");
+
+dotnet.instance.Module["canvas"] = canvas;
 
 // We're ready to dotnet.run, so let's remove the spinner
 const loading_div = document.getElementById("spinner");
 loading_div.remove();
 
 await dotnet.run();
+
+let body = document.querySelector("body");
+
+let exports = await dotnetwasm.instance.getAssemblyExports("Examples.Wasm");
+
+function Update(dt) {
+    if (exports.Examples.Wasm.Program.IsExample()) {
+        dotnetwasm.instance.Module.setCanvasSize(800, 450, false);
+        canvas.classList.add("border");
+    } else {
+        dotnetwasm.instance.Module.setCanvasSize(
+            body.clientWidth,
+            body.clientHeight,
+            false
+        );
+        if (canvas.classList.contains("border")) {
+            canvas.classList.remove("border");
+        }
+    }
+    requestAnimationFrame(Update);
+}
+
+requestAnimationFrame(Update);

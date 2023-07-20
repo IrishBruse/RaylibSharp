@@ -4,7 +4,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static class Core3dCameraFree
+public class Core3dCameraFree : ExampleHelper
 {
     // Program main entry point
     public static int Example()
@@ -46,12 +46,12 @@ public static class Core3dCameraFree
                 ClearBackground(RayWhite);
 
                 BeginMode3D(camera);
+                {
+                    DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, Red);
+                    DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, Maroon);
 
-                DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, Red);
-                DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, Maroon);
-
-                DrawGrid(10, 1.0f);
-
+                    DrawGrid(10, 1.0f);
+                }
                 EndMode3D();
 
                 DrawRectangle(10, 10, 320, 133, Fade(SkyBlue, 0.5f));
@@ -68,7 +68,7 @@ public static class Core3dCameraFree
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

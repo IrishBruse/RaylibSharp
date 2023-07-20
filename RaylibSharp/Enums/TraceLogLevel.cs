@@ -6,21 +6,21 @@ namespace RaylibSharp;
 public enum TraceLogLevel
 {
     /// <summary> Display all logs </summary>
-    LogAll = 0,
+    All = 0,
     /// <summary> Trace logging, intended for internal use only </summary>
-    LogTrace = 1,
+    Trace = 1,
     /// <summary> Debug logging, used for internal debugging, it should be disabled on release builds </summary>
-    LogDebug = 2,
+    Debug = 2,
     /// <summary> Info logging, used for program execution info </summary>
-    LogInfo = 3,
+    Info = 3,
     /// <summary> Warning logging, used on recoverable failures </summary>
-    LogWarning = 4,
+    Warning = 4,
     /// <summary> Error logging, used on unrecoverable failures </summary>
-    LogError = 5,
+    Error = 5,
     /// <summary> Fatal logging, used to abort program: exit(EXIT_FAILURE) </summary>
-    LogFatal = 6,
+    Fatal = 6,
     /// <summary> Disable logging </summary>
-    LogNone = 7,
+    None = 7,
 }
 
 #pragma warning restore CA1711

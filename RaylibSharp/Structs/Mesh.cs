@@ -45,7 +45,7 @@ public unsafe partial struct Mesh
 
 /// <summary> Mesh, vertex data and vao/vbo </summary>
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct UnmanagedMesh
+internal unsafe struct UnmanagedMesh
 {
     /// <summary> Number of vertices stored in arrays </summary>
     public int Vertexcount;

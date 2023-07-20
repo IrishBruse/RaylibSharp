@@ -1,6 +1,6 @@
 using static RaylibSharp.Raylib;
 
-public static class CoreBasicWindow
+public class CoreBasicWindow : ExampleHelper
 {
     // Program main entry point
     public static int Example()
@@ -11,10 +11,10 @@ public static class CoreBasicWindow
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - basic window");
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
-        while (!WindowShouldClose())    // Detect window close button or ESC key
+        while (!WindowShouldClose()) // Detect window close button or ESC key
         {
             // Update
             // TODO: Update your variables here
@@ -22,17 +22,14 @@ public static class CoreBasicWindow
             // Draw
             BeginDrawing();
             {
-
                 ClearBackground(RayWhite);
-
                 DrawText("Congrats! You created your first window!", 190, 200, 20, LightGray);
-
             }
             EndDrawing();
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

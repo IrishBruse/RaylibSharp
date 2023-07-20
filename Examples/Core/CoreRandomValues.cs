@@ -1,6 +1,6 @@
 using static RaylibSharp.Raylib;
 
-public static class CoreRandomValues
+public class CoreRandomValues : ExampleHelper
 {
     // Program main entry point
     public static int Example()
@@ -47,7 +47,7 @@ public static class CoreRandomValues
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

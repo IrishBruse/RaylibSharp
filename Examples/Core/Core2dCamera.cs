@@ -4,7 +4,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static class Core2dCamera
+public class Core2dCamera : ExampleHelper
 {
     private static readonly int MAX_BUILDINGS = 100;
 
@@ -125,10 +125,13 @@ public static class Core2dCamera
 
                 DrawText("SCREEN AREA", 640, 10, 20, Red);
 
-                DrawRectangle(0, 0, screenWidth, 5, Red);
-                DrawRectangle(0, 5, 5, screenHeight - 10, Red);
-                DrawRectangle(screenWidth - 5, 5, 5, screenHeight - 10, Red);
-                DrawRectangle(0, screenHeight - 5, screenWidth, 5, Red);
+                if (!System.OperatingSystem.IsBrowser())
+                {
+                    DrawRectangle(0, 0, screenWidth, 5, Red);
+                    DrawRectangle(0, 5, 5, screenHeight - 10, Red);
+                    DrawRectangle(screenWidth - 5, 5, 5, screenHeight - 10, Red);
+                    DrawRectangle(0, screenHeight - 5, screenWidth, 5, Red);
+                }
 
                 DrawRectangle(10, 10, 250, 113, Fade(SkyBlue, 0.5f));
                 DrawRectangleLines(10, 10, 250, 113, Blue);
@@ -144,7 +147,7 @@ public static class Core2dCamera
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

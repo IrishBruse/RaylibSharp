@@ -54,7 +54,7 @@ public class FunctionProcessor
             {
                 sb.AppendLine($"    /// {debug}");
             }
-            sb.AppendLine($"    [LibraryImport(\"raylib\")]");
+            sb.AppendLine($"    [LibraryImport(LIB, EntryPoint = \"{f.Name}\")]");
 
             if (type == "bool")
             {
@@ -68,6 +68,8 @@ public class FunctionProcessor
             {
                 sb.AppendLine($"    [return: {Utility.ColorMarshal}]");
             }
+
+            f.Name = ConvertFunctionToUseOverloading(f.Name);
 
             if (type == "void")
             {
@@ -84,6 +86,24 @@ public class FunctionProcessor
         sb.AppendLine();
 
         File.WriteAllText("../RaylibSharp/Raylib.cs", sb.ToString());
+    }
+
+    private static string ConvertFunctionToUseOverloading(string name)
+    {
+        if (name.EndsWith("V") && char.IsAsciiLetterLower(name[^2]))
+        {
+            name = name[..^1];
+        }
+        else if (name.EndsWith("Ex") && char.IsAsciiLetterLower(name[^3]))
+        {
+            name = name[..^2];
+        }
+        else if ((name.EndsWith("Rec") || name.EndsWith("Pro")) && char.IsAsciiLetterLower(name[^4]))
+        {
+            name = name[..^3];
+        }
+
+        return name;
     }
 
     private static string EmitParameter(Param p, Function f)

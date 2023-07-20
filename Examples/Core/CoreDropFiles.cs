@@ -4,7 +4,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static class CoreDropFiles
+public class CoreDropFiles : ExampleHelper
 {
     // Program main entry point
     public static int Example()
@@ -67,7 +67,7 @@ public static class CoreDropFiles
             EndDrawing();
         }
 
-        CloseWindow();          // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

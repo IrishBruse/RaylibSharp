@@ -21,7 +21,7 @@ public unsafe partial struct Material
 
 /// <summary> Material, includes shader and maps </summary>
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct UnmanagedMaterial
+internal unsafe struct UnmanagedMaterial
 {
     /// <summary> Material shader </summary>
     public UnmanagedShader Shader;

@@ -18,7 +18,7 @@ public unsafe partial struct BoundingBox
 
 /// <summary> BoundingBox </summary>
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct UnmanagedBoundingBox
+internal unsafe struct UnmanagedBoundingBox
 {
     /// <summary> Minimum vertex box-corner </summary>
     public Vector3 Min;

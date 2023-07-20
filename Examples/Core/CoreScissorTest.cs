@@ -4,7 +4,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static class CoreScissorTest
+public class CoreScissorTest : ExampleHelper
 {
     // Program main entry point
     public static int Example()
@@ -62,7 +62,7 @@ public static class CoreScissorTest
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

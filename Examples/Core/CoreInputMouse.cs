@@ -5,7 +5,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static class CoreInputMouse
+public class CoreInputMouse : ExampleHelper
 {
     // Program main entry point
     public static int Example()
@@ -16,7 +16,6 @@ public static class CoreInputMouse
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - mouse input");
 
-        Vector2 ballPosition = new(-100.0f, -100.0f);
         Color ballColor = DarkBlue;
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
@@ -25,7 +24,7 @@ public static class CoreInputMouse
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             // Update
-            ballPosition = GetMousePosition();
+            Vector2 ballPosition = GetMousePosition();
 
             if (IsMouseButtonPressed(MouseButton.Left))
             {
@@ -69,7 +68,7 @@ public static class CoreInputMouse
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

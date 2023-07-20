@@ -33,7 +33,7 @@ public unsafe partial struct Model
 
 /// <summary> Model, meshes, materials and animation data </summary>
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct UnmanagedModel
+internal unsafe struct UnmanagedModel
 {
     /// <summary> Local transform matrix </summary>
     public Matrix4x4 Transform;

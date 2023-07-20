@@ -2,7 +2,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static class CoreWindowShouldClose
+public class CoreWindowShouldClose : ExampleHelper
 {
     // Program main entry point
     public static int Example()
@@ -65,7 +65,7 @@ public static class CoreWindowShouldClose
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

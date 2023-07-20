@@ -22,7 +22,7 @@ public unsafe partial struct Camera2D
 
 /// <summary> Camera2D, defines position/orientation in 2d space </summary>
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct UnmanagedCamera2D
+internal unsafe struct UnmanagedCamera2D
 {
     /// <summary> Camera offset (displacement from target) </summary>
     public Vector2 Offset;

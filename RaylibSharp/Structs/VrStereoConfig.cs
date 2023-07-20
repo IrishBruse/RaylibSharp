@@ -34,7 +34,7 @@ public unsafe partial struct VrStereoConfig
 
 /// <summary> VrStereoConfig, VR stereo rendering configuration for simulator </summary>
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct UnmanagedVrStereoConfig
+internal unsafe struct UnmanagedVrStereoConfig
 {
     /// <summary> VR projection matrices (per eye) </summary>
     public fixed float ProjectionL[16];

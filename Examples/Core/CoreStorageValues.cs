@@ -5,7 +5,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static class CoreStorageValues
+public class CoreStorageValues : ExampleHelper
 {
     private const int STORAGE_POSITION_SCORE = 0;
     private const int STORAGE_POSITION_HISCORE = 1;
@@ -68,7 +68,7 @@ public static class CoreStorageValues
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

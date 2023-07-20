@@ -22,5 +22,14 @@
     },
     "ModelAnimation": {
         "UnmanagedAttribute": true
+    },
+    "Texture": {
+        "GenUnmanaged": false
+    },
+    "Image": {
+        "GenUnmanaged": false
+    },
+    "GlyphInfo": {
+        "GenUnmanaged": false
     }
 }

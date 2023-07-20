@@ -1,6 +1,6 @@
 using static RaylibSharp.Raylib;
 
-public static class CoreInputMouseWheel
+public class CoreInputMouseWheel : ExampleHelper
 {
 
     // Program main entry point
@@ -39,7 +39,7 @@ public static class CoreInputMouseWheel
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.Json;
 
-internal class Program
+public class Program
 {
     private static void Main()
     {

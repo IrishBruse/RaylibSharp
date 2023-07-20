@@ -9,7 +9,7 @@ using Camera = RaylibSharp.Camera3D;
 
 #pragma warning disable CS0618
 
-public static class Core3dCameraFirstPerson
+public class Core3dCameraFirstPerson : ExampleHelper
 {
     private static readonly int MAX_COLUMNS = 20;
 
@@ -199,7 +199,7 @@ public static class Core3dCameraFirstPerson
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

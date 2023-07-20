@@ -2,7 +2,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static class CoreCustomFrameControl
+public class CoreCustomFrameControl : ExampleHelper
 {
     // Program main entry point
     public static int Example()
@@ -109,7 +109,7 @@ public static class CoreCustomFrameControl
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

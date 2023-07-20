@@ -22,7 +22,7 @@ public unsafe partial struct FilePathList
 
 /// <summary> File path list </summary>
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct UnmanagedFilePathList
+internal unsafe struct UnmanagedFilePathList
 {
     /// <summary> Filepaths max entries </summary>
     public uint Capacity;

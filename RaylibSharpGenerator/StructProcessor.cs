@@ -64,7 +64,7 @@ public static class StructProcessor
     {
         sb.AppendLine($"/// <summary> {s.Description} </summary>");
         sb.AppendLine($"[StructLayout(LayoutKind.Sequential)]");
-        sb.AppendLine($"public unsafe struct Unmanaged{s.Name}");
+        sb.AppendLine($"internal unsafe struct Unmanaged{s.Name}");
         sb.AppendLine("{");
 
         foreach (Fields field in s.Fields)
@@ -108,7 +108,10 @@ public static class StructProcessor
                     type.Contains("char") ||
                     type.Contains("IntPtr") ||
                     type.Contains("bool") ||
+                    type.Contains("GlyphInfo") ||
                     type.Contains("Quaternion") ||
+                    type.Contains("Texture") ||
+                    type.Contains("Image") ||
                     type.Contains("void")
                 )
                 {

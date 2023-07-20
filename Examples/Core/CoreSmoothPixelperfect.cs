@@ -6,7 +6,7 @@ using RaylibSharp;
 using static RaylibSharp.Raylib;
 using System;
 
-public static class CoreSmoothPixelperfect
+public class CoreSmoothPixelperfect : ExampleHelper
 {
     // Program main entry point
     public static int Example()
@@ -100,7 +100,7 @@ public static class CoreSmoothPixelperfect
         // De-Initialization
         UnloadRenderTexture(target);    // Unload render texture
 
-        CloseWindow();                  // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

@@ -24,7 +24,7 @@ public unsafe partial struct Camera3D
 
 /// <summary> Camera, defines position/orientation in 3d space </summary>
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct UnmanagedCamera3D
+internal unsafe struct UnmanagedCamera3D
 {
     /// <summary> Camera position </summary>
     public Vector3 Position;

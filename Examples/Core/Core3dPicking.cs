@@ -6,7 +6,7 @@ using static RaylibSharp.Raylib;
 
 using Camera = RaylibSharp.Camera3D;
 
-public static class Core3dPicking
+public class Core3dPicking : ExampleHelper
 {
     // Program main entry point
     public static int Example()
@@ -114,7 +114,7 @@ public static class Core3dPicking
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

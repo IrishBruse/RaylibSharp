@@ -6,7 +6,7 @@ using RaylibSharp;
 using static RaylibSharp.Raylib;
 using System;
 
-public static class CoreWindowLetterbox
+public class CoreWindowLetterbox : ExampleHelper
 {
 
     // #define MAX(a, b) ((a)>(b)? (a) : (b))
@@ -107,7 +107,7 @@ public static class CoreWindowLetterbox
         // De-Initialization
         UnloadRenderTexture(target);        // Unload render texture
 
-        CloseWindow();                      // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

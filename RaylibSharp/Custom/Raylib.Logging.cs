@@ -6,6 +6,13 @@ using System.Text;
 
 public static unsafe partial class Raylib
 {
+    /// <summary> Show trace log messages (LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR...) </summary>
+    public static void TraceLog(TraceLogLevel level, string value)
+    {
+        traceLogCallback.Invoke(level, value);
+    }
+
+    // Todo Fix this as this locks the binding to a single instance
     private static TraceLogCallback traceLogCallback = ConsoleLog;
 
     [UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvCdecl) })]
@@ -14,21 +21,21 @@ public static unsafe partial class Raylib
         IntPtr textPtr = new(text);
         IntPtr argsPtr = new(args);
 
-        string nativeSprintf = Snprintf(textPtr, argsPtr);
         string mySprintf = SprintF(text, argsPtr);
 
-        if (string.Equals(nativeSprintf, mySprintf, StringComparison.Ordinal))
-        {
-            Console.WriteLine(nativeSprintf);
-            Console.WriteLine(mySprintf);
-            Console.WriteLine();
-        }
-        else
-        {
-            Console.WriteLine(mySprintf);
-        }
+        // string nativeSprintf = Snprintf(textPtr, argsPtr);
+        // if (string.Equals(nativeSprintf, mySprintf, StringComparison.Ordinal))
+        // {
+        //     Console.WriteLine(nativeSprintf);
+        //     Console.WriteLine(mySprintf);
+        //     Console.WriteLine();
+        // }
+        // else
+        // {
+        //     Console.WriteLine(mySprintf);
+        // }
 
-        // traceLogCallback?.Invoke((TraceLogLevel)msgType, log);
+        traceLogCallback?.Invoke((TraceLogLevel)msgType, mySprintf);
     }
 
     private static string Snprintf(IntPtr textPtr, IntPtr argsPtr)
@@ -50,27 +57,27 @@ public static unsafe partial class Raylib
     {
         switch (msgType)
         {
-            case TraceLogLevel.LogInfo:
+            case TraceLogLevel.Info:
             LogMessage(" [INFO]: ", text, ConsoleColor.White);
             break;
 
-            case TraceLogLevel.LogError:
+            case TraceLogLevel.Error:
             LogMessage(" [ERROR]: ", text, ConsoleColor.Red);
             break;
 
-            case TraceLogLevel.LogWarning:
+            case TraceLogLevel.Warning:
             LogMessage(" [WARNING]: ", text, ConsoleColor.Yellow);
             break;
 
-            case TraceLogLevel.LogDebug:
+            case TraceLogLevel.Debug:
             LogMessage(" [DEBUG]: ", text, ConsoleColor.Blue);
             break;
 
-            case TraceLogLevel.LogFatal:
+            case TraceLogLevel.Fatal:
             LogMessage(" [Fatal]: ", text, ConsoleColor.DarkRed);
             break;
 
-            case TraceLogLevel.LogTrace:
+            case TraceLogLevel.Trace:
             LogMessage(" [Trace]: ", text, ConsoleColor.White);
             break;
         }

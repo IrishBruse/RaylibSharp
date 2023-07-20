@@ -20,7 +20,7 @@ public unsafe partial struct Transform
 
 /// <summary> Transform, vertex transformation data </summary>
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct UnmanagedTransform
+internal unsafe struct UnmanagedTransform
 {
     /// <summary> Translation </summary>
     public Vector3 Translation;

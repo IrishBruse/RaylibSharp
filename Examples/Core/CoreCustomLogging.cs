@@ -4,7 +4,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static class CoreCustomLogging
+public class CoreCustomLogging : ExampleHelper
 {
     // Custom logging function
     private static void CustomLog(TraceLogLevel msgType, string text)
@@ -56,7 +56,7 @@ public static class CoreCustomLogging
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

@@ -4,7 +4,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static class CoreLoadingThread
+public class CoreLoadingThread : ExampleHelper
 {
     private enum State
     {
@@ -125,7 +125,7 @@ public static class CoreLoadingThread
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

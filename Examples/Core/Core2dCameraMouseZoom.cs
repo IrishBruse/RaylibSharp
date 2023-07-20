@@ -4,7 +4,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static class Core2dCameraMouseZoom
+public class Core2dCameraMouseZoom : ExampleHelper
 {
     // Program main entry point
     public static int Example()
@@ -96,7 +96,7 @@ public static class Core2dCameraMouseZoom
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
         return 0;
     }
 }

@@ -4,7 +4,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static class CoreInputKeys
+public class CoreInputKeys : ExampleHelper
 {
     // Program main entry point
     public static int Example()
@@ -56,7 +56,7 @@ public static class CoreInputKeys
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

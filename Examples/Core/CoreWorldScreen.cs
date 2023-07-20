@@ -6,7 +6,7 @@ using static RaylibSharp.Raylib;
 
 using Camera = RaylibSharp.Camera3D;
 
-public static class CoreWorldScreen
+public class CoreWorldScreen : ExampleHelper
 {
     // Program main entry point
     public static int Example()
@@ -63,7 +63,7 @@ public static class CoreWorldScreen
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

@@ -4,7 +4,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static class Core3dCameraMode
+public class Core3dCameraMode : ExampleHelper
 {
     // Program main entry point
     public static int Example()
@@ -17,11 +17,11 @@ public static class Core3dCameraMode
 
         // Define the camera to look into our 3d world
         Camera3D camera = new();
-        camera.Position = new(0.0f, 10.0f, 10.0f);  // Camera position
-        camera.Target = new(0.0f, 0.0f, 0.0f);      // Camera looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera up vector (rotation towards target)
+        camera.Position = new(0.0f, 10.0f, 10.0f);          // Camera position
+        camera.Target = new(0.0f, 0.0f, 0.0f);              // Camera looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f);                  // Camera up vector (rotation towards target)
         camera.Fovy = 45.0f;                                // Camera field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera mode type
+        camera.Projection = CameraProjection.Perspective;   // Camera mode type
 
         Vector3 cubePosition = new(0.0f, 0.0f, 0.0f);
 
@@ -36,28 +36,26 @@ public static class Core3dCameraMode
             // Draw
             BeginDrawing();
             {
-
                 ClearBackground(RayWhite);
 
                 BeginMode3D(camera);
+                {
+                    DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, Red);
+                    DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, Maroon);
 
-                DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, Red);
-                DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, Maroon);
-
-                DrawGrid(10, 1.0f);
-
+                    DrawGrid(10, 1.0f);
+                }
                 EndMode3D();
 
                 DrawText("Welcome to the third dimension!", 10, 40, 20, DarkGray);
 
                 DrawFPS(10, 10);
-
             }
             EndDrawing();
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

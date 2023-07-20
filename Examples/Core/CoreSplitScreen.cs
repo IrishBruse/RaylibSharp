@@ -6,7 +6,7 @@ using static RaylibSharp.Raylib;
 
 using Camera = RaylibSharp.Camera3D;
 
-public static class CoreSplitScreen
+public class CoreSplitScreen : ExampleHelper
 {
     private static Camera cameraPlayer1;
     private static Camera cameraPlayer2;
@@ -131,7 +131,7 @@ public static class CoreSplitScreen
         UnloadRenderTexture(screenPlayer1); // Unload render texture
         UnloadRenderTexture(screenPlayer2); // Unload render texture
 
-        CloseWindow();                      // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }

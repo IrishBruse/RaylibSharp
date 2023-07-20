@@ -26,7 +26,7 @@ public unsafe partial struct NPatchInfo
 
 /// <summary> NPatchInfo, n-patch layout info </summary>
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct UnmanagedNPatchInfo
+internal unsafe struct UnmanagedNPatchInfo
 {
     /// <summary> Texture source rectangle </summary>
     public RectangleF Source;

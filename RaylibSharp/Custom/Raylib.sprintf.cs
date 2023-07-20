@@ -86,7 +86,6 @@ public unsafe partial class Raylib
     }
 
     /// <summary> Text formatting with variables (sprintf() style) </summary>
-    [Obsolete("Please use C# string interpolation instead of this function", false)]
     private static string SprintF(sbyte* formatPtr, IntPtr argsPtr)
     {
         string format = new(formatPtr);

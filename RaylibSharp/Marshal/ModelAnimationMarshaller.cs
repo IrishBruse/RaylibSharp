@@ -9,7 +9,6 @@ internal static unsafe class ModelAnimationMarshaller
     public static UnmanagedModelAnimation ConvertToUnmanaged(ModelAnimation managed)
     {
         return new();
-
     }
 
     public static ModelAnimation ConvertToManaged(UnmanagedModelAnimation unmanaged)

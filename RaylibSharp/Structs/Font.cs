@@ -27,7 +27,7 @@ public unsafe partial struct Font
 
 /// <summary> Font, font texture and GlyphInfo array data </summary>
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct UnmanagedFont
+internal unsafe struct UnmanagedFont
 {
     /// <summary> Base size (default chars height) </summary>
     public int Basesize;
@@ -36,11 +36,11 @@ public unsafe struct UnmanagedFont
     /// <summary> Padding around the glyph characters </summary>
     public int Glyphpadding;
     /// <summary> Texture atlas containing the glyphs </summary>
-    public UnmanagedTexture Texture;
+    public Texture Texture;
     /// <summary> Rectangles in texture for the glyphs </summary>
     public RectangleF* Recs;
     /// <summary> Glyphs info data </summary>
-    public UnmanagedGlyphInfo* Glyphs;
+    public GlyphInfo* Glyphs;
 }
 
 #pragma warning restore CA1711,IDE0005

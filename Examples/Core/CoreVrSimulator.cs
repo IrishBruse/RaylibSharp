@@ -6,7 +6,7 @@ using RaylibSharp;
 using static RaylibSharp.Raylib;
 using Camera = RaylibSharp.Camera3D;
 
-public static class CoreVrSimulator
+public class CoreVrSimulator : ExampleHelper
 {
     private static readonly int GLSL_VERSION = 330;
 
@@ -117,7 +117,7 @@ public static class CoreVrSimulator
         UnloadRenderTexture(target);    // Unload stereo render fbo
         UnloadShader(distortion);       // Unload distortion shader
 
-        CloseWindow();                  // Close window and OpenGL context
+        CloseWindow();
 
         return 0;
     }
