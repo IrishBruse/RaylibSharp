@@ -14,7 +14,7 @@ public class CoreInputMouse : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - mouse input");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - mouse input");
 
         Color ballColor = DarkBlue;
 

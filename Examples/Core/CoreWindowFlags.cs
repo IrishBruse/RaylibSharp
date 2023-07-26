@@ -32,7 +32,7 @@ public class CoreWindowFlags : ExampleHelper
 
         // Set configuration flags for window creation
         //SetConfigFlags(WindowFlag.Vsync_int | FLAG_MSAA_4X_HINT | FLAG_WINDOW_HIGHDPI);
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - window flags");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - window flags");
 
         Vector2 ballPosition = new(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
         Vector2 ballSpeed = new(5.0f, 4.0f);

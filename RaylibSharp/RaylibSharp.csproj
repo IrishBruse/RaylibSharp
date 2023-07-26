@@ -32,6 +32,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <None Include="runtimes\**" CopyToOutputDirectory="Always" />
+    </ItemGroup>
+
+    <ItemGroup>
         <EmbeddedResource Include="../Icon.png" LogicalName="RaylibSharp.Icon.png" />
     </ItemGroup>
 </Project>

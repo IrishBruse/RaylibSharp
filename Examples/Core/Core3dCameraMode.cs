@@ -13,7 +13,7 @@ public class Core3dCameraMode : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - 3d camera mode");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - 3d camera mode");
 
         // Define the camera to look into our 3d world
         Camera3D camera = new();

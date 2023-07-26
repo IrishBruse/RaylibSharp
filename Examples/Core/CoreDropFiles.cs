@@ -13,7 +13,7 @@ public class CoreDropFiles : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - drop files");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - drop files");
 
         string[] filePaths = Array.Empty<string>();
 

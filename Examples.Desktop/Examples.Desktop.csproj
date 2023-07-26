@@ -13,7 +13,6 @@
         <PublishAot>true</PublishAot>
 
         <ApplicationIcon>../Icon.ico</ApplicationIcon>
-        <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Wasm' ">

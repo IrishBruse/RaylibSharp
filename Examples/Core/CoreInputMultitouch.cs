@@ -13,7 +13,7 @@ public class CoreInputMultitouch : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - input multitouch");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - input multitouch");
 
         Vector2[] touchPositions = new Vector2[MAX_TOUCH_POINTS];
 

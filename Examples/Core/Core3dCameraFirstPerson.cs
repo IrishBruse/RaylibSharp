@@ -20,7 +20,7 @@ public class Core3dCameraFirstPerson : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - 3d camera first person");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - 3d camera first person");
 
         // Define the camera to look into our 3d world (position, target, up vector)
         Camera camera = new();

@@ -11,7 +11,7 @@ public class CoreWindowShouldClose : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - window should close");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - window should close");
 
         SetExitKey(Key.Null);       // Disable KEY_ESCAPE to close window, X-button still works
 

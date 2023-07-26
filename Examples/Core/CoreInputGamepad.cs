@@ -18,7 +18,7 @@ public class CoreInputGamepad : ExampleHelper
 
         SetConfigFlags(WindowFlag.Msaa4xHint);  // Set MSAA 4X hint before windows creation
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - gamepad input");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - gamepad input");
 
         Texture2D texPs3Pad = LoadTexture("resources/ps3.png");
         Texture2D texXboxPad = LoadTexture("resources/xbox.png");

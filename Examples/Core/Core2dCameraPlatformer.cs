@@ -40,7 +40,7 @@ public class Core2dCameraPlatformer : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - 2d camera");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - 2d camera");
 
         Player player = new();
         player.Position = new(400, 280);

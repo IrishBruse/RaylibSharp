@@ -41,7 +41,7 @@ public class CoreSplitScreen : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - split screen");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - split screen");
 
         // Setup player 1 camera and screen
         cameraPlayer1.Fovy = 45.0f;

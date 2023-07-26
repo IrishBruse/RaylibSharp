@@ -20,7 +20,7 @@ public class CoreSmoothPixelperfect : ExampleHelper
 
         const float virtualRatio = screenWidth / (float)virtualScreenWidth;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - smooth pixel-perfect camera");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - smooth pixel-perfect camera");
 
         Camera2D worldSpaceCamera = new();  // Game world camera
         worldSpaceCamera.Zoom = 1.0f;

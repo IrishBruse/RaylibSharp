@@ -25,7 +25,7 @@ public class CoreLoadingThread : ExampleHelper
 
         State state = State.Waiting;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - loading thread");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - loading thread");
 
         int framesCounter = 0;
 

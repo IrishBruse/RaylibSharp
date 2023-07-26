@@ -17,7 +17,9 @@ internal sealed class SharedLibraryLoader
     {
         string runtimeId = RuntimeID();
 
-        NativeLibrary.TryLoad($"./runtimes/{runtimeId}/native/{libName}", out IntPtr libHandle);
+        string dllPath = $"{AppContext.BaseDirectory}/runtimes/{runtimeId}/native/{libName}";
+
+        NativeLibrary.TryLoad(dllPath, out IntPtr libHandle);
 
         return libHandle;
     }

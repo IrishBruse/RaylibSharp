@@ -13,7 +13,7 @@ public class CoreScissorTest : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - scissor test");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - scissor test");
 
         RectangleF scissorArea = new(0, 0, 300, 300);
         bool scissorMode = true;

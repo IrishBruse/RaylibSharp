@@ -1,37 +1,10 @@
 namespace RaylibSharp.Generator;
 
+using System.Text;
 using System.Text.RegularExpressions;
 
 public partial class ExampleProcessor
 {
-    private static readonly string[] Exclude ={
-        "Core2dCamera",
-        "Core2dCameraMouseZoom",
-        "Core3dCameraFirstPerson",
-        "Core3dCameraFree",
-        "Core3dCameraMode",
-        "Core3dPicking",
-        "CoreBasicWindow",
-        "CoreCustomFrameControl",
-        "CoreInputKeys",
-        "CoreInputMouse",
-        "CoreInputMultitouch",
-        "CoreRandomValues",
-        "CoreScissorTest",
-        "CoreWindowShouldClose",
-        "CoreWorldScreen",
-        "Core2dCameraPlatformer",
-        "CoreInputMouseWheel",
-        "CoreBasicScreenManager",
-        "CoreBasicWindowWeb",
-        "CoreDropFiles",
-        "CoreWindowFlags",
-        "CoreInputGamepad",
-        "CoreCustomLogging",
-        "CoreInputGestures",
-        "CoreSmoothPixelperfect",
-    };
-
     public static void Emit()
     {
         IEnumerable<string> files = Directory.GetFiles("./examples/", "*.c", SearchOption.AllDirectories).ToList();
@@ -41,61 +14,91 @@ public partial class ExampleProcessor
             string cFile = f;
             string name = Path.GetFileNameWithoutExtension(cFile);
 
-            // if (!name.StartsWith("core"))
-            // {
-            //     continue;
-            // }
-
             if (name == "examples_template")
             {
                 continue;
             }
 
             string pascalName = Utility.ToPascalCase(name);
-            string csFile = $"../Examples/temp/{pascalName}.c";
 
-            if (Exclude.Contains(pascalName))
+            string csFile = "../Examples/Gen";
+
+            if (pascalName == "ShapesTopDownLights")
             {
                 continue;
             }
 
-            GenerateExample(cFile, csFile);
+            if (pascalName.StartsWith("Core"))
+            {
+                continue;
+            }
+            else if (pascalName.StartsWith("Audio"))
+            {
+                continue;
+            }
+            else if (pascalName.StartsWith("Shapes"))
+            {
+                csFile = $"../Examples/Shapes/{pascalName}.cs";
+            }
+            else if (pascalName.StartsWith("Models"))
+            {
+                csFile = $"{csFile}/Models/{pascalName}.cs";
+            }
+            else if (pascalName.StartsWith("Shader"))
+            {
+                csFile = $"{csFile}/Shader/{pascalName}.cs";
+            }
+            else if (pascalName.StartsWith("Text"))
+            {
+                csFile = $"{csFile}/Text/{pascalName}.cs";
+            }
+            else if (pascalName.StartsWith("Texture"))
+            {
+                csFile = $"{csFile}/Texture/{pascalName}.cs";
+            }
+            else
+            {
+                csFile = $"{csFile}/temp/{pascalName}.cs";
+            }
+
+
+            string[] lines = File.ReadAllLines(cFile);
+            GenerateExample(lines, csFile);
         }
 
         // Process.Start("dotnet", "format ../Example/Example.csproj").WaitForExit();
     }
 
-    private static void GenerateExample(string inputFile, string outputFile)
+    private static void GenerateExample(string[] input, string outputFile)
     {
         Directory.CreateDirectory(Path.GetDirectoryName(outputFile)!);
 
         string exampleName = Path.GetFileNameWithoutExtension(outputFile);
 
-        string[] lines = File.ReadAllLines(inputFile);
-
         string[] fileHeader = {
             "using System.Numerics;",
             "using System.Drawing;",
+            "using System;",
             "",
             "using RaylibSharp;",
             "",
             "using static RaylibSharp.Raylib;",
-            "using Camera = RaylibSharp.Camera3D;",
             "",
         };
 
         List<string> output = new()
         {
             string.Join("\n", fileHeader),
-            "public static partial class "+exampleName+"\n{",
+            "public partial class " + exampleName + " : ExampleHelper \n{",
         };
 
         bool headerRemoved = false;
         bool lastLineEmpty = false;
 
-        foreach (string item in lines)
+        foreach (string item in input)
         {
-            string line = item.Trim();
+            string line = "    " + item;
+            line = line.TrimEnd();
 
             if (!headerRemoved)
             {
@@ -103,7 +106,7 @@ public partial class ExampleProcessor
                 continue;
             }
 
-            if (line.StartsWith("//---") || line.StartsWith("#include"))
+            if (line.TrimStart().StartsWith("//---") || line.TrimStart().StartsWith("#include"))
             {
                 continue;
             }
@@ -115,35 +118,30 @@ public partial class ExampleProcessor
                 continue;
             }
 
-            if (line.StartsWith("#define"))
+            lastLineEmpty = currentLineEmpty;
+
+            if (line.TrimStart().StartsWith("#define"))
             {
+                string lineWithoutComment = line.Split("//", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)[0];
+                string[] parts = lineWithoutComment.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
-                string[] parts = line.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)[1..];
+                Console.WriteLine(string.Join(" ", parts));
 
-                if (parts.Length <= 2)
+                if (parts.Length == 2)
                 {
-                    string type = parts[1][^1] == 'f' ? "float" : "int";
-                    line = new($"private static readonly {type} {parts[0]} = {parts[1]};");
+                    Console.WriteLine("Skipping: " + line);
+                    line = "";
                 }
                 else
                 {
-
-                    if (line.IndexOf('"') != -1)
-                    {
-                        line = $"{parts[0]} = {line.Split('"')[1]};";
-                    }
-                    else
-                    {
-                        line = "// " + line;
-                    }
+                    line = new($"private const int {parts[1]} = {parts[2]};");
                 }
             }
 
-            lastLineEmpty = currentLineEmpty;
 
             if (line.ToString().Contains("int main("))
             {
-                line = new($"public static int Example()");
+                line = new($"    public static int Example()");
             }
 
             output.Add(ProcessLine(line));
@@ -156,122 +154,232 @@ public partial class ExampleProcessor
 
     private static bool replaceCloseingBrace;
 
-    private static string ProcessLine(string line)
+    private static string ProcessLine(string l)
     {
-        if (line.StartsWith("rl"))
-        {
-            return "";
-        }
+        StringBuilder line = new(l);
 
-        line = line.Replace("->", ".");
+        // if (line.StartsWith("rl"))
+        // {
+        //     return "";
+        // }
 
-        line = IsKeyConstEnumReplace().Replace(line, m => $"{m.Groups[1]}(Key.{Utility.ToPascalCase(m.Groups[2].Value)})");
-        line = IsMouseConstEnumReplace().Replace(line, m => $"{m.Groups[1]}(MouseButton.{Utility.ToPascalCase(m.Groups[2].Value)})");
-        line = ArrayReplace().Replace(line, "$1[] $2 = new $1$3;");
+        line.Replace(RectangleReplace(), "new($1)");
+        line.Replace(ColorReplace(), "Color.FromArgb($2, $1)");
 
-        line = line.Replace("{ 0 }", "new()");
+        // Vector2AddReplace().Replace(line, "($1 + $2)");
+        // Vector2ScaleReplace().Replace(line, "($1 * $2)");
 
-        line = Vector2Replace().Replace(line, "new($1)");
-        line = Vector3Replace().Replace(line, "new($1)");
-        line = StructAssignment().Replace(line, "= new($1)");
-        line = ColorReplace().Replace(line, "Color.FromArgb($2, $1)");
+        // if (replaceCloseingBrace)
+        // {
+        //     line.Replace("}", ")");
+        //     replaceCloseingBrace = false;
+        // }
 
-        line = Vector2AddReplace().Replace(line, "($1 + $2)");
-        line = Vector2ScaleReplace().Replace(line, "($1 * $2)");
+        line.Replace(StructAssignment(), "= new($1)");
 
-        if (replaceCloseingBrace)
-        {
-            line = line.Replace("}", ")");
-            replaceCloseingBrace = false;
-        }
+        line.ReplaceAll("Rectangle ", "RectangleF ");
+        line.ReplaceAll("Rectangle[", "RectangleF[");
+
+        // Change Alias
+        line.ReplaceAll("MATERIAL_MAP_DIFFUSE", "MATERIAL_MAP_ALBEDO");
+        line.ReplaceAll("Camera3D", "Camera");
+        line.ReplaceAll("Texture2D", "Texture");
+        line.ReplaceAll("RenderTexture2D", "RenderTexture");
+
+        line.ReplaceAll("atan2f(", "MathF.Atan2(");
+        line.ReplaceAll("cosf(", "MathF.Cos(");
+        line.ReplaceAll("sinf(", "MathF.Sin(");
+        line.ReplaceAll("ceilf(", "MathF.Ceiling(");
+
+        line.ReplaceAll("->", ".");
+
+        line.Replace(IsMouseConstEnumReplace(), m => $"{m.Groups[1]}(MouseButton.{Utility.ToPascalCase(m.Groups[2].Value)})");
+        line.Replace(ArrayReplace(), "$1[] $2 = new $1$3");
+        line.Replace(VoidFunctionMatch(), "static $0");
+        line.Replace(Vector2Replace(), "new($1)");
+        line.Replace(Vector2AssignReplace(), "new($1,$2)");
+        line.Replace(Vector3Replace(), "new($1)");
+        line.Replace(Vector3AssignReplace(), "new($1,$2,$3)");
+        line.Replace(FalseBooleanAssignment(), "$1 false;");
+        line.Replace(ExampleName(), "RaylibSharp - $1 - ");
 
         foreach (string color in Utility.Colors)
         {
-            line = line.Replace(color.ToUpper(), color);
+            line.ReplaceAll(color.ToUpper(), color);
         }
 
-        line = line.Replace("&camera", "ref camera");
-
-        line = line.Replace("Rectangle ", "RectangleF ");
-        line = line.Replace("Rectangle[", "RectangleF[");
-
-
-        line = line.Replace("camera.target", "camera.Target");
-        line = line.Replace("camera.offset", "camera.Offset");
-        line = line.Replace("camera.rotation", "camera.Rotation");
-        line = line.Replace("camera.zoom", "camera.Zoom");
-        line = line.Replace("camera.zoom", "camera.Zoom");
-        line = line.Replace("camera.position", "camera.Position");
-        line = line.Replace("camera.up", "camera.Up");
-        line = line.Replace("camera.fovy", "camera.Fovy");
-        line = line.Replace("camera.projection", "camera.Projection");
-
-
-        line = line.Replace(".x", ".X");
-        line = line.Replace(".y", ".Y");
-        line = line.Replace(".z", ".Z");
-        line = line.Replace(".height", ".Height");
-        line = line.Replace(".width", ".Width");
-
-        if (line.Contains("(BoundingBox)"))
+        foreach (string key in Utility.Keys)
         {
-            line = line.Replace("(BoundingBox)", "new");
-            line = line.Replace("{", "(");
-            replaceCloseingBrace = true;
+            line.ReplaceAll("KEY_" + key.ToUpper(), "Key." + key);
         }
+
+        foreach (string val in Utility.MaterialMapIndex)
+        {
+            line.ReplaceAll("MATERIAL_MAP_" + val.ToUpper(), "MaterialMapIndex." + val);
+        }
+
+        line.ReplaceAll("camera.target", "camera.Target");
+        line.ReplaceAll("camera.offset", "camera.Offset");
+        line.ReplaceAll("camera.rotation", "camera.Rotation");
+        line.ReplaceAll("camera.zoom", "camera.Zoom");
+        line.ReplaceAll("camera.zoom", "camera.Zoom");
+        line.ReplaceAll("camera.position", "camera.Position");
+        line.ReplaceAll("camera.up", "camera.Up");
+        line.ReplaceAll("camera.fovy", "camera.Fovy");
+        line.ReplaceAll("camera.projection", "camera.Projection");
+
+        line.ReplaceAll(".hit", ".Hit");
+
+        line.ReplaceAll(".x", ".X");
+        line.ReplaceAll(".y", ".Y");
+        line.ReplaceAll(".z", ".Z");
+        line.ReplaceAll(".height", ".Height");
+        line.ReplaceAll(".width", ".Width");
+
+        line.Replace("V(", "(");
+        line.Replace("Ex(", "(");
+        line.Replace("Pro(", "(");
+        line.Replace("Rec(", "(");
+
+        line.Replace("%2", "%2 == 0");
+
+        line.Replace("{ 0 }", "new()");
+
+        // Types
+        line.ReplaceAll("void *", "System.IntPtr ");
+        line.ReplaceAll("unsigned int ", "uint ");
+        line.ReplaceAll("const char *", "string ");
 
         // CameraProjection
-        line = line.Replace("CAMERA_PERSPECTIVE", "CameraProjection.Perspective");
-        line = line.Replace("CAMERA_ORTHOGRAPHIC", "CameraProjection.Orthographic");
+        line.Replace("CAMERA_PERSPECTIVE", "CameraProjection.Perspective");
+        line.Replace("CAMERA_ORTHOGRAPHIC", "CameraProjection.Orthographic");
 
         // CameraMode
-        line = line.Replace("CAMERA_CUSTOM", "CameraMode.Custom");
-        line = line.Replace("CAMERA_FREE", "CameraMode.Free");
-        line = line.Replace("CAMERA_ORBITAL", "CameraMode.Orbital");
-        line = line.Replace("CAMERA_FIRST_PERSON", "CameraMode.FirstPerson");
-        line = line.Replace("CAMERA_THIRD_PERSON", "CameraMode.ThirdPerson");
+        line.Replace("CAMERA_CUSTOM", "CameraMode.Custom");
+        line.Replace("CAMERA_FREE", "CameraMode.Free");
+        line.Replace("CAMERA_ORBITAL", "CameraMode.Orbital");
+        line.Replace("CAMERA_FIRST_PERSON", "CameraMode.FirstPerson");
+        line.Replace("CAMERA_THIRD_PERSON", "CameraMode.ThirdPerson");
 
-        line = line.Replace("typedef struct", "struct");
-        line = line.Replace("collision.hit", "collision.Hit");
-        line = line.Replace("KEY_NULL", "Key.Null");
+        line.Replace("FLAG_MSAA_4X_HINT", "WindowFlag.Msaa4xHint");
 
-        line = line.Replace("unsigned ", "");
-        line = line.Replace("BeginDrawing();", "BeginDrawing();{");
-        line = line.Replace("EndDrawing();", "}EndDrawing();");
+        line.Replace("NULL", "null");
 
-        line = line.Replace("BeginMode2D(camera);", "BeginMode2D(camera);{");
-        line = line.Replace("EndMode2D();", "}EndMode2D();");
+        line.Replace(".materials", ".Materials");
+        line.Replace(".maps", ".Maps");
+        line.Replace(".meshes", ".Meshes");
+        line.Replace(".count", ".Count");
+        line.Replace(".paths", ".Paths");
+        line.Replace("&camera", "ref camera");
 
-        // Speficic examples
-        line = line.Replace("int cameraMode = CameraMode", "CameraMode cameraMode = CameraMode");
+        line.Replace("BeginDrawing();", "BeginDrawing();{");
+        line.Replace("EndDrawing();", "}EndDrawing();");
 
-        return line;
+        line.Replace("BeginMode2D(camera);", "BeginMode2D(camera);{");
+        line.Replace("EndMode2D();", "}EndMode2D();");
+
+        line.Replace("BeginMode3D(camera);", "BeginMode3D(camera);{");
+        line.Replace("EndMode3D();", "}EndMode3D();");
+
+        // Hardcoded edits
+        line.Replace("int [] colorState = new int [MAX_COLORS_COUNT];           // Color state: 0-DEFAULT, 1-MOUSE_HOVER", "bool [] colorState = new bool [MAX_COLORS_COUNT];           // Color state: 0-DEFAULT, 1-MOUSE_HOVER");
+        line.Replace("colorState[i] = 1;", "colorState[i] = true;");
+        line.Replace("colorState[i] = 0;", "colorState[i] = false;");
+        line.Replace("if (framesCounter/12)", "if (framesCounter/12==0)");
+
+        return line.ToString();
     }
 
-    [GeneratedRegex(@"= {(.*)}")] // = { -12.0, 1.0 }
-    private static partial Regex StructAssignment();
+    [GeneratedRegex(@"= {(.*?,.*?)}")] private static partial Regex StructAssignment(); // = { -12.0, 1.0 }
+    [GeneratedRegex(@"(IsMouse\w+)\(MOUSE_BUTTON_(.*?)\)")] private static partial Regex IsMouseConstEnumReplace(); // IsMouseButtonDown(MOUSE_BUTTON_RIGHT)
+    [GeneratedRegex(@"\(Vector3\)\{((.*?),(.*?),(.*?))\}")] private static partial Regex Vector3Replace(); // (Vector3){ , , }
+    [GeneratedRegex(@"\{ (.*?f), (.*?f), (.*?f) \}")] private static partial Regex Vector3AssignReplace(); // { 0.0f, 0.0f, 0.0f }
+    [GeneratedRegex(@"\(Vector2\)\{((.*?),(.*?))\}")] private static partial Regex Vector2Replace(); // (Vector2){ , }
+    [GeneratedRegex(@"\{ (.*?f), (.*?f) \}")] private static partial Regex Vector2AssignReplace(); // { , }
+    [GeneratedRegex(@"(int |float |const char \*|Color |RectangleF )(\w+)(\[.*\]) = (\{ 0 \})?")] private static partial Regex ArrayReplace(); // int x[10];
+    [GeneratedRegex(@"void \w+\(")] private static partial Regex VoidFunctionMatch();
+    [GeneratedRegex(@"(bool \w+ =) 0")] private static partial Regex FalseBooleanAssignment(); // bool varname = 0
+    [GeneratedRegex(@"raylib \[(\w+)\] example - ")] private static partial Regex ExampleName(); // raylib [core] example => RaylibSharp - core -
 
-    [GeneratedRegex(@"(IsKey\w+)\(KEY_(.*)\)")] // IsKeyDown(KEY_RIGHT)
-    private static partial Regex IsKeyConstEnumReplace();
+    [GeneratedRegex(@"\(Rectangle\)\{(.*?,.*?,.*?,.*?)\}")] private static partial Regex RectangleReplace(); // (Rectangle){ , , , }
+    [GeneratedRegex(@"\(Color\)\{ (.*), (255) \}")] private static partial Regex ColorReplace(); // (Color){ , , , }
+    [GeneratedRegex(@"Vector2Add\((.*?), (.*?)\)")] private static partial Regex Vector2AddReplace(); // Vector2Add(delta, -1.0f / camera.Zoom);
+    [GeneratedRegex(@"Vector2Scale\((.*?), (.*?)\)")] private static partial Regex Vector2ScaleReplace(); // Vector2Scale(delta, -1.0f / camera.Zoom);
+    [GeneratedRegex(@"(IsKey\w+)\(KEY_(.*)\)")] private static partial Regex IsKeyConstEnumReplace(); // IsKeyDown(KEY_RIGHT)
+}
 
-    [GeneratedRegex(@"(IsMouse\w+)\(MOUSE_BUTTON_(.*)\)")] // IsMouseButtonDown(MOUSE_BUTTON_RIGHT)
-    private static partial Regex IsMouseConstEnumReplace();
+internal static class Extensions
+{
+    public static void ReplaceAll(this StringBuilder sb, string find, string replace)
+    {
+        string l = "";
+        while (!sb.Equals(l))
+        {
+            sb.Replace(find, replace);
+            l = sb.ToString();
+        }
+    }
 
-    [GeneratedRegex(@"\(Vector3\)\{((.*?),(.*?),(.*?))\}")] // (Vector3){ , , }
-    private static partial Regex Vector3Replace();
+    public static void Replace(this StringBuilder sb, Regex regex, MatchEvaluator matchEvaluator)
+    {
+        string output = regex.Replace(sb.ToString(), matchEvaluator);
+        sb.Clear();
+        sb.Insert(0, output);
+    }
 
-    [GeneratedRegex(@"\(Color\)\{ (.*), (255) \}")] // (Color){ , , , }
-    private static partial Regex ColorReplace();
+    public static void Replace(this StringBuilder sb, Regex regex, string matchEvaluator)
+    {
+        string output = regex.Replace(sb.ToString(), matchEvaluator);
+        sb.Clear();
+        sb.Insert(0, output);
+    }
 
-    [GeneratedRegex(@"\(Vector2\)\{((.*?),(.*?))\}")] // (Vector2){ , }
-    private static partial Regex Vector2Replace();
+    public static bool Contains(this StringBuilder sb, string value)
+    {
+        return sb.IndexOf(value) != -1;
+    }
 
-    [GeneratedRegex(@"(\w+) (\w+)(\[\w+\]).*")] // int x[10];
-    private static partial Regex ArrayReplace();
+    public static int IndexOf(this StringBuilder sb, string value)
+    {
+        if (sb == null)
+        {
+            return -1;
+        }
 
-    [GeneratedRegex(@"Vector2Add\((.*?), (.*?)\)")] // Vector2Add(delta, -1.0f / camera.Zoom);
-    private static partial Regex Vector2AddReplace();
+        if (string.IsNullOrEmpty(value))
+        {
+            return -1;
+        }
 
-    [GeneratedRegex(@"Vector2Scale\((.*?), (.*?)\)")] // Vector2Scale(delta, -1.0f / camera.Zoom);
-    private static partial Regex Vector2ScaleReplace();
+        int count = sb.Length;
+        int len = value.Length;
+
+        if (count < len)
+        {
+            return -1;
+        }
+
+        int loopEnd = count - len + 1;
+
+        for (int loop = 0; loop < loopEnd; loop++)
+        {
+            bool found = true;
+
+            for (int innerLoop = 0; innerLoop < len; innerLoop++)
+            {
+                if (sb[loop + innerLoop] != value[innerLoop])
+                {
+                    found = false;
+                    break;
+                }
+            }
+
+            if (found)
+            {
+                return loop;
+            }
+        }
+
+        return -1;
+    }
 }

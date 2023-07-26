@@ -16,7 +16,7 @@ public class CoreInputGestures : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - input gestures");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - input gestures");
         RectangleF touchArea = new(220, 10, screenWidth - 230.0f, screenHeight - 20.0f);
 
         int gesturesCount = 0;

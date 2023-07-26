@@ -13,7 +13,7 @@ public static class ExamplePicker
 
     public static void Run()
     {
-        (string path, Func<int> example)[] examples = ExamplesList.Examples;
+        Example[] examples = ExamplesList.Examples;
 
         int exampleIndex = 0;
 
@@ -35,7 +35,7 @@ public static class ExamplePicker
 
         for (int i = 0; i < examples.Length; i++)
         {
-            byte[] data = File.ReadAllBytes(examples[i].path);
+            byte[] data = File.ReadAllBytes(examples[i].Path);
             textures[i] = Raylib.LoadTextureFromImage(Raylib.LoadImageFromMemory(".png", data, data.Length));
         }
 
@@ -99,13 +99,13 @@ public static class ExamplePicker
                         if (rect.Contains(mousePos.X, mousePos.Y))
                         {
                             Raylib.DrawRectangle(rect, Color.FromArgb(96, 200, 200, 200));
-                            Raylib.DrawRectangleLines(rect, lineThick: 10, Raylib.Gray);
+                            Raylib.DrawRectangleLines(rect, lineThick: 10, examples[i].Color);
                             hovered = true;
                             exampleIndex = i;
                         }
                         else
                         {
-                            Raylib.DrawRectangleLines(rect, lineThick: 1, Raylib.Gray);
+                            Raylib.DrawRectangleLines(rect, lineThick: 1, examples[i].Color);
                         }
                     }
 
@@ -136,7 +136,7 @@ public static class ExamplePicker
             }
 
             IsExample = true;
-            examples[exampleIndex].example.Invoke();
+            examples[exampleIndex].Entry.Invoke();
             IsExample = false;
         }
     }

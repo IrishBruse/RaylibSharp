@@ -10,7 +10,7 @@ public class CoreInputMouseWheel : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - input mouse wheel");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - input mouse wheel");
 
         int boxPositionY = (screenHeight / 2) - 40;
         int scrollSpeed = 4;            // Scrolling speed in pixels

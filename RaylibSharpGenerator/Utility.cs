@@ -52,15 +52,6 @@ public class Utility
         "Eight","Nine",
         "Semicolon","Key:",
         "Equal",
-        "A","B","C",
-        "D","E","F",
-        "G","H","I",
-        "J","K","L",
-        "M","N","O",
-        "P","Q","R",
-        "S","T","U",
-        "V","W","X",
-        "Y","Z",
         "LeftBracket","Backslash",
         "RightBracket","Grave",
         "Space","Escape",
@@ -93,9 +84,31 @@ public class Utility
         "KpSubtract","KpAdd",
         "KpEnter","KpEqual",
         "Back","Menu",
-        "VolumeUp","VolumeDown"
+        "VolumeUp","VolumeDown",
+        "A","B","C",
+        "D","E","F",
+        "G","H","I",
+        "J","K","L",
+        "M","N","O",
+        "P","Q","R",
+        "S","T","U",
+        "V","W","X",
+        "Y","Z",
     };
 
+    public static readonly string[] MaterialMapIndex = {
+        "Albedo",
+        "Metalness",
+        "Normal",
+        "Roughness",
+        "Occlusion",
+        "Emission",
+        "Height",
+        "Cubemap",
+        "Irradiance",
+        "Prefilter",
+        "Brdf",
+    };
 
     public static string ConvertTypeFunction(string t)
     {

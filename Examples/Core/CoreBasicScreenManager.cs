@@ -21,7 +21,7 @@ public class CoreBasicScreenManager : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - basic screen manager");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - basic screen manager");
 
         GameScreen currentScreen = GameScreen.LOGO;
 

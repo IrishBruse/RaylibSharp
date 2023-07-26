@@ -33,7 +33,7 @@ public class CoreCustomLogging : ExampleHelper
         // Set custom logger
         SetTraceLogCallback(CustomLog);
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - custom logging");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - custom logging");
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 

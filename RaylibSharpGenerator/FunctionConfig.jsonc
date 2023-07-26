@@ -19,6 +19,11 @@
         "UnloadDirectoryFiles",
         "LoadFileData",
         "UnloadFileData",
+        "GetFileLength",
+        "SaveFileData",
+        "ExportDataAsCode",
+        "LoadFileText",
+        "UnloadFileText",
 
         // Text
         "TextFormat",

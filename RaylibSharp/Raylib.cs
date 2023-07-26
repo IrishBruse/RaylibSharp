@@ -425,29 +425,6 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "SetSaveFileTextCallback")]
     public static partial void SetSaveFileTextCallback(SaveFileTextCallback callback);
 
-    /// <summary> Save data to file from byte array (write), returns true on success </summary>
-    [LibraryImport(LIB, EntryPoint = "SaveFileData")]
-    [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool SaveFileData([MarshalAs(UnmanagedType.LPStr)] string fileName, IntPtr data, uint bytesToWrite);
-
-    /// <summary> Export data to code (.h), returns true on success </summary>
-    [LibraryImport(LIB, EntryPoint = "ExportDataAsCode")]
-    [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool ExportDataAsCode(byte[] data, uint size, [MarshalAs(UnmanagedType.LPStr)] string fileName);
-
-    /// <summary> Load text data from file (read), returns a '\0' terminated string </summary>
-    [LibraryImport(LIB, EntryPoint = "LoadFileText")]
-    [return: MarshalAs(UnmanagedType.LPStr)]
-    public static partial string LoadFileText([MarshalAs(UnmanagedType.LPStr)] string fileName);
-
-    /// <summary> Unload file text data allocated by LoadFileText() </summary>
-    [LibraryImport(LIB, EntryPoint = "UnloadFileText")]
-    public static partial void UnloadFileText(IntPtr text);
-
-    /// <summary> Get file length in bytes (NOTE: GetFileSize() conflicts with windows.h) </summary>
-    [LibraryImport(LIB, EntryPoint = "GetFileLength")]
-    public static partial int GetFileLength([MarshalAs(UnmanagedType.LPStr)] string fileName);
-
     /// <summary> Change working directory, return true on success </summary>
     [LibraryImport(LIB, EntryPoint = "ChangeDirectory")]
     [return: MarshalAs(UnmanagedType.I1)]

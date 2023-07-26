@@ -9,7 +9,7 @@ public class CoreRandomValues : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - generate random values");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - generate random values");
 
         // SetRandomSeed(0xaabbccff);   // Set a custom random seed if desired, by default: "time(NULL)"
 

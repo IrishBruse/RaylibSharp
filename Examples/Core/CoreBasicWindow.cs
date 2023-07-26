@@ -9,7 +9,7 @@ public class CoreBasicWindow : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - basic window");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - basic window");
 
         SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 

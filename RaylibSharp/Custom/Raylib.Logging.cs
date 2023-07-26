@@ -58,27 +58,27 @@ public static unsafe partial class Raylib
         switch (msgType)
         {
             case TraceLogLevel.Info:
-            LogMessage(" [INFO]: ", text, ConsoleColor.White);
+            LogMessage("INFO: ", text, ConsoleColor.White);
             break;
 
             case TraceLogLevel.Error:
-            LogMessage(" [ERROR]: ", text, ConsoleColor.Red);
+            LogMessage("ERROR: ", text, ConsoleColor.Red);
             break;
 
             case TraceLogLevel.Warning:
-            LogMessage(" [WARNING]: ", text, ConsoleColor.Yellow);
+            LogMessage("WARNING: ", text, ConsoleColor.Yellow);
             break;
 
             case TraceLogLevel.Debug:
-            LogMessage(" [DEBUG]: ", text, ConsoleColor.Blue);
+            LogMessage("DEBUG: ", text, ConsoleColor.Blue);
             break;
 
             case TraceLogLevel.Fatal:
-            LogMessage(" [Fatal]: ", text, ConsoleColor.DarkRed);
+            LogMessage("Fatal: ", text, ConsoleColor.DarkRed);
             break;
 
             case TraceLogLevel.Trace:
-            LogMessage(" [Trace]: ", text, ConsoleColor.White);
+            LogMessage("Trace: ", text, ConsoleColor.White);
             break;
         }
     }
@@ -86,7 +86,7 @@ public static unsafe partial class Raylib
     private static void LogMessage(string prefix, string text, ConsoleColor color)
     {
         Console.ForegroundColor = color;
-        Console.WriteLine(DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") + prefix + text);
+        Console.WriteLine(prefix + text);
         Console.ResetColor();
     }
 

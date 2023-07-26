@@ -11,7 +11,7 @@ public class CoreCustomFrameControl : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - custom frame control");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - custom frame control");
 
         // Custom timming variables
         double previousTime = GetTime();    // Previous time measure

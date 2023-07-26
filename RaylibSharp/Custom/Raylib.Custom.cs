@@ -18,10 +18,15 @@ public static unsafe partial class Raylib
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void InitWindow(int width, int height, string title)
     {
-        _InitWindow(width, height, title);
         if (!OperatingSystem.IsBrowser())
         {
             _SetTraceLogCallback(&NativeLog);
+        }
+
+        _InitWindow(width, height, title);
+
+        if (!OperatingSystem.IsBrowser())
+        {
             LoadIcon();
         }
     }

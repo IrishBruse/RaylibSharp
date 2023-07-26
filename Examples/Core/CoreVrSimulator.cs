@@ -18,7 +18,7 @@ public class CoreVrSimulator : ExampleHelper
         const int screenHeight = 450;
 
         // NOTE: screenWidth/screenHeight should match VR device aspect ratio
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - vr simulator");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - vr simulator");
 
         // VR device parameters definition
         VrDeviceInfo device = new()

@@ -15,7 +15,7 @@ public class Core2dCamera : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - 2d camera");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - 2d camera");
 
         RectangleF player = new(400, 280, 40, 40);
         RectangleF[] buildings = new RectangleF[MAX_BUILDINGS];

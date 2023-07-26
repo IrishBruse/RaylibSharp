@@ -18,7 +18,7 @@ public class CoreStorageValues : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - storage save/load values");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - storage save/load values");
 
         int score = 0;
         int hiscore = 0;

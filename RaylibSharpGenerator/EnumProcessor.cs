@@ -53,6 +53,10 @@ public static class EnumProcessor
                 {
                     name = name[3..];
                 }
+                else if (e.Name == "MaterialMapIndex")
+                {
+                    name = name[11..];
+                }
 
                 sb.AppendLine($"    /// <summary> {value.Description} </summary>");
                 sb.AppendLine($"    {name} = {value.Value},");

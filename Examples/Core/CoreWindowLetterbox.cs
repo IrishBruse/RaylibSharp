@@ -20,7 +20,7 @@ public class CoreWindowLetterbox : ExampleHelper
 
         // Enable config flags for resizable window and vertical synchro
         SetConfigFlags(WindowFlag.Resizable | WindowFlag.VsyncHint);
-        InitWindow(windowWidth, windowHeight, "RaylibSharp - Core - window scale letterbox");
+        InitWindow(windowWidth, windowHeight, "RaylibSharp - core - window scale letterbox");
         SetWindowMinSize(320, 240);
 
         int gameScreenWidth = 640;

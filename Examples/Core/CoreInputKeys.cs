@@ -13,7 +13,7 @@ public class CoreInputKeys : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - keyboard input");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - keyboard input");
 
         Vector2 ballPosition = new((float)screenWidth / 2, (float)screenHeight / 2);
 

@@ -13,7 +13,7 @@ public class Core2dCameraMouseZoom : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - Core - 2d camera mouse zoom");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - 2d camera mouse zoom");
 
         Camera2D camera = new();
         camera.Zoom = 1.0f;
