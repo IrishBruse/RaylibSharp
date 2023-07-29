@@ -1,29 +1,61 @@
 ﻿namespace CheatsheetGenerator;
 
 using System;
-using System.Linq;
+using System.Text.RegularExpressions;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-internal class Program
+internal sealed partial class Program
 {
     private static void Main(string[] args)
     {
-        SyntaxTree tree = CSharpSyntaxTree.ParseText(File.ReadAllText("../RaylibSharp/Raylib.cs"));
+        string[] files = Directory.GetFiles("../RaylibSharp/", "*.cs", SearchOption.AllDirectories);
 
-        CompilationUnitSyntax root = (CompilationUnitSyntax)tree.GetRoot();
-        ClassDeclarationSyntax classNode = (ClassDeclarationSyntax)root.Members.First();
+        foreach (string item in files)
+        {
+            SyntaxTree tree = CSharpSyntaxTree.ParseText(File.ReadAllText(item));
 
-        SyntaxTriviaList trivias = classNode.GetLeadingTrivia();
-        SyntaxTrivia xmlCommentTrivia = trivias.FirstOrDefault(t => t.IsKind(SyntaxKind.SingleLineDocumentationCommentTrivia));
-        SyntaxNode? xml = xmlCommentTrivia.GetStructure();
-        Console.WriteLine(xml);
-
-        CSharpCompilation compilation = CSharpCompilation.Create("test", syntaxTrees: new[] { tree });
-        INamedTypeSymbol classSymbol = compilation.GlobalNamespace.GetTypeMembers("C").Single();
-        string? docComment = classSymbol.GetDocumentationCommentXml();
-        Console.WriteLine(docComment);
+            CompilationUnitSyntax root = (CompilationUnitSyntax)tree.GetRoot();
+            Walk(root);
+        }
     }
+
+    private static void Walk(SyntaxNode node)
+    {
+        foreach (SyntaxNode child in node.ChildNodes())
+        {
+            if (child.HasLeadingTrivia)
+            {
+                SyntaxTriviaList doc = child.GetLeadingTrivia();
+                foreach (SyntaxTrivia item in doc)
+                {
+                    if (item.IsKind(SyntaxKind.SingleLineDocumentationCommentTrivia))
+                    {
+                        NewMethod(child, Vector2AddReplace().Replace(doc.ToString(), "$1").Trim());
+                    }
+                }
+            }
+            Walk(child);
+        }
+    }
+
+    private static void NewMethod(SyntaxNode child, string doc)
+    {
+        switch (child)
+        {
+            case MethodDeclarationSyntax method:
+            Console.Write(method.Identifier);
+            Console.WriteLine(" // " + doc);
+            break;
+
+            default:
+            // Console.WriteLine("Unhandled: " + child.Kind());
+            break;
+        }
+    }
+
+    [GeneratedRegex(@"/// <summary> (.*) </summary>")] private static partial Regex Vector2AddReplace(); // Vector2Add(delta, -1.0f / camera.Zoom);
+
 }

@@ -8,7 +8,7 @@ public class FunctionProcessor
     private static FunctionConfig config;
     private const bool DebugOutput = false;
 
-    public static void Emit(RaylibApi api)
+    public static void Emit(RaylibApi api, string name)
     {
         config = JsonSerializer.Deserialize<FunctionConfig>(File.ReadAllText("./FunctionConfig.jsonc"), new JsonSerializerOptions { ReadCommentHandling = JsonCommentHandling.Skip })!;
         StringBuilder sb = new();
@@ -85,7 +85,7 @@ public class FunctionProcessor
         sb.AppendLine("}");
         sb.AppendLine();
 
-        File.WriteAllText("../RaylibSharp/Raylib.cs", sb.ToString());
+        File.WriteAllText($"../RaylibSharp/gen/{name}.cs", sb.ToString());
     }
 
     private static string ConvertFunctionToUseOverloading(string name)

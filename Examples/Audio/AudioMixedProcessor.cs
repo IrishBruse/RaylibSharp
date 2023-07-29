@@ -1,7 +1,8 @@
+using System;
+
 using RaylibSharp;
 
 using static RaylibSharp.Raylib;
-using System;
 
 public static partial class AudioMixedProcessor
 {

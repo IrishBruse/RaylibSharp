@@ -1,9 +1,10 @@
-using System.Numerics;
 using System.Drawing;
+using System.Numerics;
 
 using RaylibSharp;
 
 using static RaylibSharp.Raylib;
+
 using Camera = RaylibSharp.Camera3D;
 
 public class CoreVrSimulator : ExampleHelper

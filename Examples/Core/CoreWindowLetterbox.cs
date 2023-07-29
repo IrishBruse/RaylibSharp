@@ -1,10 +1,10 @@
-using System.Numerics;
+using System;
 using System.Drawing;
+using System.Numerics;
 
 using RaylibSharp;
 
 using static RaylibSharp.Raylib;
-using System;
 
 public class CoreWindowLetterbox : ExampleHelper
 {

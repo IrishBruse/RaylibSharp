@@ -56,7 +56,7 @@ public static class StructProcessor
 
             sb.AppendLine("#pragma warning restore CA1711,IDE0005");
 
-            File.WriteAllText("../RaylibSharp/Structs/" + s.Name + ".cs", sb.ToString());
+            File.WriteAllText($"../RaylibSharp/gen/Structs/" + s.Name + ".cs", sb.ToString());
         }
     }
 

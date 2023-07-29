@@ -2,12 +2,11 @@ namespace RaylibSharp.Generator;
 
 #pragma warning disable
 
-using System.Text.Json.Serialization;
 using System;
-
-using System.Text.Json;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 public partial class RaylibApi
 {

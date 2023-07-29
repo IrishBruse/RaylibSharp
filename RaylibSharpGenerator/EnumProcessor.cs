@@ -66,7 +66,7 @@ public static class EnumProcessor
             sb.AppendLine();
             sb.AppendLine("#pragma warning restore CA1711");
 
-            File.WriteAllText("../RaylibSharp/Enums/" + e.Name + ".cs", sb.ToString());
+            File.WriteAllText($"../RaylibSharp/gen/Enums/" + e.Name + ".cs", sb.ToString());
         }
     }
 }

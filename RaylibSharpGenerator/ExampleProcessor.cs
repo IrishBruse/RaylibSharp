@@ -138,13 +138,16 @@ public partial class ExampleProcessor
                 }
             }
 
-
             if (line.ToString().Contains("int main("))
             {
                 line = new($"    public static int Example()");
             }
 
-            output.Add(ProcessLine(line));
+            string newLine = ProcessLine(line);
+            if (newLine != null)
+            {
+                output.Add(newLine);
+            }
         }
 
         output.Add("}");
@@ -158,22 +161,8 @@ public partial class ExampleProcessor
     {
         StringBuilder line = new(l);
 
-        // if (line.StartsWith("rl"))
-        // {
-        //     return "";
-        // }
-
         line.Replace(RectangleReplace(), "new($1)");
         line.Replace(ColorReplace(), "Color.FromArgb($2, $1)");
-
-        // Vector2AddReplace().Replace(line, "($1 + $2)");
-        // Vector2ScaleReplace().Replace(line, "($1 * $2)");
-
-        // if (replaceCloseingBrace)
-        // {
-        //     line.Replace("}", ")");
-        //     replaceCloseingBrace = false;
-        // }
 
         line.Replace(StructAssignment(), "= new($1)");
 

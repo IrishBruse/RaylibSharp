@@ -4,7 +4,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
 
-        <NoWarn>IDE0055,CA1050,CA1051</NoWarn>
+        <NoWarn>IDE0055,CA1050,CA1051,IDE1006</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>

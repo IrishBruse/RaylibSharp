@@ -1,5 +1,5 @@
-using System.Numerics;
 using System.Drawing;
+using System.Numerics;
 
 using RaylibSharp;
 
@@ -9,7 +9,7 @@ public static partial class AudioModulePlaying
 {
     private static readonly int MAX_CIRCLES = 64;
 
-    private class CircleWave
+    private sealed class CircleWave
     {
         public Vector2 position;
         public float radius;

@@ -112,6 +112,10 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "SetWindowOpacity")]
     public static partial void SetWindowOpacity(float opacity);
 
+    /// <summary> Set window focused (only PLATFORM_DESKTOP) </summary>
+    [LibraryImport(LIB, EntryPoint = "SetWindowFocused")]
+    public static partial void SetWindowFocused();
+
     /// <summary> Get native window handle </summary>
     [LibraryImport(LIB, EntryPoint = "GetWindowHandle")]
     public static partial IntPtr GetWindowHandle();
@@ -886,6 +890,10 @@ public static unsafe partial class Raylib
     [return: MarshalAs(UnmanagedType.I1)]
     public static partial bool ExportImage(Image image, [MarshalAs(UnmanagedType.LPStr)] string fileName);
 
+    /// <summary> Export image to memory buffer </summary>
+    [LibraryImport(LIB, EntryPoint = "ExportImageToMemory")]
+    public static partial byte* ExportImageToMemory(Image image, [MarshalAs(UnmanagedType.LPStr)] string fileType, IntPtr fileSize);
+
     /// <summary> Export image as code file defining an array of bytes, returns true on success </summary>
     [LibraryImport(LIB, EntryPoint = "ExportImageAsCode")]
     [return: MarshalAs(UnmanagedType.I1)]
@@ -1003,7 +1011,7 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "ImageFlipHorizontal")]
     public static partial void ImageFlipHorizontal(IntPtr image);
 
-    /// <summary> Rotate image by input angle in degrees (-359 to 359)  </summary>
+    /// <summary> Rotate image by input angle in degrees (-359 to 359) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageRotate")]
     public static partial void ImageRotate(IntPtr image, int degrees);
 
@@ -1345,6 +1353,10 @@ public static unsafe partial class Raylib
     /// <summary> Draw multiple character (codepoint) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTextCodepoints")]
     public static partial void DrawTextCodepoints(Font font, IntPtr codepoints, int count, Vector2 position, float fontSize, float spacing, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+
+    /// <summary> Set vertical line spacing when drawing with line-breaks </summary>
+    [LibraryImport(LIB, EntryPoint = "SetTextLineSpacing")]
+    public static partial void SetTextLineSpacing(int spacing);
 
     /// <summary> Measure string width for default font </summary>
     [LibraryImport(LIB, EntryPoint = "MeasureText")]
