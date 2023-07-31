@@ -3,6 +3,7 @@
         <OutputType>Library</OutputType>
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
         <NoWarn>IDE0055,CA1050,CA1051,IDE1006</NoWarn>
     </PropertyGroup>

@@ -1,26 +1,25 @@
 namespace RaylibSharp.Generator;
 
 using System.Text;
-using System.Text.Json;
 
 public class FunctionProcessor
 {
     private static FunctionConfig config;
     private const bool DebugOutput = false;
 
-    public static void Emit(RaylibApi api, string name)
+    public static void Emit(RaylibApi api)
     {
-        config = JsonSerializer.Deserialize<FunctionConfig>(File.ReadAllText("./FunctionConfig.jsonc"), new JsonSerializerOptions { ReadCommentHandling = JsonCommentHandling.Skip })!;
+        config = FunctionConfig.Deserialize("./FunctionConfig.jsonc")!;
         StringBuilder sb = new();
 
-        sb.AppendLine($"namespace RaylibSharp;");
+        sb.AppendLine($"namespace {api.Namespace};");
         sb.AppendLine();
         sb.AppendLine("using System.Runtime.InteropServices;");
         sb.AppendLine("using System.Runtime.InteropServices.Marshalling;");
         sb.AppendLine("using System.Numerics;");
         sb.AppendLine("using System.Drawing;");
         sb.AppendLine();
-        sb.AppendLine($"public static unsafe partial class Raylib");
+        sb.AppendLine($"public static unsafe partial class {api.ClassName}");
         sb.AppendLine("{");
 
         foreach (Function f in api.Functions)
@@ -71,21 +70,20 @@ public class FunctionProcessor
 
             f.Name = ConvertFunctionToUseOverloading(f.Name);
 
-            if (type == "void")
+            if (f.Name.StartsWith("rl"))
             {
-                sb.AppendLine($"    public static partial void {f.Name}({parameters});");
+                f.Name = f.Name[2..];
             }
-            else
-            {
-                sb.AppendLine($"    public static partial {type} {f.Name}({parameters});");
-            }
+
+            sb.AppendLine($"    public static partial {type} {f.Name}({parameters});");
+
             sb.AppendLine("");
         }
 
         sb.AppendLine("}");
         sb.AppendLine();
 
-        File.WriteAllText($"../RaylibSharp/gen/{name}.cs", sb.ToString());
+        File.WriteAllText(Path.Join("../RaylibSharp/gen/", api.ClassName + ".cs"), sb.ToString());
     }
 
     private static string ConvertFunctionToUseOverloading(string name)
@@ -118,28 +116,13 @@ public class FunctionProcessor
 
         string type = Utility.ConvertTypeFunction(p.Type);
 
-        if (type == "bool")
+        return type switch
         {
-            return $"[{Utility.BoolMarshal}] {type} {p.Name}";
-        }
-        else if (type == "string")
-        {
-            return $"[{Utility.StringMarshal}] {type} {p.Name}";
-        }
-        else if (type == "Color")
-        {
-            return $"[{Utility.ColorMarshal}] {type} {p.Name}";
-        }
-        else if (type == "Camera3D")
-        {
-            return $"[{Utility.Camera3DMarshal}] {type} {p.Name}";
-        }
-        else if (type == "Camera2D")
-        {
-            return $"[{Utility.Camera2DMarshal}] {type} {p.Name}";
-        }
+            "bool" => $"[{Utility.BoolMarshal}] {type} {p.Name}",
+            "string" => $"[{Utility.StringMarshal}] {type} {p.Name}",
+            "Color" => $"[{Utility.ColorMarshal}] {type} {p.Name}",
 
-
-        return $"{type} {p.Name}";
+            _ => $"{type} {p.Name}"
+        };
     }
 }

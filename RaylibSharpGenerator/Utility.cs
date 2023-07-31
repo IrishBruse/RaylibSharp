@@ -9,8 +9,6 @@ public class Utility
     public static readonly string ColorMarshal = "MarshalUsing(typeof(ColorMarshaller))";
     public static readonly string MeshMarshal = "MarshalUsing(typeof(MeshMarshaller))";
     public static readonly string ModelAnimationMarshal = "MarshalUsing(typeof(ModelAnimationMarshaller))";
-    public static readonly string Camera3DMarshal = "MarshalUsing(typeof(Camera3DMarshaller))";
-    public static readonly string Camera2DMarshal = "MarshalUsing(typeof(Camera2DMarshaller))";
 
     public static readonly string[] Colors = {
         "RayWhite",
@@ -125,6 +123,8 @@ public class Utility
             "char[32]" => "string",
 
             "const unsigned char*" => "byte[]",
+
+            "rlRenderBatch" => "RenderBatch",
 
             "unsigned char" => "byte",
             "unsigned char*" => "byte*",

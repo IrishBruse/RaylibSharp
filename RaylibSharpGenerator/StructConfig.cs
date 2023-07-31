@@ -1,5 +1,18 @@
 namespace RaylibSharp.Generator;
 
-public record StructConfig(string[] AdditionalProperties, bool GenUnmanaged = true, bool GenManaged = true, bool UnmanagedAttribute = false, bool UseAsClass = false)
+using System.Text.Json;
+
+public class StructConfig
 {
+    public string[] AdditionalProperties { get; set; } = Array.Empty<string>();
+    public bool GenUnmanaged { get; set; } = true;
+    public bool GenManaged { get; set; } = true;
+    public bool UnmanagedAttribute { get; set; }
+
+    public static StructConfig Deserialize(string path)
+    {
+        string json = File.ReadAllText(path);
+        JsonSerializerOptions options = new() { ReadCommentHandling = JsonCommentHandling.Skip };
+        return JsonSerializer.Deserialize<StructConfig>(json, options)!;
+    }
 }

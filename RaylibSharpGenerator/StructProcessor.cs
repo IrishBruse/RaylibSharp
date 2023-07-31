@@ -19,13 +19,20 @@ public static class StructProcessor
         "Rectangle",
     };
 
+    private static HashSet<string> generated = new();
+
     public static void Emit(RaylibApi api)
     {
-        structConfig = JsonSerializer.Deserialize<Dictionary<string, StructConfig>>(File.ReadAllText("./StructConfig.json"))!;
+        structConfig = JsonSerializer.Deserialize<Dictionary<string, StructConfig>>(File.ReadAllText("./StructConfig.jsonc"), new JsonSerializerOptions { ReadCommentHandling = JsonCommentHandling.Skip })!;
 
         StringBuilder sb = new();
         foreach (Struct s in api.Structs)
         {
+            if (!generated.Add(s.Name))
+            {
+                continue;
+            }
+
             StructConfig config = GetConfig(s.Name);
 
             if (Ignore.Contains(s.Name))
@@ -34,7 +41,7 @@ public static class StructProcessor
             }
 
             sb.Clear();
-            sb.AppendLine($"namespace RaylibSharp;");
+            sb.AppendLine($"namespace {api.Namespace};");
             sb.AppendLine();
             sb.AppendLine("#pragma warning disable CA1711,IDE0005,CA1051");
             sb.AppendLine();
@@ -43,6 +50,11 @@ public static class StructProcessor
             sb.AppendLine("using System.Drawing;");
             sb.AppendLine("using System.Runtime.InteropServices.Marshalling;");
             sb.AppendLine();
+
+            if (s.Name.StartsWith("rl"))
+            {
+                s.Name = s.Name[2..];
+            }
 
             if (config.GenManaged)
             {
@@ -56,7 +68,7 @@ public static class StructProcessor
 
             sb.AppendLine("#pragma warning restore CA1711,IDE0005");
 
-            File.WriteAllText($"../RaylibSharp/gen/Structs/" + s.Name + ".cs", sb.ToString());
+            File.WriteAllText(Path.Join("../RaylibSharp/gen/Structs/", api.Directory, s.Name + ".cs"), sb.ToString());
         }
     }
 
@@ -86,7 +98,15 @@ public static class StructProcessor
                 fixedArray = "[" + parts[1];
             }
 
-            if (field.Type == "Matrix[2]")
+            if (field.Type == "unsigned int[4]")
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    sb.AppendLine($"    /// <summary> {field.Description} </summary>");
+                    sb.AppendLine($"    public uint {pascalName}{i};");
+                }
+            }
+            else if (field.Type == "Matrix[2]")
             {
                 sb.AppendLine($"    /// <summary> {field.Description} </summary>");
                 sb.AppendLine($"    public fixed float {pascalName}L[16];");
@@ -109,6 +129,7 @@ public static class StructProcessor
                     type.Contains("IntPtr") ||
                     type.Contains("bool") ||
                     type.Contains("GlyphInfo") ||
+                    type.Contains("DrawCall") ||
                     type.Contains("Quaternion") ||
                     type.Contains("Texture") ||
                     type.Contains("Image") ||
@@ -137,8 +158,7 @@ public static class StructProcessor
             sb.AppendLine($"[NativeMarshalling(typeof({s.Name}Marshaller))]");
         }
 
-        string defType = config.UseAsClass ? "class" : "struct";
-        sb.AppendLine($"public unsafe partial {defType} {s.Name}");
+        sb.AppendLine($"public unsafe partial struct {s.Name}");
         sb.AppendLine("{");
 
         foreach (Fields field in s.Fields)
@@ -149,12 +169,21 @@ public static class StructProcessor
             {
                 pascalName = pascalName[s.Name.Length..];
             }
+
             if (field.Type == "Matrix[2]")
             {
                 sb.AppendLine($"    /// <summary> {field.Description} </summary>");
                 sb.AppendLine($"    public Matrix4x4 {pascalName}L;");
                 sb.AppendLine($"    /// <summary> {field.Description} </summary>");
                 sb.AppendLine($"    public Matrix4x4 {pascalName}R;");
+            }
+            else if (field.Type == "unsigned int[4]")
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    sb.AppendLine($"    /// <summary> {field.Description} </summary>");
+                    sb.AppendLine($"    public uint {pascalName}{i};");
+                }
             }
             else
             {
@@ -208,6 +237,9 @@ public static class StructProcessor
             "rAudioBuffer*" => "IntPtr",
             "rAudioProcessor*" => "IntPtr",
 
+            "rlVertexBuffer*" => "VertexBuffer[]",
+            "rlDrawCall*" => "DrawCall[]",
+
             "Transform**" => "Transform[][]",
 
             "Mesh*" => "Mesh[]",
@@ -230,6 +262,11 @@ public static class StructProcessor
     {
         t = t.Replace(" *", "*");
 
+        if (t.StartsWith("rl"))
+        {
+            t = t[2..];
+        }
+
         return t switch
         {
             "float[2]" => "fixed float",
@@ -242,6 +279,8 @@ public static class StructProcessor
 
             "rAudioBuffer*" => "IntPtr",
             "rAudioProcessor*" => "IntPtr",
+
+            "rlVertexBuffer*" => "VertexBuffer*",
 
             "unsigned char*" => "byte*",
             "unsigned short*" => "short*",
@@ -262,7 +301,7 @@ public static class StructProcessor
         }
         else
         {
-            return new(Array.Empty<string>());
+            return new();
         }
     }
 }

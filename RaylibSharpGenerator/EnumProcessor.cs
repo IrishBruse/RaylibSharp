@@ -5,12 +5,24 @@ using System.Text;
 
 public static class EnumProcessor
 {
+    private static HashSet<string> generated = new();
+
     public static void Emit(RaylibApi api)
     {
         StringBuilder sb = new();
 
         foreach (EnumDef e in api.Enums)
         {
+            if (e.Name.StartsWith("rl"))
+            {
+                e.Name = e.Name[2..];
+            }
+
+            if (!generated.Add(e.Name))
+            {
+                continue;
+            }
+
             if (e.Name == "KeyboardKey")
             {
                 e.Name = "Key";
@@ -21,7 +33,7 @@ public static class EnumProcessor
             }
 
             sb.Clear();
-            sb.AppendLine($"namespace RaylibSharp;");
+            sb.AppendLine($"namespace {api.Namespace};");
             sb.AppendLine();
             sb.AppendLine("#pragma warning disable CA1711");
             sb.AppendLine();
@@ -31,42 +43,63 @@ public static class EnumProcessor
 
             foreach (ValueElement value in e.Values)
             {
-                string name = Utility.ToPascalCase(value.Name);
+                string valueName = Utility.ToPascalCase(value.Name);
 
-                if (name.StartsWith(e.Name, true, CultureInfo.CurrentCulture))
+                if (valueName.StartsWith("rl", true, CultureInfo.CurrentCulture))
                 {
-                    name = name[e.Name.Length..];
+                    valueName = valueName[2..];
                 }
-                else if (name.StartsWith("Camera", true, CultureInfo.CurrentCulture))
+
+                if (valueName.StartsWith(e.Name, true, CultureInfo.CurrentCulture))
                 {
-                    name = name[6..];
+                    valueName = valueName[e.Name.Length..];
+                }
+                else if (valueName.StartsWith("Camera"))
+                {
+                    valueName = valueName[6..];
+                }
+                else if (e.Name == "BlendMode")
+                {
+                    valueName = valueName[5..];
+                }
+                else if (e.Name == "CullMode")
+                {
+                    valueName = valueName[8..];
+                }
+                else if (e.Name == "FramebufferAttachType")
+                {
+                    valueName = valueName[10..];
+                }
+                else if (e.Name == "FramebufferAttachTextureType")
+                {
+                    valueName = valueName[10..];
                 }
                 else if (e.Name == "WindowFlag")
                 {
-                    name = name[4..];
-                    if (name.StartsWith("Window"))
+                    valueName = valueName[4..];
+                    if (valueName.StartsWith("Window"))
                     {
-                        name = name[6..];
+                        valueName = valueName[6..];
                     }
                 }
                 else if (e.Name == "TraceLogLevel")
                 {
-                    name = name[3..];
+                    valueName = valueName[3..];
                 }
                 else if (e.Name == "MaterialMapIndex")
                 {
-                    name = name[11..];
+                    valueName = valueName[11..];
                 }
 
                 sb.AppendLine($"    /// <summary> {value.Description} </summary>");
-                sb.AppendLine($"    {name} = {value.Value},");
+                sb.AppendLine($"    {valueName} = {value.Value},");
             }
 
             sb.AppendLine("}");
             sb.AppendLine();
             sb.AppendLine("#pragma warning restore CA1711");
 
-            File.WriteAllText($"../RaylibSharp/gen/Enums/" + e.Name + ".cs", sb.ToString());
+            File.WriteAllText(Path.Join("../RaylibSharp/gen/Enums/", api.Directory, e.Name + ".cs"), sb.ToString());
         }
     }
 }

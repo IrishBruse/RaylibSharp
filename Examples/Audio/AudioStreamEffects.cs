@@ -4,16 +4,14 @@ using static RaylibSharp.Raylib;
 
 public partial class AudioStreamEffects : ExampleHelper
 {
-
     // Required delay effect variables
-    private static float* delayBuffer = NULL;
-    private static uint delayBufferSize;
+    private static int delayBufferSize = 48000 * 2;
+
+    // Allocate buffer for the delay effect
+    // 1 second delay (device sampleRate*channels)
+    private static float[] delayBuffer = new float[delayBufferSize];
     private static uint delayReadIndex = 2;
     private static uint delayWriteIndex;
-
-    // Module Functions Declaration
-    private static void AudioProcessEffectLPF(System.IntPtr buffer, uint frames);   // Audio effect: lowpass filter
-    private static void AudioProcessEffectDelay(System.IntPtr buffer, uint frames); // Audio effect: delay
 
     // Program main entry point
     public static int Example()
@@ -22,15 +20,11 @@ public partial class AudioStreamEffects : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "$1 false;stream effects");
+        InitWindow(screenWidth, screenHeight, "raylib [audio] example - stream effects");
 
         InitAudioDevice();              // Initialize audio device
 
         Music music = LoadMusicStream("resources/country.mp3");
-
-        // Allocate buffer for the delay effect
-        delayBufferSize = 48000 * 2;      // 1 second delay (device sampleRate*channels)
-        delayBuffer = (float*)RL_CALLOC(delayBufferSize, sizeof(float));
 
         PlayMusicStream(music);
 
@@ -76,11 +70,11 @@ public partial class AudioStreamEffects : ExampleHelper
                 enableEffectLPF = !enableEffectLPF;
                 if (enableEffectLPF)
                 {
-                    AttachAudioStreamProcessor(music.stream, AudioProcessEffectLPF);
+                    AttachAudioStreamProcessor(music.Stream, AudioProcessEffectLPF);
                 }
                 else
                 {
-                    DetachAudioStreamProcessor(music.stream, AudioProcessEffectLPF);
+                    DetachAudioStreamProcessor(music.Stream, AudioProcessEffectLPF);
                 }
             }
 
@@ -90,11 +84,11 @@ public partial class AudioStreamEffects : ExampleHelper
                 enableEffectDelay = !enableEffectDelay;
                 if (enableEffectDelay)
                 {
-                    AttachAudioStreamProcessor(music.stream, AudioProcessEffectDelay);
+                    AttachAudioStreamProcessor(music.Stream, AudioProcessEffectDelay);
                 }
                 else
                 {
-                    DetachAudioStreamProcessor(music.stream, AudioProcessEffectDelay);
+                    DetachAudioStreamProcessor(music.Stream, AudioProcessEffectDelay);
                 }
             }
 
@@ -109,7 +103,6 @@ public partial class AudioStreamEffects : ExampleHelper
             // Draw
             BeginDrawing();
             {
-
                 ClearBackground(RayWhite);
 
                 DrawText("MUSIC SHOULD BE PLAYING!", 245, 150, 20, LightGray);
@@ -121,9 +114,8 @@ public partial class AudioStreamEffects : ExampleHelper
                 DrawText("PRESS SPACE TO RESTART MUSIC", 215, 230, 20, LightGray);
                 DrawText("PRESS P TO PAUSE/RESUME MUSIC", 208, 260, 20, LightGray);
 
-                DrawText(TextFormat("PRESS F TO TOGGLE LPF EFFECT: %s", enableEffectLPF ? "ON" : "OFF"), 200, 320, 20, Gray);
-                DrawText(TextFormat("PRESS D TO TOGGLE DELAY EFFECT: %s", enableEffectDelay ? "ON" : "OFF"), 180, 350, 20, Gray);
-
+                DrawText("PRESS F TO TOGGLE LPF EFFECT: " + (enableEffectLPF ? "ON" : "OFF"), 200, 320, 20, Gray);
+                DrawText("PRESS D TO TOGGLE DELAY EFFECT: " + (enableEffectDelay ? "ON" : "OFF"), 180, 350, 20, Gray);
             }
             EndDrawing();
         }
@@ -133,8 +125,6 @@ public partial class AudioStreamEffects : ExampleHelper
 
         CloseAudioDevice();         // Close audio device (music streaming is automatically stopped)
 
-        RL_FREE(delayBuffer);       // Free delay buffer
-
         CloseWindow();              // Close window and OpenGL context
 
         return 0;
@@ -142,10 +132,10 @@ public partial class AudioStreamEffects : ExampleHelper
 
     // Module Functions Definition
     // Audio effect: lowpass filter
-    private static void AudioProcessEffectLPF(System.IntPtr buffer, uint frames)
+    private static unsafe void AudioProcessEffectLPF(nint buffer, uint frames)
     {
-        static float[] low = new float[2];
-        static const float cutoff = 70.0f / 44100.0f; // 70 Hz lowpass filter
+        float[] low = new float[2];
+        const float cutoff = 70.0f / 44100.0f; // 70 Hz lowpass filter
         const float k = cutoff / (cutoff + 0.1591549431f); // RC filter formula
 
         for (uint i = 0; i < frames * 2; i += 2)
@@ -159,7 +149,7 @@ public partial class AudioStreamEffects : ExampleHelper
     }
 
     // Audio effect: delay
-    private static void AudioProcessEffectDelay(System.IntPtr buffer, uint frames)
+    private static unsafe void AudioProcessEffectDelay(nint buffer, uint frames)
     {
         for (uint i = 0; i < frames * 2; i += 2)
         {
@@ -169,7 +159,8 @@ public partial class AudioStreamEffects : ExampleHelper
             if (delayReadIndex == delayBufferSize)
             {
                 delayReadIndex = 0;
-            } ((float*)buffer)[i] = (0.5f * ((float*)buffer)[i]) + (0.5f * leftDelay);
+            }
+            ((float*)buffer)[i] = (0.5f * ((float*)buffer)[i]) + (0.5f * leftDelay);
             ((float*)buffer)[i + 1] = (0.5f * ((float*)buffer)[i + 1]) + (0.5f * rightDelay);
 
             delayBuffer[delayWriteIndex++] = ((float*)buffer)[i];

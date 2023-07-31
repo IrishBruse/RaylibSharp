@@ -1,18 +1,27 @@
 ﻿namespace RaylibSharp.Generator;
 
-using System.Text.Json;
-
 public class Program
 {
     private static void Main()
     {
-        string jsonString = File.ReadAllText("api/raylib.json");
+        RaylibApi api;
 
-        RaylibApi api = JsonSerializer.Deserialize<RaylibApi>(jsonString)!;
+        api = RaylibApi.Deserialize("api/raylib.json");
+        api.ClassName = "Raylib";
+        api.Namespace = "RaylibSharp";
 
         EnumProcessor.Emit(api);
         StructProcessor.Emit(api);
-        FunctionProcessor.Emit(api, "Raylib");
+        FunctionProcessor.Emit(api);
+
+        api = RaylibApi.Deserialize("api/rlgl.json");
+        api.ClassName = "RLGL";
+        api.Namespace = "RaylibSharp.GL";
+        api.Directory = "GL";
+
+        EnumProcessor.Emit(api);
+        StructProcessor.Emit(api);
+        FunctionProcessor.Emit(api);
 
         ExampleProcessor.Emit();
     }

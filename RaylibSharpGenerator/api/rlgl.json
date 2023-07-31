@@ -635,64 +635,9 @@
           "description": "Vertex colors (RGBA - 4 components per vertex) (shader-location = 3)"
         },
         {
-          "type": "#if defined(GRAPHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPEN#if defined(GRAPHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPEN#if defined(GRAPHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPEN#if defined(GRAPHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPENunsigned int *APHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPEN#endif",
-          "name": "m0",
-          "description": "Matrix first row (4 components)"
-        },
-        {
-          "type": "#if defined(GRAPHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPEN#if defined(GRAPHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPEN#if defined(GRAPHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPENunsigned int *APHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPEN#endif",
-          "name": "m4",
-          "description": "Matrix first row (4 components)"
-        },
-        {
-          "type": "#if defined(GRAPHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPEN#if defined(GRAPHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPENunsigned int *APHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPEN#endif",
-          "name": "m8",
-          "description": "Matrix first row (4 components)"
-        },
-        {
-          "type": "#if defined(GRAPHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPENunsigned int *APHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPEN#endif",
-          "name": "m12",
-          "description": "Matrix first row (4 components)"
-        },
-        {
-          "type": "unsigned int *APHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPEN#endif",
-          "name": "indices",
-          "description": "Vertex indices (in case vertex data comes indexed) (6 indices per quad)"
-        },
-        {
-          "type": "#endif",
-          "name": "shaderId",
-          "description": "Shader id to be used on the draw -> Using RLGL.currentShaderId"
-        },
-        {
-          "type": "#if defined(GRAPHICS_API_OPENGL_ES2)",
-          "name": "vaoId",
-          "description": "Vertex array id to be used on the draw -> Using RLGL.currentBatch->vertexBuffer.vaoId"
-        },
-        {
           "type": "unsigned short *",
           "name": "indices",
           "description": "Vertex indices (in case vertex data comes indexed) (6 indices per quad)"
-        },
-        {
-          "type": "#endif",
-          "name": "m0",
-          "description": "Matrix first row (4 components)"
-        },
-        {
-          "type": "#endif",
-          "name": "m4",
-          "description": "Matrix first row (4 components)"
-        },
-        {
-          "type": "#endif",
-          "name": "m8",
-          "description": "Matrix first row (4 components)"
-        },
-        {
-          "type": "#endif",
-          "name": "m12",
-          "description": "Matrix first row (4 components)"
         },
         {
           "type": "unsigned int",
@@ -769,8 +714,7 @@
       ]
     }
   ],
-  "aliases": [
-  ],
+  "aliases": [],
   "enums": [
     {
       "name": "rlGlVersion",
@@ -1379,8 +1323,7 @@
       ]
     }
   ],
-  "callbacks": [
-  ],
+  "callbacks": [],
   "functions": [
     {
       "name": "rlMatrixMode",

@@ -10,6 +10,10 @@ using System.Text.Json.Serialization;
 
 public partial class RaylibApi
 {
+    [JsonIgnore] public string ClassName { get; set; }
+    [JsonIgnore] public string Namespace { get; set; }
+    [JsonIgnore] public string Directory { get; set; }
+
     [JsonPropertyName("defines")]
     public Fields[] Defines { get; set; }
 
@@ -27,6 +31,11 @@ public partial class RaylibApi
 
     [JsonPropertyName("functions")]
     public Function[] Functions { get; set; }
+
+    public static RaylibApi Deserialize(string path)
+    {
+        return JsonSerializer.Deserialize<RaylibApi>(File.ReadAllText(path))!;
+    }
 }
 
 public partial class Fields

@@ -2,6 +2,7 @@ using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -80,8 +81,8 @@ public partial class ShapesTopDownLights : ExampleHelper
         ClearBackground(White);
 
         // Force the blend mode to only set the alpha of the destination
-        rlSetBlendFactors(RLGL_SRC_ALPHA, RLGL_SRC_ALPHA, RLGL_MIN);
-        rlSetBlendMode(BLEND_CUSTOM);
+        RLGL.SetBlendFactors(RLGL_SRC_ALPHA, RLGL_SRC_ALPHA, RLGL_MIN);
+        RLGL.SetBlendMode(BLEND_CUSTOM);
 
         // If we are valid, then draw the light radius to the alpha mask
         if (lights[slot].valid)
@@ -89,12 +90,12 @@ public partial class ShapesTopDownLights : ExampleHelper
             DrawCircleGradient((int)lights[slot].position.X, (int)lights[slot].position.Y, lights[slot].outerRadius, ColorAlpha(White, 0), White);
         }
 
-        rlDrawRenderBatchActive();
+        RLGL.DrawRenderBatchActive();
 
         // Cut out the shadows from the light radius by forcing the alpha to maximum
-        rlSetBlendMode(BLEND_ALPHA);
-        rlSetBlendFactors(RLGL_SRC_ALPHA, RLGL_SRC_ALPHA, RLGL_MAX);
-        rlSetBlendMode(BLEND_CUSTOM);
+        RLGL.SetBlendMode(BLEND_ALPHA);
+        RLGL.SetBlendFactors(RLGL_SRC_ALPHA, RLGL_SRC_ALPHA, RLGL_MAX);
+        RLGL.SetBlendMode(BLEND_CUSTOM);
 
         // Draw the shadows to the alpha mask
         for (int i = 0; i < lights[slot].shadowCount; i++)
@@ -102,10 +103,10 @@ public partial class ShapesTopDownLights : ExampleHelper
             DrawTriangleFan(lights[slot].shadows[i], 4, White);
         }
 
-        rlDrawRenderBatchActive();
+        RLGL.DrawRenderBatchActive();
 
         // Go back to normal blend mode
-        rlSetBlendMode(BLEND_ALPHA);
+        RLGL.SetBlendMode(BLEND_ALPHA);
 
         EndTextureMode();
     }
@@ -292,8 +293,8 @@ public partial class ShapesTopDownLights : ExampleHelper
                 ClearBackground(Black);
 
                 // Force the blend mode to only set the alpha of the destination
-                rlSetBlendFactors(RLGL_SRC_ALPHA, RLGL_SRC_ALPHA, RLGL_MIN);
-                rlSetBlendMode(BLEND_CUSTOM);
+                RLGL.SetBlendFactors(RLGL_SRC_ALPHA, RLGL_SRC_ALPHA, RLGL_MIN);
+                RLGL.SetBlendMode(BLEND_CUSTOM);
 
                 // Merge in all the light masks
                 for (int i = 0; i < MAX_LIGHTS; i++)
@@ -304,10 +305,10 @@ public partial class ShapesTopDownLights : ExampleHelper
                     }
                 }
 
-                rlDrawRenderBatchActive();
+                RLGL.DrawRenderBatchActive();
 
                 // Go back to normal blend
-                rlSetBlendMode(BLEND_ALPHA);
+                RLGL.SetBlendMode(BLEND_ALPHA);
                 EndTextureMode();
             }
 
@@ -318,10 +319,10 @@ public partial class ShapesTopDownLights : ExampleHelper
                 ClearBackground(Black);
 
                 // Draw the tile background
-                DrawTexture(backgroundTexture, new(0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()), Vector2Zero(), White);
+                DrawTexture(backgroundTexture, new(0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()), Vector2.Zero, White);
 
                 // Overlay the shadows from all the lights
-                DrawTexture(lightMask.texture, new(0, 0, (float)GetScreenWidth(), -(float)GetScreenHeight()), Vector2Zero(), ColorAlpha(White, showLines ? 0.75f : 1.0f));
+                DrawTexture(lightMask.texture, new(0, 0, (float)GetScreenWidth(), -(float)GetScreenHeight()), Vector2.Zero, ColorAlpha(White, showLines ? 0.75f : 1.0f));
 
                 // Draw the lights
                 for (int i = 0; i < MAX_LIGHTS; i++)

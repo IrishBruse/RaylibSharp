@@ -7,14 +7,6 @@ using System.Runtime.InteropServices.Marshalling;
 [CustomMarshaller(typeof(Color), MarshalMode.ManagedToUnmanagedOut, typeof(ColorMarshaller))]
 internal static unsafe class ColorMarshaller
 {
-    internal struct UnmanagedColor
-    {
-        public byte R;
-        public byte G;
-        public byte B;
-        public byte A;
-    }
-
     public static UnmanagedColor ConvertToUnmanaged(Color managed)
     {
         return new UnmanagedColor()
@@ -30,4 +22,12 @@ internal static unsafe class ColorMarshaller
     {
         return Color.FromArgb(unmanaged.R, unmanaged.G, unmanaged.B, unmanaged.A);
     }
+}
+
+internal struct UnmanagedColor
+{
+    public byte R;
+    public byte G;
+    public byte B;
+    public byte A;
 }

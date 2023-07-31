@@ -1,0 +1,18 @@
+{
+    "FilePathList": {
+        "UnmanagedAttribute": true,
+        "AdditionalProperties": ["internal sbyte** PathsPtr;"]
+    },
+    "Shader": { "UnmanagedAttribute": true },
+    "Font": { "UnmanagedAttribute": true },
+    "Camera2D": { "GenUnmanaged": false },
+    "Camera3D": { "GenUnmanaged": false },
+    "Mesh": { "UnmanagedAttribute": true },
+    "Model": { "UnmanagedAttribute": true },
+    "Material": { "UnmanagedAttribute": true },
+    "ModelAnimation": { "UnmanagedAttribute": true },
+    "Texture": { "GenUnmanaged": false },
+    "Image": { "GenUnmanaged": false },
+    "GlyphInfo": { "GenUnmanaged": false },
+    "rlDrawCall": { "GenUnmanaged": false }
+}

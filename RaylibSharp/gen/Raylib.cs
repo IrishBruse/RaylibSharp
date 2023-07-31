@@ -250,7 +250,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Begin 2D mode with custom camera (2D) </summary>
     [LibraryImport(LIB, EntryPoint = "BeginMode2D")]
-    public static partial void BeginMode2D([MarshalUsing(typeof(Camera2DMarshaller))] Camera2D camera);
+    public static partial void BeginMode2D(Camera2D camera);
 
     /// <summary> Ends 2D mode with custom camera </summary>
     [LibraryImport(LIB, EntryPoint = "EndMode2D")]
@@ -258,7 +258,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Begin 3D mode with custom camera (3D) </summary>
     [LibraryImport(LIB, EntryPoint = "BeginMode3D")]
-    public static partial void BeginMode3D([MarshalUsing(typeof(Camera3DMarshaller))] Camera3D camera);
+    public static partial void BeginMode3D(Camera3D camera);
 
     /// <summary> Ends 3D mode and returns to default 2D orthographic mode </summary>
     [LibraryImport(LIB, EntryPoint = "EndMode3D")]
@@ -355,31 +355,31 @@ public static unsafe partial class Raylib
 
     /// <summary> Get a ray trace from mouse position </summary>
     [LibraryImport(LIB, EntryPoint = "GetMouseRay")]
-    public static partial Ray GetMouseRay(Vector2 mousePosition, [MarshalUsing(typeof(Camera3DMarshaller))] Camera3D camera);
+    public static partial Ray GetMouseRay(Vector2 mousePosition, Camera3D camera);
 
     /// <summary> Get camera transform matrix (view matrix) </summary>
     [LibraryImport(LIB, EntryPoint = "GetCameraMatrix")]
-    public static partial Matrix4x4 GetCameraMatrix([MarshalUsing(typeof(Camera3DMarshaller))] Camera3D camera);
+    public static partial Matrix4x4 GetCameraMatrix(Camera3D camera);
 
     /// <summary> Get camera 2d transform matrix </summary>
     [LibraryImport(LIB, EntryPoint = "GetCameraMatrix2D")]
-    public static partial Matrix4x4 GetCameraMatrix2D([MarshalUsing(typeof(Camera2DMarshaller))] Camera2D camera);
+    public static partial Matrix4x4 GetCameraMatrix2D(Camera2D camera);
 
     /// <summary> Get the screen space position for a 3d world space position </summary>
     [LibraryImport(LIB, EntryPoint = "GetWorldToScreen")]
-    public static partial Vector2 GetWorldToScreen(Vector3 position, [MarshalUsing(typeof(Camera3DMarshaller))] Camera3D camera);
+    public static partial Vector2 GetWorldToScreen(Vector3 position, Camera3D camera);
 
     /// <summary> Get the world space position for a 2d camera screen space position </summary>
     [LibraryImport(LIB, EntryPoint = "GetScreenToWorld2D")]
-    public static partial Vector2 GetScreenToWorld2D(Vector2 position, [MarshalUsing(typeof(Camera2DMarshaller))] Camera2D camera);
+    public static partial Vector2 GetScreenToWorld2D(Vector2 position, Camera2D camera);
 
     /// <summary> Get size position for a 3d world space position </summary>
     [LibraryImport(LIB, EntryPoint = "GetWorldToScreenEx")]
-    public static partial Vector2 GetWorldToScreen(Vector3 position, [MarshalUsing(typeof(Camera3DMarshaller))] Camera3D camera, int width, int height);
+    public static partial Vector2 GetWorldToScreen(Vector3 position, Camera3D camera, int width, int height);
 
     /// <summary> Get the screen space position for a 2d camera world space position </summary>
     [LibraryImport(LIB, EntryPoint = "GetWorldToScreen2D")]
-    public static partial Vector2 GetWorldToScreen2D(Vector2 position, [MarshalUsing(typeof(Camera2DMarshaller))] Camera2D camera);
+    public static partial Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera);
 
     /// <summary> Set target FPS (maximum) </summary>
     [LibraryImport(LIB, EntryPoint = "SetTargetFPS")]
@@ -501,7 +501,7 @@ public static unsafe partial class Raylib
     /// <summary> Check if a gamepad button has been pressed once </summary>
     [LibraryImport(LIB, EntryPoint = "IsGamepadButtonPressed")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool IsGamepadButtonPressed(int gamepad, int button);
+    public static partial bool IsGamepadButtonPressed(int gamepad, GamepadButton button);
 
     /// <summary> Check if a gamepad button is being pressed </summary>
     [LibraryImport(LIB, EntryPoint = "IsGamepadButtonDown")]
@@ -511,12 +511,12 @@ public static unsafe partial class Raylib
     /// <summary> Check if a gamepad button has been released once </summary>
     [LibraryImport(LIB, EntryPoint = "IsGamepadButtonReleased")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool IsGamepadButtonReleased(int gamepad, int button);
+    public static partial bool IsGamepadButtonReleased(int gamepad, GamepadButton button);
 
     /// <summary> Check if a gamepad button is NOT being pressed </summary>
     [LibraryImport(LIB, EntryPoint = "IsGamepadButtonUp")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool IsGamepadButtonUp(int gamepad, int button);
+    public static partial bool IsGamepadButtonUp(int gamepad, GamepadButton button);
 
     /// <summary> Get the last gamepad button pressed </summary>
     [LibraryImport(LIB, EntryPoint = "GetGamepadButtonPressed")]
@@ -1599,15 +1599,15 @@ public static unsafe partial class Raylib
 
     /// <summary> Draw a billboard texture </summary>
     [LibraryImport(LIB, EntryPoint = "DrawBillboard")]
-    public static partial void DrawBillboard([MarshalUsing(typeof(Camera3DMarshaller))] Camera3D camera, Texture texture, Vector3 position, float size, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawBillboard(Camera3D camera, Texture texture, Vector3 position, float size, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
 
     /// <summary> Draw a billboard texture defined by source </summary>
     [LibraryImport(LIB, EntryPoint = "DrawBillboardRec")]
-    public static partial void DrawBillboard([MarshalUsing(typeof(Camera3DMarshaller))] Camera3D camera, Texture texture, RectangleF source, Vector3 position, Vector2 size, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawBillboard(Camera3D camera, Texture texture, RectangleF source, Vector3 position, Vector2 size, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
 
     /// <summary> Draw a billboard texture defined by source and rotation </summary>
     [LibraryImport(LIB, EntryPoint = "DrawBillboardPro")]
-    public static partial void DrawBillboard([MarshalUsing(typeof(Camera3DMarshaller))] Camera3D camera, Texture texture, RectangleF source, Vector3 position, Vector3 up, Vector2 size, Vector2 origin, float rotation, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawBillboard(Camera3D camera, Texture texture, RectangleF source, Vector3 position, Vector3 up, Vector2 size, Vector2 origin, float rotation, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
 
     /// <summary> Upload mesh vertex data in GPU and provide VAO/VBO ids </summary>
     [LibraryImport(LIB, EntryPoint = "UploadMesh")]

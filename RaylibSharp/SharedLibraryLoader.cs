@@ -1,4 +1,5 @@
 namespace RaylibSharp;
+
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -10,10 +11,10 @@ internal sealed class SharedLibraryLoader
     [ModuleInitializer]
     internal static void Init()
     {
-        NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), DllImportResolver);
+        NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), Resolve);
     }
 
-    private static IntPtr DllImportResolver(string libName, Assembly assembly, DllImportSearchPath? searchPath)
+    private static IntPtr Resolve(string libName, Assembly assembly, DllImportSearchPath? searchPath)
     {
         string runtimeId = RuntimeID();
 

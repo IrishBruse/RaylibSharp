@@ -97,7 +97,7 @@ public partial class ExampleProcessor
 
         foreach (string item in input)
         {
-            string line = "    " + item;
+            string? line = "    " + item;
             line = line.TrimEnd();
 
             if (!headerRemoved)
@@ -125,12 +125,9 @@ public partial class ExampleProcessor
                 string lineWithoutComment = line.Split("//", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)[0];
                 string[] parts = lineWithoutComment.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
-                Console.WriteLine(string.Join(" ", parts));
-
                 if (parts.Length == 2)
                 {
-                    Console.WriteLine("Skipping: " + line);
-                    line = "";
+                    line = null;
                 }
                 else
                 {
@@ -138,15 +135,16 @@ public partial class ExampleProcessor
                 }
             }
 
-            if (line.ToString().Contains("int main("))
-            {
-                line = new($"    public static int Example()");
-            }
+            line = ProcessLine(line);
 
-            string newLine = ProcessLine(line);
-            if (newLine != null)
+            if (line != null)
             {
-                output.Add(newLine);
+                if (line.ToString().Contains("int main("))
+                {
+                    line = new($"    public static int Example()");
+                }
+
+                output.Add(line);
             }
         }
 
@@ -155,9 +153,7 @@ public partial class ExampleProcessor
         File.WriteAllLines(outputFile, output);
     }
 
-    private static bool replaceCloseingBrace;
-
-    private static string ProcessLine(string l)
+    private static string? ProcessLine(string? l)
     {
         StringBuilder line = new(l);
 

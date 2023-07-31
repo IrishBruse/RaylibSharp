@@ -1,4 +1,5 @@
 {
+    "DebugOutput": false,
     "Excluded": [
         // Have C# alternatives
         "DirectoryExists",
@@ -46,89 +47,60 @@
         "SetTraceLogCallback",
         "InitWindow"
     ],
-    "DebugOutput": false,
     "FunctionTypeConversion": {
+        "GetGestureDetected": { "_": "Gesture" },
+        "LoadFileText": { "_": "string" },
+        "GetGamepadButtonPressed": { "_": "GamepadButton" },
+
+        "SetConfigFlags": { "flags": "WindowFlag flags" },
+        "UpdateCamera": { "mode": "CameraMode mode" },
+        "BeginBlendMode": { "mode": "BlendMode mode" },
+        "IsMouseButtonPressed": { "button": "MouseButton button" },
+        "IsMouseButtonDown": { "button": "MouseButton button" },
+        "IsMouseButtonReleased": { "button": "MouseButton button" },
+        "IsMouseButtonUp": { "button": "MouseButton button" },
+        "IsWindowState": { "flag": "WindowFlag flag" },
+        "SetWindowState": { "flags": "WindowFlag flags" },
+        "ClearWindowState": { "flags": "WindowFlag flags" },
+
+        "IsKeyReleased": { "key": "Key key" },
+        "IsKeyUp": { "key": "Key key" },
+        "IsKeyPressed": { "key": "Key key" },
+        "IsKeyDown": { "key": "Key key" },
+        "SetExitKey": { "key": "Key key" },
+        "SetMouseCursor": { "cursor": "MouseCursor cursor" },
+        "SetTraceLogLevel": { "logLevel": "TraceLogLevel logLevel" },
+        "SetTextureFilter": { "filter": "TextureFilter filter" },
+        "SetShaderValue": {
+            "uniformType": "ShaderUniformDataType uniformType"
+        },
         "LoadFontFromMemory": {
             "fileData": "[MarshalAs(UnmanagedType.LPArray)] byte[] fileData"
         },
         "LoadImageFromMemory": {
             "fileData": "[MarshalAs(UnmanagedType.LPArray)] byte[] fileData"
         },
-        "SetConfigFlags": {
-            "flags": "WindowFlag flags"
+        "LoadShader": {
+            "vsFileName": "[MarshalAs(UnmanagedType.LPStr)] string? vsFileName",
+            "fsFileName": "[MarshalAs(UnmanagedType.LPStr)] string? fsFileName"
         },
-        "UpdateCamera": {
-            "mode": "CameraMode mode"
-        },
-        "BeginBlendMode": {
-            "mode": "BlendMode mode"
-        },
-        "IsMouseButtonPressed": {
-            "button": "MouseButton button"
-        },
-        "IsMouseButtonDown": {
-            "button": "MouseButton button"
-        },
-        "IsMouseButtonReleased": {
-            "button": "MouseButton button"
-        },
-        "IsMouseButtonUp": {
-            "button": "MouseButton button"
-        },
-        "IsWindowState": {
-            "flag": "WindowFlag flag"
-        },
-        "SetWindowState": {
-            "flags": "WindowFlag flags"
-        },
-        "ClearWindowState": {
-            "flags": "WindowFlag flags"
+        "rlBindImageTexture": {
+            "readonly": "[MarshalAs(UnmanagedType.I1)] bool @readonly"
         },
         "IsGamepadButtonDown": {
             "button": "GamepadButton button"
         },
+        "IsGamepadButtonPressed": {
+            "button": "GamepadButton button"
+        },
+        "IsGamepadButtonReleased": {
+            "button": "GamepadButton button"
+        },
+        "IsGamepadButtonUp": {
+            "button": "GamepadButton button"
+        },
         "GetGamepadAxisMovement": {
             "axis": "GamepadAxis axis"
-        },
-        "GetGamepadButtonPressed": {
-            "_": "GamepadButton"
-        },
-        "IsKeyReleased": {
-            "key": "Key key"
-        },
-        "IsKeyUp": {
-            "key": "Key key"
-        },
-        "IsKeyPressed": {
-            "key": "Key key"
-        },
-        "IsKeyDown": {
-            "key": "Key key"
-        },
-        "SetExitKey": {
-            "key": "Key key"
-        },
-        "GetGestureDetected": {
-            "_": "Gesture"
-        },
-        "SetMouseCursor": {
-            "cursor": "MouseCursor cursor"
-        },
-        "LoadFileText": {
-            "_": "string"
-        },
-        "SetTraceLogLevel": {
-            "logLevel": "TraceLogLevel logLevel"
-        },
-        "SetTextureFilter": {
-            "filter": "TextureFilter filter"
-        },
-        "SetShaderValue": {
-            "uniformType": "ShaderUniformDataType uniformType"
-        },
-        "LoadShader": {
-            "vsFileName": "[MarshalAs(UnmanagedType.LPStr)] string? vsFileName",
-            "fsFileName": "[MarshalAs(UnmanagedType.LPStr)] string? fsFileName"
         }
     }
 }
