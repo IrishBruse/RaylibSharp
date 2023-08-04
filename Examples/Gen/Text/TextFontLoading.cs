@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -20,7 +21,7 @@ public partial class TextFontLoading : ExampleHelper
 
         // Define characters to draw
         // NOTE: raylib supports UTF-8 encoding, following list is actually codified as UTF8 internally
-        const char msg[256] = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHI\nJKLMNOPQRSTUVWXYZ[]^_`abcdefghijklmn\nopqrstuvwxyz{|}~¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓ\nÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷\nøùúûüýþÿ";
+        const string msg = "!\"#$%ref '()*+,-./0123456789:;<=>?@ABCDEFGHI\nJKLMNOPQRSTUVWXYZ[]^_`abcdefghijklmn\nopqrstuvwxyz{|}~¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓ\nÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷\nøùúûüýþÿ";
 
         // NOTE: Textures/Fonts MUST be loaded after Window initialization (OpenGL context is required)
 
@@ -51,12 +52,12 @@ public partial class TextFontLoading : ExampleHelper
 
                 if (!useTtf)
                 {
-                    DrawText(fontBm, msg, new( 20.0f, 100.0f ), (float)fontBm.baseSize, 2, Maroon);
+                    DrawText(fontBm, msg, new( 20.0f, 100.0f ), (float)fontBm.BaseSize, 2, Maroon);
                     DrawText("Using BMFont (Angelcode) imported", 20, GetScreenHeight() - 30, 20, Gray);
                 }
                 else
                 {
-                    DrawText(fontTtf, msg, new( 20.0f, 100.0f ), (float)fontTtf.baseSize, 2, Lime);
+                    DrawText(fontTtf, msg, new( 20.0f, 100.0f ), (float)fontTtf.BaseSize, 2, Lime);
                     DrawText("Using TTF font generated", 20, GetScreenHeight() - 30, 20, Gray);
                 }
 

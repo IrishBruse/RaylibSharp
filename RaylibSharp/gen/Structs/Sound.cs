@@ -13,7 +13,7 @@ public unsafe partial struct Sound
     /// <summary> Audio stream </summary>
     public AudioStream Stream;
     /// <summary> Total number of frames (considering channels) </summary>
-    public uint Framecount;
+    public uint FrameCount;
 }
 
 /// <summary> Sound </summary>
@@ -23,7 +23,7 @@ internal unsafe struct UnmanagedSound
     /// <summary> Audio stream </summary>
     public UnmanagedAudioStream Stream;
     /// <summary> Total number of frames (considering channels) </summary>
-    public uint Framecount;
+    public uint FrameCount;
 }
 
 #pragma warning restore CA1711,IDE0005

@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -21,7 +22,7 @@ public partial class TexturesRawData : ExampleHelper
         // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
         // Load RAW image data (512x512, 32bit RGBA, no file header)
-        Image fudesumiRaw = LoadImageRaw("resources/fudesumi.raw", 384, 512, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8, 0);
+        Image fudesumiRaw = LoadImageRaw("resources/fudesumi.Raw", 384, 512, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8, 0);
         Texture fudesumi = LoadTextureFromImage(fudesumiRaw);  // Upload CPU (RAM) image to GPU (VRAM)
         UnloadImage(fudesumiRaw);                                // Unload CPU (RAM) image data
 
@@ -30,7 +31,7 @@ public partial class TexturesRawData : ExampleHelper
         int height = 480;
 
         // Dynamic memory allocation to store pixels data (Color type)
-        Color *pixels = (Color *)malloc(width*height*sizeof(Color));
+        Color[] pixels = (Color[] )malloc(width*height*sizeof(Color));
 
         for (int y = 0; y < height; y++)
         {

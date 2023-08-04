@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -28,11 +29,11 @@ public partial class TextCodepointsLoading : ExampleHelper
 
         // Get codepoints from text
         int codepointCount = 0;
-        int *codepoints = LoadCodepoints(text, &codepointCount);
+        int *codepoints = LoadCodepoints(text, ref codepointCount);
 
         // Removed duplicate codepoints to generate smaller font atlas
         int codepointsNoDupsCount = 0;
-        int *codepointsNoDups = CodepointRemoveDuplicates(codepoints, codepointCount, &codepointsNoDupsCount);
+        int *codepointsNoDups = CodepointRemoveDuplicates(codepoints, codepointCount, ref codepointsNoDupsCount);
         UnloadCodepoints(codepoints);
 
         // Load font containing all the provided codepoint glyphs
@@ -40,7 +41,7 @@ public partial class TextCodepointsLoading : ExampleHelper
         Font font = LoadFont("resources/DotGothic16-Regular.ttf", 36, codepointsNoDups, codepointsNoDupsCount);
 
         // Set bilinear scale filter for better font scaling
-        SetTextureFilter(font.texture, TEXTURE_FILTER_BILINEAR);
+        SetTextureFilter(font.Texture, TEXTURE_FILTER_BILINEAR);
 
         // Free codepoints, atlas has already been generated
         free(codepointsNoDups);
@@ -63,13 +64,13 @@ public partial class TextCodepointsLoading : ExampleHelper
             if (IsKeyPressed(Key.Right))
             {
                 // Get next codepoint in string and move pointer
-                codepoint = GetCodepointNext(ptr, &codepointSize);
+                codepoint = GetCodepointNext(ptr, ref codepointSize);
                 ptr += codepointSize;
             }
             else if (IsKeyPressed(Key.Left))
             {
                 // Get previous codepoint in string and move pointer
-                codepoint = GetCodepointPrevious(ptr, &codepointSize);
+                codepoint = GetCodepointPrevious(ptr, ref codepointSize);
                 ptr -= codepointSize;
             }
 
@@ -85,13 +86,13 @@ public partial class TextCodepointsLoading : ExampleHelper
                 if (showFontAtlas)
                 {
                     // Draw generated font texture atlas containing provided codepoints
-                    DrawTexture(font.texture, 150, 100, Black);
-                    DrawRectangleLines(150, 100, font.texture.Width, font.texture.Height, Black);
+                    DrawTexture(font.Texture, 150, 100, Black);
+                    DrawRectangleLines(150, 100, font.Texture.Width, font.Texture.Height, Black);
                 }
                 else
                 {
                     // Draw provided text with laoded font, containing all required codepoint glyphs
-                    DrawText(font, text, (Vector2) { 160, 110 }, 48, 5, Black);
+                    DrawText(font, text, new( 160, 110 ), 48, 5, Black);
                 }
 
                 DrawText("Press SPACE to toggle font atlas view!", 10, GetScreenHeight() - 30, 20, Gray);

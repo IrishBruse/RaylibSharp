@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -26,13 +27,13 @@ private const int GLSL_VERSION = 100;
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shaders - model shader");
 
-        // Define the camera to look into our 3d world
-        Camera camera = new();
-        camera.Position = (Vector3)new(4.0f,4.0f, 4.0f);    // Camera position
-        camera.Target = (Vector3)new(0.0f,1.0f, -1.0f);     // Camera looking at point
-        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);          // Camera up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera projection type
+        // Define the camera to look into our 3d woRLGL.d
+        Camera3D camera = new();
+        camera.Position = (Vector3)new(4.0f,4.0f, 4.0f);    // Camera3D position
+        camera.Target = (Vector3)new(0.0f,1.0f, -1.0f);     // Camera3D looking at point
+        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
 
         Model model = LoadModel("resources/models/watermill.obj");                   // Load OBJ model
         Texture texture = LoadTexture("resources/models/watermill_diffuse.png");   // Load model texture
@@ -42,7 +43,7 @@ private const int GLSL_VERSION = 100;
         Shader shader = LoadShader(0, TextFormat("resources/shaders/glsl%i/grayscale.fs", GLSL_VERSION));
 
         model.Materials[0].shader = shader;                     // Set shader effect to 3d model
-        model.Materials[0].Maps[MaterialMapIndex.Albedo].texture = texture; // Bind texture to model
+        model.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture; // Bind texture to model
 
         Vector3 position = new( 0.0f, 0.0f, 0.0f );    // Set model position
 

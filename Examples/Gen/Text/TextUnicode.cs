@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -189,22 +190,22 @@ private const int EMOJI_PER_HEIGHT = 4;
                 // Draw random emojis in the background
                 for (int i = 0; i < SIZEOF(emoji); ++i)
                 {
-                    string txt = &emojiCodepoints[emoji[i].index];
-                    RectangleF emojiRect = new( pos.X, pos.Y, (float)fontEmoji.baseSize, (float)fontEmoji.baseSize );
+                    string txt = ref emojiCodepoints[emoji[i].index];
+                    RectangleF emojiRect = new( pos.X, pos.Y, (float)fontEmoji.BaseSize, (float)fontEmoji.BaseSize );
 
                     if (!CheckCollisionPoint(mouse, emojiRect))
                     {
-                        DrawText(fontEmoji, txt, pos, (float)fontEmoji.baseSize, 1.0f, selected == i ? emoji[i].color : Fade(LightGray, 0.4f));
+                        DrawText(fontEmoji, txt, pos, (float)fontEmoji.BaseSize, 1.0f, selected == i ? emoji[i].color : Fade(LightGray, 0.4f));
                     }
                     else
                     {
-                        DrawText(fontEmoji, txt, pos, (float)fontEmoji.baseSize, 1.0f, emoji[i].color );
+                        DrawText(fontEmoji, txt, pos, (float)fontEmoji.BaseSize, 1.0f, emoji[i].color );
                         hovered = i;
                         hoveredPos = pos;
                     }
 
-                    if ((i != 0) && (i%EMOJI_PER_WIDTH == 0)) { pos.Y += fontEmoji.baseSize + 24.25f; pos.X = 28.8f; }
-                    else pos.X += fontEmoji.baseSize + 28.8f;
+                    if ((i != 0) && (i%EMOJI_PER_WIDTH == 0)) { pos.Y += fontEmoji.BaseSize + 24.25f; pos.X = 28.8f; }
+                    else pos.X += fontEmoji.BaseSize + 28.8f;
                 }
 
                 // Draw the message when a emoji is selected
@@ -212,15 +213,15 @@ private const int EMOJI_PER_HEIGHT = 4;
                 {
                     const int message = emoji[selected].message;
                     const int horizontalPadding = 20, verticalPadding = 30;
-                    Font *font = &fontDefault;
+                    Font *font = ref fontDefault;
 
                     // Set correct font for asian languages
                     if (TextIsEqual(messages[message].language, "Chinese") ||
                         TextIsEqual(messages[message].language, "Korean") ||
-                        TextIsEqual(messages[message].language, "Japanese")) font = &fontAsian;
+                        TextIsEqual(messages[message].language, "Japanese")) font = ref fontAsian;
 
                     // Calculate size for the message box (approximate the height and width)
-                    Vector2 sz = MeasureText(*font, messages[message].text, (float)font.baseSize, 1.0f);
+                    Vector2 sz = MeasureText(*font, messages[message].text, (float)font.BaseSize, 1.0f);
                     if (sz.X > 300) { sz.Y *= sz.X/300; sz.X = 300; }
                     else if (sz.X < 160) sz.X = 160;
 
@@ -253,10 +254,10 @@ private const int EMOJI_PER_HEIGHT = 4;
 
                     // Draw the main text message
                     RectangleF textRect = new( msgRect.X + horizontalPadding/2, msgRect.Y + verticalPadding/2, msgRect.Width - horizontalPadding, msgRect.Height );
-                    DrawTextBoxed(*font, messages[message].text, textRect, (float)font.baseSize, 1.0f, true, White);
+                    DrawTextBoxed(*font, messages[message].text, textRect, (float)font.BaseSize, 1.0f, true, White);
 
                     // Draw the info text below the main message
-                    int size = (int)strlen(messages[message].text);
+                    int size = (int)stRLGL.en(messages[message].text);
                     int length = GetCodepointCount(messages[message].text);
                     string info = TextFormat("%s %u characters %i bytes", messages[message].language, length, size);
                     sz = MeasureText(GetFontDefault(), info, 10, 1.0f);
@@ -316,7 +317,7 @@ private const int EMOJI_PER_HEIGHT = 4;
         float textOffsetY = 0;          // Offset between lines (on line break '\n')
         float textOffsetX = 0.0f;       // Offset X to next character to draw
 
-        float scaleFactor = fontSize/(float)font.baseSize;     // Character rectangle scaling factor
+        float scaleFactor = fontSize/(float)font.BaseSize;     // Character rectangle scaling factor
 
         // Word/character wrapping mechanism variables
         enum { MEASURE_STATE = 0, DRAW_STATE = 1 };
@@ -330,7 +331,7 @@ private const int EMOJI_PER_HEIGHT = 4;
         {
             // Get next codepoint from byte string and glyph index in font
             int codepointByteCount = 0;
-            int codepoint = GetCodepoint(&text[i], &codepointByteCount);
+            int codepoint = GetCodepoint(ref text[i], ref codepointByteCount);
             int index = GetGlyphIndex(font, codepoint);
 
             // NOTE: Normally we exit the decoding sequence as soon as a bad byte is found (and return 0x3f)
@@ -341,7 +342,7 @@ private const int EMOJI_PER_HEIGHT = 4;
             float glyphWidth = 0;
             if (codepoint != '\n')
             {
-                glyphWidth = (font.glyphs[index].advanceX == 0) ? font.recs[index].Width*scaleFactor : font.glyphs[index].advanceX*scaleFactor;
+                glyphWidth = (font.Glyphs[index].AdvanceX == 0) ? font.Recs[index].Width*scaleFactor : font.Glyphs[index].AdvanceX*scaleFactor;
 
                 if (i + 1 < length) glyphWidth = glyphWidth + spacing;
             }
@@ -390,7 +391,7 @@ private const int EMOJI_PER_HEIGHT = 4;
                 {
                     if (!wordWrap)
                     {
-                        textOffsetY += (font.baseSize + font.baseSize/2)*scaleFactor;
+                        textOffsetY += (font.BaseSize + font.BaseSize/2)*scaleFactor;
                         textOffsetX = 0;
                     }
                 }
@@ -398,18 +399,18 @@ private const int EMOJI_PER_HEIGHT = 4;
                 {
                     if (!wordWrap && ((textOffsetX + glyphWidth) > rec.Width))
                     {
-                        textOffsetY += (font.baseSize + font.baseSize/2)*scaleFactor;
+                        textOffsetY += (font.BaseSize + font.BaseSize/2)*scaleFactor;
                         textOffsetX = 0;
                     }
 
                     // When text overflows rectangle height limit, just stop drawing
-                    if ((textOffsetY + font.baseSize*scaleFactor) > rec.Height) break;
+                    if ((textOffsetY + font.BaseSize*scaleFactor) > rec.Height) break;
 
                     // Draw selection background
                     bool isGlyphSelected = false;
                     if ((selectStart >= 0) && (k >= selectStart) && (k < (selectStart + selectLength)))
                     {
-                        DrawRectangle(new( rec.X + textOffsetX - 1, rec.Y + textOffsetY, glyphWidth, (float)font.baseSize*scaleFactor ), selectBackTint);
+                        DrawRectangle(new( rec.X + textOffsetX - 1, rec.Y + textOffsetY, glyphWidth, (float)font.BaseSize*scaleFactor ), selectBackTint);
                         isGlyphSelected = true;
                     }
 
@@ -422,7 +423,7 @@ private const int EMOJI_PER_HEIGHT = 4;
 
                 if (wordWrap && (i == endLine))
                 {
-                    textOffsetY += (font.baseSize + font.baseSize/2)*scaleFactor;
+                    textOffsetY += (font.BaseSize + font.BaseSize/2)*scaleFactor;
                     textOffsetX = 0;
                     startLine = endLine;
                     endLine = -1;

@@ -23,7 +23,7 @@ internal static unsafe class RenderBatchMarshaller
                 Currentdepth = managed.Currentdepth,
                 Drawcounter = managed.Drawcounter,
                 Draws = drawsPtr,
-                Vertexbuffer = vertexBuffersPtr,
+                // Vertexbuffer = vertexBuffersPtr,
             };
         }
     }

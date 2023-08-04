@@ -12,11 +12,11 @@ using System.Runtime.InteropServices.Marshalling;
 public unsafe partial struct Font
 {
     /// <summary> Base size (default chars height) </summary>
-    public int Basesize;
+    public int BaseSize;
     /// <summary> Number of glyph characters </summary>
-    public int Glyphcount;
+    public int GlyphCount;
     /// <summary> Padding around the glyph characters </summary>
-    public int Glyphpadding;
+    public int GlyphPadding;
     /// <summary> Texture atlas containing the glyphs </summary>
     public Texture Texture;
     /// <summary> Rectangles in texture for the glyphs </summary>
@@ -30,11 +30,11 @@ public unsafe partial struct Font
 internal unsafe struct UnmanagedFont
 {
     /// <summary> Base size (default chars height) </summary>
-    public int Basesize;
+    public int BaseSize;
     /// <summary> Number of glyph characters </summary>
-    public int Glyphcount;
+    public int GlyphCount;
     /// <summary> Padding around the glyph characters </summary>
-    public int Glyphpadding;
+    public int GlyphPadding;
     /// <summary> Texture atlas containing the glyphs </summary>
     public Texture Texture;
     /// <summary> Rectangles in texture for the glyphs </summary>

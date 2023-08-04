@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -54,12 +55,12 @@ private const int MAX_STARS = 400;
 
         Star stars[MAX_STARS] = new();
 
-        for (int n = 0; n < MAX_STARS; n++) ResetStar(&stars[n]);
+        for (int n = 0; n < MAX_STARS; n++) ResetStar(ref stars[n]);
 
         // Progress all the stars on, so they don't all start in the centre
         for (int m = 0; m < screenWidth/2.0; m++)
         {
-            for (int n = 0; n < MAX_STARS; n++) UpdateStar(&stars[n]);
+            for (int n = 0; n < MAX_STARS; n++) UpdateStar(ref stars[n]);
         }
 
         int frameCounter = 0;
@@ -72,9 +73,9 @@ private const int MAX_STARS = 400;
 
         for (int i = 0; i < MAX_SPOTS; i++)
         {
-            char posName[32] = "spots[x].pos\0";
-            char innerName[32] = "spots[x].inner\0";
-            char radiusName[32] = "spots[x].radius\0";
+            string posName = "spots[x].pos\0";
+            string innerName = "spots[x].inner\0";
+            string radiusName = "spots[x].Radius\0";
 
             posName[6] = '0' + i;
             innerName[6] = '0' + i;
@@ -82,7 +83,7 @@ private const int MAX_STARS = 400;
 
             spots[i].positionLoc = GetShaderLocation(shdrSpot, posName);
             spots[i].innerLoc = GetShaderLocation(shdrSpot, innerName);
-            spots[i].radiusLoc = GetShaderLocation(shdrSpot, radiusName);
+            spots[i].RadiusLoc = GetShaderLocation(shdrSpot, radiusName);
 
         }
 
@@ -90,7 +91,7 @@ private const int MAX_STARS = 400;
         // a pitch black half and a dimly lit half.
         uint wLoc = GetShaderLocation(shdrSpot, "screenWidth");
         float sw = (float)GetScreenWidth();
-        SetShaderValue(shdrSpot, wLoc, &sw, SHADER_UNIFORM_FLOAT);
+        SetShaderValue(shdrSpot, wLoc, ref sw, SHADER_UNIFORM_FLOAT);
 
         // Randomize the locations and velocities of the spotlights
         // and initialize the shader locations
@@ -107,11 +108,11 @@ private const int MAX_STARS = 400;
             }
 
             spots[i].inner = 28.0f * (i + 1);
-            spots[i].radius = 48.0f * (i + 1);
+            spots[i].Radius = 48.0f * (i + 1);
 
-            SetShaderValue(shdrSpot, spots[i].positionLoc, &spots[i].position.X, SHADER_UNIFORM_VEC2);
-            SetShaderValue(shdrSpot, spots[i].innerLoc, &spots[i].inner, SHADER_UNIFORM_FLOAT);
-            SetShaderValue(shdrSpot, spots[i].radiusLoc, &spots[i].radius, SHADER_UNIFORM_FLOAT);
+            SetShaderValue(shdrSpot, spots[i].positionLoc, ref spots[i].position.X, SHADER_UNIFORM_VEC2);
+            SetShaderValue(shdrSpot, spots[i].innerLoc, ref spots[i].inner, SHADER_UNIFORM_FLOAT);
+            SetShaderValue(shdrSpot, spots[i].RadiusLoc, ref spots[i].Radius, SHADER_UNIFORM_FLOAT);
         }
 
         SetTargetFPS(60);               // Set  to run at 60 frames-per-second
@@ -123,7 +124,7 @@ private const int MAX_STARS = 400;
             frameCounter++;
 
             // Move the stars, resetting them if the go offscreen
-            for (int n = 0; n < MAX_STARS; n++) UpdateStar(&stars[n]);
+            for (int n = 0; n < MAX_STARS; n++) UpdateStar(ref stars[n]);
 
             // Update the spots, send them to the shader
             for (int i = 0; i < MAX_SPOTS; i++)
@@ -145,7 +146,7 @@ private const int MAX_STARS = 400;
                     if (spots[i].position.Y > (screenHeight - 64)) spots[i].speed.Y = -spots[i].speed.Y;
                 }
 
-                SetShaderValue(shdrSpot, spots[i].positionLoc, &spots[i].position.X, SHADER_UNIFORM_VEC2);
+                SetShaderValue(shdrSpot, spots[i].positionLoc, ref spots[i].position.X, SHADER_UNIFORM_VEC2);
             }
 
             // Draw

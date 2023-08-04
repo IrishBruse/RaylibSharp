@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -72,7 +73,7 @@ public partial class TextRectangleBounds : ExampleHelper
                 if (IsMouseButtonDown(MouseButton.Left) && CheckCollisionPoint(mouse, resizer)) resizing = true;
             }
 
-            // Move resizer rectangle properly
+            // Move resizer rectangle propeRLGL.Y
             resizer.X = container.X + container.Width - 17;
             resizer.Y = container.Y + container.Height - 17;
 
@@ -100,7 +101,7 @@ public partial class TextRectangleBounds : ExampleHelper
 
                 DrawText("Press [SPACE] to toggle word wrap", 218, screenHeight - 86, 20, Gray);
 
-                DrawText("Click hold & drag the    to resize the container", 155, screenHeight - 38, 20, RayWhite);
+                DrawText("Click hold ref  drag the    to resize the container", 155, screenHeight - 38, 20, RayWhite);
 
             }EndDrawing();
         }
@@ -127,7 +128,7 @@ public partial class TextRectangleBounds : ExampleHelper
         float textOffsetY = 0;          // Offset between lines (on line break '\n')
         float textOffsetX = 0.0f;       // Offset X to next character to draw
 
-        float scaleFactor = fontSize/(float)font.baseSize;     // Character rectangle scaling factor
+        float scaleFactor = fontSize/(float)font.BaseSize;     // Character rectangle scaling factor
 
         // Word/character wrapping mechanism variables
         enum { MEASURE_STATE = 0, DRAW_STATE = 1 };
@@ -141,7 +142,7 @@ public partial class TextRectangleBounds : ExampleHelper
         {
             // Get next codepoint from byte string and glyph index in font
             int codepointByteCount = 0;
-            int codepoint = GetCodepoint(&text[i], &codepointByteCount);
+            int codepoint = GetCodepoint(ref text[i], ref codepointByteCount);
             int index = GetGlyphIndex(font, codepoint);
 
             // NOTE: Normally we exit the decoding sequence as soon as a bad byte is found (and return 0x3f)
@@ -152,7 +153,7 @@ public partial class TextRectangleBounds : ExampleHelper
             float glyphWidth = 0;
             if (codepoint != '\n')
             {
-                glyphWidth = (font.glyphs[index].advanceX == 0) ? font.recs[index].Width*scaleFactor : font.glyphs[index].advanceX*scaleFactor;
+                glyphWidth = (font.Glyphs[index].AdvanceX == 0) ? font.Recs[index].Width*scaleFactor : font.Glyphs[index].AdvanceX*scaleFactor;
 
                 if (i + 1 < length) glyphWidth = glyphWidth + spacing;
             }
@@ -201,7 +202,7 @@ public partial class TextRectangleBounds : ExampleHelper
                 {
                     if (!wordWrap)
                     {
-                        textOffsetY += (font.baseSize + font.baseSize/2)*scaleFactor;
+                        textOffsetY += (font.BaseSize + font.BaseSize/2)*scaleFactor;
                         textOffsetX = 0;
                     }
                 }
@@ -209,18 +210,18 @@ public partial class TextRectangleBounds : ExampleHelper
                 {
                     if (!wordWrap && ((textOffsetX + glyphWidth) > rec.Width))
                     {
-                        textOffsetY += (font.baseSize + font.baseSize/2)*scaleFactor;
+                        textOffsetY += (font.BaseSize + font.BaseSize/2)*scaleFactor;
                         textOffsetX = 0;
                     }
 
                     // When text overflows rectangle height limit, just stop drawing
-                    if ((textOffsetY + font.baseSize*scaleFactor) > rec.Height) break;
+                    if ((textOffsetY + font.BaseSize*scaleFactor) > rec.Height) break;
 
                     // Draw selection background
                     bool isGlyphSelected = false;
                     if ((selectStart >= 0) && (k >= selectStart) && (k < (selectStart + selectLength)))
                     {
-                        DrawRectangle(new( rec.X + textOffsetX - 1, rec.Y + textOffsetY, glyphWidth, (float)font.baseSize*scaleFactor ), selectBackTint);
+                        DrawRectangle(new( rec.X + textOffsetX - 1, rec.Y + textOffsetY, glyphWidth, (float)font.BaseSize*scaleFactor ), selectBackTint);
                         isGlyphSelected = true;
                     }
 
@@ -233,7 +234,7 @@ public partial class TextRectangleBounds : ExampleHelper
 
                 if (wordWrap && (i == endLine))
                 {
-                    textOffsetY += (font.baseSize + font.baseSize/2)*scaleFactor;
+                    textOffsetY += (font.BaseSize + font.BaseSize/2)*scaleFactor;
                     textOffsetX = 0;
                     startLine = endLine;
                     endLine = -1;

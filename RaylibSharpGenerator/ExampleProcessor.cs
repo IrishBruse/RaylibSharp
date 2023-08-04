@@ -9,21 +9,14 @@ public partial class ExampleProcessor
     {
         IEnumerable<string> files = Directory.GetFiles("./examples/", "*.c", SearchOption.AllDirectories).ToList();
 
-        foreach (string f in files)
+        foreach (string cFile in files)
         {
-            string cFile = f;
             string name = Path.GetFileNameWithoutExtension(cFile);
-
-            if (name == "examples_template")
-            {
-                continue;
-            }
-
             string pascalName = Utility.ToPascalCase(name);
 
-            string csFile = "../Examples/Gen";
 
-            if (pascalName == "ShapesTopDownLights")
+            string csFile = "../Examples/Gen";
+            if (pascalName == "ShapesTopDownLights" || pascalName == "ExamplesTemplate" || pascalName.StartsWith("temp/"))
             {
                 continue;
             }
@@ -42,6 +35,7 @@ public partial class ExampleProcessor
             }
             else if (pascalName.StartsWith("Models"))
             {
+                continue;
                 csFile = $"{csFile}/Models/{pascalName}.cs";
             }
             else if (pascalName.StartsWith("Shader"))
@@ -58,9 +52,10 @@ public partial class ExampleProcessor
             }
             else
             {
-                csFile = $"{csFile}/temp/{pascalName}.cs";
+                continue;
             }
 
+            Console.WriteLine("Example " + pascalName);
 
             string[] lines = File.ReadAllLines(cFile);
             GenerateExample(lines, csFile);
@@ -81,6 +76,7 @@ public partial class ExampleProcessor
             "using System;",
             "",
             "using RaylibSharp;",
+            "using RaylibSharp.GL;",
             "",
             "using static RaylibSharp.Raylib;",
             "",
@@ -164,6 +160,9 @@ public partial class ExampleProcessor
 
         line.ReplaceAll("Rectangle ", "RectangleF ");
         line.ReplaceAll("Rectangle[", "RectangleF[");
+        // line.ReplaceAll("&", "ref ");
+
+        line.Replace("ModelAnimation *", "ModelAnimation[]");
 
         // Change Alias
         line.ReplaceAll("MATERIAL_MAP_DIFFUSE", "MATERIAL_MAP_ALBEDO");
@@ -187,6 +186,16 @@ public partial class ExampleProcessor
         line.Replace(Vector3AssignReplace(), "new($1,$2,$3)");
         line.Replace(FalseBooleanAssignment(), "$1 false;");
         line.Replace(ExampleName(), "RaylibSharp - $1 - ");
+        line.Replace(RLGLReplace(), "RLGL.$1");
+        line.Replace(CAndRef(), "$1ref $2");
+        line.Replace(RLConstantsReplace(), m => $"RLGL.Rl{Utility.ToPascalCase(m.Groups[1].Value)}");
+
+        line.Replace(new Regex(@"char (\w+?)\[\d+\]"), "string $1");
+        line.Replace(new Regex(@"bool (\w+?) = 0;"), "bool $1 = false;");
+        line.Replace(new Regex(@"bool (\w+?) = 1;"), "bool $1 = true;");
+
+        // char modelFileName[128] =
+        // bool drawMesh = 1;
 
         foreach (string color in Utility.Colors)
         {
@@ -203,6 +212,7 @@ public partial class ExampleProcessor
             line.ReplaceAll("MATERIAL_MAP_" + val.ToUpper(), "MaterialMapIndex." + val);
         }
 
+        line.ReplaceAll("Camera ", "Camera3D ");
         line.ReplaceAll("camera.target", "camera.Target");
         line.ReplaceAll("camera.offset", "camera.Offset");
         line.ReplaceAll("camera.rotation", "camera.Rotation");
@@ -212,6 +222,20 @@ public partial class ExampleProcessor
         line.ReplaceAll("camera.up", "camera.Up");
         line.ReplaceAll("camera.fovy", "camera.Fovy");
         line.ReplaceAll("camera.projection", "camera.Projection");
+
+        line.ReplaceAll("model.boneCount", "model.BoneCount");
+        line.ReplaceAll(".frameCount", ".FrameCount");
+        line.ReplaceAll(".translation", ".Translation");
+        line.ReplaceAll(".framePoses", ".FramePoses");
+        line.ReplaceAll(".texture", ".Texture");
+
+        line.Replace(".id", ".Id");
+        line.Replace(".r", ".R");
+        line.Replace(".g", ".G");
+        line.Replace(".b", ".B");
+        line.Replace(".a", ".A");
+
+        line.ReplaceAll("[MaterialMapIndex", "[(int)MaterialMapIndex");
 
         line.ReplaceAll(".hit", ".Hit");
 
@@ -229,11 +253,17 @@ public partial class ExampleProcessor
         line.Replace("%2", "%2 == 0");
 
         line.Replace("{ 0 }", "new()");
+        line.Replace("{ 0.0f }", "new(0,0)");
+
+        // Vector functions
+        line.ReplaceAll("Vector2Distance", "Vector2.Distance");
+        line.ReplaceAll("Vector3Distance", "Vector3.Distance");
 
         // Types
         line.ReplaceAll("void *", "System.IntPtr ");
         line.ReplaceAll("unsigned int ", "uint ");
         line.ReplaceAll("const char *", "string ");
+        line.ReplaceAll("Color *", "Color[] ");
 
         // CameraProjection
         line.Replace("CAMERA_PERSPECTIVE", "CameraProjection.Perspective");
@@ -255,6 +285,8 @@ public partial class ExampleProcessor
         line.Replace(".meshes", ".Meshes");
         line.Replace(".count", ".Count");
         line.Replace(".paths", ".Paths");
+        line.Replace(".name", ".Name");
+        line.Replace(".parent", ".Parent");
         line.Replace("&camera", "ref camera");
 
         line.Replace("BeginDrawing();", "BeginDrawing();{");
@@ -279,7 +311,7 @@ public partial class ExampleProcessor
     [GeneratedRegex(@"(IsMouse\w+)\(MOUSE_BUTTON_(.*?)\)")] private static partial Regex IsMouseConstEnumReplace(); // IsMouseButtonDown(MOUSE_BUTTON_RIGHT)
     [GeneratedRegex(@"\(Vector3\)\{((.*?),(.*?),(.*?))\}")] private static partial Regex Vector3Replace(); // (Vector3){ , , }
     [GeneratedRegex(@"\{ (.*?f), (.*?f), (.*?f) \}")] private static partial Regex Vector3AssignReplace(); // { 0.0f, 0.0f, 0.0f }
-    [GeneratedRegex(@"\(Vector2\)\{((.*?),(.*?))\}")] private static partial Regex Vector2Replace(); // (Vector2){ , }
+    [GeneratedRegex(@"\(Vector2\).?\{((.*?),(.*?))\}")] private static partial Regex Vector2Replace(); // (Vector2){ , }
     [GeneratedRegex(@"\{ (.*?f), (.*?f) \}")] private static partial Regex Vector2AssignReplace(); // { , }
     [GeneratedRegex(@"(int |float |const char \*|Color |RectangleF )(\w+)(\[.*\]) = (\{ 0 \})?")] private static partial Regex ArrayReplace(); // int x[10];
     [GeneratedRegex(@"void \w+\(")] private static partial Regex VoidFunctionMatch();
@@ -291,6 +323,9 @@ public partial class ExampleProcessor
     [GeneratedRegex(@"Vector2Add\((.*?), (.*?)\)")] private static partial Regex Vector2AddReplace(); // Vector2Add(delta, -1.0f / camera.Zoom);
     [GeneratedRegex(@"Vector2Scale\((.*?), (.*?)\)")] private static partial Regex Vector2ScaleReplace(); // Vector2Scale(delta, -1.0f / camera.Zoom);
     [GeneratedRegex(@"(IsKey\w+)\(KEY_(.*)\)")] private static partial Regex IsKeyConstEnumReplace(); // IsKeyDown(KEY_RIGHT)
+    [GeneratedRegex(@"rl(\w+)")] private static partial Regex RLGLReplace(); // rlBegin
+    [GeneratedRegex(@"RL_(\w+)")] private static partial Regex RLConstantsReplace(); // RL_QUAD
+    [GeneratedRegex(@"([^&])&([^&])")] private static partial Regex CAndRef(); // &camera
 }
 
 internal static class Extensions
@@ -312,9 +347,9 @@ internal static class Extensions
         sb.Insert(0, output);
     }
 
-    public static void Replace(this StringBuilder sb, Regex regex, string matchEvaluator)
+    public static void Replace(this StringBuilder sb, Regex regex, string replacement)
     {
-        string output = regex.Replace(sb.ToString(), matchEvaluator);
+        string output = regex.Replace(sb.ToString(), replacement);
         sb.Clear();
         sb.Insert(0, output);
     }

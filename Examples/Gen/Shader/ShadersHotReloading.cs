@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -53,7 +54,7 @@ private const int GLSL_VERSION = 100;
             float [] mousePos = new float [2]new( mouse.X, mouse.Y );
 
             // Set shader required uniform values
-            SetShaderValue(shader, timeLoc, &totalTime, SHADER_UNIFORM_FLOAT);
+            SetShaderValue(shader, timeLoc, ref totalTime, SHADER_UNIFORM_FLOAT);
             SetShaderValue(shader, mouseLoc, mousePos, SHADER_UNIFORM_VEC2);
 
             // Hot shader reloading
@@ -67,7 +68,7 @@ private const int GLSL_VERSION = 100;
                     // Try reloading updated shader
                     Shader updatedShader = LoadShader(0, TextFormat(fragShaderFileName, GLSL_VERSION));
 
-                    if (updatedShader.id != rlGetShaderIdDefault())      // It was correctly loaded
+                    if (updatedShader.Id != RLGL.GetShaderIdDefault())      // It was correctly loaded
                     {
                         UnloadShader(shader);
                         shader = updatedShader;
@@ -101,7 +102,7 @@ private const int GLSL_VERSION = 100;
                          shaderAutoReloading? "AUTO" : "MANUAL"), 10, 10, 10, shaderAutoReloading? Red : Black);
                 if (!shaderAutoReloading) DrawText("MOUSE CLICK to SHADER RE-LOADING", 10, 30, 10, Black);
 
-                DrawText(TextFormat("Shader last modification: %s", asctime(localtime(&fragShaderFileModTime))), 10, 430, 10, Black);
+                DrawText(TextFormat("Shader last modification: %s", asctime(localtime(ref fragShaderFileModTime))), 10, 430, 10, Black);
 
             }EndDrawing();
         }

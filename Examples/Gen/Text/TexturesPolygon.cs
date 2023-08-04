@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -94,29 +95,29 @@ private const int MAX_POINTS = 11;
     // without crossing perimeter, points must be in anticlockwise order
     static void DrawTexturePoly(Texture texture, Vector2 center, Vector2 *points, Vector2 *texcoords, int pointCount, Color tint)
     {
-        rlSetTexture(texture.id);
+        RLGL.SetTexture(texture.Id);
 
-        // Texturing is only supported on RL_QUADS
-        rlBegin(RL_QUADS);
+        // Texturing is only supported on RLGL.RlQuads
+        RLGL.Begin(RLGL.RlQuads);
 
-            rlColor4ub(tint.r, tint.g, tint.b, tint.a);
+            RLGL.Color4ub(tint.R, tint.G, tint.B, tint.A);
 
             for (int i = 0; i < pointCount - 1; i++)
             {
-                rlTexCoord2f(0.5f, 0.5f);
-                rlVertex2f(center.X, center.Y);
+                RLGL.TexCoord2f(0.5f, 0.5f);
+                RLGL.Vertex2f(center.X, center.Y);
 
-                rlTexCoord2f(texcoords[i].X, texcoords[i].Y);
-                rlVertex2f(points[i].X + center.X, points[i].Y + center.Y);
+                RLGL.TexCoord2f(texcoords[i].X, texcoords[i].Y);
+                RLGL.Vertex2f(points[i].X + center.X, points[i].Y + center.Y);
 
-                rlTexCoord2f(texcoords[i + 1].X, texcoords[i + 1].Y);
-                rlVertex2f(points[i + 1].X + center.X, points[i + 1].Y + center.Y);
+                RLGL.TexCoord2f(texcoords[i + 1].X, texcoords[i + 1].Y);
+                RLGL.Vertex2f(points[i + 1].X + center.X, points[i + 1].Y + center.Y);
 
-                rlTexCoord2f(texcoords[i + 1].X, texcoords[i + 1].Y);
-                rlVertex2f(points[i + 1].X + center.X, points[i + 1].Y + center.Y);
+                RLGL.TexCoord2f(texcoords[i + 1].X, texcoords[i + 1].Y);
+                RLGL.Vertex2f(points[i + 1].X + center.X, points[i + 1].Y + center.Y);
             }
-        rlEnd();
+        RLGL.End();
 
-        rlSetTexture(0);
+        RLGL.SetTexture(0);
     }
 }

@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -53,7 +54,7 @@ private const int GLSL_VERSION = 100;
             if (dividerValue < 0.0f) dividerValue = 0.0f;
             else if (dividerValue > 1.0f) dividerValue = 1.0f;
 
-            SetShaderValue(shader, dividerLoc, &dividerValue, SHADER_UNIFORM_FLOAT);
+            SetShaderValue(shader, dividerLoc, ref dividerValue, SHADER_UNIFORM_FLOAT);
 
             // Draw
             BeginDrawing();{

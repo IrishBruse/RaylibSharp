@@ -299,3 +299,6 @@ public static unsafe partial class Raylib
         }
     }
 }
+
+/// <summary> Easing function </summary>
+public delegate float EasingFunction(float t, float b, float c, float d);

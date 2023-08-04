@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -54,7 +55,7 @@ private const int GLSL_VERSION = 100;
 
                 BeginShaderMode(shader);
                     // NOTE: Render texture must be y-flipped due to default OpenGL coordinates (left-bottom)
-                    DrawTexture(target.texture, new( 0, 0, (float)target.texture.Width, (float)-target.texture.Height ), new( 0.0f, 0.0f ), White);
+                    DrawTexture(target.Texture, new( 0, 0, (float)target.Texture.Width, (float)-target.Texture.Height ), new( 0.0f, 0.0f ), White);
                 EndShaderMode();
             }EndDrawing();
         }

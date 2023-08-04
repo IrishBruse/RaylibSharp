@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -27,7 +28,7 @@ private const int NUM_TEXTURES = 9;
         Image squareGradient = GenImageGradientSquare(screenWidth, screenHeight, 0.0f, White, Black);
         Image checked = GenImageChecked(screenWidth, screenHeight, 32, 32, Red, Blue);
         Image whiteNoise = GenImageWhiteNoise(screenWidth, screenHeight, 0.5f);
-        Image perlinNoise = GenImagePerlinNoise(screenWidth, screenHeight, 50, 50, 4.0f);
+        Image peRLGL.inNoise = GenImagePeRLGL.inNoise(screenWidth, screenHeight, 50, 50, 4.0f);
         Image cellular = GenImageCellular(screenWidth, screenHeight, 32);
 
         Texture textures[NUM_TEXTURES] = new();
@@ -39,7 +40,7 @@ private const int NUM_TEXTURES = 9;
         textures[4] = LoadTextureFromImage(squareGradient);
         textures[5] = LoadTextureFromImage(checked);
         textures[6] = LoadTextureFromImage(whiteNoise);
-        textures[7] = LoadTextureFromImage(perlinNoise);
+        textures[7] = LoadTextureFromImage(peRLGL.inNoise);
         textures[8] = LoadTextureFromImage(cellular);
 
         // Unload image data (CPU RAM)
@@ -50,7 +51,7 @@ private const int NUM_TEXTURES = 9;
         UnloadImage(squareGradient);
         UnloadImage(checked);
         UnloadImage(whiteNoise);
-        UnloadImage(perlinNoise);
+        UnloadImage(peRLGL.inNoise);
         UnloadImage(cellular);
 
         int currentTexture = 0;

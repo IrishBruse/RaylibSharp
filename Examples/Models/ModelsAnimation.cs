@@ -1,14 +1,11 @@
 using System.Numerics;
-using System.Drawing;
-using System;
 
 using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public partial class ModelsAnimation : ExampleHelper 
+public partial class ModelsAnimation : ExampleHelper
 {
-
     // Program main entry point
     public static int Example()
     {
@@ -18,23 +15,23 @@ public partial class ModelsAnimation : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - models - model animation");
 
-        // Define the camera to look into our 3d world
-        Camera camera = new();
-        camera.Position = (Vector3)new(10.0f,10.0f, 10.0f); // Camera position
-        camera.Target = (Vector3)new(0.0f,0.0f, 0.0f);      // Camera looking at point
-        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);          // Camera up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera mode type
+        // Define the camera to look into our 3d woRLGL.d
+        Camera3D camera = new();
+        camera.Position = new(10.0f, 10.0f, 10.0f); // Camera3D position
+        camera.Target = new(0.0f, 0.0f, 0.0f);      // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective;             // Camera3D mode type
 
         Model model = LoadModel("resources/models/iqm/guy.iqm");                    // Load the animated model mesh and basic data
         Texture texture = LoadTexture("resources/models/iqm/guytex.png");         // Load model texture and set material
-        SetMaterialTexture(&model.Materials[0], MaterialMapIndex.Albedo, texture);     // Set model material map texture
+        SetMaterialTexture(ref model.Materials[0], MaterialMapIndex.Albedo, texture);     // Set model material map texture
 
-        Vector3 position = new( 0.0f, 0.0f, 0.0f );            // Set model position
+        Vector3 position = new(0.0f, 0.0f, 0.0f);            // Set model position
 
         // Load animation data
         uint animsCount = 0;
-        ModelAnimation *anims = LoadModelAnimations("resources/models/iqm/guyanim.iqm", &animsCount);
+        ModelAnimation[] anims = LoadModelAnimations("resources/models/iqm/guyanim.iqm", ref animsCount);
         int animFrameCounter = 0;
 
         DisableCursor();                    // Catch cursor
@@ -51,36 +48,43 @@ public partial class ModelsAnimation : ExampleHelper
             {
                 animFrameCounter++;
                 UpdateModelAnimation(model, anims[0], animFrameCounter);
-                if (animFrameCounter >= anims[0].frameCount) animFrameCounter = 0;
+                if (animFrameCounter >= anims[0].FrameCount)
+                {
+                    animFrameCounter = 0;
+                }
             }
 
             // Draw
-            BeginDrawing();{
+            BeginDrawing();
+            {
 
                 ClearBackground(RayWhite);
 
-                BeginMode3D(camera);{
+                BeginMode3D(camera);
+                {
 
-                    DrawModel(model, position, (Vector3)new(1.0f,0.0f, 0.0f), -90.0f, (Vector3)new(1.0f,1.0f, 1.0f), White);
+                    DrawModel(model, position, new(1.0f, 0.0f, 0.0f), -90.0f, new(1.0f, 1.0f, 1.0f), White);
 
-                    for (int i = 0; i < model.boneCount; i++)
+                    for (int i = 0; i < model.BoneCount; i++)
                     {
-                        DrawCube(anims[0].framePoses[animFrameCounter][i].translation, 0.2f, 0.2f, 0.2f, Red);
+                        DrawCube(anims[0].FramePoses[animFrameCounter][i].Translation, 0.2f, 0.2f, 0.2f, Red);
                     }
 
                     DrawGrid(10, 1.0f);         // Draw a grid
 
-                }EndMode3D();
+                }
+                EndMode3D();
 
                 DrawText("PRESS SPACE to PLAY MODEL ANIMATION", 10, 10, 20, Maroon);
                 DrawText("(c) Guy IQM 3D model by @culacant", screenWidth - 200, screenHeight - 20, 10, Gray);
 
-            }EndDrawing();
+            }
+            EndDrawing();
         }
 
         // De-Initialization
         UnloadTexture(texture);                     // Unload texture
-        UnloadModelAnimations(anims, animsCount);   // Unload model animations data
+        // UnloadModelAnimations(anims, animsCount);   // Unload model animations data
         UnloadModel(model);                         // Unload model
 
         CloseWindow();                  // Close window and OpenGL context

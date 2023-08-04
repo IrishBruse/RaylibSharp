@@ -1,16 +1,9 @@
-using System.Numerics;
-using System.Drawing;
-using System;
-
 using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public partial class ModelsOrthographicProjection : ExampleHelper 
+public partial class ModelsGeometricShapes : ExampleHelper
 {
-
-private const int FOVY_PERSPECTIVE = 45.0f;
-private const int WIDTH_ORTHOGRAPHIC = 10.0f;
 
     // Program main entry point
     public static int Example()
@@ -21,8 +14,13 @@ private const int WIDTH_ORTHOGRAPHIC = 10.0f;
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - models - geometric shapes");
 
-        // Define the camera to look into our 3d world
-        Camera camera = new( new(0.0f,10.0f, 10.0f ), { 0.0f, 0.0f, 0.0f), new(0.0f,1.0f, 0.0f), FOVY_PERSPECTIVE, CameraProjection.Perspective };
+        // Define the camera to look into our 3d woRLGL.d
+        Camera3D camera = new();
+        camera.Position = new(0.0f, 10.0f, 10.0f);
+        camera.Target = new(0.0f, 0.0f, 0.0f);
+        camera.Up = new(0.0f, 1.0f, 0.0f);
+        camera.Fovy = 45.0f;
+        camera.Projection = CameraProjection.Perspective;
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
@@ -30,26 +28,16 @@ private const int WIDTH_ORTHOGRAPHIC = 10.0f;
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             // Update
-            if (IsKeyPressed(Key.Space))
-            {
-                if (camera.Projection == CameraProjection.Perspective)
-                {
-                    camera.Fovy = WIDTH_ORTHOGRAPHIC;
-                    camera.Projection = CameraProjection.Orthographic;
-                }
-                else
-                {
-                    camera.Fovy = FOVY_PERSPECTIVE;
-                    camera.Projection = CameraProjection.Perspective;
-                }
-            }
+            // TODO: Update your variables here
 
             // Draw
-            BeginDrawing();{
+            BeginDrawing();
+            {
 
                 ClearBackground(RayWhite);
 
-                BeginMode3D(camera);{
+                BeginMode3D(camera);
+                {
 
                     DrawCube(new(-4.0f, 0.0f, 2.0f), 2.0f, 5.0f, 2.0f, Red);
                     DrawCubeWires(new(-4.0f, 0.0f, 2.0f), 2.0f, 5.0f, 2.0f, Gold);
@@ -65,18 +53,18 @@ private const int WIDTH_ORTHOGRAPHIC = 10.0f;
                     DrawCylinder(new(1.0f, 0.0f, -4.0f), 0.0f, 1.5f, 3.0f, 8, Gold);
                     DrawCylinderWires(new(1.0f, 0.0f, -4.0f), 0.0f, 1.5f, 3.0f, 8, Pink);
 
+                    DrawCapsule(new(-3.0f, 1.5f, -4.0f), new(-4.0f, -1.0f, -4.0f), 1.2f, 8, 8, Violet);
+                    DrawCapsuleWires(new(-3.0f, 1.5f, -4.0f), new(-4.0f, -1.0f, -4.0f), 1.2f, 8, 8, Purple);
+
                     DrawGrid(10, 1.0f);        // Draw a grid
 
-                }EndMode3D();
-
-                DrawText("Press Spacebar to switch camera type", 10, GetScreenHeight() - 30, 20, DarkGray);
-
-                if (camera.Projection == CameraProjection.Orthographic) DrawText("ORTHOGRAPHIC", 10, 40, 20, Black);
-                else if (camera.Projection == CameraProjection.Perspective) DrawText("PERSPECTIVE", 10, 40, 20, Black);
+                }
+                EndMode3D();
 
                 DrawFPS(10, 10);
 
-            }EndDrawing();
+            }
+            EndDrawing();
         }
 
         // De-Initialization

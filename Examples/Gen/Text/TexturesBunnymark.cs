@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -12,7 +13,7 @@ public partial class TexturesBunnymark : ExampleHelper
 private const int MAX_BUNNIES = 50000;
 
     // This is the maximum amount of elements (quads) per batch
-    // NOTE: This value is defined in [rlgl] module and can be changed there
+    // NOTE: This value is defined in [RLGL.Gl] module and can be changed there
 private const int MAX_BATCH_ELEMENTS = 8192;
 
     typedef struct Bunny {

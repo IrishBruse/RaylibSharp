@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -38,7 +39,7 @@ private const int GLSL_VERSION = 100;
         int textureSizeLoc = GetShaderLocation(shdrOutline, "textureSize");
 
         // Set shader values (they can be changed later)
-        SetShaderValue(shdrOutline, outlineSizeLoc, &outlineSize, SHADER_UNIFORM_FLOAT);
+        SetShaderValue(shdrOutline, outlineSizeLoc, ref outlineSize, SHADER_UNIFORM_FLOAT);
         SetShaderValue(shdrOutline, outlineColorLoc, outlineColor, SHADER_UNIFORM_VEC4);
         SetShaderValue(shdrOutline, textureSizeLoc, textureSize, SHADER_UNIFORM_VEC2);
 
@@ -51,7 +52,7 @@ private const int GLSL_VERSION = 100;
             outlineSize += GetMouseWheelMove();
             if (outlineSize < 1.0f) outlineSize = 1.0f;
 
-            SetShaderValue(shdrOutline, outlineSizeLoc, &outlineSize, SHADER_UNIFORM_FLOAT);
+            SetShaderValue(shdrOutline, outlineSizeLoc, ref outlineSize, SHADER_UNIFORM_FLOAT);
 
             // Draw
             BeginDrawing();{

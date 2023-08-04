@@ -1,12 +1,10 @@
 using System.Numerics;
-using System.Drawing;
-using System;
 
 using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public partial class ModelsLoadingM3d : ExampleHelper 
+public partial class ModelsLoadingM3d : ExampleHelper
 {
 
     // Program main entry point
@@ -18,19 +16,19 @@ public partial class ModelsLoadingM3d : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - models - M3D model loading");
 
-        // Define the camera to look into our 3d world
-        Camera camera = new();
-        camera.Position = (Vector3)new(1.5f,1.5f, 1.5f);    // Camera position
-        camera.Target = (Vector3)new(0.0f,0.4f, 0.0f);      // Camera looking at point
-        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);          // Camera up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera projection type
+        // Define the camera to look into our 3d woRLGL.d
+        Camera3D camera = new();
+        camera.Position = new(1.5f, 1.5f, 1.5f);    // Camera3D position
+        camera.Target = new(0.0f, 0.4f, 0.0f);      // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
 
-        Vector3 position = new( 0.0f, 0.0f, 0.0f );            // Set model position
+        Vector3 position = new(0.0f, 0.0f, 0.0f);            // Set model position
 
-        char modelFileName[128] = "resources/models/m3d/cesium_man.m3d";
-        bool drawMesh = 1;
-        bool drawSkeleton = 1;
+        string modelFileName = "resources/models/m3d/cesium_man.m3d";
+        bool drawMesh = true;
+        bool drawSkeleton = true;
         bool animPlaying = false;   // Store anim state, what to draw
 
         // Load model
@@ -39,7 +37,7 @@ public partial class ModelsLoadingM3d : ExampleHelper
         // Load animations
         uint animsCount = 0;
         int animFrameCounter = 0, animId = 0;
-        ModelAnimation *anims = LoadModelAnimations(modelFileName, &animsCount); // Load skeletal animation data
+        ModelAnimation[] anims = LoadModelAnimations(modelFileName, ref animsCount); // Load skeletal animation data
 
         DisableCursor();                    // Limit cursor to relative movement inside the window
 
@@ -51,14 +49,17 @@ public partial class ModelsLoadingM3d : ExampleHelper
             // Update
             UpdateCamera(ref camera, CameraMode.FirstPerson);
 
-            if (animsCount)
+            if (animsCount != 0)
             {
                 // Play animation when spacebar is held down (or step one frame with N)
                 if (IsKeyDown(Key.Space) || IsKeyPressed(Key.N))
                 {
                     animFrameCounter++;
 
-                    if (animFrameCounter >= anims[animId].frameCount) animFrameCounter = 0;
+                    if (animFrameCounter >= anims[animId].FrameCount)
+                    {
+                        animFrameCounter = 0;
+                    }
 
                     UpdateModelAnimation(model, anims[animId], animFrameCounter);
                     animPlaying = true;
@@ -70,27 +71,42 @@ public partial class ModelsLoadingM3d : ExampleHelper
                     animFrameCounter = 0;
                     animId++;
 
-                    if (animId >= animsCount) animId = 0;
+                    if (animId >= animsCount)
+                    {
+                        animId = 0;
+                    }
+
                     UpdateModelAnimation(model, anims[animId], 0);
                     animPlaying = true;
                 }
             }
 
             // Toggle skeleton drawing
-            if (IsKeyPressed(Key.S)) drawSkeleton ^= 1;
+            if (IsKeyPressed(Key.S))
+            {
+                drawSkeleton ^= true;
+            }
 
             // Toggle mesh drawing
-            if (IsKeyPressed(Key.M)) drawMesh ^= 1;
+            if (IsKeyPressed(Key.M))
+            {
+                drawMesh ^= true;
+            }
 
             // Draw
-            BeginDrawing();{
+            BeginDrawing();
+            {
 
                 ClearBackground(RayWhite);
 
-                BeginMode3D(camera);{
+                BeginMode3D(camera);
+                {
 
                     // Draw 3d model with texture
-                    if (drawMesh) DrawModel(model, position, 1.0f, White);
+                    if (drawMesh)
+                    {
+                        DrawModel(model, position, 1.0f, White);
+                    }
 
                     // Draw the animated skeleton
                     if (drawSkeleton)
@@ -98,31 +114,31 @@ public partial class ModelsLoadingM3d : ExampleHelper
                         // Loop to (boneCount - 1) because the last one is a special "no bone" bone,
                         // needed to workaround buggy models
                         // without a -1, we would always draw a cube at the origin
-                        for (int i = 0; i < model.boneCount - 1; i++)
+                        for (int i = 0; i < model.BoneCount - 1; i++)
                         {
                             // By default the model is loaded in bind-pose by LoadModel().
                             // But if UpdateModelAnimation() has been called at least once
                             // then the model is already in animation pose, so we need the animated skeleton
-                            if (!animPlaying || !animsCount)
+                            if (!animPlaying || animsCount == 0)
                             {
                                 // Display the bind-pose skeleton
-                                DrawCube(model.bindPose[i].translation, 0.04f, 0.04f, 0.04f, Red);
+                                DrawCube(model.BindPose[i].Translation, 0.04f, 0.04f, 0.04f, Red);
 
-                                if (model.bones[i].parent >= 0)
+                                if (model.Bones[i].Parent >= 0)
                                 {
-                                    DrawLine3D(model.bindPose[i].translation,
-                                        model.bindPose[model.bones[i].parent].translation, Red);
+                                    DrawLine3D(model.BindPose[i].Translation,
+                                        model.BindPose[model.Bones[i].Parent].Translation, Red);
                                 }
                             }
                             else
                             {
                                 // Display the frame-pose skeleton
-                                DrawCube(anims[animId].framePoses[animFrameCounter][i].translation, 0.05f, 0.05f, 0.05f, Red);
+                                DrawCube(anims[animId].FramePoses[animFrameCounter][i].Translation, 0.05f, 0.05f, 0.05f, Red);
 
-                                if (anims[animId].bones[i].parent >= 0)
+                                if (anims[animId].Bones[i].Parent >= 0)
                                 {
-                                    DrawLine3D(anims[animId].framePoses[animFrameCounter][i].translation,
-                                        anims[animId].framePoses[animFrameCounter][anims[animId].bones[i].parent].translation, Red);
+                                    DrawLine3D(anims[animId].FramePoses[animFrameCounter][i].Translation,
+                                        anims[animId].FramePoses[animFrameCounter][anims[animId].Bones[i].Parent].Translation, Red);
                                 }
                             }
                         }
@@ -130,20 +146,22 @@ public partial class ModelsLoadingM3d : ExampleHelper
 
                     DrawGrid(10, 1.0f);         // Draw a grid
 
-                }EndMode3D();
+                }
+                EndMode3D();
 
                 DrawText("PRESS SPACE to PLAY MODEL ANIMATION", 10, GetScreenHeight() - 60, 10, Maroon);
                 DrawText("PRESS A to CYCLE THROUGH ANIMATIONS", 10, GetScreenHeight() - 40, 10, DarkGray);
                 DrawText("PRESS M to toggle MESH, S to toggle SKELETON DRAWING", 10, GetScreenHeight() - 20, 10, DarkGray);
                 DrawText("(c) CesiumMan model by KhronosGroup", GetScreenWidth() - 210, GetScreenHeight() - 20, 10, Gray);
 
-            }EndDrawing();
+            }
+            EndDrawing();
         }
 
         // De-Initialization
 
         // Unload model animations data
-        UnloadModelAnimations(anims, animsCount);
+        // UnloadModelAnimations(anims, animsCount);
 
         UnloadModel(model);         // Unload model
 

@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -24,13 +25,13 @@ private const int GLSL_VERSION = 100;
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shaders - simple shader mask");
 
-        // Define the camera to look into our 3d world
-        Camera camera = new();
-        camera.Position = (Vector3)new(0.0f,1.0f, 2.0f);    // Camera position
-        camera.Target = (Vector3)new(0.0f,0.0f, 0.0f);      // Camera looking at point
-        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);          // Camera up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera projection type
+        // Define the camera to look into our 3d woRLGL.d
+        Camera3D camera = new();
+        camera.Position = (Vector3)new(0.0f,1.0f, 2.0f);    // Camera3D position
+        camera.Target = (Vector3)new(0.0f,0.0f, 0.0f);      // Camera3D looking at point
+        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
 
         // Define our three models to show the shader on
         Mesh torus = GenMeshTorus(0.3f, 1, 16, 32);
@@ -48,14 +49,14 @@ private const int GLSL_VERSION = 100;
 
         // Load and apply the diffuse texture (colour map)
         Texture texDiffuse = LoadTexture("resources/plasma.png");
-        model1.Materials[0].Maps[MaterialMapIndex.Albedo].texture = texDiffuse;
-        model2.Materials[0].Maps[MaterialMapIndex.Albedo].texture = texDiffuse;
+        model1.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texDiffuse;
+        model2.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texDiffuse;
 
         // Using MaterialMapIndex.Emission as a spare slot to use for 2nd texture
         // NOTE: Don't use MaterialMapIndex.Irradiance, MaterialMapIndex.Prefilter or  MaterialMapIndex.Cubemap as they are bound as cube maps
         Texture texMask = LoadTexture("resources/mask.png");
-        model1.Materials[0].Maps[MaterialMapIndex.Emission].texture = texMask;
-        model2.Materials[0].Maps[MaterialMapIndex.Emission].texture = texMask;
+        model1.Materials[0].Maps[(int)MaterialMapIndex.Emission].Texture = texMask;
+        model2.Materials[0].Maps[(int)MaterialMapIndex.Emission].Texture = texMask;
         shader.locs[SHADER_LOC_MAP_EMISSION] = GetShaderLocation(shader, "mask");
 
         // Frame is incremented each frame to animate the shader
@@ -83,7 +84,7 @@ private const int GLSL_VERSION = 100;
             rotation.Z -= 0.0025f;
 
             // Send frames counter to shader for animation
-            SetShaderValue(shader, shaderFrame, &framesCounter, SHADER_UNIFORM_INT);
+            SetShaderValue(shader, shaderFrame, ref framesCounter, SHADER_UNIFORM_INT);
 
             // Rotate one of the models
             model1.transform = MatrixRotateXYZ(rotation);

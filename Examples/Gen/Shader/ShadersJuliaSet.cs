@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -63,7 +64,7 @@ private const int GLSL_VERSION = 100;
         SetShaderValue(shader, GetShaderLocation(shader, "screenDims"), screenDims, SHADER_UNIFORM_VEC2);
 
         SetShaderValue(shader, cLoc, c, SHADER_UNIFORM_VEC2);
-        SetShaderValue(shader, zoomLoc, &zoom, SHADER_UNIFORM_FLOAT);
+        SetShaderValue(shader, zoomLoc, ref zoom, SHADER_UNIFORM_FLOAT);
         SetShaderValue(shader, offsetLoc, offset, SHADER_UNIFORM_VEC2);
 
         int incrementSpeed = 0;             // Multiplier of speed to change c value
@@ -120,7 +121,7 @@ private const int GLSL_VERSION = 100;
                 }
                 else offsetSpeed = new( 0.0f, 0.0f );
 
-                SetShaderValue(shader, zoomLoc, &zoom, SHADER_UNIFORM_FLOAT);
+                SetShaderValue(shader, zoomLoc, ref zoom, SHADER_UNIFORM_FLOAT);
                 SetShaderValue(shader, offsetLoc, offset, SHADER_UNIFORM_VEC2);
 
                 // Increment c value with time
@@ -151,7 +152,7 @@ private const int GLSL_VERSION = 100;
                 BeginShaderMode(shader);
                     // WARNING: If FLAG_WINDOW_HIGHDPI is enabled, HighDPI monitor scaling should be considered
                     // when rendering the RenderTexture to fit in the HighDPI scaled Window
-                    DrawTexture(target.texture, new( 0.0f, 0.0f ), 0.0f, 1.0f, White);
+                    DrawTexture(target.Texture, new( 0.0f, 0.0f ), 0.0f, 1.0f, White);
                 EndShaderMode();
 
                 if (showControls)

@@ -101,6 +101,39 @@
         },
         "GetGamepadAxisMovement": {
             "axis": "GamepadAxis axis"
+        },
+        "rlSetBlendMode": {
+            "mode": "BlendMode mode"
+        },
+        "rlSetCullFace": {
+            "mode": "CullMode mode"
+        },
+        "DrawTriangleFan": {
+            "points": "Vector2[] points"
+        },
+        "LoadModelAnimations": {
+            "_": "ModelAnimation[]",
+            "animCount": "ref uint animCount"
+        },
+        "SetMaterialTexture": {
+            "material": "ref Material material",
+            "mapType": "MaterialMapIndex mapType"
+        },
+        "LoadImageColors": {
+            "_": "Color[]"
+        },
+        "UploadMesh": {
+            "mesh": "ref Mesh mesh"
+        },
+        "LoadTextureCubemap": {
+            "layout": "CubemapLayout layout"
+        },
+        "rlLoadTextureCubemap": {
+            "format": "PixelFormat format"
+        },
+        "rlFramebufferAttach": {
+            "attachType": "FramebufferAttachType attachType",
+            "texType": "FramebufferAttachTextureType texType"
         }
     }
 }

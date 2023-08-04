@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -26,7 +27,7 @@ private const int MIN_FRAME_DELAY = 1;
         // Load all GIF animation frames into a single Image
         // NOTE: GIF data is always loaded as RGBA (32bit) by default
         // NOTE: Frames are just appended one after another in image.data memory
-        Image imScarfyAnim = LoadImageAnim("resources/scarfy_run.gif", &animFrames);
+        Image imScarfyAnim = LoadImageAnim("resources/scarfy_run.Gif", ref animFrames);
 
         // Load texture from image
         // NOTE: We will update this texture when required with next frame data

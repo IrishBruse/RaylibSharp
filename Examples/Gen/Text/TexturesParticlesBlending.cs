@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -38,10 +39,10 @@ private const int MAX_PARTICLES = 200;
         {
             mouseTail[i].position = new( 0, 0 );
             mouseTail[i].color = Color.FromArgb(255, GetRandomValue(0, 255), GetRandomValue(0, 255), GetRandomValue(0, 255));
-            mouseTail[i].alpha = 1.0f;
+            mouseTail[i].Alpha = 1.0f;
             mouseTail[i].size = (float)GetRandomValue(1, 30)/20.0f;
-            mouseTail[i].rotation = (float)GetRandomValue(0, 360);
-            mouseTail[i].active = false;
+            mouseTail[i].Rotation = (float)GetRandomValue(0, 360);
+            mouseTail[i].Active = false;
         }
 
         float gravity = 3.0f;
@@ -63,10 +64,10 @@ private const int MAX_PARTICLES = 200;
             // NOTE: When a particle disappears, active = false and it can be reused.
             for (int i = 0; i < MAX_PARTICLES; i++)
             {
-                if (!mouseTail[i].active)
+                if (!mouseTail[i].Active)
                 {
-                    mouseTail[i].active = true;
-                    mouseTail[i].alpha = 1.0f;
+                    mouseTail[i].Active = true;
+                    mouseTail[i].Alpha = 1.0f;
                     mouseTail[i].position = GetMousePosition();
                     i = MAX_PARTICLES;
                 }
@@ -74,14 +75,14 @@ private const int MAX_PARTICLES = 200;
 
             for (int i = 0; i < MAX_PARTICLES; i++)
             {
-                if (mouseTail[i].active)
+                if (mouseTail[i].Active)
                 {
                     mouseTail[i].position.Y += gravity/2;
-                    mouseTail[i].alpha -= 0.005f;
+                    mouseTail[i].Alpha -= 0.005f;
 
-                    if (mouseTail[i].alpha <= 0.0f) mouseTail[i].active = false;
+                    if (mouseTail[i].Alpha <= 0.0f) mouseTail[i].Active = false;
 
-                    mouseTail[i].rotation += 2.0f;
+                    mouseTail[i].Rotation += 2.0f;
                 }
             }
 
@@ -101,10 +102,10 @@ private const int MAX_PARTICLES = 200;
                     // Draw active particles
                     for (int i = 0; i < MAX_PARTICLES; i++)
                     {
-                        if (mouseTail[i].active) DrawTexture(smoke, new( 0.0f, 0.0f, (float)smoke.Width, (float)smoke.Height ),
+                        if (mouseTail[i].Active) DrawTexture(smoke, new( 0.0f, 0.0f, (float)smoke.Width, (float)smoke.Height ),
                                                                new( mouseTail[i].position.X, mouseTail[i].position.Y, smoke.Width*mouseTail[i].size, smoke.Height*mouseTail[i].size ),
-                                                               new( (float)(smoke.Width*mouseTail[i].size/2.0f), (float)(smoke.Height*mouseTail[i].size/2.0f) ), mouseTail[i].rotation,
-                                                               Fade(mouseTail[i].color, mouseTail[i].alpha));
+                                                               new( (float)(smoke.Width*mouseTail[i].size/2.0f), (float)(smoke.Height*mouseTail[i].size/2.0f) ), mouseTail[i].Rotation,
+                                                               Fade(mouseTail[i].color, mouseTail[i].Alpha));
                     }
 
                 EndBlendMode();

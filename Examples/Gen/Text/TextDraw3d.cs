@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -58,13 +59,13 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
         bool spin = true;        // Spin the camera?
         bool multicolor = false; // Multicolor mode
 
-        // Define the camera to look into our 3d world
-        Camera camera = new();
-        camera.Position = (Vector3)new(-10.0f,15.0f, -10.0f);   // Camera position
-        camera.Target = (Vector3)new(0.0f,0.0f, 0.0f);          // Camera looking at point
-        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);              // Camera up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                    // Camera field-of-view Y
-        camera.Projection = CameraProjection.Perspective;                 // Camera projection type
+        // Define the camera to look into our 3d woRLGL.d
+        Camera3D camera = new();
+        camera.Position = (Vector3)new(-10.0f,15.0f, -10.0f);   // Camera3D position
+        camera.Target = (Vector3)new(0.0f,0.0f, 0.0f);          // Camera3D looking at point
+        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);              // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f;                                    // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective;                 // Camera3D projection type
 
         int camera_mode = CameraMode.Orbital;
 
@@ -78,7 +79,7 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
         float lineSpacing = -1.0f;
 
         // Set the text (using markdown!)
-        char text[64] = "Hello ~~World~~ in 3D!";
+        string text = "Hello ~~WoRLGL.d~~ in 3D!";
         Vector3 tbox = {0};
         int layers = 1;
         int quads = 0;
@@ -126,7 +127,7 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
                 {
                     UnloadFont(font);
                     font = LoadFont(droppedFiles.Paths[0]);
-                    fontSize = (float)font.baseSize;
+                    fontSize = (float)font.BaseSize;
                 }
 
                 UnloadDroppedFiles(droppedFiles);    // Unload filepaths from memory
@@ -141,19 +142,19 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
                 spin = !spin;
                 // we need to reset the camera when changing modes
                 camera = (Camera)new();
-                camera.Target = (Vector3)new(0.0f,0.0f, 0.0f);          // Camera looking at point
-                camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);              // Camera up vector (rotation towards target)
-                camera.Fovy = 45.0f;                                    // Camera field-of-view Y
-                camera.Projection = CameraProjection.Perspective;                 // Camera mode type
+                camera.Target = (Vector3)new(0.0f,0.0f, 0.0f);          // Camera3D looking at point
+                camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);              // Camera3D up vector (rotation towards target)
+                camera.Fovy = 45.0f;                                    // Camera3D field-of-view Y
+                camera.Projection = CameraProjection.Perspective;                 // Camera3D mode type
 
                 if (spin)
                 {
-                    camera.Position = (Vector3)new(-10.0f,15.0f, -10.0f);   // Camera position
+                    camera.Position = (Vector3)new(-10.0f,15.0f, -10.0f);   // Camera3D position
                     camera_mode = CameraMode.Orbital;
                 }
                 else
                 {
-                    camera.Position = (Vector3)new(10.0f,10.0f, -10.0f);   // Camera position
+                    camera.Position = (Vector3)new(10.0f,10.0f, -10.0f);   // Camera3D position
                     camera_mode = CameraMode.Free;
                 }
             }
@@ -198,7 +199,7 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
                     for (int i = 0; i < TEXT_MAX_LAYERS; ++i)
                     {
                         multi[i] = GenerateRandomColor(0.5f, 0.8f);
-                        multi[i].a = GetRandomValue(0, 255);
+                        multi[i].A = GetRandomValue(0, 255);
                     }
                 }
             }
@@ -254,28 +255,28 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
                     BeginShaderMode(alphaDiscard);
 
                         // Draw the 3D text above the red cube
-                        rlPushMatrix();
-                            rlRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-                            rlRotatef(90.0f, 0.0f, 0.0f, -1.0f);
+                        RLGL.PushMatrix();
+                            RLGL.Rotatef(90.0f, 1.0f, 0.0f, 0.0f);
+                            RLGL.Rotatef(90.0f, 0.0f, 0.0f, -1.0f);
 
                             for (int i = 0; i < layers; ++i)
                             {
                                 Color clr = light;
                                 if (multicolor) clr = multi[i];
-                                DrawTextWave3D(font, text, (Vector3)new(-tbox.X/2.0f,layerDistance*i, -4.5f), fontSize, fontSpacing, lineSpacing, true, &wcfg, time, clr);
+                                DrawTextWave3D(font, text, (Vector3)new(-tbox.X/2.0f,layerDistance*i, -4.5f), fontSize, fontSpacing, lineSpacing, true, ref wcfg, time, clr);
                             }
 
                             // Draw the text boundry if set
                             if (SHOW_TEXT_BOUNDRY) DrawCubeWires(new( 0.0f, 0.0f, -4.5f + tbox.Z/2 ), tbox, dark);
-                        rlPopMatrix();
+                        RLGL.PopMatrix();
 
                         // Don't draw the letter boundries for the 3D text below
                         bool slb = SHOW_LETTER_BOUNDRY;
                         SHOW_LETTER_BOUNDRY = false;
 
                         // Draw 3D options (use default font)
-                        rlPushMatrix();
-                            rlRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+                        RLGL.PushMatrix();
+                            RLGL.Rotatef(180.0f, 0.0f, 1.0f, 0.0f);
                             char *opt = (char *)TextFormat("< SIZE: %2 == 0.1f >", fontSize);
                             quads += TextLength(opt);
                             Vector3 m = MeasureText3D(GetFontDefault(), opt, 8.0f, 1.0f, 0.0f);
@@ -316,7 +317,7 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
                             m = MeasureText3D(GetFontDefault(), opt, 8.0f, 1.0f, 0.0f);
                             pos.X = -m.X/2.0f;
                             DrawText3D(GetFontDefault(), opt, pos, 8.0f, 1.0f, 0.0f, false, DarkPurple);
-                        rlPopMatrix();
+                        RLGL.PopMatrix();
 
                         // Draw 3D info text (use default font)
                         opt = "All the text displayed here is in 3D";
@@ -365,8 +366,8 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
 
                 }EndMode3D();
 
-                // Draw 2D info text & stats
-                DrawText("Drag & drop a font file to change the font!\nType something, see what happens!\n\n"
+                // Draw 2D info text ref  stats
+                DrawText("Drag ref  drop a font file to change the font!\nType something, see what happens!\n\n"
                 "Press [F3] to toggle the camera", 10, 35, 10, Black);
 
                 quads += TextLength(text)*2*layers;
@@ -409,64 +410,64 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
         // Character index position in sprite font
         // NOTE: In case a codepoint is not available in the font, index returned points to '?'
         int index = GetGlyphIndex(font, codepoint);
-        float scale = fontSize/(float)font.baseSize;
+        float scale = fontSize/(float)font.BaseSize;
 
         // Character destination rectangle on screen
         // NOTE: We consider charsPadding on drawing
-        position.X += (float)(font.glyphs[index].offsetX - font.glyphPadding)/(float)font.baseSize*scale;
-        position.Z += (float)(font.glyphs[index].offsetY - font.glyphPadding)/(float)font.baseSize*scale;
+        position.X += (float)(font.Glyphs[index].offsetX - font.GlyphPadding)/(float)font.BaseSize*scale;
+        position.Z += (float)(font.Glyphs[index].offsetY - font.GlyphPadding)/(float)font.BaseSize*scale;
 
         // Character source rectangle from font texture atlas
         // NOTE: We consider chars padding when drawing, it could be required for outline/glow shader effects
-        RectangleF srcRec = { font.recs[index].X - (float)font.glyphPadding, font.recs[index].Y - (float)font.glyphPadding,
-                             font.recs[index].Width + 2.0f*font.glyphPadding, font.recs[index].Height + 2.0f*font.glyphPadding };
+        RectangleF srcRec = { font.Recs[index].X - (float)font.GlyphPadding, font.Recs[index].Y - (float)font.GlyphPadding,
+                             font.Recs[index].Width + 2.0f*font.GlyphPadding, font.Recs[index].Height + 2.0f*font.GlyphPadding };
 
-        float width = (float)(font.recs[index].Width + 2.0f*font.glyphPadding)/(float)font.baseSize*scale;
-        float height = (float)(font.recs[index].Height + 2.0f*font.glyphPadding)/(float)font.baseSize*scale;
+        float width = (float)(font.Recs[index].Width + 2.0f*font.GlyphPadding)/(float)font.BaseSize*scale;
+        float height = (float)(font.Recs[index].Height + 2.0f*font.GlyphPadding)/(float)font.BaseSize*scale;
 
-        if (font.texture.id > 0)
+        if (font.Texture.Id > 0)
         {
             const float x = 0.0f;
             const float y = 0.0f;
             const float z = 0.0f;
 
             // normalized texture coordinates of the glyph inside the font texture (0.0f . 1.0f)
-            const float tx = srcRec.X/font.texture.Width;
-            const float ty = srcRec.Y/font.texture.Height;
-            const float tw = (srcRec.X+srcRec.Width)/font.texture.Width;
-            const float th = (srcRec.Y+srcRec.Height)/font.texture.Height;
+            const float tx = srcRec.X/font.Texture.Width;
+            const float ty = srcRec.Y/font.Texture.Height;
+            const float tw = (srcRec.X+srcRec.Width)/font.Texture.Width;
+            const float th = (srcRec.Y+srcRec.Height)/font.Texture.Height;
 
             if (SHOW_LETTER_BOUNDRY) DrawCubeWires(new( position.X + width/2, position.Y, position.Z + height/2), new( width, LETTER_BOUNDRY_SIZE, height ), LETTER_BOUNDRY_COLOR);
 
-            rlCheckRenderBatchLimit(4 + 4*backface);
-            rlSetTexture(font.texture.id);
+            RLGL.CheckRenderBatchLimit(4 + 4*backface);
+            RLGL.SetTexture(font.Texture.Id);
 
-            rlPushMatrix();
-                rlTranslatef(position.X, position.Y, position.Z);
+            RLGL.PushMatrix();
+                RLGL.Translatef(position.X, position.Y, position.Z);
 
-                rlBegin(RL_QUADS);
-                    rlColor4ub(tint.r, tint.g, tint.b, tint.a);
+                RLGL.Begin(RLGL.RlQuads);
+                    RLGL.Color4ub(tint.R, tint.G, tint.B, tint.A);
 
                     // Front Face
-                    rlNormal3f(0.0f, 1.0f, 0.0f);                                   // Normal Pointing Up
-                    rlTexCoord2f(tx, ty); rlVertex3f(x,         y, z);              // Top Left Of The Texture and Quad
-                    rlTexCoord2f(tx, th); rlVertex3f(x,         y, z + height);     // Bottom Left Of The Texture and Quad
-                    rlTexCoord2f(tw, th); rlVertex3f(x + width, y, z + height);     // Bottom Right Of The Texture and Quad
-                    rlTexCoord2f(tw, ty); rlVertex3f(x + width, y, z);              // Top Right Of The Texture and Quad
+                    RLGL.Normal3f(0.0f, 1.0f, 0.0f);                                   // Normal Pointing Up
+                    RLGL.TexCoord2f(tx, ty); RLGL.Vertex3f(x,         y, z);              // Top Left Of The Texture and Quad
+                    RLGL.TexCoord2f(tx, th); RLGL.Vertex3f(x,         y, z + height);     // Bottom Left Of The Texture and Quad
+                    RLGL.TexCoord2f(tw, th); RLGL.Vertex3f(x + width, y, z + height);     // Bottom Right Of The Texture and Quad
+                    RLGL.TexCoord2f(tw, ty); RLGL.Vertex3f(x + width, y, z);              // Top Right Of The Texture and Quad
 
                     if (backface)
                     {
                         // Back Face
-                        rlNormal3f(0.0f, -1.0f, 0.0f);                              // Normal Pointing Down
-                        rlTexCoord2f(tx, ty); rlVertex3f(x,         y, z);          // Top Right Of The Texture and Quad
-                        rlTexCoord2f(tw, ty); rlVertex3f(x + width, y, z);          // Top Left Of The Texture and Quad
-                        rlTexCoord2f(tw, th); rlVertex3f(x + width, y, z + height); // Bottom Left Of The Texture and Quad
-                        rlTexCoord2f(tx, th); rlVertex3f(x,         y, z + height); // Bottom Right Of The Texture and Quad
+                        RLGL.Normal3f(0.0f, -1.0f, 0.0f);                              // Normal Pointing Down
+                        RLGL.TexCoord2f(tx, ty); RLGL.Vertex3f(x,         y, z);          // Top Right Of The Texture and Quad
+                        RLGL.TexCoord2f(tw, ty); RLGL.Vertex3f(x + width, y, z);          // Top Left Of The Texture and Quad
+                        RLGL.TexCoord2f(tw, th); RLGL.Vertex3f(x + width, y, z + height); // Bottom Left Of The Texture and Quad
+                        RLGL.TexCoord2f(tx, th); RLGL.Vertex3f(x,         y, z + height); // Bottom Right Of The Texture and Quad
                     }
-                rlEnd();
-            rlPopMatrix();
+                RLGL.End();
+            RLGL.PopMatrix();
 
-            rlSetTexture(0);
+            RLGL.SetTexture(0);
         }
     }
 
@@ -478,13 +479,13 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
         float textOffsetY = 0.0f;               // Offset between lines (on line break '\n')
         float textOffsetX = 0.0f;               // Offset X to next character to draw
 
-        float scale = fontSize/(float)font.baseSize;
+        float scale = fontSize/(float)font.BaseSize;
 
         for (int i = 0; i < length;)
         {
             // Get next codepoint from byte string and glyph index in font
             int codepointByteCount = 0;
-            int codepoint = GetCodepoint(&text[i], &codepointByteCount);
+            int codepoint = GetCodepoint(ref text[i], ref codepointByteCount);
             int index = GetGlyphIndex(font, codepoint);
 
             // NOTE: Normally we exit the decoding sequence as soon as a bad byte is found (and return 0x3f)
@@ -495,7 +496,7 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
             {
                 // NOTE: Fixed line spacing of 1.5 line-height
                 // TODO: Support custom line spacing defined by user
-                textOffsetY += scale + lineSpacing/(float)font.baseSize*scale;
+                textOffsetY += scale + lineSpacing/(float)font.BaseSize*scale;
                 textOffsetX = 0.0f;
             }
             else
@@ -505,8 +506,8 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
                     DrawTextCodepoint3D(font, codepoint, new( position.X + textOffsetX, position.Y, position.Z + textOffsetY ), fontSize, backface, tint);
                 }
 
-                if (font.glyphs[index].advanceX == 0) textOffsetX += (float)(font.recs[index].Width + fontSpacing)/(float)font.baseSize*scale;
-                else textOffsetX += (float)(font.glyphs[index].advanceX + fontSpacing)/(float)font.baseSize*scale;
+                if (font.Glyphs[index].AdvanceX == 0) textOffsetX += (float)(font.Recs[index].Width + fontSpacing)/(float)font.BaseSize*scale;
+                else textOffsetX += (float)(font.Glyphs[index].AdvanceX + fontSpacing)/(float)font.BaseSize*scale;
             }
 
             i += codepointByteCount;   // Move text bytes counter to next codepoint
@@ -522,7 +523,7 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
 
         float tempTextWidth = 0.0f;     // Used to count longer text line width
 
-        float scale = fontSize/(float)font.baseSize;
+        float scale = fontSize/(float)font.BaseSize;
         float textHeight = scale;
         float textWidth = 0.0f;
 
@@ -534,7 +535,7 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
             lenCounter++;
 
             int next = 0;
-            letter = GetCodepoint(&text[i], &next);
+            letter = GetCodepoint(ref text[i], ref next);
             index = GetGlyphIndex(font, letter);
 
             // NOTE: normally we exit the decoding sequence as soon as a bad byte is found (and return 0x3f)
@@ -544,15 +545,15 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
 
             if (letter != '\n')
             {
-                if (font.glyphs[index].advanceX != 0) textWidth += (font.glyphs[index].advanceX+fontSpacing)/(float)font.baseSize*scale;
-                else textWidth += (font.recs[index].Width + font.glyphs[index].offsetX)/(float)font.baseSize*scale;
+                if (font.Glyphs[index].AdvanceX != 0) textWidth += (font.Glyphs[index].AdvanceX+fontSpacing)/(float)font.BaseSize*scale;
+                else textWidth += (font.Recs[index].Width + font.Glyphs[index].offsetX)/(float)font.BaseSize*scale;
             }
             else
             {
                 if (tempTextWidth < textWidth) tempTextWidth = textWidth;
                 lenCounter = 0;
                 textWidth = 0.0f;
-                textHeight += scale + lineSpacing/(float)font.baseSize*scale;
+                textHeight += scale + lineSpacing/(float)font.BaseSize*scale;
             }
 
             if (tempLen < lenCounter) tempLen = lenCounter;
@@ -561,7 +562,7 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
         if (tempTextWidth < textWidth) tempTextWidth = textWidth;
 
         Vector3 vec = new();
-        vec.X = tempTextWidth + (float)((tempLen - 1)*fontSpacing/(float)font.baseSize*scale); // Adds chars spacing to measure
+        vec.X = tempTextWidth + (float)((tempLen - 1)*fontSpacing/(float)font.BaseSize*scale); // Adds chars spacing to measure
         vec.Y = 0.25f;
         vec.Z = textHeight;
 
@@ -577,7 +578,7 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
         float textOffsetY = 0.0f;               // Offset between lines (on line break '\n')
         float textOffsetX = 0.0f;               // Offset X to next character to draw
 
-        float scale = fontSize/(float)font.baseSize;
+        float scale = fontSize/(float)font.BaseSize;
 
         bool wave = false;
 
@@ -585,7 +586,7 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
         {
             // Get next codepoint from byte string and glyph index in font
             int codepointByteCount = 0;
-            int codepoint = GetCodepoint(&text[i], &codepointByteCount);
+            int codepoint = GetCodepoint(ref text[i], ref codepointByteCount);
             int index = GetGlyphIndex(font, codepoint);
 
             // NOTE: Normally we exit the decoding sequence as soon as a bad byte is found (and return 0x3f)
@@ -596,13 +597,13 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
             {
                 // NOTE: Fixed line spacing of 1.5 line-height
                 // TODO: Support custom line spacing defined by user
-                textOffsetY += scale + lineSpacing/(float)font.baseSize*scale;
+                textOffsetY += scale + lineSpacing/(float)font.BaseSize*scale;
                 textOffsetX = 0.0f;
                 k = 0;
             }
             else if (codepoint == '~')
             {
-                if (GetCodepoint(&text[i+1], &codepointByteCount) == '~')
+                if (GetCodepoint(ref text[i+1], ref codepointByteCount) == '~')
                 {
                     codepointByteCount += 1;
                     wave = !wave;
@@ -623,8 +624,8 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
                     DrawTextCodepoint3D(font, codepoint, new( pos.X + textOffsetX, pos.Y, pos.Z + textOffsetY ), fontSize, backface, tint);
                 }
 
-                if (font.glyphs[index].advanceX == 0) textOffsetX += (float)(font.recs[index].Width + fontSpacing)/(float)font.baseSize*scale;
-                else textOffsetX += (float)(font.glyphs[index].advanceX + fontSpacing)/(float)font.baseSize*scale;
+                if (font.Glyphs[index].AdvanceX == 0) textOffsetX += (float)(font.Recs[index].Width + fontSpacing)/(float)font.BaseSize*scale;
+                else textOffsetX += (float)(font.Glyphs[index].AdvanceX + fontSpacing)/(float)font.BaseSize*scale;
             }
 
             i += codepointByteCount;   // Move text bytes counter to next codepoint
@@ -640,7 +641,7 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
 
         float tempTextWidth = 0.0f;     // Used to count longer text line width
 
-        float scale = fontSize/(float)font.baseSize;
+        float scale = fontSize/(float)font.BaseSize;
         float textHeight = scale;
         float textWidth = 0.0f;
 
@@ -652,7 +653,7 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
             lenCounter++;
 
             int next = 0;
-            letter = GetCodepoint(&text[i], &next);
+            letter = GetCodepoint(ref text[i], ref next);
             index = GetGlyphIndex(font, letter);
 
             // NOTE: normally we exit the decoding sequence as soon as a bad byte is found (and return 0x3f)
@@ -662,14 +663,14 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
 
             if (letter != '\n')
             {
-                if (letter == '~' && GetCodepoint(&text[i+1], &next) == '~')
+                if (letter == '~' && GetCodepoint(ref text[i+1], ref next) == '~')
                 {
                     i++;
                 }
                 else
                 {
-                    if (font.glyphs[index].advanceX != 0) textWidth += (font.glyphs[index].advanceX+fontSpacing)/(float)font.baseSize*scale;
-                    else textWidth += (font.recs[index].Width + font.glyphs[index].offsetX)/(float)font.baseSize*scale;
+                    if (font.Glyphs[index].AdvanceX != 0) textWidth += (font.Glyphs[index].AdvanceX+fontSpacing)/(float)font.BaseSize*scale;
+                    else textWidth += (font.Recs[index].Width + font.Glyphs[index].offsetX)/(float)font.BaseSize*scale;
                 }
             }
             else
@@ -677,7 +678,7 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
                 if (tempTextWidth < textWidth) tempTextWidth = textWidth;
                 lenCounter = 0;
                 textWidth = 0.0f;
-                textHeight += scale + lineSpacing/(float)font.baseSize*scale;
+                textHeight += scale + lineSpacing/(float)font.BaseSize*scale;
             }
 
             if (tempLen < lenCounter) tempLen = lenCounter;
@@ -686,7 +687,7 @@ private const int LETTER_BOUNDRY_COLOR = Violet;
         if (tempTextWidth < textWidth) tempTextWidth = textWidth;
 
         Vector3 vec = new();
-        vec.X = tempTextWidth + (float)((tempLen - 1)*fontSpacing/(float)font.baseSize*scale); // Adds chars spacing to measure
+        vec.X = tempTextWidth + (float)((tempLen - 1)*fontSpacing/(float)font.BaseSize*scale); // Adds chars spacing to measure
         vec.Y = 0.25f;
         vec.Z = textHeight;
 

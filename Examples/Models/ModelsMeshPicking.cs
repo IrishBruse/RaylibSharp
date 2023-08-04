@@ -1,16 +1,12 @@
-using System.Numerics;
 using System.Drawing;
-using System;
+using System.Numerics;
 
 using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public partial class ModelsMeshPicking : ExampleHelper 
+public partial class ModelsMeshPicking : ExampleHelper
 {
-
-private const int FLT_MAX = 340282346638528859811704183484516925440.0f;
-
     // Program main entry point
     public static int Example()
     {
@@ -20,38 +16,38 @@ private const int FLT_MAX = 340282346638528859811704183484516925440.0f;
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - models - mesh picking");
 
-        // Define the camera to look into our 3d world
-        Camera camera = new();
-        camera.Position = (Vector3)new(20.0f,20.0f, 20.0f); // Camera position
-        camera.Target = (Vector3)new(0.0f,8.0f, 0.0f);      // Camera looking at point
-        camera.Up = (Vector3)new(0.0f,1.6f, 0.0f);          // Camera up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera projection type
-
-        Ray ray = new();        // Picking ray
+        // Define the camera to look into our 3d woRLGL.d
+        Camera3D camera = new();
+        camera.Position = new(20.0f, 20.0f, 20.0f); // Camera3D position
+        camera.Target = new(0.0f, 8.0f, 0.0f);      // Camera3D looking at point
+        camera.Up = new(0.0f, 1.6f, 0.0f);          // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
+        _ = new
+        Ray();        // Picking ray
 
         Model tower = LoadModel("resources/models/obj/turret.obj");                 // Load OBJ model
         Texture texture = LoadTexture("resources/models/obj/turret_diffuse.png"); // Load model texture
-        tower.Materials[0].Maps[MaterialMapIndex.Albedo].texture = texture;            // Set model diffuse texture
+        tower.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture;            // Set model diffuse texture
 
-        Vector3 towerPos = new( 0.0f, 0.0f, 0.0f );                        // Set model position
+        Vector3 towerPos = new(0.0f, 0.0f, 0.0f);                        // Set model position
         BoundingBox towerBBox = GetMeshBoundingBox(tower.Meshes[0]);    // Get mesh bounding box
 
         // Ground quad
-        Vector3 g0 = (Vector3)new(-50.0f,0.0f, -50.0f);
-        Vector3 g1 = (Vector3)new(-50.0f,0.0f,  50.0f);
-        Vector3 g2 = (Vector3)new( 50.0f,0.0f,  50.0f);
-        Vector3 g3 = (Vector3)new( 50.0f,0.0f, -50.0f);
+        Vector3 g0 = new(-50.0f, 0.0f, -50.0f);
+        Vector3 g1 = new(-50.0f, 0.0f, 50.0f);
+        Vector3 g2 = new(50.0f, 0.0f, 50.0f);
+        Vector3 g3 = new(50.0f, 0.0f, -50.0f);
 
         // Test triangle
-        Vector3 ta = (Vector3)new(-25.0f,0.5f, 0.0f);
-        Vector3 tb = (Vector3)new(-4.0f,2.5f, 1.0f);
-        Vector3 tc = (Vector3)new(-8.0f,6.5f, 0.0f);
+        Vector3 ta = new(-25.0f, 0.5f, 0.0f);
+        Vector3 tb = new(-4.0f, 2.5f, 1.0f);
+        Vector3 tc = new(-8.0f, 6.5f, 0.0f);
 
-        Vector3 bary = new( 0.0f, 0.0f, 0.0f );
+        Vector3 bary = new(0.0f, 0.0f, 0.0f);
 
         // Test sphere
-        Vector3 sp = (Vector3)new(-30.0f,5.0f, 5.0f);
+        Vector3 sp = new(-30.0f, 5.0f, 5.0f);
         float sr = 4.0f;
 
         SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
@@ -59,29 +55,38 @@ private const int FLT_MAX = 340282346638528859811704183484516925440.0f;
         while (!WindowShouldClose())        // Detect window close button or ESC key
         {
             // Update
-            if (IsCursorHidden()) UpdateCamera(ref camera, CameraMode.FirstPerson);          // Update camera
+            if (IsCursorHidden())
+            {
+                UpdateCamera(ref camera, CameraMode.FirstPerson);          // Update camera
+            }
 
             // Toggle camera controls
             if (IsMouseButtonPressed(MouseButton.Right))
             {
-                if (IsCursorHidden()) EnableCursor();
-                else DisableCursor();
+                if (IsCursorHidden())
+                {
+                    EnableCursor();
+                }
+                else
+                {
+                    DisableCursor();
+                }
             }
 
             // Display information about closest hit
             RayCollision collision = new();
-            char *hitObjectName = "None";
-            collision.distance = FLT_MAX;
+            string hitObjectName = "None";
+            collision.Distance = float.MaxValue;
             collision.Hit = false;
             Color cursorColor = White;
 
             // Get ray and test against objects
-            ray = GetMouseRay(GetMousePosition(), camera);
+            Ray ray = GetMouseRay(GetMousePosition(), camera);
 
             // Check ray collision against ground quad
             RayCollision groundHitInfo = GetRayCollisionQuad(ray, g0, g1, g2, g3);
 
-            if ((groundHitInfo.Hit) && (groundHitInfo.distance < collision.distance))
+            if (groundHitInfo.Hit && (groundHitInfo.Distance < collision.Distance))
             {
                 collision = groundHitInfo;
                 cursorColor = Green;
@@ -91,19 +96,19 @@ private const int FLT_MAX = 340282346638528859811704183484516925440.0f;
             // Check ray collision against test triangle
             RayCollision triHitInfo = GetRayCollisionTriangle(ray, ta, tb, tc);
 
-            if ((triHitInfo.Hit) && (triHitInfo.distance < collision.distance))
+            if (triHitInfo.Hit && (triHitInfo.Distance < collision.Distance))
             {
                 collision = triHitInfo;
                 cursorColor = Purple;
                 hitObjectName = "Triangle";
 
-                bary = Vector3Barycenter(collision.point, ta, tb, tc);
+                bary = Vector3Barycenter(collision.Point, ta, tb, tc);
             }
 
             // Check ray collision against test sphere
             RayCollision sphereHitInfo = GetRayCollisionSphere(ray, sp, sr);
 
-            if ((sphereHitInfo.Hit) && (sphereHitInfo.distance < collision.distance))
+            if (sphereHitInfo.Hit && (sphereHitInfo.Distance < collision.Distance))
             {
                 collision = sphereHitInfo;
                 cursorColor = Orange;
@@ -113,7 +118,7 @@ private const int FLT_MAX = 340282346638528859811704183484516925440.0f;
             // Check ray collision against bounding box first, before trying the full ray-mesh test
             RayCollision boxHitInfo = GetRayCollisionBox(ray, towerBBox);
 
-            if ((boxHitInfo.Hit) && (boxHitInfo.distance < collision.distance))
+            if (boxHitInfo.Hit && (boxHitInfo.Distance < collision.Distance))
             {
                 collision = boxHitInfo;
                 cursorColor = Orange;
@@ -121,16 +126,19 @@ private const int FLT_MAX = 340282346638528859811704183484516925440.0f;
 
                 // Check ray collision against model meshes
                 RayCollision meshHitInfo = new();
-                for (int m = 0; m < tower.meshCount; m++)
+                for (int m = 0; m < tower.MeshCount; m++)
                 {
                     // NOTE: We consider the model.transform for the collision check but
                     // it can be checked against any transform Matrix, used when checking against same
                     // model drawn multiple times with multiple transforms
-                    meshHitInfo = GetRayCollisionMesh(ray, tower.Meshes[m], tower.transform);
+                    meshHitInfo = GetRayCollisionMesh(ray, tower.Meshes[m], tower.Transform);
                     if (meshHitInfo.Hit)
                     {
                         // Save the closest hit mesh
-                        if ((!collision.Hit) || (collision.distance > meshHitInfo.distance)) collision = meshHitInfo;
+                        if ((!collision.Hit) || (collision.Distance > meshHitInfo.Distance))
+                        {
+                            collision = meshHitInfo;
+                        }
 
                         break;  // Stop once one mesh collision is detected, the colliding mesh is m
                     }
@@ -145,11 +153,13 @@ private const int FLT_MAX = 340282346638528859811704183484516925440.0f;
             }
 
             // Draw
-            BeginDrawing();{
+            BeginDrawing();
+            {
 
                 ClearBackground(RayWhite);
 
-                BeginMode3D(camera);{
+                BeginMode3D(camera);
+                {
 
                     // Draw the tower
                     // WARNING: If scale is different than 1.0f,
@@ -165,49 +175,47 @@ private const int FLT_MAX = 340282346638528859811704183484516925440.0f;
                     DrawSphereWires(sp, sr, 8, 8, Purple);
 
                     // Draw the mesh bbox if we hit it
-                    if (boxHitInfo.Hit) DrawBoundingBox(towerBBox, Lime);
+                    if (boxHitInfo.Hit)
+                    {
+                        DrawBoundingBox(towerBBox, Lime);
+                    }
 
                     // If we hit something, draw the cursor at the hit point
                     if (collision.Hit)
                     {
-                        DrawCube(collision.point, 0.3f, 0.3f, 0.3f, cursorColor);
-                        DrawCubeWires(collision.point, 0.3f, 0.3f, 0.3f, Red);
+                        DrawCube(collision.Point, 0.3f, 0.3f, 0.3f, cursorColor);
+                        DrawCubeWires(collision.Point, 0.3f, 0.3f, 0.3f, Red);
 
                         Vector3 normalEnd;
-                        normalEnd.X = collision.point.X + collision.normal.X;
-                        normalEnd.Y = collision.point.Y + collision.normal.Y;
-                        normalEnd.Z = collision.point.Z + collision.normal.Z;
+                        normalEnd.X = collision.Point.X + collision.Normal.X;
+                        normalEnd.Y = collision.Point.Y + collision.Normal.Y;
+                        normalEnd.Z = collision.Point.Z + collision.Normal.Z;
 
-                        DrawLine3D(collision.point, normalEnd, Red);
+                        DrawLine3D(collision.Point, normalEnd, Red);
                     }
 
                     DrawRay(ray, Maroon);
 
                     DrawGrid(10, 10.0f);
 
-                }EndMode3D();
+                }
+                EndMode3D();
 
                 // Draw some debug GUI text
-                DrawText(TextFormat("Hit Object: %s", hitObjectName), 10, 50, 10, Black);
+                DrawText("Hit Object: " + hitObjectName, 10, 50, 10, Black);
 
                 if (collision.Hit)
                 {
                     int ypos = 70;
 
-                    DrawText(TextFormat("Distance: %3.2f", collision.distance), 10, ypos, 10, Black);
+                    DrawText("Distance: " + collision.Distance.ToString("0.000"), 10, ypos, 10, Black);
+                    DrawText($"Hit Pos: {collision.Point.X:000.00} {collision.Point.Y:000.00} {collision.Point.Z:000.00}", 10, ypos + 15, 10, Black);
+                    DrawText($"Hit Norm: {collision.Point.X:000.00} {collision.Point.Y:000.00} {collision.Point.Z:000.00}", 10, ypos + 30, 10, Black);
 
-                    DrawText(TextFormat("Hit Pos: %3.2f %3.2f %3.2f",
-                                        collision.point.X,
-                                        collision.point.Y,
-                                        collision.point.Z), 10, ypos + 15, 10, Black);
-
-                    DrawText(TextFormat("Hit Norm: %3.2f %3.2f %3.2f",
-                                        collision.normal.X,
-                                        collision.normal.Y,
-                                        collision.normal.Z), 10, ypos + 30, 10, Black);
-
-                    if (triHitInfo.Hit && TextIsEqual(hitObjectName, "Triangle"))
-                        DrawText(TextFormat("Barycenter: %3.2f %3.2f %3.2f",  bary.X, bary.Y, bary.Z), 10, ypos + 45, 10, Black);
+                    if (triHitInfo.Hit && hitObjectName == "Triangle")
+                    {
+                        DrawText($"Barycenter: {bary.X:000.00} {bary.Y:000.00} {bary.Z:000.00}", 10, ypos + 45, 10, Black);
+                    }
                 }
 
                 DrawText("Right click mouse to toggle camera controls", 10, 430, 10, Gray);
@@ -216,7 +224,8 @@ private const int FLT_MAX = 340282346638528859811704183484516925440.0f;
 
                 DrawFPS(10, 10);
 
-            }EndDrawing();
+            }
+            EndDrawing();
         }
 
         // De-Initialization

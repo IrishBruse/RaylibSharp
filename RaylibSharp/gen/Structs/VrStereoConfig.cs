@@ -15,21 +15,21 @@ public unsafe partial struct VrStereoConfig
     /// <summary> VR projection matrices (per eye) </summary>
     public Matrix4x4 ProjectionR;
     /// <summary> VR view offset matrices (per eye) </summary>
-    public Matrix4x4 ViewoffsetL;
+    public Matrix4x4 ViewOffsetL;
     /// <summary> VR view offset matrices (per eye) </summary>
-    public Matrix4x4 ViewoffsetR;
+    public Matrix4x4 ViewOffsetR;
     /// <summary> VR left lens center </summary>
-    public Vector2 Leftlenscenter;
+    public Vector2 LeftLensCenter;
     /// <summary> VR right lens center </summary>
-    public Vector2 Rightlenscenter;
+    public Vector2 RightLensCenter;
     /// <summary> VR left screen center </summary>
-    public Vector2 Leftscreencenter;
+    public Vector2 LeftScreenCenter;
     /// <summary> VR right screen center </summary>
-    public Vector2 Rightscreencenter;
+    public Vector2 RightScreenCenter;
     /// <summary> VR distortion scale </summary>
     public Vector2 Scale;
     /// <summary> VR distortion scale in </summary>
-    public Vector2 Scalein;
+    public Vector2 ScaleIn;
 }
 
 /// <summary> VrStereoConfig, VR stereo rendering configuration for simulator </summary>
@@ -41,21 +41,21 @@ internal unsafe struct UnmanagedVrStereoConfig
     /// <summary> VR projection matrices (per eye) </summary>
     public fixed float ProjectionR[16];
     /// <summary> VR view offset matrices (per eye) </summary>
-    public fixed float ViewoffsetL[16];
+    public fixed float ViewOffsetL[16];
     /// <summary> VR view offset matrices (per eye) </summary>
-    public fixed float ViewoffsetR[16];
+    public fixed float ViewOffsetR[16];
     /// <summary> VR left lens center </summary>
-    public fixed float Leftlenscenter[2];
+    public fixed float LeftLensCenter[2];
     /// <summary> VR right lens center </summary>
-    public fixed float Rightlenscenter[2];
+    public fixed float RightLensCenter[2];
     /// <summary> VR left screen center </summary>
-    public fixed float Leftscreencenter[2];
+    public fixed float LeftScreenCenter[2];
     /// <summary> VR right screen center </summary>
-    public fixed float Rightscreencenter[2];
+    public fixed float RightScreenCenter[2];
     /// <summary> VR distortion scale </summary>
     public fixed float Scale[2];
     /// <summary> VR distortion scale in </summary>
-    public fixed float Scalein[2];
+    public fixed float ScaleIn[2];
 }
 
 #pragma warning restore CA1711,IDE0005

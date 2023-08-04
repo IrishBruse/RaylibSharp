@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -18,7 +19,7 @@ public partial class TextFontFilters : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - text - font filters");
 
-        const char msg[50] = "Loaded Font";
+        const string msg = "Loaded Font";
 
         // NOTE: Textures/Fonts MUST be loaded after Window initialization (OpenGL context is required)
 
@@ -27,14 +28,14 @@ public partial class TextFontFilters : ExampleHelper
 
         // Generate mipmap levels to use trilinear filtering
         // NOTE: On 2D drawing it won't be noticeable, it looks like FILTER_BILINEAR
-        GenTextureMipmaps(&font.texture);
+        GenTextureMipmaps(ref font.Texture);
 
-        float fontSize = (float)font.baseSize;
+        float fontSize = (float)font.BaseSize;
         Vector2 fontPosition = new( 40.0f, screenHeight/2.0f - 80.0f );
         Vector2 textSize = new( 0.0f, 0.0f );
 
         // Setup texture scaling filter
-        SetTextureFilter(font.texture, TEXTURE_FILTER_POINT);
+        SetTextureFilter(font.Texture, TEXTURE_FILTER_POINT);
         int currentFontFilter = 0;      // TEXTURE_FILTER_POINT
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
@@ -48,18 +49,18 @@ public partial class TextFontFilters : ExampleHelper
             // Choose font texture filter method
             if (IsKeyPressed(Key.One))
             {
-                SetTextureFilter(font.texture, TEXTURE_FILTER_POINT);
+                SetTextureFilter(font.Texture, TEXTURE_FILTER_POINT);
                 currentFontFilter = 0;
             }
             else if (IsKeyPressed(Key.Two))
             {
-                SetTextureFilter(font.texture, TEXTURE_FILTER_BILINEAR);
+                SetTextureFilter(font.Texture, TEXTURE_FILTER_BILINEAR);
                 currentFontFilter = 1;
             }
             else if (IsKeyPressed(Key.Three))
             {
                 // NOTE: Trilinear filter won't be noticed on 2D drawing
-                SetTextureFilter(font.texture, TEXTURE_FILTER_TRILINEAR);
+                SetTextureFilter(font.Texture, TEXTURE_FILTER_TRILINEAR);
                 currentFontFilter = 2;
             }
 

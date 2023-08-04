@@ -81,11 +81,11 @@ public static class StructProcessor
 
         foreach (Fields field in s.Fields)
         {
-            string pascalName = Utility.ToPascalCase(field.Name);
+            string titleCaseName = char.ToUpper(field.Name[0]) + field.Name[1..];
 
-            if (pascalName.StartsWith(s.Name, true, CultureInfo.CurrentCulture))
+            if (titleCaseName.StartsWith(s.Name, true, CultureInfo.CurrentCulture))
             {
-                pascalName = pascalName[s.Name.Length..];
+                titleCaseName = titleCaseName[s.Name.Length..];
             }
 
             string type = ConvertUnmanagedTypeStruct(field.Type);
@@ -103,15 +103,15 @@ public static class StructProcessor
                 for (int i = 0; i < 4; i++)
                 {
                     sb.AppendLine($"    /// <summary> {field.Description} </summary>");
-                    sb.AppendLine($"    public uint {pascalName}{i};");
+                    sb.AppendLine($"    public uint {titleCaseName}{i};");
                 }
             }
             else if (field.Type == "Matrix[2]")
             {
                 sb.AppendLine($"    /// <summary> {field.Description} </summary>");
-                sb.AppendLine($"    public fixed float {pascalName}L[16];");
+                sb.AppendLine($"    public fixed float {titleCaseName}L[16];");
                 sb.AppendLine($"    /// <summary> {field.Description} </summary>");
-                sb.AppendLine($"    public fixed float {pascalName}R[16];");
+                sb.AppendLine($"    public fixed float {titleCaseName}R[16];");
             }
             else
             {
@@ -136,11 +136,11 @@ public static class StructProcessor
                     type.Contains("void")
                 )
                 {
-                    sb.AppendLine($"    public {type} {pascalName}{fixedArray};");
+                    sb.AppendLine($"    public {type} {titleCaseName}{fixedArray};");
                 }
                 else
                 {
-                    sb.AppendLine($"    public Unmanaged{type} {pascalName};");
+                    sb.AppendLine($"    public Unmanaged{type} {titleCaseName};");
                 }
             }
         }
@@ -163,26 +163,26 @@ public static class StructProcessor
 
         foreach (Fields field in s.Fields)
         {
-            string pascalName = Utility.ToPascalCase(field.Name);
+            string titleCaseName = char.ToUpper(field.Name[0]) + field.Name[1..];
 
-            if (pascalName.StartsWith(s.Name, true, CultureInfo.CurrentCulture))
+            if (titleCaseName.StartsWith(s.Name, true, CultureInfo.CurrentCulture))
             {
-                pascalName = pascalName[s.Name.Length..];
+                titleCaseName = titleCaseName[s.Name.Length..];
             }
 
             if (field.Type == "Matrix[2]")
             {
                 sb.AppendLine($"    /// <summary> {field.Description} </summary>");
-                sb.AppendLine($"    public Matrix4x4 {pascalName}L;");
+                sb.AppendLine($"    public Matrix4x4 {titleCaseName}L;");
                 sb.AppendLine($"    /// <summary> {field.Description} </summary>");
-                sb.AppendLine($"    public Matrix4x4 {pascalName}R;");
+                sb.AppendLine($"    public Matrix4x4 {titleCaseName}R;");
             }
             else if (field.Type == "unsigned int[4]")
             {
                 for (int i = 0; i < 4; i++)
                 {
                     sb.AppendLine($"    /// <summary> {field.Description} </summary>");
-                    sb.AppendLine($"    public uint {pascalName}{i};");
+                    sb.AppendLine($"    public uint {titleCaseName}{i};");
                 }
             }
             else
@@ -194,8 +194,12 @@ public static class StructProcessor
                 {
                     type = "CameraProjection";
                 }
+                else if (field.Name == "format" && s.Name == "Texture")
+                {
+                    type = "PixelFormat";
+                }
 
-                sb.AppendLine($"    public {type} {pascalName};");
+                sb.AppendLine($"    public {type} {titleCaseName};");
             }
         }
 

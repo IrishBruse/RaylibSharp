@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -53,7 +54,7 @@ private const int PLAYER_TILE_VISIBILITY = 2;
         // NOTE: To get an automatic smooth-fog effect we use a render texture to render fog
         // at a smaller size (one pixel per tile) and scale it on drawing with bilinear filtering
         RenderTexture fogOfWar = LoadRenderTexture(map.tilesX, map.tilesY);
-        SetTextureFilter(fogOfWar.texture, TEXTURE_FILTER_BILINEAR);
+        SetTextureFilter(fogOfWar.Texture, TEXTURE_FILTER_BILINEAR);
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
@@ -115,7 +116,7 @@ private const int PLAYER_TILE_VISIBILITY = 2;
                 DrawRectangle(playerPosition, new( PLAYER_SIZE, PLAYER_SIZE ), Red);
 
                 // Draw fog of war (scaled to full map, bilinear filtering)
-                DrawTexture(fogOfWar.texture, new( 0, 0, (float)fogOfWar.texture.Width, (float)-fogOfWar.texture.Height ),
+                DrawTexture(fogOfWar.Texture, new( 0, 0, (float)fogOfWar.Texture.Width, (float)-fogOfWar.Texture.Height ),
                                new( 0, 0, (float)map.tilesX*MAP_TILE_SIZE, (float)map.tilesY*MAP_TILE_SIZE ),
                                new( 0, 0 ), 0.0f, White);
 

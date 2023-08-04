@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -25,12 +26,12 @@ private const int GLSL_VERSION = 100;
         SetConfigFlags(FLAG_WINDOW_RESIZABLE);
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shaders - raymarching shapes");
 
-        Camera camera = new();
-        camera.Position = (Vector3)new(2.5f,2.5f, 3.0f);    // Camera position
-        camera.Target = (Vector3)new(0.0f,0.0f, 0.7f);      // Camera looking at point
-        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);          // Camera up vector (rotation towards target)
-        camera.Fovy = 65.0f;                                // Camera field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera projection type
+        Camera3D camera = new();
+        camera.Position = (Vector3)new(2.5f,2.5f, 3.0f);    // Camera3D position
+        camera.Target = (Vector3)new(0.0f,0.0f, 0.7f);      // Camera3D looking at point
+        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
+        camera.Fovy = 65.0f;                                // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
 
         // Load raymarching shader
         // NOTE: Defining 0 (null) for vertex shader forces usage of internal default vertex shader
@@ -65,7 +66,7 @@ private const int GLSL_VERSION = 100;
             // Set shader required uniform values
             SetShaderValue(shader, viewEyeLoc, cameraPos, SHADER_UNIFORM_VEC3);
             SetShaderValue(shader, viewCenterLoc, cameraTarget, SHADER_UNIFORM_VEC3);
-            SetShaderValue(shader, runTimeLoc, &runTime, SHADER_UNIFORM_FLOAT);
+            SetShaderValue(shader, runTimeLoc, ref runTime, SHADER_UNIFORM_FLOAT);
 
             // Check if screen is resized
             if (IsWindowResized())

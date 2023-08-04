@@ -1,14 +1,13 @@
-using System.Numerics;
-using System.Drawing;
 using System;
+using System.Drawing;
+using System.Numerics;
 
 using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public partial class ModelsWavingCubes : ExampleHelper 
+public partial class ModelsWavingCubes : ExampleHelper
 {
-
     // Program main entry point
     public static int Example()
     {
@@ -19,12 +18,12 @@ public partial class ModelsWavingCubes : ExampleHelper
         InitWindow(screenWidth, screenHeight, "RaylibSharp - models - waving cubes");
 
         // Initialize the camera
-        Camera camera = new();
-        camera.Position = (Vector3)new(30.0f,20.0f, 30.0f); // Camera position
-        camera.Target = (Vector3)new(0.0f,0.0f, 0.0f);      // Camera looking at point
-        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);          // Camera up vector (rotation towards target)
-        camera.Fovy = 70.0f;                                // Camera field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera projection type
+        Camera3D camera = new();
+        camera.Position = new(30.0f, 20.0f, 30.0f); // Camera3D position
+        camera.Target = new(0.0f, 0.0f, 0.0f);      // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
+        camera.Fovy = 70.0f;                                // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
 
         // Specify the amount of blocks in each direction
         const int numBlocks = 15;
@@ -38,20 +37,20 @@ public partial class ModelsWavingCubes : ExampleHelper
             double time = GetTime();
 
             // Calculate time scale for cube position and size
-            float scale = (2.0f + (float)sin(time))*0.7f;
+            float scale = (2.0f + (float)Math.Sin(time)) * 0.7f;
 
             // Move camera around the scene
-            double cameraTime = time*0.3;
-            camera.Position.X = (float)cos(cameraTime)*40.0f;
-            camera.Position.Z = (float)sin(cameraTime)*40.0f;
+            double cameraTime = time * 0.3;
+            camera.Position.X = (float)Math.Cos(cameraTime) * 40.0f;
+            camera.Position.Z = (float)Math.Sin(cameraTime) * 40.0f;
 
             // Draw
-            BeginDrawing();{
-
+            BeginDrawing();
+            {
                 ClearBackground(RayWhite);
 
-                BeginMode3D(camera);{
-
+                BeginMode3D(camera);
+                {
                     DrawGrid(10, 5.0f);
 
                     for (int x = 0; x < numBlocks; x++)
@@ -61,35 +60,35 @@ public partial class ModelsWavingCubes : ExampleHelper
                             for (int z = 0; z < numBlocks; z++)
                             {
                                 // Scale of the blocks depends on x/y/z positions
-                                float blockScale = (x + y + z)/30.0f;
+                                float blockScale = (x + y + z) / 30.0f;
 
                                 // Scatter makes the waving effect by adding blockScale over time
-                                float scatter = MathF.Sin(blockScale*20.0f + (float)(time*4.0f));
+                                float scatter = MathF.Sin((blockScale * 20.0f) + (float)(time * 4.0f));
 
                                 // Calculate the cube position
-                                Vector3 cubePos = {
-                                    (float)(x - numBlocks/2)*(scale*3.0f) + scatter,
-                                    (float)(y - numBlocks/2)*(scale*2.0f) + scatter,
-                                    (float)(z - numBlocks/2)*(scale*3.0f) + scatter
-                                };
+                                Vector3 cubePos = new(
+                                    ((x - (numBlocks / 2)) * (scale * 3.0f)) + scatter,
+                                    ((y - (numBlocks / 2)) * (scale * 2.0f)) + scatter,
+                                    ((z - (numBlocks / 2)) * (scale * 3.0f)) + scatter
+                                );
 
                                 // Pick a color with a hue depending on cube position for the rainbow color effect
-                                Color cubeColor = ColorFromHS((float)(((x + y + z)*18)%360), 0.75f, 0.9f);
+                                Color cubeColor = ColorFromHSV((x + y + z) * 18 % 360, 0.75f, 0.9f);
 
                                 // Calculate cube size
-                                float cubeSize = (2.4f - scale)*blockScale;
+                                float cubeSize = (2.4f - scale) * blockScale;
 
                                 // And finally, draw the cube!
                                 DrawCube(cubePos, cubeSize, cubeSize, cubeSize, cubeColor);
                             }
                         }
                     }
-
-                }EndMode3D();
+                }
+                EndMode3D();
 
                 DrawFPS(10, 10);
-
-            }EndDrawing();
+            }
+            EndDrawing();
         }
 
         // De-Initialization

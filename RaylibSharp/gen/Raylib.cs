@@ -785,7 +785,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Draw a triangle fan defined by points (first vertex is the center) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTriangleFan")]
-    public static partial void DrawTriangleFan(IntPtr points, int pointCount, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawTriangleFan(Vector2[] points, int pointCount, [MarshalUsing(typeof(ColorMarshaller))] Color color);
 
     /// <summary> Draw a triangle strip defined by points </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTriangleStrip")]
@@ -1049,7 +1049,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Load color data from image as a Color array (RGBA - 32bit) </summary>
     [LibraryImport(LIB, EntryPoint = "LoadImageColors")]
-    public static partial IntPtr LoadImageColors(Image image);
+    public static partial Color[] LoadImageColors(Image image);
 
     /// <summary> Load colors palette from image as a Color array (RGBA - 32bit) </summary>
     [LibraryImport(LIB, EntryPoint = "LoadImagePalette")]
@@ -1146,7 +1146,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Load cubemap from image, multiple image cubemap layouts supported </summary>
     [LibraryImport(LIB, EntryPoint = "LoadTextureCubemap")]
-    public static partial Texture LoadTextureCubemap(Image image, int layout);
+    public static partial Texture LoadTextureCubemap(Image image, CubemapLayout layout);
 
     /// <summary> Load texture for rendering (framebuffer) </summary>
     [LibraryImport(LIB, EntryPoint = "LoadRenderTexture")]
@@ -1611,7 +1611,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Upload mesh vertex data in GPU and provide VAO/VBO ids </summary>
     [LibraryImport(LIB, EntryPoint = "UploadMesh")]
-    public static partial void UploadMesh(IntPtr mesh, [MarshalAs(UnmanagedType.I1)] bool dynamic);
+    public static partial void UploadMesh(ref Mesh mesh, [MarshalAs(UnmanagedType.I1)] bool dynamic);
 
     /// <summary> Update mesh vertex data in GPU for a specific buffer index </summary>
     [LibraryImport(LIB, EntryPoint = "UpdateMeshBuffer")]
@@ -1705,7 +1705,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Set texture for a material map type (MATERIAL_MAP_DIFFUSE, MATERIAL_MAP_SPECULAR...) </summary>
     [LibraryImport(LIB, EntryPoint = "SetMaterialTexture")]
-    public static partial void SetMaterialTexture(IntPtr material, int mapType, Texture texture);
+    public static partial void SetMaterialTexture(ref Material material, MaterialMapIndex mapType, Texture texture);
 
     /// <summary> Set material for a mesh </summary>
     [LibraryImport(LIB, EntryPoint = "SetModelMeshMaterial")]
@@ -1713,7 +1713,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Load model animations from file </summary>
     [LibraryImport(LIB, EntryPoint = "LoadModelAnimations")]
-    public static partial IntPtr LoadModelAnimations([MarshalAs(UnmanagedType.LPStr)] string fileName, uint* animCount);
+    public static partial ModelAnimation[] LoadModelAnimations([MarshalAs(UnmanagedType.LPStr)] string fileName, ref uint animCount);
 
     /// <summary> Update model animation pose </summary>
     [LibraryImport(LIB, EntryPoint = "UpdateModelAnimation")]

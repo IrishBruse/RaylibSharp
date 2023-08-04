@@ -82,7 +82,7 @@ public partial class ShapesTopDownLights : ExampleHelper
 
         // Force the blend mode to only set the alpha of the destination
         RLGL.SetBlendFactors(RLGL_SRC_ALPHA, RLGL_SRC_ALPHA, RLGL_MIN);
-        RLGL.SetBlendMode(BLEND_CUSTOM);
+        RLGL.SetBlendMode(BlendMode.Custom);
 
         // If we are valid, then draw the light radius to the alpha mask
         if (lights[slot].valid)
@@ -93,20 +93,20 @@ public partial class ShapesTopDownLights : ExampleHelper
         RLGL.DrawRenderBatchActive();
 
         // Cut out the shadows from the light radius by forcing the alpha to maximum
-        RLGL.SetBlendMode(BLEND_ALPHA);
+        RLGL.SetBlendMode(BlendMode.Alpha);
         RLGL.SetBlendFactors(RLGL_SRC_ALPHA, RLGL_SRC_ALPHA, RLGL_MAX);
-        RLGL.SetBlendMode(BLEND_CUSTOM);
+        RLGL.SetBlendMode(BlendMode.Custom);
 
         // Draw the shadows to the alpha mask
         for (int i = 0; i < lights[slot].shadowCount; i++)
         {
-            DrawTriangleFan(lights[slot].shadows[i], 4, White);
+            DrawTriangleFan(lights[slot].shadows, 4, White);
         }
 
         RLGL.DrawRenderBatchActive();
 
         // Go back to normal blend mode
-        RLGL.SetBlendMode(BLEND_ALPHA);
+        RLGL.SetBlendMode(BlendMode.Alpha);
 
         EndTextureMode();
     }
@@ -129,7 +129,7 @@ public partial class ShapesTopDownLights : ExampleHelper
     }
 
     // See if a light needs to update it's mask
-    private bool UpdateLight(int slot, Rectangle[] boxes, int count)
+    private static bool UpdateLight(int slot, RectangleF[] boxes, int count)
     {
         if (!lights[slot].active || !lights[slot].dirty)
         {
@@ -233,7 +233,7 @@ public partial class ShapesTopDownLights : ExampleHelper
         // Initialize our 'world' of boxes
         int boxCount = 0;
         RectangleF[] boxes = new RectangleF[MAX_BOXES];
-        SetupBoxes(boxes, &boxCount);
+        SetupBoxes(boxes, ref boxCount);
 
         // Create a checkerboard ground texture
         Image img = GenImageChecked(64, 64, 32, 32, DarkBrown, DarkGray);
@@ -294,21 +294,21 @@ public partial class ShapesTopDownLights : ExampleHelper
 
                 // Force the blend mode to only set the alpha of the destination
                 RLGL.SetBlendFactors(RLGL_SRC_ALPHA, RLGL_SRC_ALPHA, RLGL_MIN);
-                RLGL.SetBlendMode(BLEND_CUSTOM);
+                RLGL.SetBlendMode(BlendMode.Custom);
 
                 // Merge in all the light masks
                 for (int i = 0; i < MAX_LIGHTS; i++)
                 {
                     if (lights[i].active)
                     {
-                        DrawTexture(lights[i].mask.texture, new(0, 0, (float)GetScreenWidth(), -(float)GetScreenHeight()), Vector2Zero(), White);
+                        DrawTexture(lights[i].mask.Texture, new(0, 0, (float)GetScreenWidth(), -(float)GetScreenHeight()), Vector2.Zero, White);
                     }
                 }
 
                 RLGL.DrawRenderBatchActive();
 
                 // Go back to normal blend
-                RLGL.SetBlendMode(BLEND_ALPHA);
+                RLGL.SetBlendMode(BlendMode.Alpha);
                 EndTextureMode();
             }
 
@@ -322,7 +322,7 @@ public partial class ShapesTopDownLights : ExampleHelper
                 DrawTexture(backgroundTexture, new(0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()), Vector2.Zero, White);
 
                 // Overlay the shadows from all the lights
-                DrawTexture(lightMask.texture, new(0, 0, (float)GetScreenWidth(), -(float)GetScreenHeight()), Vector2.Zero, ColorAlpha(White, showLines ? 0.75f : 1.0f));
+                DrawTexture(lightMask.Texture, new(0, 0, (float)GetScreenWidth(), -(float)GetScreenHeight()), Vector2.Zero, ColorAlpha(White, showLines ? 0.75f : 1.0f));
 
                 // Draw the lights
                 for (int i = 0; i < MAX_LIGHTS; i++)
@@ -337,7 +337,7 @@ public partial class ShapesTopDownLights : ExampleHelper
                 {
                     for (int s = 0; s < lights[0].shadowCount; s++)
                     {
-                        DrawTriangleFan(lights[0].shadows[s].vertices, 4, DarkPurple);
+                        DrawTriangleFan(lights[0].shadows, 4, DarkPurple);
                     }
 
                     for (int b = 0; b < boxCount; b++)

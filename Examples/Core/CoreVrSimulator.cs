@@ -25,19 +25,19 @@ public class CoreVrSimulator : ExampleHelper
         VrDeviceInfo device = new()
         {
             // Oculus Rift CV1 parameters for simulator
-            Hresolution = 2160,                 // Horizontal resolution in pixels
-            Vresolution = 1200,                 // Vertical resolution in pixels
-            Hscreensize = 0.133793f,            // Horizontal size in meters
-            Vscreensize = 0.0669f,              // Vertical size in meters
-            Vscreencenter = 0.04678f,           // Screen center in meters
-            Eyetoscreendistance = 0.041f,       // Distance between eye and display in meters
-            Lensseparationdistance = 0.07f,     // Lens separation distance in meters
-            Interpupillarydistance = 0.07f,     // IPD (distance between pupils) in meters
+            HResolution = 2160,                 // Horizontal resolution in pixels
+            VResolution = 1200,                 // Vertical resolution in pixels
+            HScreenSize = 0.133793f,            // Horizontal size in meters
+            VScreenSize = 0.0669f,              // Vertical size in meters
+            VScreenCenter = 0.04678f,           // Screen center in meters
+            EyeToScreenDistance = 0.041f,       // Distance between eye and display in meters
+            LensSeparationDistance = 0.07f,     // Lens separation distance in meters
+            InterpupillaryDistance = 0.07f,     // IPD (distance between pupils) in meters
 
             // NOTE: CV1 uses fresnel-hybrid-asymmetric lenses with specific compute shaders
             // Following parameters are just an approximation to CV1 distortion stereo rendering
-            Lensdistortionvalues = new(1.0f, 0.22f, 0.24f, 0.0f), // Lens distortion constant parameters
-            Chromaabcorrection = new(0.996f, -0.004f, 1.014f, 0.0f), // Lens distortion constant parameters
+            LensDistortionValues = new(1.0f, 0.22f, 0.24f, 0.0f), // Lens distortion constant parameters
+            ChromaAbCorrection = new(0.996f, -0.004f, 1.014f, 0.0f), // Lens distortion constant parameters
         };
 
         // Load VR stereo config for VR device parameteres (Oculus Rift CV1 parameters)
@@ -47,19 +47,19 @@ public class CoreVrSimulator : ExampleHelper
         Shader distortion = LoadShader(null, $"resources/distortion{GLSL_VERSION}.fs");
 
         // Update distortion shader with lens and distortion-scale parameters
-        SetShaderValue(distortion, GetShaderLocation(distortion, "leftLensCenter"), ref config.Leftlenscenter, ShaderUniformDataType.ShaderUniformVec2);
-        SetShaderValue(distortion, GetShaderLocation(distortion, "rightLensCenter"), ref config.Rightlenscenter, ShaderUniformDataType.ShaderUniformVec2);
-        SetShaderValue(distortion, GetShaderLocation(distortion, "leftScreenCenter"), ref config.Leftscreencenter, ShaderUniformDataType.ShaderUniformVec2);
-        SetShaderValue(distortion, GetShaderLocation(distortion, "rightScreenCenter"), ref config.Rightscreencenter, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(distortion, GetShaderLocation(distortion, "leftLensCenter"), ref config.LeftLensCenter, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(distortion, GetShaderLocation(distortion, "rightLensCenter"), ref config.RightLensCenter, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(distortion, GetShaderLocation(distortion, "leftScreenCenter"), ref config.LeftScreenCenter, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(distortion, GetShaderLocation(distortion, "rightScreenCenter"), ref config.RightScreenCenter, ShaderUniformDataType.ShaderUniformVec2);
 
         SetShaderValue(distortion, GetShaderLocation(distortion, "scale"), ref config.Scale, ShaderUniformDataType.ShaderUniformVec2);
-        SetShaderValue(distortion, GetShaderLocation(distortion, "scaleIn"), ref config.Scalein, ShaderUniformDataType.ShaderUniformVec2);
-        SetShaderValue(distortion, GetShaderLocation(distortion, "deviceWarpParam"), ref device.Lensdistortionvalues, ShaderUniformDataType.ShaderUniformVec4);
-        SetShaderValue(distortion, GetShaderLocation(distortion, "chromaAbParam"), ref device.Chromaabcorrection, ShaderUniformDataType.ShaderUniformVec4);
+        SetShaderValue(distortion, GetShaderLocation(distortion, "scaleIn"), ref config.ScaleIn, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(distortion, GetShaderLocation(distortion, "deviceWarpParam"), ref device.LensDistortionValues, ShaderUniformDataType.ShaderUniformVec4);
+        SetShaderValue(distortion, GetShaderLocation(distortion, "chromaAbParam"), ref device.ChromaAbCorrection, ShaderUniformDataType.ShaderUniformVec4);
 
         // Initialize framebuffer for stereo rendering
         // NOTE: Screen size should match HMD aspect ratio
-        RenderTexture target = LoadRenderTexture(device.Hresolution, device.Vresolution);
+        RenderTexture target = LoadRenderTexture(device.HResolution, device.VResolution);
 
         // The target's height is flipped (in the source Rectangle), due to OpenGL reasons
         RectangleF sourceRec = new(0.0f, 0.0f, target.Texture.Width, -(float)target.Texture.Height);

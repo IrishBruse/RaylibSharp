@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -47,8 +48,8 @@ private const int MAX_FONTS = 8;
 
         for (int i = 0; i < MAX_FONTS; i++)
         {
-            positions[i].X = screenWidth/2.0f - MeasureText(fonts[i], messages[i], fonts[i].baseSize*2.0f, (float)spacings[i]).X/2.0f;
-            positions[i].Y = 60.0f + fonts[i].baseSize + 45.0f*i;
+            positions[i].X = screenWidth/2.0f - MeasureText(fonts[i], messages[i], fonts[i].BaseSize*2.0f, (float)spacings[i]).X/2.0f;
+            positions[i].Y = 60.0f + fonts[i].BaseSize + 45.0f*i;
         }
 
         // Small Y position corrections
@@ -76,7 +77,7 @@ private const int MAX_FONTS = 8;
 
                 for (int i = 0; i < MAX_FONTS; i++)
                 {
-                    DrawText(fonts[i], messages[i], positions[i], fonts[i].baseSize*2.0f, (float)spacings[i], colors[i]);
+                    DrawText(fonts[i], messages[i], positions[i], fonts[i].BaseSize*2.0f, (float)spacings[i], colors[i]);
                 }
 
             }EndDrawing();

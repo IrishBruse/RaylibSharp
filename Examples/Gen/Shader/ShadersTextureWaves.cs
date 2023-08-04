@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -47,13 +48,13 @@ private const int GLSL_VERSION = 100;
         float speedY = 8.0f;
 
         float [] screenSize = new float [2]new( (float)GetScreenWidth(), (float)GetScreenHeight() );
-        SetShaderValue(shader, GetShaderLocation(shader, "size"), &screenSize, SHADER_UNIFORM_VEC2);
-        SetShaderValue(shader, freqXLoc, &freqX, SHADER_UNIFORM_FLOAT);
-        SetShaderValue(shader, freqYLoc, &freqY, SHADER_UNIFORM_FLOAT);
-        SetShaderValue(shader, ampXLoc, &ampX, SHADER_UNIFORM_FLOAT);
-        SetShaderValue(shader, ampYLoc, &ampY, SHADER_UNIFORM_FLOAT);
-        SetShaderValue(shader, speedXLoc, &speedX, SHADER_UNIFORM_FLOAT);
-        SetShaderValue(shader, speedYLoc, &speedY, SHADER_UNIFORM_FLOAT);
+        SetShaderValue(shader, GetShaderLocation(shader, "size"), ref screenSize, SHADER_UNIFORM_VEC2);
+        SetShaderValue(shader, freqXLoc, ref freqX, SHADER_UNIFORM_FLOAT);
+        SetShaderValue(shader, freqYLoc, ref freqY, SHADER_UNIFORM_FLOAT);
+        SetShaderValue(shader, ampXLoc, ref ampX, SHADER_UNIFORM_FLOAT);
+        SetShaderValue(shader, ampYLoc, ref ampY, SHADER_UNIFORM_FLOAT);
+        SetShaderValue(shader, speedXLoc, ref speedX, SHADER_UNIFORM_FLOAT);
+        SetShaderValue(shader, speedYLoc, ref speedY, SHADER_UNIFORM_FLOAT);
 
         float seconds = 0.0f;
 
@@ -66,7 +67,7 @@ private const int GLSL_VERSION = 100;
             // Update
             seconds += GetFrameTime();
 
-            SetShaderValue(shader, secondsLoc, &seconds, SHADER_UNIFORM_FLOAT);
+            SetShaderValue(shader, secondsLoc, ref seconds, SHADER_UNIFORM_FLOAT);
 
             // Draw
             BeginDrawing();{

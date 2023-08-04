@@ -1,12 +1,11 @@
-using System.Numerics;
 using System.Drawing;
-using System;
+using System.Numerics;
 
 using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public partial class ModelsBillboard : ExampleHelper 
+public partial class ModelsBillboard : ExampleHelper
 {
 
     // Program main entry point
@@ -18,28 +17,28 @@ public partial class ModelsBillboard : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - models - drawing billboards");
 
-        // Define the camera to look into our 3d world
-        Camera camera = new();
-        camera.Position = (Vector3)new(5.0f,4.0f, 5.0f);    // Camera position
-        camera.Target = (Vector3)new(0.0f,2.0f, 0.0f);      // Camera looking at point
-        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);          // Camera up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera projection type
+        // Define the camera to look into our 3d woRLGL.d
+        Camera3D camera = new();
+        camera.Position = new(5.0f, 4.0f, 5.0f);    // Camera3D position
+        camera.Target = new(0.0f, 2.0f, 0.0f);      // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
 
         Texture bill = LoadTexture("resources/billboard.png");    // Our billboard texture
-        Vector3 billPositionStatic = new( 0.0f, 2.0f, 0.0f );          // Position of static billboard
-        Vector3 billPositionRotating = new( 1.0f, 2.0f, 1.0f );        // Position of rotating billboard
+        Vector3 billPositionStatic = new(0.0f, 2.0f, 0.0f);          // Position of static billboard
+        Vector3 billPositionRotating = new(1.0f, 2.0f, 1.0f);        // Position of rotating billboard
 
         // Entire billboard texture, source is used to take a segment from a larger texture.
-        RectangleF source = new( 0.0f, 0.0f, (float)bill.Width, (float)bill.Height );
+        RectangleF source = new(0.0f, 0.0f, bill.Width, bill.Height);
 
         // NOTE: Billboard locked on axis-Y
-        Vector3 billUp = new( 0.0f, 1.0f, 0.0f );
+        Vector3 billUp = new(0.0f, 1.0f, 0.0f);
 
         // Rotate around origin
         // Here we choose to rotate around the image center
         // NOTE: (-1, 1) is the range where origin.X, origin.Y is inside the texture
-        Vector2 rotateOrigin = { 0.0f };
+        Vector2 rotateOrigin = new(0, 0);
 
         // Distance is needed for the correct billboard draw order
         // Larger distance (further away from the camera) should be drawn prior to smaller distance.
@@ -56,15 +55,17 @@ public partial class ModelsBillboard : ExampleHelper
             UpdateCamera(ref camera, CameraMode.Orbital);
 
             rotation += 0.4f;
-            distanceStatic = Vector3Distance(camera.Position, billPositionStatic);
-            distanceRotating = Vector3Distance(camera.Position, billPositionRotating);
+            distanceStatic = Vector3.Distance(camera.Position, billPositionStatic);
+            distanceRotating = Vector3.Distance(camera.Position, billPositionRotating);
 
             // Draw
-            BeginDrawing();{
+            BeginDrawing();
+            {
 
                 ClearBackground(RayWhite);
 
-                BeginMode3D(camera);{
+                BeginMode3D(camera);
+                {
 
                     DrawGrid(10, 1.0f);        // Draw a grid
 
@@ -72,19 +73,21 @@ public partial class ModelsBillboard : ExampleHelper
                     if (distanceStatic > distanceRotating)
                     {
                         DrawBillboard(camera, bill, billPositionStatic, 2.0f, White);
-                        DrawBillboard(camera, bill, source, billPositionRotating, billUp, (Vector2) {1.0f, 1.0f}, rotateOrigin, rotation, White);
+                        DrawBillboard(camera, bill, source, billPositionRotating, billUp, new(1.0f, 1.0f), rotateOrigin, rotation, White);
                     }
                     else
                     {
-                        DrawBillboard(camera, bill, source, billPositionRotating, billUp, (Vector2) {1.0f, 1.0f}, rotateOrigin, rotation, White);
+                        DrawBillboard(camera, bill, source, billPositionRotating, billUp, new(1.0f, 1.0f), rotateOrigin, rotation, White);
                         DrawBillboard(camera, bill, billPositionStatic, 2.0f, White);
                     }
 
-                }EndMode3D();
+                }
+                EndMode3D();
 
                 DrawFPS(10, 10);
 
-            }EndDrawing();
+            }
+            EndDrawing();
         }
 
         // De-Initialization

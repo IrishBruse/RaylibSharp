@@ -12,9 +12,9 @@ using System.Runtime.InteropServices.Marshalling;
 public unsafe partial struct Mesh
 {
     /// <summary> Number of vertices stored in arrays </summary>
-    public int Vertexcount;
+    public int VertexCount;
     /// <summary> Number of triangles stored (indexed or not) </summary>
-    public int Trianglecount;
+    public int TriangleCount;
     /// <summary> Vertex position (XYZ - 3 components per vertex) (shader-location = 0) </summary>
     public float[] Vertices;
     /// <summary> Vertex texture coordinates (UV - 2 components per vertex) (shader-location = 1) </summary>
@@ -30,17 +30,17 @@ public unsafe partial struct Mesh
     /// <summary> Vertex indices (in case vertex data comes indexed) </summary>
     public short[] Indices;
     /// <summary> Animated vertex positions (after bones transformations) </summary>
-    public float[] Animvertices;
+    public float[] AnimVertices;
     /// <summary> Animated normals (after bones transformations) </summary>
-    public float[] Animnormals;
+    public float[] AnimNormals;
     /// <summary> Vertex bone ids, max 255 bone ids, up to 4 bones influence by vertex (skinning) </summary>
-    public byte[] Boneids;
+    public byte[] BoneIds;
     /// <summary> Vertex bone weight, up to 4 bones influence by vertex (skinning) </summary>
-    public float[] Boneweights;
+    public float[] BoneWeights;
     /// <summary> OpenGL Vertex Array Object id </summary>
-    public uint Vaoid;
+    public uint VaoId;
     /// <summary> OpenGL Vertex Buffer Objects id (default vertex data) </summary>
-    public uint[] Vboid;
+    public uint[] VboId;
 }
 
 /// <summary> Mesh, vertex data and vao/vbo </summary>
@@ -48,9 +48,9 @@ public unsafe partial struct Mesh
 internal unsafe struct UnmanagedMesh
 {
     /// <summary> Number of vertices stored in arrays </summary>
-    public int Vertexcount;
+    public int VertexCount;
     /// <summary> Number of triangles stored (indexed or not) </summary>
-    public int Trianglecount;
+    public int TriangleCount;
     /// <summary> Vertex position (XYZ - 3 components per vertex) (shader-location = 0) </summary>
     public float* Vertices;
     /// <summary> Vertex texture coordinates (UV - 2 components per vertex) (shader-location = 1) </summary>
@@ -66,17 +66,17 @@ internal unsafe struct UnmanagedMesh
     /// <summary> Vertex indices (in case vertex data comes indexed) </summary>
     public short* Indices;
     /// <summary> Animated vertex positions (after bones transformations) </summary>
-    public float* Animvertices;
+    public float* AnimVertices;
     /// <summary> Animated normals (after bones transformations) </summary>
-    public float* Animnormals;
+    public float* AnimNormals;
     /// <summary> Vertex bone ids, max 255 bone ids, up to 4 bones influence by vertex (skinning) </summary>
-    public byte* Boneids;
+    public byte* BoneIds;
     /// <summary> Vertex bone weight, up to 4 bones influence by vertex (skinning) </summary>
-    public float* Boneweights;
+    public float* BoneWeights;
     /// <summary> OpenGL Vertex Array Object id </summary>
-    public uint Vaoid;
+    public uint VaoId;
     /// <summary> OpenGL Vertex Buffer Objects id (default vertex data) </summary>
-    public uint* Vboid;
+    public uint* VboId;
 }
 
 #pragma warning restore CA1711,IDE0005

@@ -11,7 +11,7 @@ using System.Runtime.InteropServices.Marshalling;
 public unsafe partial struct VertexBuffer
 {
     /// <summary> Number of elements in the buffer (QUADS) </summary>
-    public int Elementcount;
+    public int ElementCount;
     /// <summary> Vertex position (XYZ - 3 components per vertex) (shader-location = 0) </summary>
     public float[] Vertices;
     /// <summary> Vertex texture coordinates (UV - 2 components per vertex) (shader-location = 1) </summary>
@@ -21,15 +21,15 @@ public unsafe partial struct VertexBuffer
     /// <summary> Vertex indices (in case vertex data comes indexed) (6 indices per quad) </summary>
     public short[] Indices;
     /// <summary> OpenGL Vertex Array Object id </summary>
-    public uint Vaoid;
+    public uint VaoId;
     /// <summary> OpenGL Vertex Buffer Objects id (4 types of vertex data) </summary>
-    public uint Vboid0;
+    public uint VboId0;
     /// <summary> OpenGL Vertex Buffer Objects id (4 types of vertex data) </summary>
-    public uint Vboid1;
+    public uint VboId1;
     /// <summary> OpenGL Vertex Buffer Objects id (4 types of vertex data) </summary>
-    public uint Vboid2;
+    public uint VboId2;
     /// <summary> OpenGL Vertex Buffer Objects id (4 types of vertex data) </summary>
-    public uint Vboid3;
+    public uint VboId3;
 }
 
 /// <summary> Dynamic vertex buffers (position + texcoords + colors + indices arrays) </summary>
@@ -37,7 +37,7 @@ public unsafe partial struct VertexBuffer
 internal unsafe struct UnmanagedVertexBuffer
 {
     /// <summary> Number of elements in the buffer (QUADS) </summary>
-    public int Elementcount;
+    public int ElementCount;
     /// <summary> Vertex position (XYZ - 3 components per vertex) (shader-location = 0) </summary>
     public float* Vertices;
     /// <summary> Vertex texture coordinates (UV - 2 components per vertex) (shader-location = 1) </summary>
@@ -47,15 +47,15 @@ internal unsafe struct UnmanagedVertexBuffer
     /// <summary> Vertex indices (in case vertex data comes indexed) (6 indices per quad) </summary>
     public short* Indices;
     /// <summary> OpenGL Vertex Array Object id </summary>
-    public uint Vaoid;
+    public uint VaoId;
     /// <summary> OpenGL Vertex Buffer Objects id (4 types of vertex data) </summary>
-    public uint Vboid0;
+    public uint VboId0;
     /// <summary> OpenGL Vertex Buffer Objects id (4 types of vertex data) </summary>
-    public uint Vboid1;
+    public uint VboId1;
     /// <summary> OpenGL Vertex Buffer Objects id (4 types of vertex data) </summary>
-    public uint Vboid2;
+    public uint VboId2;
     /// <summary> OpenGL Vertex Buffer Objects id (4 types of vertex data) </summary>
-    public uint Vboid3;
+    public uint VboId3;
 }
 
 #pragma warning restore CA1711,IDE0005

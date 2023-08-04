@@ -11,25 +11,25 @@ using System.Runtime.InteropServices.Marshalling;
 public unsafe partial struct VrDeviceInfo
 {
     /// <summary> Horizontal resolution in pixels </summary>
-    public int Hresolution;
+    public int HResolution;
     /// <summary> Vertical resolution in pixels </summary>
-    public int Vresolution;
+    public int VResolution;
     /// <summary> Horizontal size in meters </summary>
-    public float Hscreensize;
+    public float HScreenSize;
     /// <summary> Vertical size in meters </summary>
-    public float Vscreensize;
+    public float VScreenSize;
     /// <summary> Screen center in meters </summary>
-    public float Vscreencenter;
+    public float VScreenCenter;
     /// <summary> Distance between eye and display in meters </summary>
-    public float Eyetoscreendistance;
+    public float EyeToScreenDistance;
     /// <summary> Lens separation distance in meters </summary>
-    public float Lensseparationdistance;
+    public float LensSeparationDistance;
     /// <summary> IPD (distance between pupils) in meters </summary>
-    public float Interpupillarydistance;
+    public float InterpupillaryDistance;
     /// <summary> Lens distortion constant parameters </summary>
-    public Vector4 Lensdistortionvalues;
+    public Vector4 LensDistortionValues;
     /// <summary> Chromatic aberration correction parameters </summary>
-    public Vector4 Chromaabcorrection;
+    public Vector4 ChromaAbCorrection;
 }
 
 /// <summary> VrDeviceInfo, Head-Mounted-Display device parameters </summary>
@@ -37,25 +37,25 @@ public unsafe partial struct VrDeviceInfo
 internal unsafe struct UnmanagedVrDeviceInfo
 {
     /// <summary> Horizontal resolution in pixels </summary>
-    public int Hresolution;
+    public int HResolution;
     /// <summary> Vertical resolution in pixels </summary>
-    public int Vresolution;
+    public int VResolution;
     /// <summary> Horizontal size in meters </summary>
-    public float Hscreensize;
+    public float HScreenSize;
     /// <summary> Vertical size in meters </summary>
-    public float Vscreensize;
+    public float VScreenSize;
     /// <summary> Screen center in meters </summary>
-    public float Vscreencenter;
+    public float VScreenCenter;
     /// <summary> Distance between eye and display in meters </summary>
-    public float Eyetoscreendistance;
+    public float EyeToScreenDistance;
     /// <summary> Lens separation distance in meters </summary>
-    public float Lensseparationdistance;
+    public float LensSeparationDistance;
     /// <summary> IPD (distance between pupils) in meters </summary>
-    public float Interpupillarydistance;
+    public float InterpupillaryDistance;
     /// <summary> Lens distortion constant parameters </summary>
-    public fixed float Lensdistortionvalues[4];
+    public fixed float LensDistortionValues[4];
     /// <summary> Chromatic aberration correction parameters </summary>
-    public fixed float Chromaabcorrection[4];
+    public fixed float ChromaAbCorrection[4];
 }
 
 #pragma warning restore CA1711,IDE0005

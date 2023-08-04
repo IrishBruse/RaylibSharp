@@ -13,13 +13,13 @@ public unsafe partial struct Music
     /// <summary> Audio stream </summary>
     public AudioStream Stream;
     /// <summary> Total number of frames (considering channels) </summary>
-    public uint Framecount;
+    public uint FrameCount;
     /// <summary> Music looping enable </summary>
     public bool Looping;
     /// <summary> Type of music context (audio filetype) </summary>
-    public int Ctxtype;
+    public int CtxType;
     /// <summary> Audio context data, depends on type </summary>
-    public IntPtr Ctxdata;
+    public IntPtr CtxData;
 }
 
 /// <summary> Music, audio stream, anything longer than ~10 seconds should be streamed </summary>
@@ -29,13 +29,13 @@ internal unsafe struct UnmanagedMusic
     /// <summary> Audio stream </summary>
     public UnmanagedAudioStream Stream;
     /// <summary> Total number of frames (considering channels) </summary>
-    public uint Framecount;
+    public uint FrameCount;
     /// <summary> Music looping enable </summary>
     public bool Looping;
     /// <summary> Type of music context (audio filetype) </summary>
-    public int Ctxtype;
+    public int CtxType;
     /// <summary> Audio context data, depends on type </summary>
-    public void* Ctxdata;
+    public void* CtxData;
 }
 
 #pragma warning restore CA1711,IDE0005

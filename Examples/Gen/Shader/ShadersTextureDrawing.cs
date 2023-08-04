@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -33,7 +34,7 @@ private const int GLSL_VERSION = 100;
 
         float time = 0.0f;
         int timeLoc = GetShaderLocation(shader, "uTime");
-        SetShaderValue(shader, timeLoc, &time, SHADER_UNIFORM_FLOAT);
+        SetShaderValue(shader, timeLoc, ref time, SHADER_UNIFORM_FLOAT);
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
         // -------------------------------------------------------------------------------------------------------------
@@ -43,7 +44,7 @@ private const int GLSL_VERSION = 100;
         {
             // Update
             time = (float)GetTime();
-            SetShaderValue(shader, timeLoc, &time, SHADER_UNIFORM_FLOAT);
+            SetShaderValue(shader, timeLoc, ref time, SHADER_UNIFORM_FLOAT);
 
             // Draw
             BeginDrawing();{

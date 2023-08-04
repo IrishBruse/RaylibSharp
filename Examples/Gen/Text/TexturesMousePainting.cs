@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -140,8 +141,8 @@ private const int MAX_COLORS_COUNT = 23;
             // NOTE: Saving painted texture to a default named image
             if ((btnSaveMouseHover && IsMouseButtonReleased(MouseButton.Left)) || IsKeyPressed(Key.S))
             {
-                Image image = LoadImageFromTexture(target.texture);
-                ImageFlipVertical(&image);
+                Image image = LoadImageFromTexture(target.Texture);
+                ImageFlipVertical(ref image);
                 ExportImage(image, "my_amazing_texture_painting.png");
                 UnloadImage(image);
                 showSaveMessage = true;
@@ -164,7 +165,7 @@ private const int MAX_COLORS_COUNT = 23;
             ClearBackground(RayWhite);
 
             // NOTE: Render texture must be y-flipped due to default OpenGL coordinates (left-bottom)
-            DrawTexture(target.texture, (Rectangle) { 0, 0, (float)target.texture.Width, (float)-target.texture.Height }, (Vector2) { 0, 0 }, White);
+            DrawTexture(target.Texture, (Rectangle) { 0, 0, (float)target.Texture.Width, (float)-target.Texture.Height }, new( 0, 0 ), White);
 
             // Draw drawing circle for reference
             if (mousePos.Y > 50)

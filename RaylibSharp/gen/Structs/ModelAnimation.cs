@@ -12,13 +12,13 @@ using System.Runtime.InteropServices.Marshalling;
 public unsafe partial struct ModelAnimation
 {
     /// <summary> Number of bones </summary>
-    public int Bonecount;
+    public int BoneCount;
     /// <summary> Number of animation frames </summary>
-    public int Framecount;
+    public int FrameCount;
     /// <summary> Bones information (skeleton) </summary>
     public BoneInfo[] Bones;
     /// <summary> Poses array by frame </summary>
-    public Transform[][] Frameposes;
+    public Transform[][] FramePoses;
     /// <summary> Animation name </summary>
     public string Name;
 }
@@ -28,13 +28,13 @@ public unsafe partial struct ModelAnimation
 internal unsafe struct UnmanagedModelAnimation
 {
     /// <summary> Number of bones </summary>
-    public int Bonecount;
+    public int BoneCount;
     /// <summary> Number of animation frames </summary>
-    public int Framecount;
+    public int FrameCount;
     /// <summary> Bones information (skeleton) </summary>
     public UnmanagedBoneInfo* Bones;
     /// <summary> Poses array by frame </summary>
-    public UnmanagedTransform** Frameposes;
+    public UnmanagedTransform** FramePoses;
     /// <summary> Animation name </summary>
     public fixed char Name[32];
 }

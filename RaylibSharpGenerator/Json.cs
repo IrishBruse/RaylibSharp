@@ -15,7 +15,7 @@ public partial class RaylibApi
     [JsonIgnore] public string Directory { get; set; }
 
     [JsonPropertyName("defines")]
-    public Fields[] Defines { get; set; }
+    public Define[] Defines { get; set; }
 
     [JsonPropertyName("structs")]
     public Struct[] Structs { get; set; }
@@ -45,6 +45,21 @@ public partial class Fields
 
     [JsonPropertyName("name")]
     public string Name { get; set; }
+
+    [JsonPropertyName("description")]
+    public string Description { get; set; }
+}
+
+public partial class Define
+{
+    [JsonPropertyName("type")]
+    public string Type { get; set; }
+
+    [JsonPropertyName("name")]
+    public string Name { get; set; }
+
+    [JsonPropertyName("value")]
+    public object Value { get; set; }
 
     [JsonPropertyName("description")]
     public string Description { get; set; }

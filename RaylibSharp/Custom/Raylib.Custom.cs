@@ -103,4 +103,8 @@ public static unsafe partial class Raylib
     /// <summary> Set shader uniform value </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
     public static partial void SetShaderValue(Shader shader, int locIndex, ref Vector4 value, ShaderUniformDataType uniformType);
+
+    /// <summary> Set shader uniform value </summary>
+    [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
+    public static partial void SetShaderValue(Shader shader, int locIndex, int[] value, ShaderUniformDataType uniformType);
 }

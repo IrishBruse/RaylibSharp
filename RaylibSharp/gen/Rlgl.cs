@@ -214,7 +214,7 @@ public static unsafe partial class RLGL
 
     /// <summary> Set face culling mode </summary>
     [LibraryImport(LIB, EntryPoint = "rlSetCullFace")]
-    public static partial void SetCullFace(int mode);
+    public static partial void SetCullFace(CullMode mode);
 
     /// <summary> Enable scissor test </summary>
     [LibraryImport(LIB, EntryPoint = "rlEnableScissorTest")]
@@ -279,7 +279,7 @@ public static unsafe partial class RLGL
 
     /// <summary> Set blending mode </summary>
     [LibraryImport(LIB, EntryPoint = "rlSetBlendMode")]
-    public static partial void SetBlendMode(int mode);
+    public static partial void SetBlendMode(BlendMode mode);
 
     /// <summary> Set blending mode factor and equation (using OpenGL factors) </summary>
     [LibraryImport(LIB, EntryPoint = "rlSetBlendFactors")]
@@ -428,7 +428,7 @@ public static unsafe partial class RLGL
 
     /// <summary> Load texture cubemap </summary>
     [LibraryImport(LIB, EntryPoint = "rlLoadTextureCubemap")]
-    public static partial uint LoadTextureCubemap(IntPtr data, int size, int format);
+    public static partial uint LoadTextureCubemap(IntPtr data, int size, PixelFormat format);
 
     /// <summary> Update GPU texture with new data </summary>
     [LibraryImport(LIB, EntryPoint = "rlUpdateTexture")]
@@ -465,7 +465,7 @@ public static unsafe partial class RLGL
 
     /// <summary> Attach texture/renderbuffer to a framebuffer </summary>
     [LibraryImport(LIB, EntryPoint = "rlFramebufferAttach")]
-    public static partial void FramebufferAttach(uint fboId, uint texId, int attachType, int texType, int mipLevel);
+    public static partial void FramebufferAttach(uint fboId, uint texId, FramebufferAttachType attachType, FramebufferAttachTextureType texType, int mipLevel);
 
     /// <summary> Verify framebuffer is complete </summary>
     [LibraryImport(LIB, EntryPoint = "rlFramebufferComplete")]
@@ -601,3 +601,4 @@ public static unsafe partial class RLGL
     public static partial void LoadDrawQuad();
 
 }
+

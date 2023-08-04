@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -61,7 +62,7 @@ public partial class TexturesBackgroundScrolling : ExampleHelper
                 DrawTexture(foreground, new( scrollingFore, 70 ), 0.0f, 2.0f, White);
                 DrawTexture(foreground, new( foreground.Width*2 + scrollingFore, 70 ), 0.0f, 2.0f, White);
 
-                DrawText("BACKGROUND SCROLLING & PARALLAX", 10, 10, 20, Red);
+                DrawText("BACKGROUND SCROLLING ref  PARALLAX", 10, 10, 20, Red);
                 DrawText("(c) Cyberpunk Street Environment by Luis Zuno (@ansimuz)", screenWidth - 330, screenHeight - 20, 10, RayWhite);
 
             }EndDrawing();

@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -126,10 +127,10 @@ public partial class TexturesTexturedCurve : ExampleHelper
         // The mouse is down, and nothing was selected, so see if anything was picked
         Vector2 mouse = GetMousePosition();
 
-        if (CheckCollisionPointCircle(mouse, curveStartPosition, 6)) curveSelectedPoint = &curveStartPosition;
-        else if (CheckCollisionPointCircle(mouse, curveStartPositionTangent, 6)) curveSelectedPoint = &curveStartPositionTangent;
-        else if (CheckCollisionPointCircle(mouse, curveEndPosition, 6)) curveSelectedPoint = &curveEndPosition;
-        else if (CheckCollisionPointCircle(mouse, curveEndPositionTangent, 6)) curveSelectedPoint = &curveEndPositionTangent;
+        if (CheckCollisionPointCircle(mouse, curveStartPosition, 6)) curveSelectedPoint = ref curveStartPosition;
+        else if (CheckCollisionPointCircle(mouse, curveStartPositionTangent, 6)) curveSelectedPoint = ref curveStartPositionTangent;
+        else if (CheckCollisionPointCircle(mouse, curveEndPosition, 6)) curveSelectedPoint = ref curveEndPosition;
+        else if (CheckCollisionPointCircle(mouse, curveEndPositionTangent, 6)) curveSelectedPoint = ref curveEndPositionTangent;
     }
 
     static static void DrawTexturedCurve(void)
@@ -183,25 +184,25 @@ public partial class TexturesTexturedCurve : ExampleHelper
             Vector2 currentNegNormal = Vector2Add(current, Vector2Scale(normal, -curveWidth));
 
             // Draw the segment as a quad
-            rlSetTexture(texRoad.id);
-            rlBegin(RL_QUADS);
+            RLGL.SetTexture(texRoad.Id);
+            RLGL.Begin(RLGL.RlQuads);
 
-            rlColor4ub(255,255,255,255);
-            rlNormal3f(0.0f, 0.0f, 1.0f);
+            RLGL.Color4ub(255,255,255,255);
+            RLGL.Normal3f(0.0f, 0.0f, 1.0f);
 
-            rlTexCoord2f(0, previousV);
-            rlVertex2f(prevNegNormal.X, prevNegNormal.Y);
+            RLGL.TexCoord2f(0, previousV);
+            RLGL.Vertex2f(prevNegNormal.X, prevNegNormal.Y);
 
-            rlTexCoord2f(1, previousV);
-            rlVertex2f(prevPosNormal.X, prevPosNormal.Y);
+            RLGL.TexCoord2f(1, previousV);
+            RLGL.Vertex2f(prevPosNormal.X, prevPosNormal.Y);
 
-            rlTexCoord2f(1, v);
-            rlVertex2f(currentPosNormal.X, currentPosNormal.Y);
+            RLGL.TexCoord2f(1, v);
+            RLGL.Vertex2f(currentPosNormal.X, currentPosNormal.Y);
 
-            rlTexCoord2f(0, v);
-            rlVertex2f(currentNegNormal.X, currentNegNormal.Y);
+            RLGL.TexCoord2f(0, v);
+            RLGL.Vertex2f(currentNegNormal.X, currentNegNormal.Y);
 
-            rlEnd();
+            RLGL.End();
 
             // The current step is the start of the next step
             previous = current;

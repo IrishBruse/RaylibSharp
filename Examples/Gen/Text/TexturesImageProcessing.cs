@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -47,7 +48,7 @@ private const int NUM_PROCESSES = 9;
         // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
         Image imOrigin = LoadImage("resources/parrots.png");   // Loaded in CPU memory (RAM)
-        ImageFormat(&imOrigin, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);         // Format image to RGBA 32bit (required for texture update) <-- ISSUE
+        ImageFormat(ref imOrigin, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);         // Format image to RGBA 32bit (required for texture update) <-- ISSUE
         Texture texture = LoadTextureFromImage(imOrigin);    // Image converted to texture, GPU memory (VRAM)
 
         Image imCopy = ImageCopy(imOrigin);
@@ -109,18 +110,18 @@ private const int NUM_PROCESSES = 9;
                 // with a texture and by shaders
                 switch (currentProcess)
                 {
-                    case COLOR_GraySCALE: ImageColorGrayscale(&imCopy); break;
-                    case COLOR_TINT: ImageColorTint(&imCopy, Green); break;
-                    case COLOR_INVERT: ImageColorInvert(&imCopy); break;
-                    case COLOR_CONTRAST: ImageColorContrast(&imCopy, -40); break;
-                    case COLOR_BRIGHTNESS: ImageColorBrightness(&imCopy, -80); break;
-                    case GAUSSIAN_BLUR: ImageBlurGaussian(&imCopy, 10); break;
-                    case FLIP_VERTICAL: ImageFlipVertical(&imCopy); break;
-                    case FLIP_HORIZONTAL: ImageFlipHorizontal(&imCopy); break;
+                    case COLOR_GraySCALE: ImageColorGrayscale(ref imCopy); break;
+                    case COLOR_TINT: ImageColorTint(ref imCopy, Green); break;
+                    case COLOR_INVERT: ImageColorInvert(ref imCopy); break;
+                    case COLOR_CONTRAST: ImageColorContrast(ref imCopy, -40); break;
+                    case COLOR_BRIGHTNESS: ImageColorBrightness(ref imCopy, -80); break;
+                    case GAUSSIAN_BLUR: ImageBlurGaussian(ref imCopy, 10); break;
+                    case FLIP_VERTICAL: ImageFlipVertical(ref imCopy); break;
+                    case FLIP_HORIZONTAL: ImageFlipHorizontal(ref imCopy); break;
                     default: break;
                 }
 
-                Color *pixels = LoadImageColors(imCopy);    // Load pixel data from image (RGBA 32bit)
+                Color[] pixels = LoadImageColors(imCopy);    // Load pixel data from image (RGBA 32bit)
                 UpdateTexture(texture, pixels);             // Update texture with new image data
                 UnloadImageColors(pixels);                  // Unload pixels data from RAM
 

@@ -1,17 +1,12 @@
 using System.Numerics;
-using System.Drawing;
-using System;
 
 using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public partial class ModelsMeshGeneration : ExampleHelper 
+public partial class ModelsMeshGeneration : ExampleHelper
 {
-
-private const int NUM_MODELS = 9;
-
-    static Mesh GenMeshCustom(void);    // Generate a simple triangle mesh from code
+    private const int NUM_MODELS = 9;
 
     // Program main entry point
     public static int Example()
@@ -23,11 +18,11 @@ private const int NUM_MODELS = 9;
         InitWindow(screenWidth, screenHeight, "RaylibSharp - models - mesh generation");
 
         // We generate a checked image for texturing
-        Image checked = GenImageChecked(2, 2, 1, 1, Red, Green);
-        Texture texture = LoadTextureFromImage(checked);
-        UnloadImage(checked);
+        Image check = GenImageChecked(2, 2, 1, 1, Red, Green);
+        Texture texture = LoadTextureFromImage(check);
+        UnloadImage(check);
 
-        Model models[NUM_MODELS] = new();
+        Model[] models = new Model[NUM_MODELS];
 
         models[0] = LoadModelFromMesh(GenMeshPlane(2, 2, 5, 5));
         models[1] = LoadModelFromMesh(GenMeshCube(2.0f, 1.0f, 2.0f));
@@ -51,13 +46,21 @@ private const int NUM_MODELS = 9;
         //ExportMesh(models[8].Meshes[0], "custom.obj");
 
         // Set checked texture as default diffuse component for all models material
-        for (int i = 0; i < NUM_MODELS; i++) models[i].Materials[0].Maps[MaterialMapIndex.Albedo].texture = texture;
+        for (int i = 0; i < NUM_MODELS; i++)
+        {
+            models[i].Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture;
+        }
 
-        // Define the camera to look into our 3d world
-        Camera camera = new( new(5.0f,5.0f, 5.0f ), { 0.0f, 0.0f, 0.0f), new(0.0f,1.0f, 0.0f), 45.0f, 0 };
+        // Define the camera to look into our 3d woRLGL.d
+        Camera3D camera = new();
+        camera.Position = new(10.0f, 10.0f, 10.0f); // Camera3D position
+        camera.Target = new(0.0f, 0.0f, 0.0f);      // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
 
         // Model drawing position
-        Vector3 position = new( 0.0f, 0.0f, 0.0f );
+        Vector3 position = new(0.0f, 0.0f, 0.0f);
 
         int currentModel = 0;
 
@@ -71,37 +74,46 @@ private const int NUM_MODELS = 9;
 
             if (IsMouseButtonPressed(MouseButton.Left))
             {
-                currentModel = (currentModel + 1)%NUM_MODELS; // Cycle between the textures
+                currentModel = (currentModel + 1) % NUM_MODELS; // Cycle between the textures
             }
 
             if (IsKeyPressed(Key.Right))
             {
                 currentModel++;
-                if (currentModel >= NUM_MODELS) currentModel = 0;
+                if (currentModel >= NUM_MODELS)
+                {
+                    currentModel = 0;
+                }
             }
             else if (IsKeyPressed(Key.Left))
             {
                 currentModel--;
-                if (currentModel < 0) currentModel = NUM_MODELS - 1;
+                if (currentModel < 0)
+                {
+                    currentModel = NUM_MODELS - 1;
+                }
             }
 
             // Draw
-            BeginDrawing();{
+            BeginDrawing();
+            {
 
                 ClearBackground(RayWhite);
 
-                BeginMode3D(camera);{
+                BeginMode3D(camera);
+                {
 
-                   DrawModel(models[currentModel], position, 1.0f, White);
-                   DrawGrid(10, 1.0);
+                    DrawModel(models[currentModel], position, 1.0f, White);
+                    DrawGrid(10, 1.0f);
 
-                }EndMode3D();
+                }
+                EndMode3D();
 
                 DrawRectangle(30, 400, 310, 30, Fade(SkyBlue, 0.5f));
                 DrawRectangleLines(30, 400, 310, 30, Fade(DarkBlue, 0.5f));
                 DrawText("MOUSE LEFT BUTTON to CYCLE PROCEDURAL MODELS", 40, 410, 10, Blue);
 
-                switch(currentModel)
+                switch (currentModel)
                 {
                     case 0: DrawText("PLANE", 680, 10, 20, DarkBlue); break;
                     case 1: DrawText("CUBE", 680, 10, 20, DarkBlue); break;
@@ -115,14 +127,18 @@ private const int NUM_MODELS = 9;
                     default: break;
                 }
 
-            }EndDrawing();
+            }
+            EndDrawing();
         }
 
         // De-Initialization
         UnloadTexture(texture); // Unload texture
 
         // Unload models data (GPU VRAM)
-        for (int i = 0; i < NUM_MODELS; i++) UnloadModel(models[i]);
+        for (int i = 0; i < NUM_MODELS; i++)
+        {
+            UnloadModel(models[i]);
+        }
 
         CloseWindow();          // Close window and OpenGL context
 
@@ -130,47 +146,47 @@ private const int NUM_MODELS = 9;
     }
 
     // Generate a simple triangle mesh from code
-    static Mesh GenMeshCustom(void)
+    private static Mesh GenMeshCustom()
     {
         Mesh mesh = new();
-        mesh.triangleCount = 1;
-        mesh.vertexCount = mesh.triangleCount*3;
-        mesh.vertices = (float *)MemAlloc(mesh.vertexCount*3*sizeof(float));    // 3 vertices, 3 coordinates each (x, y, z)
-        mesh.texcoords = (float *)MemAlloc(mesh.vertexCount*2*sizeof(float));   // 3 vertices, 2 coordinates each (x, y)
-        mesh.normals = (float *)MemAlloc(mesh.vertexCount*3*sizeof(float));     // 3 vertices, 3 coordinates each (x, y, z)
+        mesh.TriangleCount = 1;
+        mesh.VertexCount = mesh.TriangleCount * 3;
+        mesh.Vertices = new float[mesh.VertexCount * 3 * sizeof(float)];    // 3 vertices, 3 coordinates each (x, y, z)
+        mesh.Texcoords = new float[mesh.VertexCount * 2 * sizeof(float)];   // 3 vertices, 2 coordinates each (x, y)
+        mesh.Normals = new float[mesh.VertexCount * 3 * sizeof(float)];     // 3 vertices, 3 coordinates each (x, y, z)
 
         // Vertex at (0, 0, 0)
-        mesh.vertices[0] = 0;
-        mesh.vertices[1] = 0;
-        mesh.vertices[2] = 0;
-        mesh.normals[0] = 0;
-        mesh.normals[1] = 1;
-        mesh.normals[2] = 0;
-        mesh.texcoords[0] = 0;
-        mesh.texcoords[1] = 0;
+        mesh.Vertices[0] = 0;
+        mesh.Vertices[1] = 0;
+        mesh.Vertices[2] = 0;
+        mesh.Normals[0] = 0;
+        mesh.Normals[1] = 1;
+        mesh.Normals[2] = 0;
+        mesh.Texcoords[0] = 0;
+        mesh.Texcoords[1] = 0;
 
         // Vertex at (1, 0, 2)
-        mesh.vertices[3] = 1;
-        mesh.vertices[4] = 0;
-        mesh.vertices[5] = 2;
-        mesh.normals[3] = 0;
-        mesh.normals[4] = 1;
-        mesh.normals[5] = 0;
-        mesh.texcoords[2] = 0.5f;
-        mesh.texcoords[3] = 1.0f;
+        mesh.Vertices[3] = 1;
+        mesh.Vertices[4] = 0;
+        mesh.Vertices[5] = 2;
+        mesh.Normals[3] = 0;
+        mesh.Normals[4] = 1;
+        mesh.Normals[5] = 0;
+        mesh.Texcoords[2] = 0.5f;
+        mesh.Texcoords[3] = 1.0f;
 
         // Vertex at (2, 0, 0)
-        mesh.vertices[6] = 2;
-        mesh.vertices[7] = 0;
-        mesh.vertices[8] = 0;
-        mesh.normals[6] = 0;
-        mesh.normals[7] = 1;
-        mesh.normals[8] = 0;
-        mesh.texcoords[4] = 1;
-        mesh.texcoords[5] =0;
+        mesh.Vertices[6] = 2;
+        mesh.Vertices[7] = 0;
+        mesh.Vertices[8] = 0;
+        mesh.Normals[6] = 0;
+        mesh.Normals[7] = 1;
+        mesh.Normals[8] = 0;
+        mesh.Texcoords[4] = 1;
+        mesh.Texcoords[5] = 0;
 
         // Upload mesh data from CPU (RAM) to GPU (VRAM) memory
-        UploadMesh(&mesh, false);
+        UploadMesh(ref mesh, false);
 
         return mesh;
     }

@@ -11,17 +11,17 @@ using System.Runtime.InteropServices.Marshalling;
 public unsafe partial struct RenderBatch
 {
     /// <summary> Number of vertex buffers (multi-buffering support) </summary>
-    public int Buffercount;
+    public int BufferCount;
     /// <summary> Current buffer tracking in case of multi-buffering </summary>
-    public int Currentbuffer;
+    public int CurrentBuffer;
     /// <summary> Dynamic buffer(s) for vertex data </summary>
-    public VertexBuffer[] Vertexbuffer;
+    public VertexBuffer[] VertexBuffer;
     /// <summary> Draw calls array, depends on textureId </summary>
     public DrawCall[] Draws;
     /// <summary> Draw calls counter </summary>
-    public int Drawcounter;
+    public int DrawCounter;
     /// <summary> Current depth value for next draw </summary>
-    public float Currentdepth;
+    public float CurrentDepth;
 }
 
 /// <summary> rlRenderBatch type </summary>
@@ -29,17 +29,17 @@ public unsafe partial struct RenderBatch
 internal unsafe struct UnmanagedRenderBatch
 {
     /// <summary> Number of vertex buffers (multi-buffering support) </summary>
-    public int Buffercount;
+    public int BufferCount;
     /// <summary> Current buffer tracking in case of multi-buffering </summary>
-    public int Currentbuffer;
+    public int CurrentBuffer;
     /// <summary> Dynamic buffer(s) for vertex data </summary>
-    public UnmanagedVertexBuffer* Vertexbuffer;
+    public UnmanagedVertexBuffer* VertexBuffer;
     /// <summary> Draw calls array, depends on textureId </summary>
     public DrawCall* Draws;
     /// <summary> Draw calls counter </summary>
-    public int Drawcounter;
+    public int DrawCounter;
     /// <summary> Current depth value for next draw </summary>
-    public float Currentdepth;
+    public float CurrentDepth;
 }
 
 #pragma warning restore CA1711,IDE0005

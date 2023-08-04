@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -158,7 +159,7 @@ private const int COLOR_SIZE = 16;
     // Draw part of a texture (defined by a rectangle) with rotation and scale tiled into dest.
     static void DrawTextureTiled(Texture texture, RectangleF source, RectangleF dest, Vector2 origin, float rotation, float scale, Color tint)
     {
-        if ((texture.id <= 0) || (scale <= 0.0f)) return;  // Wanna see a infinite loop?!...just delete this line!
+        if ((texture.Id <= 0) || (scale <= 0.0f)) return;  // Wanna see a infinite loop?!...just delete this line!
         if ((source.Width == 0) || (source.Height == 0)) return;
 
         int tileWidth = (int)(source.Width*scale), tileHeight = (int)(source.Height*scale);

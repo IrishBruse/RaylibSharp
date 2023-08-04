@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -21,20 +22,20 @@ public partial class TexturesImageDrawing : ExampleHelper
         // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
         Image cat = LoadImage("resources/cat.png");             // Load image in CPU memory (RAM)
-        ImageCrop(&cat, new( 100, 10, 280, 380 ));      // Crop an image piece
-        ImageFlipHorizontal(&cat);                              // Flip cropped image horizontally
-        ImageResize(&cat, 150, 200);                            // Resize flipped-cropped image
+        ImageCrop(ref cat, new( 100, 10, 280, 380 ));      // Crop an image piece
+        ImageFlipHorizontal(ref cat);                              // Flip cropped image horizontally
+        ImageResize(ref cat, 150, 200);                            // Resize flipped-cropped image
 
         Image parrots = LoadImage("resources/parrots.png");     // Load image in CPU memory (RAM)
 
         // Draw one image over the other with a scaling of 1.5f
-        ImageDraw(&parrots, cat, new( 0, 0, (float)cat.Width, (float)cat.Height ), new( 30, 40, cat.Width*1.5f, cat.Height*1.5f ), White);
-        ImageCrop(&parrots, new( 0, 50, (float)parrots.Width, (float)parrots.Height - 100 )); // Crop resulting image
+        ImageDraw(ref parrots, cat, new( 0, 0, (float)cat.Width, (float)cat.Height ), new( 30, 40, cat.Width*1.5f, cat.Height*1.5f ), White);
+        ImageCrop(ref parrots, new( 0, 50, (float)parrots.Width, (float)parrots.Height - 100 )); // Crop resulting image
 
         // Draw on the image with a few image draw methods
-        ImageDrawPixel(&parrots, 10, 10, RayWhite);
-        ImageDrawCircleLines(&parrots, 10, 10, 5, RayWhite);
-        ImageDrawRectangle(&parrots, 5, 20, 10, 10, RayWhite);
+        ImageDrawPixel(ref parrots, 10, 10, RayWhite);
+        ImageDrawCircleLines(ref parrots, 10, 10, 5, RayWhite);
+        ImageDrawRectangle(ref parrots, 5, 20, 10, 10, RayWhite);
 
         UnloadImage(cat);       // Unload image from RAM
 
@@ -42,7 +43,7 @@ public partial class TexturesImageDrawing : ExampleHelper
         Font font = LoadFont("resources/custom_jupiter_crash.png");
 
         // Draw over image using custom font
-        ImageDrawText(&parrots, font, "PARROTS & CAT", new( 300, 230 ), (float)font.baseSize, -2, White);
+        ImageDrawText(ref parrots, font, "PARROTS ref  CAT", new( 300, 230 ), (float)font.BaseSize, -2, White);
 
         UnloadFont(font);       // Unload custom font (already drawn used on image)
 

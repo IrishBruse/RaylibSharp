@@ -11,6 +11,7 @@ insert_final_newline = true
 dotnet_analyzer_diagnostic.severity = warning # Default Severity for all .NET Code Style rules below
 file_header_template = unset
 
+dotnet_diagnostic.CS8795.severity = none
 dotnet_diagnostic.IDE0210.severity = none
 dotnet_diagnostic.CS8321.severity = none
 dotnet_diagnostic.CA1305.severity = none

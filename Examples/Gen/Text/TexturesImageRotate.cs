@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -25,9 +26,9 @@ private const int NUM_TEXTURES = 3;
         Image image90 = LoadImage("resources/raylib_logo.png");
         Image imageNeg90 = LoadImage("resources/raylib_logo.png");
 
-        ImageRotate(&image45, 45);
-        ImageRotate(&image90, 90);
-        ImageRotate(&imageNeg90, -90);
+        ImageRotate(ref image45, 45);
+        ImageRotate(ref image90, 90);
+        ImageRotate(ref imageNeg90, -90);
 
         Texture textures[NUM_TEXTURES] = new();
 

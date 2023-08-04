@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -27,13 +28,13 @@ private const int GLSL_VERSION = 100;
         SetConfigFlags(WindowFlag.Msaa4xHint);  // Enable Multi Sampling Anti Aliasing 4x (if available)
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shaders - fog");
 
-        // Define the camera to look into our 3d world
-        Camera camera = new();
-        camera.Position = (Vector3)new(2.0f,2.0f, 6.0f);    // Camera position
-        camera.Target = (Vector3)new(0.0f,0.5f, 0.0f);      // Camera looking at point
-        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);          // Camera up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera projection type
+        // Define the camera to look into our 3d woRLGL.d
+        Camera3D camera = new();
+        camera.Position = (Vector3)new(2.0f,2.0f, 6.0f);    // Camera3D position
+        camera.Target = (Vector3)new(0.0f,0.5f, 0.0f);      // Camera3D looking at point
+        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
 
         // Load models and texture
         Model modelA = LoadModelFromMesh(GenMeshTorus(0.4f, 1.0f, 16, 32));
@@ -42,9 +43,9 @@ private const int GLSL_VERSION = 100;
         Texture texture = LoadTexture("resources/texel_checker.png");
 
         // Assign texture to default model material
-        modelA.Materials[0].Maps[MaterialMapIndex.Albedo].texture = texture;
-        modelB.Materials[0].Maps[MaterialMapIndex.Albedo].texture = texture;
-        modelC.Materials[0].Maps[MaterialMapIndex.Albedo].texture = texture;
+        modelA.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture;
+        modelB.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture;
+        modelC.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture;
 
         // Load shader and set up some uniforms
         Shader shader = LoadShader(TextFormat("resources/shaders/glsl%i/lighting.vs", GLSL_VERSION),
@@ -58,7 +59,7 @@ private const int GLSL_VERSION = 100;
 
         float fogDensity = 0.15f;
         int fogDensityLoc = GetShaderLocation(shader, "fogDensity");
-        SetShaderValue(shader, fogDensityLoc, &fogDensity, SHADER_UNIFORM_FLOAT);
+        SetShaderValue(shader, fogDensityLoc, ref fogDensity, SHADER_UNIFORM_FLOAT);
 
         // NOTE: All models share the same shader
         modelA.Materials[0].shader = shader;
@@ -88,7 +89,7 @@ private const int GLSL_VERSION = 100;
                 if (fogDensity < 0.0f) fogDensity = 0.0f;
             }
 
-            SetShaderValue(shader, fogDensityLoc, &fogDensity, SHADER_UNIFORM_FLOAT);
+            SetShaderValue(shader, fogDensityLoc, ref fogDensity, SHADER_UNIFORM_FLOAT);
 
             // Rotate the torus
             modelA.transform = MatrixMultiply(modelA.transform, MatrixRotateX(-0.025f));

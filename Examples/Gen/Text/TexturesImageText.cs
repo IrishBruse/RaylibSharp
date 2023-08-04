@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -24,7 +25,7 @@ public partial class TexturesImageText : ExampleHelper
         Font font = LoadFont("resources/KAISG.ttf", 64, 0, 0);
 
         // Draw over image using custom font
-        ImageDrawText(&parrots, font, "[Parrots font drawing]", new( 20.0f, 20.0f ), (float)font.baseSize, 0.0f, Red);
+        ImageDrawText(ref parrots, font, "[Parrots font drawing]", new( 20.0f, 20.0f ), (float)font.BaseSize, 0.0f, Red);
 
         Texture texture = LoadTextureFromImage(parrots);  // Image converted to texture, uploaded to GPU memory (VRAM)
         UnloadImage(parrots);   // Once image has been converted to texture and uploaded to VRAM, it can be unloaded from RAM
@@ -54,9 +55,9 @@ public partial class TexturesImageText : ExampleHelper
 
                     // Draw text directly using sprite font
                     DrawText(font, "[Parrots font drawing]", (Vector2){ position.X + 20,
-                               position.Y + 20 + 280 }, (float)font.baseSize, 0.0f, White);
+                               position.Y + 20 + 280 }, (float)font.BaseSize, 0.0f, White);
                 }
-                else DrawTexture(font.texture, screenWidth/2 - font.texture.Width/2, 50, Black);
+                else DrawTexture(font.Texture, screenWidth/2 - font.Texture.Width/2, 50, Black);
 
                 DrawText("PRESS SPACE to SHOW FONT ATLAS USED", 290, 420, 10, DarkGray);
 

@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -18,7 +19,7 @@ public partial class TextWritingAnim : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - text - text writing anim");
 
-        const char message[128] = "This sample illustrates a text writing\nanimation effect! Check it out! ;)";
+        const string message = "This sample illustrates a text writing\nanimation effect! Check it out! ;)";
 
         int framesCounter = 0;
 

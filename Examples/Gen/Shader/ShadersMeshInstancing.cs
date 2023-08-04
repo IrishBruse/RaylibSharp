@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -28,19 +29,19 @@ private const int MAX_INSTANCES = 10000;
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shaders - mesh instancing");
 
-        // Define the camera to look into our 3d world
-        Camera camera = new();
-        camera.Position = (Vector3)new(-125.0f,125.0f, -125.0f);    // Camera position
-        camera.Target = (Vector3)new(0.0f,0.0f, 0.0f);              // Camera looking at point
-        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);                  // Camera up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                        // Camera field-of-view Y
-        camera.Projection = CameraProjection.Perspective;                     // Camera projection type
+        // Define the camera to look into our 3d woRLGL.d
+        Camera3D camera = new();
+        camera.Position = (Vector3)new(-125.0f,125.0f, -125.0f);    // Camera3D position
+        camera.Target = (Vector3)new(0.0f,0.0f, 0.0f);              // Camera3D looking at point
+        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);                  // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f;                                        // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective;                     // Camera3D projection type
 
         // Define mesh to be instanced
         Mesh cube = GenMeshCube(1.0f, 1.0f, 1.0f);
 
         // Define transforms to be uploaded to GPU for instances
-        Matrix *transforms = (Matrix *)RL_CALLOC(MAX_INSTANCES, sizeof(Matrix));   // Pre-multiplied transformations passed to rlgl
+        Matrix *transforms = (Matrix *)RLGL.RlCalloc(MAX_INSTANCES, sizeof(Matrix));   // Pre-multiplied transformations passed to RLGL.Gl
 
         // Translate and rotate cubes randomly
         for (int i = 0; i < MAX_INSTANCES; i++)
@@ -72,13 +73,13 @@ private const int MAX_INSTANCES = 10000;
         // to be used on mesh drawing with DrawMeshInstanced()
         Material matInstances = LoadMaterialDefault();
         matInstances.shader = shader;
-        matInstances.Maps[MaterialMapIndex.Albedo].color = Red;
+        matInstances.Maps[(int)MaterialMapIndex.Albedo].color = Red;
 
         // Load default material (using raylib intenral default shader) for non-instanced mesh drawing
         // WARNING: Default shader enables vertex color attribute BUT GenMeshCube() does not generate vertex colors, so,
         // when drawing the color attribute is disabled and a default color value is provided as input for thevertex attribute
         Material matDefault = LoadMaterialDefault();
-        matDefault.Maps[MaterialMapIndex.Albedo].color = Blue;
+        matDefault.Maps[(int)MaterialMapIndex.Albedo].color = Blue;
 
         SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
 
@@ -118,7 +119,7 @@ private const int MAX_INSTANCES = 10000;
         }
 
         // De-Initialization
-        RL_FREE(transforms);    // Free transforms
+        RLGL.RlFree(transforms);    // Free transforms
 
         CloseWindow();          // Close window and OpenGL context
 

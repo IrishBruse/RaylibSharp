@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
@@ -27,13 +28,13 @@ private const int GLSL_VERSION = 100;
         SetConfigFlags(WindowFlag.Msaa4xHint);  // Enable Multi Sampling Anti Aliasing 4x (if available)
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shaders - basic lighting");
 
-        // Define the camera to look into our 3d world
-        Camera camera = new();
-        camera.Position = (Vector3)new(2.0f,4.0f, 6.0f);    // Camera position
-        camera.Target = (Vector3)new(0.0f,0.5f, 0.0f);      // Camera looking at point
-        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);          // Camera up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera projection type
+        // Define the camera to look into our 3d woRLGL.d
+        Camera3D camera = new();
+        camera.Position = (Vector3)new(2.0f,4.0f, 6.0f);    // Camera3D position
+        camera.Target = (Vector3)new(0.0f,0.5f, 0.0f);      // Camera3D looking at point
+        camera.Up = (Vector3)new(0.0f,1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
 
         // Load plane model from a generated mesh
         Model model = LoadModelFromMesh(GenMeshPlane(10.0f, 10.0f, 3, 3));
