@@ -37,7 +37,7 @@ public static class DefineProcessor
                 type = "float";
             }
 
-            string value = e.Value.ToString();
+            string value = e.Value.ToString()!;
 
             if (type == "string")
             {

@@ -1,13 +1,10 @@
 using System.Numerics;
-using System.Drawing;
-using System;
 
 using RaylibSharp;
-using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
-public partial class ShapesBouncingBall : ExampleHelper 
+public partial class ShapesBouncingBall : ExampleHelper
 {
 
     // Program main entry point
@@ -19,11 +16,11 @@ public partial class ShapesBouncingBall : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shapes - bouncing ball");
 
-        Vector2 ballPosition = new( GetScreenWidth()/2.0f, GetScreenHeight()/2.0f );
-        Vector2 ballSpeed = new( 5.0f, 4.0f );
+        Vector2 ballPosition = new(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
+        Vector2 ballSpeed = new(5.0f, 4.0f);
         int ballRadius = 20;
 
-        bool pause = false;;
+        bool pause = false; ;
         int framesCounter = 0;
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
@@ -32,7 +29,10 @@ public partial class ShapesBouncingBall : ExampleHelper
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             // Update
-            if (IsKeyPressed(Key.Space)) pause = !pause;
+            if (IsKeyPressed(Key.Space))
+            {
+                pause = !pause;
+            }
 
             if (!pause)
             {
@@ -40,25 +40,40 @@ public partial class ShapesBouncingBall : ExampleHelper
                 ballPosition.Y += ballSpeed.Y;
 
                 // Check walls collision for bouncing
-                if ((ballPosition.X >= (GetScreenWidth() - ballRadius)) || (ballPosition.X <= ballRadius)) ballSpeed.X *= -1.0f;
-                if ((ballPosition.Y >= (GetScreenHeight() - ballRadius)) || (ballPosition.Y <= ballRadius)) ballSpeed.Y *= -1.0f;
+                if ((ballPosition.X >= (GetScreenWidth() - ballRadius)) || (ballPosition.X <= ballRadius))
+                {
+                    ballSpeed.X *= -1.0f;
+                }
+
+                if ((ballPosition.Y >= (GetScreenHeight() - ballRadius)) || (ballPosition.Y <= ballRadius))
+                {
+                    ballSpeed.Y *= -1.0f;
+                }
             }
-            else framesCounter++;
+            else
+            {
+                framesCounter++;
+            }
 
             // Draw
-            BeginDrawing();{
+            BeginDrawing();
+            {
 
                 ClearBackground(RayWhite);
 
-                DrawCircle(ballPosition, (float)ballRadius, Maroon);
+                DrawCircle(ballPosition, ballRadius, Maroon);
                 DrawText("PRESS SPACE to PAUSE BALL MOVEMENT", 10, GetScreenHeight() - 25, 20, LightGray);
 
                 // On pause, we draw a blinking message
-                if (pause && ((framesCounter/30)%2 == 0)) DrawText("PAUSED", 350, 200, 30, Gray);
+                if (pause && (framesCounter / 30 % 2 == 0))
+                {
+                    DrawText("PAUSED", 350, 200, 30, Gray);
+                }
 
                 DrawFPS(10, 10);
 
-            }EndDrawing();
+            }
+            EndDrawing();
         }
 
         // De-Initialization

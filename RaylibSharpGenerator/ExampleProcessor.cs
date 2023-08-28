@@ -35,8 +35,8 @@ public partial class ExampleProcessor
             }
             else if (pascalName.StartsWith("Models"))
             {
+                // csFile = $"{csFile}/Models/{pascalName}.cs";
                 continue;
-                csFile = $"{csFile}/Models/{pascalName}.cs";
             }
             else if (pascalName.StartsWith("Shader"))
             {
@@ -44,7 +44,8 @@ public partial class ExampleProcessor
             }
             else if (pascalName.StartsWith("Text"))
             {
-                csFile = $"{csFile}/Text/{pascalName}.cs";
+                // csFile = $"{csFile}/Text/{pascalName}.cs";
+                continue;
             }
             else if (pascalName.StartsWith("Texture"))
             {
@@ -130,6 +131,10 @@ public partial class ExampleProcessor
                     line = new($"private const int {parts[1]} = {parts[2]};");
                 }
             }
+            else if (line.TrimStart().StartsWith("#else") || line.TrimStart().StartsWith("#endif") || line.TrimStart().StartsWith("#if"))
+            {
+                line = "// " + line;
+            }
 
             line = ProcessLine(line);
 
@@ -190,9 +195,9 @@ public partial class ExampleProcessor
         line.Replace(CAndRef(), "$1ref $2");
         line.Replace(RLConstantsReplace(), m => $"RLGL.Rl{Utility.ToPascalCase(m.Groups[1].Value)}");
 
-        line.Replace(new Regex(@"char (\w+?)\[\d+\]"), "string $1");
-        line.Replace(new Regex(@"bool (\w+?) = 0;"), "bool $1 = false;");
-        line.Replace(new Regex(@"bool (\w+?) = 1;"), "bool $1 = true;");
+        line.Replace(MyRegex(), "string $1");
+        line.Replace(BoolFalse(), "bool $1 = false;");
+        line.Replace(BoolTrue(), "bool $1 = true;");
 
         // char modelFileName[128] =
         // bool drawMesh = 1;
@@ -264,6 +269,9 @@ public partial class ExampleProcessor
         line.ReplaceAll("unsigned int ", "uint ");
         line.ReplaceAll("const char *", "string ");
         line.ReplaceAll("Color *", "Color[] ");
+        line.ReplaceAll("Matrix ", "Matrix4x4 ");
+
+        line.ReplaceAll("Vector3Zero()", "Vector3.Zero");
 
         // CameraProjection
         line.Replace("CAMERA_PERSPECTIVE", "CameraProjection.Perspective");
@@ -289,11 +297,22 @@ public partial class ExampleProcessor
         line.Replace(".parent", ".Parent");
         line.Replace("&camera", "ref camera");
 
+        line.Replace(".loc[", ".Loc[");
+        line.Replace(".locs[", ".Locs[");
+        line.Replace(".transform", ".Transform");
+        line.Replace(".shader", ".Shader");
+
         line.Replace("BeginDrawing();", "BeginDrawing();{");
         line.Replace("EndDrawing();", "}EndDrawing();");
 
+        line.Replace("BeginShaderMode(shader);", "BeginShaderMode(shader);{");
+        line.Replace("EndShaderMode();", "}EndShaderMode();");
+
         line.Replace("BeginMode2D(camera);", "BeginMode2D(camera);{");
         line.Replace("EndMode2D();", "}EndMode2D();");
+
+        line.Replace("BeginTextureMode(target);", "BeginTextureMode(target);{");
+        line.Replace("EndTextureMode();", "}EndTextureMode();");
 
         line.Replace("BeginMode3D(camera);", "BeginMode3D(camera);{");
         line.Replace("EndMode3D();", "}EndMode3D();");
@@ -313,7 +332,7 @@ public partial class ExampleProcessor
     [GeneratedRegex(@"\{ (.*?f), (.*?f), (.*?f) \}")] private static partial Regex Vector3AssignReplace(); // { 0.0f, 0.0f, 0.0f }
     [GeneratedRegex(@"\(Vector2\).?\{((.*?),(.*?))\}")] private static partial Regex Vector2Replace(); // (Vector2){ , }
     [GeneratedRegex(@"\{ (.*?f), (.*?f) \}")] private static partial Regex Vector2AssignReplace(); // { , }
-    [GeneratedRegex(@"(int |float |const char \*|Color |RectangleF )(\w+)(\[.*\]) = (\{ 0 \})?")] private static partial Regex ArrayReplace(); // int x[10];
+    [GeneratedRegex(@"(int |float |const char \*|Color |Light |RectangleF )(\w+)(\[.*\]) = (\{ 0 \})?")] private static partial Regex ArrayReplace(); // int x[10];
     [GeneratedRegex(@"void \w+\(")] private static partial Regex VoidFunctionMatch();
     [GeneratedRegex(@"(bool \w+ =) 0")] private static partial Regex FalseBooleanAssignment(); // bool varname = 0
     [GeneratedRegex(@"raylib \[(\w+)\] example - ")] private static partial Regex ExampleName(); // raylib [core] example => RaylibSharp - core -
@@ -323,9 +342,12 @@ public partial class ExampleProcessor
     [GeneratedRegex(@"Vector2Add\((.*?), (.*?)\)")] private static partial Regex Vector2AddReplace(); // Vector2Add(delta, -1.0f / camera.Zoom);
     [GeneratedRegex(@"Vector2Scale\((.*?), (.*?)\)")] private static partial Regex Vector2ScaleReplace(); // Vector2Scale(delta, -1.0f / camera.Zoom);
     [GeneratedRegex(@"(IsKey\w+)\(KEY_(.*)\)")] private static partial Regex IsKeyConstEnumReplace(); // IsKeyDown(KEY_RIGHT)
-    [GeneratedRegex(@"rl(\w+)")] private static partial Regex RLGLReplace(); // rlBegin
+    [GeneratedRegex(@" rl(\w+)")] private static partial Regex RLGLReplace(); // rlBegin
     [GeneratedRegex(@"RL_(\w+)")] private static partial Regex RLConstantsReplace(); // RL_QUAD
     [GeneratedRegex(@"([^&])&([^&])")] private static partial Regex CAndRef(); // &camera
+    [GeneratedRegex("char (\\w+?)\\[\\d+\\]")] private static partial Regex MyRegex();
+    [GeneratedRegex("bool (\\w+?) = 0;")] private static partial Regex BoolFalse();
+    [GeneratedRegex("bool (\\w+?) = 1;")] private static partial Regex BoolTrue();
 }
 
 internal static class Extensions

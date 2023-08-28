@@ -1,16 +1,13 @@
-using System.Numerics;
 using System.Drawing;
-using System;
+using System.Numerics;
 
 using RaylibSharp;
-using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
-public partial class ShapesRectangleScaling : ExampleHelper 
+public partial class ShapesRectangleScaling : ExampleHelper
 {
-
-private const int MOUSE_SCALE_MARK_SIZE = 12;
+    private const int MOUSE_SCALE_MARK_SIZE = 12;
 
     // Program main entry point
     public static int Example()
@@ -21,11 +18,7 @@ private const int MOUSE_SCALE_MARK_SIZE = 12;
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shapes - rectangle scaling mouse");
 
-        RectangleF rec = new( 100, 100, 200, 80 );
-
-        Vector2 mousePosition = new();
-
-        bool mouseScaleReady = false;
+        RectangleF rec = new(100, 100, 200, 80);
         bool mouseScaleMode = false;
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
@@ -34,35 +27,61 @@ private const int MOUSE_SCALE_MARK_SIZE = 12;
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             // Update
-            mousePosition = GetMousePosition();
+            Vector2 mousePosition = GetMousePosition();
 
-            if (CheckCollisionPoint(mousePosition, new( rec.X + rec.Width - MOUSE_SCALE_MARK_SIZE, rec.Y + rec.Height - MOUSE_SCALE_MARK_SIZE, MOUSE_SCALE_MARK_SIZE, MOUSE_SCALE_MARK_SIZE )))
+
+            bool mouseScaleReady;
+            if (CheckCollisionPoint(mousePosition, new(rec.X + rec.Width - MOUSE_SCALE_MARK_SIZE, rec.Y + rec.Height - MOUSE_SCALE_MARK_SIZE, MOUSE_SCALE_MARK_SIZE, MOUSE_SCALE_MARK_SIZE)))
             {
                 mouseScaleReady = true;
-                if (IsMouseButtonPressed(MouseButton.Left)) mouseScaleMode = true;
+                if (IsMouseButtonPressed(MouseButton.Left))
+                {
+                    mouseScaleMode = true;
+                }
             }
-            else mouseScaleReady = false;
+            else
+            {
+                mouseScaleReady = false;
+            }
 
             if (mouseScaleMode)
             {
                 mouseScaleReady = true;
 
-                rec.Width = (mousePosition.X - rec.X);
-                rec.Height = (mousePosition.Y - rec.Y);
+                rec.Width = mousePosition.X - rec.X;
+                rec.Height = mousePosition.Y - rec.Y;
 
                 // Check minimum rec size
-                if (rec.Width < MOUSE_SCALE_MARK_SIZE) rec.Width = MOUSE_SCALE_MARK_SIZE;
-                if (rec.Height < MOUSE_SCALE_MARK_SIZE) rec.Height = MOUSE_SCALE_MARK_SIZE;
+                if (rec.Width < MOUSE_SCALE_MARK_SIZE)
+                {
+                    rec.Width = MOUSE_SCALE_MARK_SIZE;
+                }
+
+                if (rec.Height < MOUSE_SCALE_MARK_SIZE)
+                {
+                    rec.Height = MOUSE_SCALE_MARK_SIZE;
+                }
 
                 // Check maximum rec size
-                if (rec.Width > (GetScreenWidth() - rec.X)) rec.Width = GetScreenWidth() - rec.X;
-                if (rec.Height > (GetScreenHeight() - rec.Y)) rec.Height = GetScreenHeight() - rec.Y;
+                if (rec.Width > (GetScreenWidth() - rec.X))
+                {
+                    rec.Width = GetScreenWidth() - rec.X;
+                }
 
-                if (IsMouseButtonReleased(MouseButton.Left)) mouseScaleMode = false;
+                if (rec.Height > (GetScreenHeight() - rec.Y))
+                {
+                    rec.Height = GetScreenHeight() - rec.Y;
+                }
+
+                if (IsMouseButtonReleased(MouseButton.Left))
+                {
+                    mouseScaleMode = false;
+                }
             }
 
             // Draw
-            BeginDrawing();{
+            BeginDrawing();
+            {
 
                 ClearBackground(RayWhite);
 
@@ -73,12 +92,13 @@ private const int MOUSE_SCALE_MARK_SIZE = 12;
                 if (mouseScaleReady)
                 {
                     DrawRectangleLines(rec, 1, Red);
-                    DrawTriangle(new( rec.X + rec.Width - MOUSE_SCALE_MARK_SIZE, rec.Y + rec.Height ),
-                                 new( rec.X + rec.Width, rec.Y + rec.Height ),
-                                 new( rec.X + rec.Width, rec.Y + rec.Height - MOUSE_SCALE_MARK_SIZE ), Red);
+                    DrawTriangle(new(rec.X + rec.Width - MOUSE_SCALE_MARK_SIZE, rec.Y + rec.Height),
+                                 new(rec.X + rec.Width, rec.Y + rec.Height),
+                                 new(rec.X + rec.Width, rec.Y + rec.Height - MOUSE_SCALE_MARK_SIZE), Red);
                 }
 
-            }EndDrawing();
+            }
+            EndDrawing();
         }
 
         // De-Initialization

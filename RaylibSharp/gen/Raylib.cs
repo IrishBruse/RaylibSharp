@@ -1180,7 +1180,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Generate GPU mipmaps for a texture </summary>
     [LibraryImport(LIB, EntryPoint = "GenTextureMipmaps")]
-    public static partial void GenTextureMipmaps(IntPtr texture);
+    public static partial void GenTextureMipmaps(ref Texture texture);
 
     /// <summary> Set texture scaling filter mode </summary>
     [LibraryImport(LIB, EntryPoint = "SetTextureFilter")]
@@ -1627,7 +1627,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Draw multiple mesh instances with material and different transforms </summary>
     [LibraryImport(LIB, EntryPoint = "DrawMeshInstanced")]
-    public static partial void DrawMeshInstanced(Mesh mesh, Material material, IntPtr transforms, int instances);
+    public static partial void DrawMeshInstanced(Mesh mesh, Material material, Matrix4x4[] transforms, int instances);
 
     /// <summary> Export mesh data to file, returns true on success </summary>
     [LibraryImport(LIB, EntryPoint = "ExportMesh")]

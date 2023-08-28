@@ -1,15 +1,9 @@
-using System.Numerics;
-using System.Drawing;
-using System;
-
 using RaylibSharp;
-using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
-public partial class ShapesLogoRaylibAnim : ExampleHelper 
+public partial class ShapesLogoRaylibAnim : ExampleHelper
 {
-
     // Program main entry point
     public static int Example()
     {
@@ -19,8 +13,8 @@ public partial class ShapesLogoRaylibAnim : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shapes - raylib logo animation");
 
-        int logoPositionX = screenWidth/2 - 128;
-        int logoPositionY = screenHeight/2 - 128;
+        int logoPositionX = (screenWidth / 2) - 128;
+        int logoPositionY = (screenHeight / 2) - 128;
 
         int framesCounter = 0;
         int lettersCount = 0;
@@ -55,20 +49,26 @@ public partial class ShapesLogoRaylibAnim : ExampleHelper
                 topSideRecWidth += 4;
                 leftSideRecHeight += 4;
 
-                if (topSideRecWidth == 256) state = 2;
+                if (topSideRecWidth == 256)
+                {
+                    state = 2;
+                }
             }
             else if (state == 2)            // State 2: Bottom and right bars growing
             {
                 bottomSideRecWidth += 4;
                 rightSideRecHeight += 4;
 
-                if (bottomSideRecWidth == 256) state = 3;
+                if (bottomSideRecWidth == 256)
+                {
+                    state = 3;
+                }
             }
             else if (state == 3)            // State 3: Letters appearing (one by one)
             {
                 framesCounter++;
 
-                if (framesCounter/12==0)       // Every 12 frames, one more letter!
+                if (framesCounter / 12 == 0)       // Every 12 frames, one more letter!
                 {
                     lettersCount++;
                     framesCounter = 0;
@@ -104,13 +104,16 @@ public partial class ShapesLogoRaylibAnim : ExampleHelper
             }
 
             // Draw
-            BeginDrawing();{
-
+            BeginDrawing();
+            {
                 ClearBackground(RayWhite);
 
                 if (state == 0)
                 {
-                    if ((framesCounter/15)%2 == 0) DrawRectangle(logoPositionX, logoPositionY, 16, 16, Black);
+                    if (framesCounter / 15 % 2 == 0)
+                    {
+                        DrawRectangle(logoPositionX, logoPositionY, 16, 16, Black);
+                    }
                 }
                 else if (state == 1)
                 {
@@ -133,16 +136,16 @@ public partial class ShapesLogoRaylibAnim : ExampleHelper
                     DrawRectangle(logoPositionX + 240, logoPositionY + 16, 16, rightSideRecHeight - 32, Fade(Black, alpha));
                     DrawRectangle(logoPositionX, logoPositionY + 240, bottomSideRecWidth, 16, Fade(Black, alpha));
 
-                    DrawRectangle(GetScreenWidth()/2 - 112, GetScreenHeight()/2 - 112, 224, 224, Fade(RayWhite, alpha));
+                    DrawRectangle((GetScreenWidth() / 2) - 112, (GetScreenHeight() / 2) - 112, 224, 224, Fade(RayWhite, alpha));
 
-                    DrawText(TextSubtext("raylib", 0, lettersCount), GetScreenWidth()/2 - 44, GetScreenHeight()/2 + 48, 50, Fade(Black, alpha));
+                    DrawText(TextSubtext("raylib", 0, lettersCount), (GetScreenWidth() / 2) - 44, (GetScreenHeight() / 2) + 48, 50, Fade(Black, alpha));
                 }
                 else if (state == 4)
                 {
                     DrawText("[R] REPLAY", 340, 200, 20, Gray);
                 }
-
-            }EndDrawing();
+            }
+            EndDrawing();
         }
 
         // De-Initialization

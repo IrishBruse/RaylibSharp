@@ -368,7 +368,7 @@ public static unsafe partial class RLGL
 
     /// <summary> Load a vertex buffer attribute </summary>
     [LibraryImport(LIB, EntryPoint = "rlLoadVertexBuffer")]
-    public static partial uint LoadVertexBuffer(IntPtr buffer, int size, [MarshalAs(UnmanagedType.I1)] bool dynamic);
+    public static partial uint LoadVertexBuffer(float[] buffer, int size, [MarshalAs(UnmanagedType.I1)] bool dynamic);
 
     /// <summary> Load a new attributes element buffer </summary>
     [LibraryImport(LIB, EntryPoint = "rlLoadVertexBufferElement")]
@@ -420,7 +420,7 @@ public static unsafe partial class RLGL
 
     /// <summary> Load texture in GPU </summary>
     [LibraryImport(LIB, EntryPoint = "rlLoadTexture")]
-    public static partial uint LoadTexture(IntPtr data, int width, int height, int format, int mipmapCount);
+    public static partial uint LoadTexture(IntPtr data, int width, int height, PixelFormat format, int mipmapCount);
 
     /// <summary> Load depth texture/renderbuffer (to be attached to fbo) </summary>
     [LibraryImport(LIB, EntryPoint = "rlLoadTextureDepth")]

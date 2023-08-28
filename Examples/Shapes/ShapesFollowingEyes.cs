@@ -1,15 +1,10 @@
-using System.Numerics;
-using System.Drawing;
 using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
+using System.Numerics;
 
 using static RaylibSharp.Raylib;
 
-public partial class ShapesFollowingEyes : ExampleHelper 
+public partial class ShapesFollowingEyes : ExampleHelper
 {
-
     // Program main entry point
     public static int Example()
     {
@@ -19,26 +14,25 @@ public partial class ShapesFollowingEyes : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shapes - following eyes");
 
-        Vector2 scleraLeftPosition = new( GetScreenWidth()/2.0f - 100.0f, GetScreenHeight()/2.0f );
-        Vector2 scleraRightPosition = new( GetScreenWidth()/2.0f + 100.0f, GetScreenHeight()/2.0f );
+        Vector2 scleraLeftPosition = new((GetScreenWidth() / 2.0f) - 100.0f, GetScreenHeight() / 2.0f);
+        Vector2 scleraRightPosition = new((GetScreenWidth() / 2.0f) + 100.0f, GetScreenHeight() / 2.0f);
         float scleraRadius = 80;
 
-        Vector2 irisLeftPosition = new( GetScreenWidth()/2.0f - 100.0f, GetScreenHeight()/2.0f );
-        Vector2 irisRightPosition = new( GetScreenWidth()/2.0f + 100.0f, GetScreenHeight()/2.0f );
         float irisRadius = 24;
-
-        float angle = 0.0f;
-        float dx = 0.0f, dy = 0.0f, dxx = 0.0f, dyy = 0.0f;
-
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             // Update
-            irisLeftPosition = GetMousePosition();
-            irisRightPosition = GetMousePosition();
+            Vector2 irisLeftPosition = GetMousePosition();
+            Vector2 irisRightPosition = GetMousePosition();
 
+            float angle;
+            float dx;
+            float dy;
+            float dxx;
+            float dyy;
             // Check not inside the left eye sclera
             if (!CheckCollisionPointCircle(irisLeftPosition, scleraLeftPosition, scleraRadius - 20))
             {
@@ -47,8 +41,8 @@ public partial class ShapesFollowingEyes : ExampleHelper
 
                 angle = MathF.Atan2(dy, dx);
 
-                dxx = (scleraRadius - irisRadius)*MathF.Cos(angle);
-                dyy = (scleraRadius - irisRadius)*MathF.Sin(angle);
+                dxx = (scleraRadius - irisRadius) * MathF.Cos(angle);
+                dyy = (scleraRadius - irisRadius) * MathF.Sin(angle);
 
                 irisLeftPosition.X = scleraLeftPosition.X + dxx;
                 irisLeftPosition.Y = scleraLeftPosition.Y + dyy;
@@ -62,16 +56,16 @@ public partial class ShapesFollowingEyes : ExampleHelper
 
                 angle = MathF.Atan2(dy, dx);
 
-                dxx = (scleraRadius - irisRadius)*MathF.Cos(angle);
-                dyy = (scleraRadius - irisRadius)*MathF.Sin(angle);
+                dxx = (scleraRadius - irisRadius) * MathF.Cos(angle);
+                dyy = (scleraRadius - irisRadius) * MathF.Sin(angle);
 
                 irisRightPosition.X = scleraRightPosition.X + dxx;
                 irisRightPosition.Y = scleraRightPosition.Y + dyy;
             }
 
             // Draw
-            BeginDrawing();{
-
+            BeginDrawing();
+            {
                 ClearBackground(RayWhite);
 
                 DrawCircle(scleraLeftPosition, scleraRadius, LightGray);
@@ -83,8 +77,8 @@ public partial class ShapesFollowingEyes : ExampleHelper
                 DrawCircle(irisRightPosition, 10, Black);
 
                 DrawFPS(10, 10);
-
-            }EndDrawing();
+            }
+            EndDrawing();
         }
 
         // De-Initialization

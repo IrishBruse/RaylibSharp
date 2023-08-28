@@ -102,9 +102,40 @@ public static unsafe partial class Raylib
 
     /// <summary> Set shader uniform value </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
+    public static partial void SetShaderValue(Shader shader, int locIndex, ref Vector3 value, ShaderUniformDataType uniformType);
+
+    /// <summary> Set shader uniform value </summary>
+    [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
     public static partial void SetShaderValue(Shader shader, int locIndex, ref Vector4 value, ShaderUniformDataType uniformType);
 
     /// <summary> Set shader uniform value </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
-    public static partial void SetShaderValue(Shader shader, int locIndex, int[] value, ShaderUniformDataType uniformType);
+    public static partial void SetShaderValue(Shader shader, int locIndex, ref float value, ShaderUniformDataType uniformType);
+
+    /// <summary> Set shader uniform value </summary>
+    [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
+    public static partial void SetShaderValue(Shader shader, int locIndex, ref int value, ShaderUniformDataType uniformType);
+
+    /// <summary> Set shader uniform value </summary>
+    [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
+    public static partial void SetShaderValue(Shader shader, int locIndex, ref bool value, ShaderUniformDataType uniformType);
+
+    /// <summary> Set shader uniform value </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void SetShaderValue<T>(Shader shader, int locIndex, ref T value, ShaderUniformDataType uniformType) where T : Enum
+    {
+        SetShaderValue(shader, locIndex, ref value, uniformType);
+    }
+
+    /// <summary> Set shader uniform value vector </summary>
+    [LibraryImport(LIB, EntryPoint = "SetShaderValueV")]
+    public static partial void SetShaderValue(Shader shader, int locIndex, Vector2[] value, ShaderUniformDataType uniformType, int count);
+
+    /// <summary> Set shader uniform value vector </summary>
+    [LibraryImport(LIB, EntryPoint = "SetShaderValueV")]
+    public static partial void SetShaderValue(Shader shader, int locIndex, int[] value, ShaderUniformDataType uniformType, int count);
+
+    /// <summary> Set shader uniform value vector </summary>
+    [LibraryImport(LIB, EntryPoint = "SetShaderValueV")]
+    public static partial void SetShaderValue(Shader shader, int locIndex, byte[] value, ShaderUniformDataType uniformType, int count);
 }

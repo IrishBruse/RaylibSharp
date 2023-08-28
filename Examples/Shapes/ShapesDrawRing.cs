@@ -1,17 +1,10 @@
-using System.Numerics;
-using System.Drawing;
 using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
+using System.Numerics;
 
 using static RaylibSharp.Raylib;
 
-public partial class ShapesDrawRing : ExampleHelper 
+public partial class ShapesDrawRing : ExampleHelper
 {
-
-
-
     // Program main entry point
     public static int Example()
     {
@@ -21,7 +14,7 @@ public partial class ShapesDrawRing : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shapes - draw ring");
 
-        Vector2 center = new((GetScreenWidth() - 300)/2.0f, GetScreenHeight()/2.0f );
+        Vector2 center = new((GetScreenWidth() - 300) / 2.0f, GetScreenHeight() / 2.0f);
 
         float innerRadius = 80.0f;
         float outerRadius = 190.0f;
@@ -43,36 +36,47 @@ public partial class ShapesDrawRing : ExampleHelper
             // NOTE: All variables update happens inside GUI control functions
 
             // Draw
-            BeginDrawing();{
-
+            BeginDrawing();
+            {
                 ClearBackground(RayWhite);
 
                 DrawLine(500, 0, 500, GetScreenHeight(), Fade(LightGray, 0.6f));
                 DrawRectangle(500, 0, GetScreenWidth() - 500, GetScreenHeight(), Fade(LightGray, 0.3f));
 
-                if (drawRing) DrawRing(center, innerRadius, outerRadius, startAngle, endAngle, segments, Fade(Maroon, 0.3f));
-                if (drawRingLines) DrawRingLines(center, innerRadius, outerRadius, startAngle, endAngle, segments, Fade(Black, 0.4f));
-                if (drawCircleLines) DrawCircleSectorLines(center, outerRadius, startAngle, endAngle, segments, Fade(Black, 0.4f));
+                if (drawRing)
+                {
+                    DrawRing(center, innerRadius, outerRadius, startAngle, endAngle, segments, Fade(Maroon, 0.3f));
+                }
+
+                if (drawRingLines)
+                {
+                    DrawRingLines(center, innerRadius, outerRadius, startAngle, endAngle, segments, Fade(Black, 0.4f));
+                }
+
+                if (drawCircleLines)
+                {
+                    DrawCircleSectorLines(center, outerRadius, startAngle, endAngle, segments, Fade(Black, 0.4f));
+                }
 
                 // Draw GUI controls
-                startAngle = GuiSliderBar(new( 600, 40, 120, 20 ), "StartAngle", null, startAngle, -450, 450);
-                endAngle = GuiSliderBar(new( 600, 70, 120, 20 ), "EndAngle", null, endAngle, -450, 450);
+                startAngle = GuiSliderBar(new(600, 40, 120, 20), "StartAngle", null, startAngle, -450, 450);
+                endAngle = GuiSliderBar(new(600, 70, 120, 20), "EndAngle", null, endAngle, -450, 450);
 
-                innerRadius = GuiSliderBar(new( 600, 140, 120, 20 ), "InnerRadius", null, innerRadius, 0, 100);
-                outerRadius = GuiSliderBar(new( 600, 170, 120, 20 ), "OuterRadius", null, outerRadius, 0, 200);
+                innerRadius = GuiSliderBar(new(600, 140, 120, 20), "InnerRadius", null, innerRadius, 0, 100);
+                outerRadius = GuiSliderBar(new(600, 170, 120, 20), "OuterRadius", null, outerRadius, 0, 200);
 
-                segments = (int)GuiSliderBar(new( 600, 240, 120, 20 ), "Segments", null, (float)segments, 0, 100);
+                segments = (int)GuiSliderBar(new(600, 240, 120, 20), "Segments", null, segments, 0, 100);
 
-                drawRing = GuiCheckBox(new( 600, 320, 20, 20 ), "Draw Ring", drawRing);
-                drawRingLines = GuiCheckBox(new( 600, 350, 20, 20 ), "Draw RingLines", drawRingLines);
-                drawCircleLines = GuiCheckBox(new( 600, 380, 20, 20 ), "Draw CircleLines", drawCircleLines);
+                drawRing = GuiCheckBox(new(600, 320, 20, 20), "Draw Ring", drawRing);
+                drawRingLines = GuiCheckBox(new(600, 350, 20, 20), "Draw RingLines", drawRingLines);
+                drawCircleLines = GuiCheckBox(new(600, 380, 20, 20), "Draw CircleLines", drawCircleLines);
 
-                int minSegments = (int)MathF.Ceiling((endAngle - startAngle)/90);
-                DrawText(TextFormat("MODE: %s", (segments >= minSegments)? "MANUAL" : "AUTO"), 600, 270, 10, (segments >= minSegments)? Maroon : DarkGray);
+                int minSegments = (int)MathF.Ceiling((endAngle - startAngle) / 90);
+                DrawText("MODE: " + ((segments >= minSegments) ? "MANUAL" : "AUTO"), 600, 270, 10, (segments >= minSegments) ? Maroon : DarkGray);
 
                 DrawFPS(10, 10);
-
-            }EndDrawing();
+            }
+            EndDrawing();
         }
 
         // De-Initialization

@@ -1,8 +1,8 @@
 namespace RaylibSharp;
 
-using RaylibSharp.GL;
-
 using System.Runtime.InteropServices.Marshalling;
+
+using RaylibSharp.GL;
 
 [CustomMarshaller(typeof(RenderBatch), MarshalMode.ManagedToUnmanagedIn, typeof(RenderBatchMarshaller))]
 [CustomMarshaller(typeof(RenderBatch), MarshalMode.ManagedToUnmanagedOut, typeof(RenderBatchMarshaller))]

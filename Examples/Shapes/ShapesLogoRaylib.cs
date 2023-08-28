@@ -1,13 +1,6 @@
-using System.Numerics;
-using System.Drawing;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
 using static RaylibSharp.Raylib;
 
-public partial class ShapesLogoRaylib : ExampleHelper 
+public partial class ShapesLogoRaylib : ExampleHelper
 {
 
     // Program main entry point
@@ -28,17 +21,17 @@ public partial class ShapesLogoRaylib : ExampleHelper
             // TODO: Update your variables here
 
             // Draw
-            BeginDrawing();{
-
+            BeginDrawing();
+            {
                 ClearBackground(RayWhite);
 
-                DrawRectangle(screenWidth/2 - 128, screenHeight/2 - 128, 256, 256, Black);
-                DrawRectangle(screenWidth/2 - 112, screenHeight/2 - 112, 224, 224, RayWhite);
-                DrawText("raylib", screenWidth/2 - 44, screenHeight/2 + 48, 50, Black);
+                DrawRectangle((screenWidth / 2) - 128, (screenHeight / 2) - 128, 256, 256, Black);
+                DrawRectangle((screenWidth / 2) - 112, (screenHeight / 2) - 112, 224, 224, RayWhite);
+                DrawText("raylib", (screenWidth / 2) - 44, (screenHeight / 2) + 48, 50, Black);
 
                 DrawText("this is NOT a texture!", 350, 370, 10, Gray);
-
-            }EndDrawing();
+            }
+            EndDrawing();
         }
 
         // De-Initialization

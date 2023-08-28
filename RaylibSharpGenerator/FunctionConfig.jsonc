@@ -128,12 +128,24 @@
         "LoadTextureCubemap": {
             "layout": "CubemapLayout layout"
         },
+        "GenTextureMipmaps": {
+            "texture": "ref Texture texture"
+        },
+        "DrawMeshInstanced": {
+            "transforms": "Matrix4x4[] transforms"
+        },
         "rlLoadTextureCubemap": {
             "format": "PixelFormat format"
         },
         "rlFramebufferAttach": {
             "attachType": "FramebufferAttachType attachType",
             "texType": "FramebufferAttachTextureType texType"
+        },
+        "rlLoadTexture": {
+            "format": "PixelFormat format"
+        },
+        "rlLoadVertexBuffer": {
+            "buffer": "float[] buffer"
         }
     }
 }

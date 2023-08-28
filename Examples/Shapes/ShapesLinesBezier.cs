@@ -1,13 +1,10 @@
 using System.Numerics;
-using System.Drawing;
-using System;
 
 using RaylibSharp;
-using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
-public partial class ShapesLinesBezier : ExampleHelper 
+public partial class ShapesLinesBezier : ExampleHelper
 {
 
     // Program main entry point
@@ -20,8 +17,8 @@ public partial class ShapesLinesBezier : ExampleHelper
         SetConfigFlags(WindowFlag.Msaa4xHint);
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shapes - cubic-bezier lines");
 
-        Vector2 start = new( 0, 0 );
-        Vector2 end = new( (float)screenWidth, (float)screenHeight );
+        Vector2 start = new(0, 0);
+        Vector2 end = new(screenWidth, screenHeight);
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
@@ -29,19 +26,25 @@ public partial class ShapesLinesBezier : ExampleHelper
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             // Update
-            if (IsMouseButtonDown(MouseButton.Left)) start = GetMousePosition();
-            else if (IsMouseButtonDown(MouseButton.Right)) end = GetMousePosition();
+            if (IsMouseButtonDown(MouseButton.Left))
+            {
+                start = GetMousePosition();
+            }
+            else if (IsMouseButtonDown(MouseButton.Right))
+            {
+                end = GetMousePosition();
+            }
 
             // Draw
-            BeginDrawing();{
-
+            BeginDrawing();
+            {
                 ClearBackground(RayWhite);
 
                 DrawText("USE MOUSE LEFT-RIGHT CLICK to DEFINE LINE START and END POINTS", 15, 20, 20, Gray);
 
                 DrawLineBezier(start, end, 2.0f, Red);
-
-            }EndDrawing();
+            }
+            EndDrawing();
         }
 
         // De-Initialization

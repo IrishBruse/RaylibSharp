@@ -1,0 +1,31 @@
+on: [workflow_dispatch]
+jobs:
+    gh-pages:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout raylib
+              uses: actions/checkout@v3
+              with:
+                  ref: master
+                  repository: raysan5/raylib
+                  path: raylib
+
+            - name: Setup emsdk
+              uses: mymindstorm/setup-emsdk@v11
+              with:
+                  version: 3.1.12
+                  actions-cache-folder: "emsdk-cache"
+
+            - name: Build raylib for Web
+              run: |
+                  cd raylib
+                  emcmake cmake \
+                    -B artifacts \
+                    -D BUILD_EXAMPLES=Off \
+                    -D PLATFORM=Web
+                  cmake --build artifacts
+
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: libraylib.a
+                  path: raylib/artifacts/raylib/libraylib.a

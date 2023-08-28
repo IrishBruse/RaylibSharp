@@ -301,7 +301,7 @@ public partial class ShapesTopDownLights : ExampleHelper
                 {
                     if (lights[i].active)
                     {
-                        DrawTexture(lights[i].mask.Texture, new(0, 0, (float)GetScreenWidth(), -(float)GetScreenHeight()), Vector2.Zero, White);
+                        DrawTexture(lights[i].mask.Texture, new(0, 0, GetScreenWidth(), -(float)GetScreenHeight()), Vector2.Zero, White);
                     }
                 }
 
@@ -319,10 +319,10 @@ public partial class ShapesTopDownLights : ExampleHelper
                 ClearBackground(Black);
 
                 // Draw the tile background
-                DrawTexture(backgroundTexture, new(0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()), Vector2.Zero, White);
+                DrawTexture(backgroundTexture, new(0, 0, GetScreenWidth(), GetScreenHeight()), Vector2.Zero, White);
 
                 // Overlay the shadows from all the lights
-                DrawTexture(lightMask.Texture, new(0, 0, (float)GetScreenWidth(), -(float)GetScreenHeight()), Vector2.Zero, ColorAlpha(White, showLines ? 0.75f : 1.0f));
+                DrawTexture(lightMask.Texture, new(0, 0, GetScreenWidth(), -(float)GetScreenHeight()), Vector2.Zero, ColorAlpha(White, showLines ? 0.75f : 1.0f));
 
                 // Draw the lights
                 for (int i = 0; i < MAX_LIGHTS; i++)

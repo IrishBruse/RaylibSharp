@@ -40,14 +40,15 @@ public partial class ModelsSkybox : ExampleHelper
         // NOTE: Some locations are automatically set at shader loading
         skybox.Materials[0].Shader = LoadShader($"resources/shaders/glsl{glslVersion}/skybox.vs", $"resources/shaders/gls{glslVersion}/skybox.fs");
 
-        SetShaderValue(skybox.Materials[0].Shader, GetShaderLocation(skybox.Materials[0].Shader, "environmentMap"), new int[] { (int)MaterialMapIndex.Cubemap }, ShaderUniformDataType.ShaderUniformInt);
-        SetShaderValue(skybox.Materials[0].Shader, GetShaderLocation(skybox.Materials[0].Shader, "doGamma"), new int[] { useHDR ? 1 : 0 }, ShaderUniformDataType.ShaderUniformInt);
-        SetShaderValue(skybox.Materials[0].Shader, GetShaderLocation(skybox.Materials[0].Shader, "vflipped"), new int[] { useHDR ? 1 : 0 }, ShaderUniformDataType.ShaderUniformInt);
+        int matMap = (int)MaterialMapIndex.Cubemap;
+        SetShaderValue(skybox.Materials[0].Shader, GetShaderLocation(skybox.Materials[0].Shader, "environmentMap"), ref matMap, ShaderUniformDataType.ShaderUniformInt);
+        SetShaderValue(skybox.Materials[0].Shader, GetShaderLocation(skybox.Materials[0].Shader, "doGamma"), ref useHDR, ShaderUniformDataType.ShaderUniformInt);
+        SetShaderValue(skybox.Materials[0].Shader, GetShaderLocation(skybox.Materials[0].Shader, "vflipped"), ref useHDR, ShaderUniformDataType.ShaderUniformInt);
 
         // Load cubemap shader and setup required shader locations
         Shader shdrCubemap = LoadShader($"resources/shaders/glsl{glslVersion}/cubemap.vs", $"resources/shaders/glsl{glslVersion}/cubemap.fs");
 
-        SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), new int[] { 0 }, ShaderUniformDataType.ShaderUniformInt);
+        SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), 0, ShaderUniformDataType.ShaderUniformInt);
 
         TextureCubemap panorama;
 

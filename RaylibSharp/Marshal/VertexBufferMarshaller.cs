@@ -1,8 +1,8 @@
 namespace RaylibSharp;
 
-using RaylibSharp.GL;
-
 using System.Runtime.InteropServices.Marshalling;
+
+using RaylibSharp.GL;
 
 [CustomMarshaller(typeof(VertexBuffer), MarshalMode.ManagedToUnmanagedIn, typeof(VertexBufferMarshaller))]
 [CustomMarshaller(typeof(VertexBuffer), MarshalMode.ManagedToUnmanagedOut, typeof(VertexBufferMarshaller))]
