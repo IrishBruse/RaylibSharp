@@ -14,9 +14,9 @@ internal static unsafe class FontMarshaller
         {
             return new()
             {
-                Basesize = managed.Basesize,
-                Glyphcount = managed.Glyphcount,
-                Glyphpadding = managed.Glyphpadding,
+                BaseSize = managed.BaseSize,
+                GlyphCount = managed.GlyphCount,
+                GlyphPadding = managed.GlyphPadding,
                 Texture = managed.Texture,
                 Glyphs = glyphPtr,
                 Recs = recsPtr,
@@ -26,13 +26,13 @@ internal static unsafe class FontMarshaller
 
     public static Font ConvertToManaged(UnmanagedFont unmanaged)
     {
-        Span<GlyphInfo> glyphs = new(unmanaged.Glyphs, unmanaged.Glyphcount);
-        Span<RectangleF> recs = new(unmanaged.Recs, unmanaged.Glyphcount);
+        Span<GlyphInfo> glyphs = new(unmanaged.Glyphs, unmanaged.GlyphCount);
+        Span<RectangleF> recs = new(unmanaged.Recs, unmanaged.GlyphCount);
         return new()
         {
-            Basesize = unmanaged.Basesize,
-            Glyphcount = unmanaged.Glyphcount,
-            Glyphpadding = unmanaged.Glyphpadding,
+            BaseSize = unmanaged.BaseSize,
+            GlyphCount = unmanaged.GlyphCount,
+            GlyphPadding = unmanaged.GlyphPadding,
             Texture = unmanaged.Texture,
             Glyphs = glyphs.ToArray(),
             Recs = recs.ToArray(),

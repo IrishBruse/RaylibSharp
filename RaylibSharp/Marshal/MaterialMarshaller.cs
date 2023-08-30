@@ -8,11 +8,11 @@ internal static unsafe class MaterialMarshaller
 {
     public static UnmanagedMaterial ConvertToUnmanaged(Material managed)
     {
-        return new();
+        throw new NotImplementedException();
     }
 
     public static Material ConvertToManaged(UnmanagedMaterial unmanaged)
     {
-        return new();
+        throw new NotImplementedException();
     }
 }

@@ -46,6 +46,11 @@ public class FunctionProcessor
                 {
                     type = newReturnType;
                 }
+
+                if (conversion.TryGetValue("@", out string? extraAttributes))
+                {
+                    sb.AppendLine(extraAttributes);
+                }
             }
 
             string debug = string.Join(" ", f.Params?.Select(p => p.Type + " " + p.Name) ?? Array.Empty<string>());

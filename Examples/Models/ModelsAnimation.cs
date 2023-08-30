@@ -25,7 +25,7 @@ public partial class ModelsAnimation : ExampleHelper
 
         Model model = LoadModel("resources/models/iqm/guy.iqm");                    // Load the animated model mesh and basic data
         Texture texture = LoadTexture("resources/models/iqm/guytex.png");         // Load model texture and set material
-        SetMaterialTexture(ref model.Materials[0], MaterialMapIndex.Albedo, texture);     // Set model material map texture
+        SetMaterialTexture(model.Materials[0], MaterialMapIndex.Albedo, texture);     // Set model material map texture
 
         Vector3 position = new(0.0f, 0.0f, 0.0f);            // Set model position
 

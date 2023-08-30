@@ -186,7 +186,7 @@ public partial class ModelsMeshGeneration : ExampleHelper
         mesh.Texcoords[5] = 0;
 
         // Upload mesh data from CPU (RAM) to GPU (VRAM) memory
-        UploadMesh(ref mesh, false);
+        UploadMesh(mesh, false);
 
         return mesh;
     }

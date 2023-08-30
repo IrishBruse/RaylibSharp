@@ -11,17 +11,15 @@ internal static unsafe class RenderBatchMarshaller
     // TODO: Fix this as it is not working yet
     public static UnmanagedRenderBatch ConvertToUnmanaged(RenderBatch managed)
     {
-        throw new NotImplementedException();
-
         fixed (DrawCall* drawsPtr = managed.Draws)
-        fixed (VertexBuffer* vertexBuffersPtr = managed.Vertexbuffer)
+        fixed (VertexBuffer* vertexBuffersPtr = managed.VertexBuffer)
         {
             return new()
             {
-                Buffercount = managed.Buffercount,
-                Currentbuffer = managed.Currentbuffer,
-                Currentdepth = managed.Currentdepth,
-                Drawcounter = managed.Drawcounter,
+                BufferCount = managed.BufferCount,
+                CurrentBuffer = managed.CurrentBuffer,
+                CurrentDepth = managed.CurrentDepth,
+                DrawCounter = managed.DrawCounter,
                 Draws = drawsPtr,
                 // Vertexbuffer = vertexBuffersPtr,
             };
@@ -30,18 +28,16 @@ internal static unsafe class RenderBatchMarshaller
 
     public static RenderBatch ConvertToManaged(UnmanagedRenderBatch unmanaged)
     {
-        throw new NotImplementedException();
-
-        Span<DrawCall> draws = new(unmanaged.Draws, unmanaged.Drawcounter);
-        Span<VertexBuffer> vertexBuffers = new(unmanaged.Vertexbuffer, unmanaged.Buffercount);
+        Span<DrawCall> draws = new(unmanaged.Draws, unmanaged.DrawCounter);
+        Span<VertexBuffer> vertexBuffers = new(unmanaged.VertexBuffer, unmanaged.BufferCount);
         return new()
         {
-            Buffercount = unmanaged.Buffercount,
-            Currentbuffer = unmanaged.Currentbuffer,
-            Currentdepth = unmanaged.Currentdepth,
-            Drawcounter = unmanaged.Drawcounter,
+            BufferCount = unmanaged.BufferCount,
+            CurrentBuffer = unmanaged.CurrentBuffer,
+            CurrentDepth = unmanaged.CurrentDepth,
+            DrawCounter = unmanaged.DrawCounter,
             Draws = draws.ToArray(),
-            Vertexbuffer = vertexBuffers.ToArray(),
+            VertexBuffer = vertexBuffers.ToArray(),
         };
     }
 }

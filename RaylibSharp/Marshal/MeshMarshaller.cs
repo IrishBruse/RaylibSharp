@@ -10,8 +10,8 @@ internal static unsafe class MeshMarshaller
     {
         return new()
         {
-            Vertexcount = managed.Vertexcount,
-            Trianglecount = managed.Trianglecount,
+            VertexCount = managed.VertexCount,
+            TriangleCount = managed.TriangleCount,
         };
     }
 
@@ -19,8 +19,8 @@ internal static unsafe class MeshMarshaller
     {
         return new()
         {
-            Vertexcount = unmanaged.Vertexcount,
-            Trianglecount = unmanaged.Trianglecount,
+            VertexCount = unmanaged.VertexCount,
+            TriangleCount = unmanaged.TriangleCount,
         };
     }
 }

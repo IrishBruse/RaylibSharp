@@ -118,7 +118,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Set shader uniform value </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
-    public static partial void SetShaderValue(Shader shader, int locIndex, ref bool value, ShaderUniformDataType uniformType);
+    public static partial void SetShaderValue(Shader shader, int locIndex, [MarshalAs(UnmanagedType.I1)] ref bool value, ShaderUniformDataType uniformType);
 
     /// <summary> Set shader uniform value </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -138,4 +138,5 @@ public static unsafe partial class Raylib
     /// <summary> Set shader uniform value vector </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValueV")]
     public static partial void SetShaderValue(Shader shader, int locIndex, byte[] value, ShaderUniformDataType uniformType, int count);
+
 }

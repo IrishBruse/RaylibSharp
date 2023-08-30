@@ -333,14 +333,6 @@ public static unsafe partial class RLGL
     [LibraryImport(LIB, EntryPoint = "rlGetShaderLocsDefault")]
     public static partial IntPtr GetShaderLocsDefault();
 
-    /// <summary> Load a render batch system </summary>
-    [LibraryImport(LIB, EntryPoint = "rlLoadRenderBatch")]
-    public static partial RenderBatch LoadRenderBatch(int numBuffers, int bufferElements);
-
-    /// <summary> Unload render batch system </summary>
-    [LibraryImport(LIB, EntryPoint = "rlUnloadRenderBatch")]
-    public static partial void UnloadRenderBatch(RenderBatch batch);
-
     /// <summary> Draw render batch data (Update->Draw->Reset) </summary>
     [LibraryImport(LIB, EntryPoint = "rlDrawRenderBatch")]
     public static partial void DrawRenderBatch(IntPtr batch);

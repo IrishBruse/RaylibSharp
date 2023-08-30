@@ -1,9 +1,9 @@
 namespace RaylibSharp;
 
+using System.Drawing;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
-using System.Numerics;
-using System.Drawing;
 
 public static unsafe partial class Raylib
 {
@@ -1047,17 +1047,9 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "ImageColorReplace")]
     public static partial void ImageColorReplace(IntPtr image, [MarshalUsing(typeof(ColorMarshaller))] Color color, [MarshalUsing(typeof(ColorMarshaller))] Color replace);
 
-    /// <summary> Load color data from image as a Color array (RGBA - 32bit) </summary>
-    [LibraryImport(LIB, EntryPoint = "LoadImageColors")]
-    public static partial Color[] LoadImageColors(Image image);
-
     /// <summary> Load colors palette from image as a Color array (RGBA - 32bit) </summary>
     [LibraryImport(LIB, EntryPoint = "LoadImagePalette")]
     public static partial IntPtr LoadImagePalette(Image image, int maxPaletteSize, IntPtr colorCount);
-
-    /// <summary> Unload color data loaded with LoadImageColors() </summary>
-    [LibraryImport(LIB, EntryPoint = "UnloadImageColors")]
-    public static partial void UnloadImageColors(IntPtr colors);
 
     /// <summary> Unload colors palette loaded with LoadImagePalette() </summary>
     [LibraryImport(LIB, EntryPoint = "UnloadImagePalette")]
@@ -1611,7 +1603,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Upload mesh vertex data in GPU and provide VAO/VBO ids </summary>
     [LibraryImport(LIB, EntryPoint = "UploadMesh")]
-    public static partial void UploadMesh(ref Mesh mesh, [MarshalAs(UnmanagedType.I1)] bool dynamic);
+    public static partial void UploadMesh(Mesh mesh, [MarshalAs(UnmanagedType.I1)] bool dynamic);
 
     /// <summary> Update mesh vertex data in GPU for a specific buffer index </summary>
     [LibraryImport(LIB, EntryPoint = "UpdateMeshBuffer")]
@@ -1705,13 +1697,14 @@ public static unsafe partial class Raylib
 
     /// <summary> Set texture for a material map type (MATERIAL_MAP_DIFFUSE, MATERIAL_MAP_SPECULAR...) </summary>
     [LibraryImport(LIB, EntryPoint = "SetMaterialTexture")]
-    public static partial void SetMaterialTexture(ref Material material, MaterialMapIndex mapType, Texture texture);
+    public static partial void SetMaterialTexture(Material material, MaterialMapIndex mapType, Texture texture);
 
     /// <summary> Set material for a mesh </summary>
     [LibraryImport(LIB, EntryPoint = "SetModelMeshMaterial")]
     public static partial void SetModelMeshMaterial(IntPtr model, int meshId, int materialId);
 
     /// <summary> Load model animations from file </summary>
+    [return: MarshalUsing(CountElementName = "animCount")]
     [LibraryImport(LIB, EntryPoint = "LoadModelAnimations")]
     public static partial ModelAnimation[] LoadModelAnimations([MarshalAs(UnmanagedType.LPStr)] string fileName, ref uint animCount);
 
@@ -2031,4 +2024,3 @@ public static unsafe partial class Raylib
     public static partial void DetachAudioMixedProcessor(AudioCallback processor);
 
 }
-

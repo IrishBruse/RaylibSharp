@@ -30,7 +30,8 @@
         "TextFormat",
         "TextIsEqual",
 
-        // Unsure
+        // Unnecessary
+        "GetMouseWheelMove",
         "MemAlloc",
         "MemRealloc",
         "MemFree",
@@ -38,54 +39,40 @@
         "DecompressData",
         "EncodeDataBase64",
         "DecodeDataBase64",
-
         "TraceLog", // Errors
-
-        "GetMouseWheelMove", // Unnecessary
 
         // Manually implemented
         "SetTraceLogCallback",
-        "InitWindow"
+        "InitWindow",
+        "LoadImageColors",
+        "UnloadImageColors",
+        "rlLoadRenderBatch",
+        "rlUnloadRenderBatch"
     ],
     "FunctionTypeConversion": {
-        "GetGestureDetected": { "_": "Gesture" },
-        "LoadFileText": { "_": "string" },
-        "GetGamepadButtonPressed": { "_": "GamepadButton" },
-
-        "SetConfigFlags": { "flags": "WindowFlag flags" },
-        "UpdateCamera": { "mode": "CameraMode mode" },
-        "BeginBlendMode": { "mode": "BlendMode mode" },
-        "IsMouseButtonPressed": { "button": "MouseButton button" },
-        "IsMouseButtonDown": { "button": "MouseButton button" },
-        "IsMouseButtonReleased": { "button": "MouseButton button" },
-        "IsMouseButtonUp": { "button": "MouseButton button" },
-        "IsWindowState": { "flag": "WindowFlag flag" },
-        "SetWindowState": { "flags": "WindowFlag flags" },
-        "ClearWindowState": { "flags": "WindowFlag flags" },
-
-        "IsKeyReleased": { "key": "Key key" },
-        "IsKeyUp": { "key": "Key key" },
-        "IsKeyPressed": { "key": "Key key" },
-        "IsKeyDown": { "key": "Key key" },
-        "SetExitKey": { "key": "Key key" },
-        "SetMouseCursor": { "cursor": "MouseCursor cursor" },
-        "SetTraceLogLevel": { "logLevel": "TraceLogLevel logLevel" },
-        "SetTextureFilter": { "filter": "TextureFilter filter" },
-        "SetShaderValue": {
-            "uniformType": "ShaderUniformDataType uniformType"
+        "BeginBlendMode": {
+            "mode": "BlendMode mode"
         },
-        "LoadFontFromMemory": {
-            "fileData": "[MarshalAs(UnmanagedType.LPArray)] byte[] fileData"
+        "ClearWindowState": {
+            "flags": "WindowFlag flags"
         },
-        "LoadImageFromMemory": {
-            "fileData": "[MarshalAs(UnmanagedType.LPArray)] byte[] fileData"
+        "DrawMeshInstanced": {
+            "transforms": "Matrix4x4[] transforms"
         },
-        "LoadShader": {
-            "vsFileName": "[MarshalAs(UnmanagedType.LPStr)] string? vsFileName",
-            "fsFileName": "[MarshalAs(UnmanagedType.LPStr)] string? fsFileName"
+        "DrawTriangleFan": {
+            "points": "Vector2[] points"
         },
-        "rlBindImageTexture": {
-            "readonly": "[MarshalAs(UnmanagedType.I1)] bool @readonly"
+        "GenTextureMipmaps": {
+            "texture": "ref Texture texture"
+        },
+        "GetGamepadAxisMovement": {
+            "axis": "GamepadAxis axis"
+        },
+        "GetGamepadButtonPressed": {
+            "_": "GamepadButton"
+        },
+        "GetGestureDetected": {
+            "_": "Gesture"
         },
         "IsGamepadButtonDown": {
             "button": "GamepadButton button"
@@ -99,43 +86,56 @@
         "IsGamepadButtonUp": {
             "button": "GamepadButton button"
         },
-        "GetGamepadAxisMovement": {
-            "axis": "GamepadAxis axis"
+        "IsKeyDown": {
+            "key": "Key key"
         },
-        "rlSetBlendMode": {
-            "mode": "BlendMode mode"
+        "IsKeyPressed": {
+            "key": "Key key"
         },
-        "rlSetCullFace": {
-            "mode": "CullMode mode"
+        "IsKeyReleased": {
+            "key": "Key key"
         },
-        "DrawTriangleFan": {
-            "points": "Vector2[] points"
+        "IsKeyUp": {
+            "key": "Key key"
+        },
+        "IsMouseButtonDown": {
+            "button": "MouseButton button"
+        },
+        "IsMouseButtonPressed": {
+            "button": "MouseButton button"
+        },
+        "IsMouseButtonReleased": {
+            "button": "MouseButton button"
+        },
+        "IsMouseButtonUp": {
+            "button": "MouseButton button"
+        },
+        "IsWindowState": {
+            "flag": "WindowFlag flag"
+        },
+        "LoadFileText": {
+            "_": "string"
+        },
+        "LoadFontFromMemory": {
+            "fileData": "[MarshalAs(UnmanagedType.LPArray)] byte[] fileData"
+        },
+        "LoadImageFromMemory": {
+            "fileData": "[MarshalAs(UnmanagedType.LPArray)] byte[] fileData"
         },
         "LoadModelAnimations": {
             "_": "ModelAnimation[]",
+            "@": "[return: MarshalUsing(CountElementName = \"animCount\")]",
             "animCount": "ref uint animCount"
         },
-        "SetMaterialTexture": {
-            "material": "ref Material material",
-            "mapType": "MaterialMapIndex mapType"
-        },
-        "LoadImageColors": {
-            "_": "Color[]"
-        },
-        "UploadMesh": {
-            "mesh": "ref Mesh mesh"
+        "LoadShader": {
+            "fsFileName": "[MarshalAs(UnmanagedType.LPStr)] string? fsFileName",
+            "vsFileName": "[MarshalAs(UnmanagedType.LPStr)] string? vsFileName"
         },
         "LoadTextureCubemap": {
             "layout": "CubemapLayout layout"
         },
-        "GenTextureMipmaps": {
-            "texture": "ref Texture texture"
-        },
-        "DrawMeshInstanced": {
-            "transforms": "Matrix4x4[] transforms"
-        },
-        "rlLoadTextureCubemap": {
-            "format": "PixelFormat format"
+        "rlBindImageTexture": {
+            "readonly": "[MarshalAs(UnmanagedType.I1)] bool @readonly"
         },
         "rlFramebufferAttach": {
             "attachType": "FramebufferAttachType attachType",
@@ -144,8 +144,48 @@
         "rlLoadTexture": {
             "format": "PixelFormat format"
         },
+        "rlLoadTextureCubemap": {
+            "format": "PixelFormat format"
+        },
         "rlLoadVertexBuffer": {
             "buffer": "float[] buffer"
+        },
+        "rlSetBlendMode": {
+            "mode": "BlendMode mode"
+        },
+        "rlSetCullFace": {
+            "mode": "CullMode mode"
+        },
+        "SetConfigFlags": {
+            "flags": "WindowFlag flags"
+        },
+        "SetExitKey": {
+            "key": "Key key"
+        },
+        "SetMaterialTexture": {
+            "mapType": "MaterialMapIndex mapType",
+            "material": "Material material"
+        },
+        "SetMouseCursor": {
+            "cursor": "MouseCursor cursor"
+        },
+        "SetShaderValue": {
+            "uniformType": "ShaderUniformDataType uniformType"
+        },
+        "SetTextureFilter": {
+            "filter": "TextureFilter filter"
+        },
+        "SetTraceLogLevel": {
+            "logLevel": "TraceLogLevel logLevel"
+        },
+        "SetWindowState": {
+            "flags": "WindowFlag flags"
+        },
+        "UpdateCamera": {
+            "mode": "CameraMode mode"
+        },
+        "UploadMesh": {
+            "mesh": "Mesh mesh"
         }
     }
 }

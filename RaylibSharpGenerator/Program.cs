@@ -19,7 +19,7 @@ public class Program
 
         Generate(api);
 
-        ExampleProcessor.Emit();
+        // ExampleProcessor.Emit();
     }
 
     private static void Generate(RaylibApi api)
