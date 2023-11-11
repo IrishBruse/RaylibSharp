@@ -54,17 +54,17 @@ public partial class ModelsMeshGeneration : ExampleHelper
         // Define the camera to look into our 3d woRLGL.d
         Camera3D camera = new();
         camera.Position = new(10.0f, 10.0f, 10.0f); // Camera3D position
-        camera.Target = new(0.0f, 0.0f, 0.0f);      // Camera3D looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
+        camera.Target = new(0.0f, 0.0f, 0.0f); // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f; // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera3D projection type
 
         // Model drawing position
         Vector3 position = new(0.0f, 0.0f, 0.0f);
 
         int currentModel = 0;
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -140,7 +140,7 @@ public partial class ModelsMeshGeneration : ExampleHelper
             UnloadModel(models[i]);
         }
 
-        CloseWindow();          // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }
@@ -151,9 +151,9 @@ public partial class ModelsMeshGeneration : ExampleHelper
         Mesh mesh = new();
         mesh.TriangleCount = 1;
         mesh.VertexCount = mesh.TriangleCount * 3;
-        mesh.Vertices = new float[mesh.VertexCount * 3 * sizeof(float)];    // 3 vertices, 3 coordinates each (x, y, z)
-        mesh.Texcoords = new float[mesh.VertexCount * 2 * sizeof(float)];   // 3 vertices, 2 coordinates each (x, y)
-        mesh.Normals = new float[mesh.VertexCount * 3 * sizeof(float)];     // 3 vertices, 3 coordinates each (x, y, z)
+        mesh.Vertices = new float[mesh.VertexCount * 3 * sizeof(float)]; // 3 vertices, 3 coordinates each (x, y, z)
+        mesh.Texcoords = new float[mesh.VertexCount * 2 * sizeof(float)]; // 3 vertices, 2 coordinates each (x, y)
+        mesh.Normals = new float[mesh.VertexCount * 3 * sizeof(float)]; // 3 vertices, 3 coordinates each (x, y, z)
 
         // Vertex at (0, 0, 0)
         mesh.Vertices[0] = 0;

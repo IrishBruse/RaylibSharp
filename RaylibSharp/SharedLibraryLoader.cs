@@ -6,23 +6,39 @@ using System.Runtime.InteropServices;
 
 #pragma warning disable CA2255
 
-internal sealed class SharedLibraryLoader
+internal static class SharedLibraryLoader
 {
+    private static IntPtr? libHandle;
+
     [ModuleInitializer]
     internal static void Init()
     {
+        Console.WriteLine("Locating native Raylib dll");
         NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), Resolve);
     }
 
     private static IntPtr Resolve(string libName, Assembly assembly, DllImportSearchPath? searchPath)
     {
+        if (libHandle.HasValue)
+        {
+            return libHandle.Value;
+        }
+
         string runtimeId = RuntimeID();
 
         string dllPath = $"{AppContext.BaseDirectory}/runtimes/{runtimeId}/native/{libName}";
 
-        NativeLibrary.TryLoad(dllPath, out IntPtr libHandle);
+        Console.WriteLine($"Loaded native Raylib dll from {dllPath}");
 
-        return libHandle;
+        if (NativeLibrary.TryLoad(dllPath, out IntPtr handle))
+        {
+            libHandle = handle;
+            return handle;
+        }
+        else
+        {
+            return IntPtr.Zero;
+        }
     }
 
     private static string RuntimeID()

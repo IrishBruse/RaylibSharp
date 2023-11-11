@@ -12,7 +12,13 @@
     "Material": { "UnmanagedAttribute": true },
     "ModelAnimation": { "UnmanagedAttribute": true },
     "Texture": { "GenUnmanaged": false },
-    "Image": { "GenUnmanaged": false },
+    "Image": {
+        "GenUnmanaged": false,
+        "FunctionTypeConversion": {
+            "Format": "PixelFormat Format"
+        }
+    },
+    "NPatchInfo": { "GenUnmanaged": false },
     "GlyphInfo": { "GenUnmanaged": false },
     "rlDrawCall": { "GenUnmanaged": false }
 }

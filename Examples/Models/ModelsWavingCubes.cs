@@ -20,10 +20,10 @@ public partial class ModelsWavingCubes : ExampleHelper
         // Initialize the camera
         Camera3D camera = new();
         camera.Position = new(30.0f, 20.0f, 30.0f); // Camera3D position
-        camera.Target = new(0.0f, 0.0f, 0.0f);      // Camera3D looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
-        camera.Fovy = 70.0f;                                // Camera3D field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
+        camera.Target = new(0.0f, 0.0f, 0.0f); // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera3D up vector (rotation towards target)
+        camera.Fovy = 70.0f; // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera3D projection type
 
         // Specify the amount of blocks in each direction
         const int numBlocks = 15;
@@ -92,7 +92,7 @@ public partial class ModelsWavingCubes : ExampleHelper
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

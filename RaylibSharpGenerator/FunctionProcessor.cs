@@ -93,7 +93,7 @@ public class FunctionProcessor
 
     private static string ConvertFunctionToUseOverloading(string name)
     {
-        if (name.EndsWith("V") && char.IsAsciiLetterLower(name[^2]))
+        if (name.EndsWith('V') && char.IsAsciiLetterLower(name[^2]))
         {
             name = name[..^1];
         }

@@ -17,7 +17,7 @@ public class CoreDropFiles : ExampleHelper
 
         string[] filePaths = Array.Empty<string>();
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -29,7 +29,7 @@ public class CoreDropFiles : ExampleHelper
 
                 filePaths = droppedFiles.Paths;
 
-                UnloadDroppedFiles(droppedFiles);    // Unload filepaths from memory
+                UnloadDroppedFiles(droppedFiles); // Unload filepaths from memory
             }
 
             // Draw

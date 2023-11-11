@@ -7,8 +7,8 @@ using static RaylibSharp.Raylib;
 
 public class RlLights
 {
-    public const int MAXLIGHTS = 4;   // Max dynamic lights supported by shader
-    private static int lightsCount;     // Current amount of created lights
+    public const int MAXLIGHTS = 4; // Max dynamic lights supported by shader
+    private static int lightsCount; // Current amount of created lights
 
     // Create a light and get shader locations
     public static Light CreateLight(LightType type, Vector3 position, Vector3 target, Color color, Shader shader)

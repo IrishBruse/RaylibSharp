@@ -31,7 +31,7 @@ public partial class ShapesColorsPalette : ExampleHelper
             "LightGray", "Pink", "Yellow", "Green", "SkyBlue", "Purple", "Beige"
         };
 
-        RectangleF[] colorsRecs = new RectangleF[MAX_COLORS_COUNT];     // Rectangles array
+        RectangleF[] colorsRecs = new RectangleF[MAX_COLORS_COUNT]; // Rectangles array
 
         // Fills colorsRecs data (for every rectangle)
         for (int i = 0; i < MAX_COLORS_COUNT; i++)
@@ -42,11 +42,11 @@ public partial class ShapesColorsPalette : ExampleHelper
             colorsRecs[i].Height = 100.0f;
         }
 
-        bool[] colorState = new bool[MAX_COLORS_COUNT];           // Color state: 0-DEFAULT, 1-MOUSE_HOVER
+        bool[] colorState = new bool[MAX_COLORS_COUNT]; // Color state: 0-DEFAULT, 1-MOUSE_HOVER
         _ = new
         Vector2(0.0f, 0.0f);
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -93,7 +93,7 @@ public partial class ShapesColorsPalette : ExampleHelper
         }
 
         // De-Initialization
-        CloseWindow();                // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

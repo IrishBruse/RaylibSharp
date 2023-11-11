@@ -19,27 +19,27 @@ public partial class ModelsLoading : ExampleHelper
         // Define the camera to look into our 3d woRLGL.d
         Camera3D camera = new();
         camera.Position = new(50.0f, 50.0f, 50.0f); // Camera3D position
-        camera.Target = new(0.0f, 10.0f, 0.0f);     // Camera3D looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
-        camera.Projection = CameraProjection.Perspective;                   // Camera3D mode type
+        camera.Target = new(0.0f, 10.0f, 0.0f); // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f; // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera3D mode type
 
-        Model model = LoadModel("resources/models/obj/castle.obj");                 // Load model
+        Model model = LoadModel("resources/models/obj/castle.obj"); // Load model
         Texture texture = LoadTexture("resources/models/obj/castle_diffuse.png"); // Load model texture
-        model.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture;            // Set map diffuse texture
+        model.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture; // Set map diffuse texture
 
-        Vector3 position = new(0.0f, 0.0f, 0.0f);                    // Set model position
+        Vector3 position = new(0.0f, 0.0f, 0.0f); // Set model position
 
-        BoundingBox bounds = GetMeshBoundingBox(model.Meshes[0]);   // Set model bounds
+        BoundingBox bounds = GetMeshBoundingBox(model.Meshes[0]); // Set model bounds
 
         // NOTE: bounds are calculated from the original size of the model,
         // if model is scaled on drawing, bounds must be also scaled
 
-        bool selected = false;          // Selected object flag
+        bool selected = false; // Selected object flag
 
-        DisableCursor();                // Limit cursor to relative movement inside the window
+        DisableCursor(); // Limit cursor to relative movement inside the window
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -61,8 +61,8 @@ public partial class ModelsLoading : ExampleHelper
                         IsFileExtension(droppedFiles.Paths[0], ".iqm") ||
                         IsFileExtension(droppedFiles.Paths[0], ".m3d"))       // Model file formats supported
                     {
-                        UnloadModel(model);                         // Unload previous model
-                        model = LoadModel(droppedFiles.Paths[0]);   // Load new model
+                        UnloadModel(model); // Unload previous model
+                        model = LoadModel(droppedFiles.Paths[0]); // Load new model
                         model.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture; // Set current map diffuse texture
 
                         bounds = GetMeshBoundingBox(model.Meshes[0]);
@@ -78,7 +78,7 @@ public partial class ModelsLoading : ExampleHelper
                     }
                 }
 
-                UnloadDroppedFiles(droppedFiles);    // Unload filepaths from memory
+                UnloadDroppedFiles(droppedFiles); // Unload filepaths from memory
             }
 
             // Select model on mouse click
@@ -104,13 +104,13 @@ public partial class ModelsLoading : ExampleHelper
                 BeginMode3D(camera);
                 {
 
-                    DrawModel(model, position, 1.0f, White);        // Draw 3d model with texture
+                    DrawModel(model, position, 1.0f, White); // Draw 3d model with texture
 
-                    DrawGrid(20, 10.0f);         // Draw a grid
+                    DrawGrid(20, 10.0f); // Draw a grid
 
                     if (selected)
                     {
-                        DrawBoundingBox(bounds, Green);   // Draw selection box
+                        DrawBoundingBox(bounds, Green); // Draw selection box
                     }
                 }
                 EndMode3D();
@@ -130,10 +130,10 @@ public partial class ModelsLoading : ExampleHelper
         }
 
         // De-Initialization
-        UnloadTexture(texture);     // Unload texture
-        UnloadModel(model);         // Unload model
+        UnloadTexture(texture); // Unload texture
+        UnloadModel(model); // Unload model
 
-        CloseWindow();              // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

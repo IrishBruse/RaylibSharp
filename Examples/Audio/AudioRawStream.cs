@@ -5,7 +5,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public partial class AudioRawStreams : ExampleHelper
+public partial class AudioRawStream : ExampleHelper
 {
     private static readonly int MAX_SAMPLES = 512;
     private static readonly int MAX_SAMPLES_PER_UPDATE = 4096;
@@ -51,7 +51,7 @@ public partial class AudioRawStreams : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "raylib [audio] example - raw audio streaming");
 
-        InitAudioDevice();              // Initialize audio device
+        InitAudioDevice(); // Initialize audio device
 
         SetAudioStreamBufferSizeDefault(MAX_SAMPLES_PER_UPDATE);
 
@@ -66,7 +66,7 @@ public partial class AudioRawStreams : ExampleHelper
         // Frame buffer, describing the waveform when repeated over the course of a frame
         short[] writeBuf = new short[MAX_SAMPLES_PER_UPDATE];
 
-        PlayAudioStream(stream);        // Start processing stream buffer (no data loaded currently)
+        PlayAudioStream(stream); // Start processing stream buffer (no data loaded currently)
 
         // Position read in to determine next frequency
         Vector2 mousePosition = new(-100.0f, -100.0f);
@@ -76,7 +76,7 @@ public partial class AudioRawStreams : ExampleHelper
 
         Vector2 position = new(0, 0);
 
-        SetTargetFPS(30);               // Set our game to run at 30 frames-per-second
+        SetTargetFPS(30); // Set our game to run at 30 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -180,10 +180,10 @@ public partial class AudioRawStreams : ExampleHelper
         }
 
         // De-Initialization
-        UnloadAudioStream(stream);   // Close raw audio stream and delete buffers from RAM
-        CloseAudioDevice();         // Close audio device (music streaming is automatically stopped)
+        UnloadAudioStream(stream); // Close raw audio stream and delete buffers from RAM
+        CloseAudioDevice(); // Close audio device (music streaming is automatically stopped)
 
-        CloseWindow();              // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

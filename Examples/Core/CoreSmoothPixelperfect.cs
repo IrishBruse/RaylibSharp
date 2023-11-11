@@ -22,7 +22,7 @@ public class CoreSmoothPixelperfect : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - core - smooth pixel-perfect camera");
 
-        Camera2D worldSpaceCamera = new();  // Game world camera
+        Camera2D worldSpaceCamera = new(); // Game world camera
         worldSpaceCamera.Zoom = 1.0f;
 
         Camera2D screenSpaceCamera = new(); // Smoothing camera
@@ -47,7 +47,7 @@ public class CoreSmoothPixelperfect : ExampleHelper
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             // Update
-            rotation += 60.0f * GetFrameTime();   // Rotate the rectangles, 60 degrees per second
+            rotation += 60.0f * GetFrameTime(); // Rotate the rectangles, 60 degrees per second
 
             // Make the camera move to demonstrate the effect
             float cameraX = (float)(Math.Sin(GetTime()) * 50.0f) - 10.0f;
@@ -98,7 +98,7 @@ public class CoreSmoothPixelperfect : ExampleHelper
         }
 
         // De-Initialization
-        UnloadRenderTexture(target);    // Unload render texture
+        UnloadRenderTexture(target); // Unload render texture
 
         CloseWindow();
 

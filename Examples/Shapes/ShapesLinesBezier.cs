@@ -20,7 +20,7 @@ public partial class ShapesLinesBezier : ExampleHelper
         Vector2 start = new(0, 0);
         Vector2 end = new(screenWidth, screenHeight);
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -48,7 +48,7 @@ public partial class ShapesLinesBezier : ExampleHelper
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

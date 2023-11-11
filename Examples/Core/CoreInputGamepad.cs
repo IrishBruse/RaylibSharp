@@ -16,14 +16,14 @@ public class CoreInputGamepad : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        SetConfigFlags(WindowFlag.Msaa4xHint);  // Set MSAA 4X hint before windows creation
+        SetConfigFlags(WindowFlag.Msaa4xHint); // Set MSAA 4X hint before windows creation
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - core - gamepad input");
 
         Texture2D texPs3Pad = LoadTexture("resources/ps3.png");
         Texture2D texXboxPad = LoadTexture("resources/xbox.png");
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key

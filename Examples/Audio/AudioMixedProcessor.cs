@@ -4,16 +4,16 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static partial class AudioMixedProcessor
+public partial class AudioMixedProcessor : ExampleHelper
 {
-    private static float exponent = 1.0f;                 // Audio exponentiation value
-    private static float[] averageVolume = new float[400];   // Average volume history
+    private static float exponent = 1.0f; // Audio exponentiation value
+    private static float[] averageVolume = new float[400]; // Average volume history
 
     // Audio processing function
     private static unsafe void ProcessAudio(IntPtr buffer, uint frames)
     {
-        float* samples = (float*)buffer;   // Samples internally stored as <float>s
-        float average = 0.0f;               // Temporary average volume
+        float* samples = (float*)buffer; // Samples internally stored as <float>s
+        float average = 0.0f; // Temporary average volume
 
         for (uint frame = 0; frame < frames; frame++)
         {
@@ -23,7 +23,7 @@ public static partial class AudioMixedProcessor
             *left = MathF.Pow(MathF.Abs(*left), exponent) * ((*left < 0.0f) ? -1.0f : 1.0f);
             *right = MathF.Pow(MathF.Abs(*right), exponent) * ((*right < 0.0f) ? -1.0f : 1.0f);
 
-            average += MathF.Abs(*left) / frames;   // accumulating average volume
+            average += MathF.Abs(*left) / frames; // accumulating average volume
             average += MathF.Abs(*right) / frames;
         }
 
@@ -33,7 +33,7 @@ public static partial class AudioMixedProcessor
             averageVolume[i] = averageVolume[i + 1];
         }
 
-        averageVolume[399] = average;         // Adding last average value
+        averageVolume[399] = average; // Adding last average value
     }
 
     // Program main entry point
@@ -45,7 +45,7 @@ public static partial class AudioMixedProcessor
 
         InitWindow(screenWidth, screenHeight, "raylib [audio] example - processing mixed output");
 
-        InitAudioDevice();              // Initialize audio device
+        InitAudioDevice(); // Initialize audio device
 
         AttachAudioMixedProcessor(ProcessAudio);
 
@@ -54,13 +54,13 @@ public static partial class AudioMixedProcessor
 
         PlayMusicStream(music);
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             // Update
-            UpdateMusicStream(music);   // Update music buffer with new stream data
+            UpdateMusicStream(music); // Update music buffer with new stream data
 
             // Modify processing variables
             if (IsKeyPressed(Key.Left))
@@ -111,13 +111,13 @@ public static partial class AudioMixedProcessor
         }
 
         // De-Initialization
-        UnloadMusicStream(music);   // Unload music stream buffers from RAM
+        UnloadMusicStream(music); // Unload music stream buffers from RAM
 
-        DetachAudioMixedProcessor(ProcessAudio);  // Disconnect audio processor
+        DetachAudioMixedProcessor(ProcessAudio); // Disconnect audio processor
 
-        CloseAudioDevice();         // Close audio device (music streaming is automatically stopped)
+        CloseAudioDevice(); // Close audio device (music streaming is automatically stopped)
 
-        CloseWindow();              // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

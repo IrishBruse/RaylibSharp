@@ -19,43 +19,43 @@ public partial class ModelsFirstPersonMaze : ExampleHelper
 
         // Define the camera to look into our 3d woRLGL.d
         Camera3D camera = new();
-        camera.Position = new(0.2f, 0.4f, 0.2f);    // Camera3D position
-        camera.Target = new(0.185f, 0.4f, 0.0f);    // Camera3D looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
-        _ = new Vector3(0.0f, 0.0f, 0.0f);            // Set model position
+        camera.Position = new(0.2f, 0.4f, 0.2f); // Camera3D position
+        camera.Target = new(0.185f, 0.4f, 0.0f); // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f; // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera3D projection type
+        _ = new Vector3(0.0f, 0.0f, 0.0f); // Set model position
 
-        Image imMap = LoadImage("resources/cubicmap.png");      // Load cubicmap image (RAM)
-        Texture cubicmap = LoadTextureFromImage(imMap);       // Convert image to texture to display (VRAM)
+        Image imMap = LoadImage("resources/cubicmap.png"); // Load cubicmap image (RAM)
+        Texture cubicmap = LoadTextureFromImage(imMap); // Convert image to texture to display (VRAM)
         Mesh mesh = GenMeshCubicmap(imMap, new(1.0f, 1.0f, 1.0f));
         Model model = LoadModelFromMesh(mesh);
 
         // NOTE: By default each cube is mapped to one part of texture atlas
-        Texture texture = LoadTexture("resources/cubicmap_atlas.png");    // Load map texture
-        model.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture;    // Set map diffuse texture
+        Texture texture = LoadTexture("resources/cubicmap_atlas.png"); // Load map texture
+        model.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture; // Set map diffuse texture
 
         // Get map image data to be used for collision detection
         Color[] mapPixels = LoadImageColors(imMap);
-        UnloadImage(imMap);             // Unload image from RAM
+        UnloadImage(imMap); // Unload image from RAM
 
-        Vector3 mapPosition = new(-16.0f, 0.0f, -8.0f);  // Set model position
+        Vector3 mapPosition = new(-16.0f, 0.0f, -8.0f); // Set model position
 
-        DisableCursor();                // Limit cursor to relative movement inside the window
+        DisableCursor(); // Limit cursor to relative movement inside the window
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             // Update
-            Vector3 oldCamPos = camera.Position;    // Store old camera position
+            Vector3 oldCamPos = camera.Position; // Store old camera position
 
             UpdateCamera(ref camera, CameraMode.FirstPerson);
 
             // Check player collision (we simplify to 2D collision detection)
             Vector2 playerPos = new(camera.Position.X, camera.Position.Z);
-            float playerRadius = 0.1f;  // Collision radius (player is modelled as a cilinder for collision)
+            float playerRadius = 0.1f; // Collision radius (player is modelled as a cilinder for collision)
 
             int playerCellX = (int)(playerPos.X - mapPosition.X + 0.5f);
             int playerCellY = (int)(playerPos.Y - mapPosition.Z + 0.5f);
@@ -103,7 +103,7 @@ public partial class ModelsFirstPersonMaze : ExampleHelper
 
                 BeginMode3D(camera);
                 {
-                    DrawModel(model, mapPosition, 1.0f, White);                     // Draw maze map
+                    DrawModel(model, mapPosition, 1.0f, White); // Draw maze map
                 }
                 EndMode3D();
 
@@ -120,13 +120,13 @@ public partial class ModelsFirstPersonMaze : ExampleHelper
         }
 
         // De-Initialization
-        // UnloadImageColors(mapPixels);   // Unload color array
+        // UnloadImageColors(mapPixels); // Unload color array
 
-        UnloadTexture(cubicmap);        // Unload cubicmap texture
-        UnloadTexture(texture);         // Unload map texture
-        UnloadModel(model);             // Unload map model
+        UnloadTexture(cubicmap); // Unload cubicmap texture
+        UnloadTexture(texture); // Unload map texture
+        UnloadModel(model); // Unload map model
 
-        CloseWindow();                  // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

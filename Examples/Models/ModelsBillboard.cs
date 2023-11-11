@@ -19,15 +19,15 @@ public partial class ModelsBillboard : ExampleHelper
 
         // Define the camera to look into our 3d woRLGL.d
         Camera3D camera = new();
-        camera.Position = new(5.0f, 4.0f, 5.0f);    // Camera3D position
-        camera.Target = new(0.0f, 2.0f, 0.0f);      // Camera3D looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
+        camera.Position = new(5.0f, 4.0f, 5.0f); // Camera3D position
+        camera.Target = new(0.0f, 2.0f, 0.0f); // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f; // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera3D projection type
 
-        Texture bill = LoadTexture("resources/billboard.png");    // Our billboard texture
-        Vector3 billPositionStatic = new(0.0f, 2.0f, 0.0f);          // Position of static billboard
-        Vector3 billPositionRotating = new(1.0f, 2.0f, 1.0f);        // Position of rotating billboard
+        Texture bill = LoadTexture("resources/billboard.png"); // Our billboard texture
+        Vector3 billPositionStatic = new(0.0f, 2.0f, 0.0f); // Position of static billboard
+        Vector3 billPositionRotating = new(1.0f, 2.0f, 1.0f); // Position of rotating billboard
 
         // Entire billboard texture, source is used to take a segment from a larger texture.
         RectangleF source = new(0.0f, 0.0f, bill.Width, bill.Height);
@@ -46,7 +46,7 @@ public partial class ModelsBillboard : ExampleHelper
         float distanceRotating;
         float rotation = 0.0f;
 
-        SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
@@ -67,7 +67,7 @@ public partial class ModelsBillboard : ExampleHelper
                 BeginMode3D(camera);
                 {
 
-                    DrawGrid(10, 1.0f);        // Draw a grid
+                    DrawGrid(10, 1.0f); // Draw a grid
 
                     // Draw order matters!
                     if (distanceStatic > distanceRotating)
@@ -91,9 +91,9 @@ public partial class ModelsBillboard : ExampleHelper
         }
 
         // De-Initialization
-        UnloadTexture(bill);        // Unload texture
+        UnloadTexture(bill); // Unload texture
 
-        CloseWindow();              // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

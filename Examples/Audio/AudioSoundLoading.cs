@@ -2,9 +2,8 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static partial class AudioSoundLoading
+public partial class AudioSoundLoading : ExampleHelper
 {
-
     // Program main entry point
     public static int Example()
     {
@@ -14,12 +13,12 @@ public static partial class AudioSoundLoading
 
         InitWindow(screenWidth, screenHeight, "raylib [audio] example - sound loading and playing");
 
-        InitAudioDevice();      // Initialize audio device
+        InitAudioDevice(); // Initialize audio device
 
-        Sound fxWav = LoadSound("resources/sound.wav");         // Load WAV audio file
-        Sound fxOgg = LoadSound("resources/target.ogg");        // Load OGG audio file
+        Sound fxWav = LoadSound("resources/sound.wav"); // Load WAV audio file
+        Sound fxOgg = LoadSound("resources/target.ogg"); // Load OGG audio file
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -27,12 +26,12 @@ public static partial class AudioSoundLoading
             // Update
             if (IsKeyPressed(Key.Space))
             {
-                PlaySound(fxWav);      // Play WAV sound
+                PlaySound(fxWav); // Play WAV sound
             }
 
             if (IsKeyPressed(Key.Enter))
             {
-                PlaySound(fxOgg);      // Play OGG sound
+                PlaySound(fxOgg); // Play OGG sound
             }
 
             // Draw
@@ -49,12 +48,12 @@ public static partial class AudioSoundLoading
         }
 
         // De-Initialization
-        UnloadSound(fxWav);     // Unload sound data
-        UnloadSound(fxOgg);     // Unload sound data
+        UnloadSound(fxWav); // Unload sound data
+        UnloadSound(fxOgg); // Unload sound data
 
-        CloseAudioDevice();     // Close audio device
+        CloseAudioDevice(); // Close audio device
 
-        CloseWindow();          // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

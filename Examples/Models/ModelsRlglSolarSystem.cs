@@ -26,19 +26,19 @@ public partial class ModelsRlglSolarSystem : ExampleHelper
         // Define the camera to look into our 3d woRLGL.d
         Camera3D camera = new();
         camera.Position = new(16.0f, 16.0f, 16.0f); // Camera3D position
-        camera.Target = new(0.0f, 0.0f, 0.0f);      // Camera3D looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
+        camera.Target = new(0.0f, 0.0f, 0.0f); // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f; // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera3D projection type
 
-        float rotationSpeed = 0.2f;         // General system rotation speed
+        float rotationSpeed = 0.2f; // General system rotation speed
 
-        float earthRotation = 0.0f;         // Rotation of earth around itself (days) in degrees
-        float earthOrbitRotation = 0.0f;    // Rotation of earth around the Sun (years) in degrees
-        float moonRotation = 0.0f;          // Rotation of moon around itself
-        float moonOrbitRotation = 0.0f;     // Rotation of moon around earth in degrees
+        float earthRotation = 0.0f; // Rotation of earth around itself (days) in degrees
+        float earthOrbitRotation = 0.0f; // Rotation of earth around the Sun (years) in degrees
+        float moonRotation = 0.0f; // Rotation of moon around itself
+        float moonOrbitRotation = 0.0f; // Rotation of moon around earth in degrees
 
-        SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
@@ -59,27 +59,27 @@ public partial class ModelsRlglSolarSystem : ExampleHelper
                 BeginMode3D(camera);
                 {
                     RLGL.PushMatrix();
-                    RLGL.Scalef(sunRadius, sunRadius, sunRadius);          // Scale Sun
-                    DrawSphereBasic(Gold);                              // Draw the Sun
+                    RLGL.Scalef(sunRadius, sunRadius, sunRadius); // Scale Sun
+                    DrawSphereBasic(Gold); // Draw the Sun
                     RLGL.PopMatrix();
 
                     RLGL.PushMatrix();
-                    RLGL.Rotatef(earthOrbitRotation, 0.0f, 1.0f, 0.0f);    // Rotation for Earth orbit around Sun
-                    RLGL.Translatef(earthOrbitRadius, 0.0f, 0.0f);         // Translation for Earth orbit
+                    RLGL.Rotatef(earthOrbitRotation, 0.0f, 1.0f, 0.0f); // Rotation for Earth orbit around Sun
+                    RLGL.Translatef(earthOrbitRadius, 0.0f, 0.0f); // Translation for Earth orbit
 
                     RLGL.PushMatrix();
-                    RLGL.Rotatef(earthRotation, 0.25f, 1.0f, 0.0f);       // Rotation for Earth itself
+                    RLGL.Rotatef(earthRotation, 0.25f, 1.0f, 0.0f); // Rotation for Earth itself
                     RLGL.Scalef(earthRadius, earthRadius, earthRadius);// Scale Earth
 
-                    DrawSphereBasic(Blue);                          // Draw the Earth
+                    DrawSphereBasic(Blue); // Draw the Earth
                     RLGL.PopMatrix();
 
-                    RLGL.Rotatef(moonOrbitRotation, 0.0f, 1.0f, 0.0f);     // Rotation for Moon orbit around Earth
-                    RLGL.Translatef(moonOrbitRadius, 0.0f, 0.0f);          // Translation for Moon orbit
-                    RLGL.Rotatef(moonRotation, 0.0f, 1.0f, 0.0f);          // Rotation for Moon itself
-                    RLGL.Scalef(moonRadius, moonRadius, moonRadius);       // Scale Moon
+                    RLGL.Rotatef(moonOrbitRotation, 0.0f, 1.0f, 0.0f); // Rotation for Moon orbit around Earth
+                    RLGL.Translatef(moonOrbitRadius, 0.0f, 0.0f); // Translation for Moon orbit
+                    RLGL.Rotatef(moonRotation, 0.0f, 1.0f, 0.0f); // Rotation for Moon itself
+                    RLGL.Scalef(moonRadius, moonRadius, moonRadius); // Scale Moon
 
-                    DrawSphereBasic(LightGray);                         // Draw the Moon
+                    DrawSphereBasic(LightGray); // Draw the Moon
                     RLGL.PopMatrix();
 
                     // Some reference elements (not affected by previous matrix transformations)
@@ -95,7 +95,7 @@ public partial class ModelsRlglSolarSystem : ExampleHelper
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

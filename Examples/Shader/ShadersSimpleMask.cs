@@ -18,11 +18,11 @@ public partial class ShadersSimpleMask : ExampleHelper
 
         // Define the camera to look into our 3d world
         Camera3D camera = new();
-        camera.Position = new(0.0f, 1.0f, 2.0f);    // Camera3D position
-        camera.Target = new(0.0f, 0.0f, 0.0f);      // Camera3D looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
+        camera.Position = new(0.0f, 1.0f, 2.0f); // Camera3D position
+        camera.Target = new(0.0f, 0.0f, 0.0f); // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f; // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera3D projection type
 
         // Define our three models to show the shader on
         Mesh torus = GenMeshTorus(0.3f, 1, 16, 32);
@@ -60,10 +60,10 @@ public partial class ShadersSimpleMask : ExampleHelper
         model2.Materials[0].Shader = shader;
 
         int framesCounter = 0;
-        Vector3 rotation = new();           // Model rotation angles
+        Vector3 rotation = new(); // Model rotation angles
 
-        DisableCursor();                    // Limit cursor to relative movement inside the window
-        SetTargetFPS(60);                   // Set  to run at 60 frames-per-second
+        DisableCursor(); // Limit cursor to relative movement inside the window
+        SetTargetFPS(60); // Set  to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
@@ -92,7 +92,7 @@ public partial class ShadersSimpleMask : ExampleHelper
                     DrawModel(model1, new(0.5f, 0.0f, 0.0f), 1, White);
                     DrawModel(model2, new(-0.5f, 0.0f, 0.0f), new(1.0f, 1.0f, 0.0f), 50, new(1.0f, 1.0f, 1.0f), White);
                     DrawModel(model3, new(0.0f, 0.0f, -1.5f), 1, White);
-                    DrawGrid(10, 1.0f);        // Draw a grid
+                    DrawGrid(10, 1.0f); // Draw a grid
                 }
                 EndMode3D();
 
@@ -109,12 +109,12 @@ public partial class ShadersSimpleMask : ExampleHelper
         UnloadModel(model2);
         UnloadModel(model3);
 
-        UnloadTexture(texDiffuse);  // Unload default diffuse texture
-        UnloadTexture(texMask);     // Unload texture mask
+        UnloadTexture(texDiffuse); // Unload default diffuse texture
+        UnloadTexture(texMask); // Unload texture mask
 
-        UnloadShader(shader);       // Unload shader
+        UnloadShader(shader); // Unload shader
 
-        CloseWindow();              // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

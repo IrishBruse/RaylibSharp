@@ -28,7 +28,7 @@ public class CoreWindowLetterbox : ExampleHelper
 
         // Render texture initialization, used to hold the rendering result so we can easily resize it
         RenderTexture target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
-        SetTextureFilter(target.Texture, TextureFilter.Bilinear);  // Texture scale filter to use
+        SetTextureFilter(target.Texture, TextureFilter.Bilinear); // Texture scale filter to use
 
         Color[] colors = new Color[10];
         for (int i = 0; i < 10; i++)
@@ -36,7 +36,7 @@ public class CoreWindowLetterbox : ExampleHelper
             colors[i] = Color.FromArgb(255, GetRandomValue(100, 250), GetRandomValue(50, 150), GetRandomValue(10, 100));
         }
 
-        SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
@@ -68,7 +68,7 @@ public class CoreWindowLetterbox : ExampleHelper
             // Draw
             // Draw everything in the render texture, note this will not be rendered on screen, yet
             BeginTextureMode(target);
-            ClearBackground(RayWhite);  // Clear render texture background color
+            ClearBackground(RayWhite); // Clear render texture background color
 
             for (int i = 0; i < 10; i++)
             {
@@ -82,7 +82,7 @@ public class CoreWindowLetterbox : ExampleHelper
 
             BeginDrawing();
             {
-                ClearBackground(Black);     // Clear screen background
+                ClearBackground(Black); // Clear screen background
 
                 RectangleF source = new(
                     0.0f,
@@ -105,7 +105,7 @@ public class CoreWindowLetterbox : ExampleHelper
         }
 
         // De-Initialization
-        UnloadRenderTexture(target);        // Unload render texture
+        UnloadRenderTexture(target); // Unload render texture
 
         CloseWindow();
 

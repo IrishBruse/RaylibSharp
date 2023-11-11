@@ -39,9 +39,9 @@ public partial class ShapesEasingsRectangleArray : ExampleHelper
 
         float rotation = 0.0f;
         int framesCounter = 0;
-        int state = 0;                  // Rectangles animation state: 0-Playing, 1-Finished
+        int state = 0; // Rectangles animation state: 0-Playing, 1-Finished
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -68,7 +68,7 @@ public partial class ShapesEasingsRectangleArray : ExampleHelper
 
                     if ((recs[i].Height == 0) && (recs[i].Width == 0))
                     {
-                        state = 1;   // Finish playing
+                        state = 1; // Finish playing
                     }
 
                     rotation = EaseLinearIn(framesCounter, 0.0f, 360.0f, PLAY_TIME_IN_FRAMES);
@@ -109,7 +109,7 @@ public partial class ShapesEasingsRectangleArray : ExampleHelper
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

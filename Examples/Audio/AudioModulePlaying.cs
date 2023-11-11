@@ -5,7 +5,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static partial class AudioModulePlaying
+public partial class AudioModulePlaying : ExampleHelper
 {
     private static readonly int MAX_CIRCLES = 64;
 
@@ -25,11 +25,11 @@ public static partial class AudioModulePlaying
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        SetConfigFlags(WindowFlag.Msaa4xHint);  // NOTE: Try to enable MSAA 4X
+        SetConfigFlags(WindowFlag.Msaa4xHint); // NOTE: Try to enable MSAA 4X
 
         InitWindow(screenWidth, screenHeight, "raylib [audio] example - module playing (streaming)");
 
-        InitAudioDevice();                  // Initialize audio device
+        InitAudioDevice(); // Initialize audio device
 
         Color[] colors = { Orange, Red, Gold, Lime, Blue, Violet, Brown, LightGray, Pink, Yellow, Green, SkyBlue, Purple, Beige };
 
@@ -38,6 +38,7 @@ public static partial class AudioModulePlaying
 
         for (int i = MAX_CIRCLES - 1; i >= 0; i--)
         {
+            circles[i] = new();
             circles[i].alpha = 0.0f;
             circles[i].radius = GetRandomValue(10, 40);
             circles[i].position.X = GetRandomValue((int)circles[i].radius, (int)(screenWidth - circles[i].radius));
@@ -53,13 +54,13 @@ public static partial class AudioModulePlaying
         PlayMusicStream(music);
         bool pause = false;
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             // Update
-            UpdateMusicStream(music);      // Update music buffer with new stream data
+            UpdateMusicStream(music); // Update music buffer with new stream data
 
             // Restart music playing (stop and play)
             if (IsKeyPressed(Key.Space))
@@ -138,11 +139,11 @@ public static partial class AudioModulePlaying
         }
 
         // De-Initialization
-        UnloadMusicStream(music);          // Unload music stream buffers from RAM
+        UnloadMusicStream(music); // Unload music stream buffers from RAM
 
-        CloseAudioDevice();     // Close audio device (music streaming is automatically stopped)
+        CloseAudioDevice(); // Close audio device (music streaming is automatically stopped)
 
-        CloseWindow();          // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

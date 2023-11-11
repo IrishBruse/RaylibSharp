@@ -35,7 +35,7 @@ public partial class ShadersMultiSample2d : ExampleHelper
         int dividerLoc = GetShaderLocation(shader, "divider");
         float dividerValue = 0.5f;
 
-        SetTargetFPS(60);                           // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())                // Detect window close button or ESC key
@@ -89,11 +89,11 @@ public partial class ShadersMultiSample2d : ExampleHelper
         }
 
         // De-Initialization
-        UnloadShader(shader);       // Unload shader
-        UnloadTexture(texRed);      // Unload texture
-        UnloadTexture(texBlue);     // Unload texture
+        UnloadShader(shader); // Unload shader
+        UnloadTexture(texRed); // Unload texture
+        UnloadTexture(texBlue); // Unload texture
 
-        CloseWindow();              // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

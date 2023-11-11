@@ -22,7 +22,7 @@ public partial class ModelsGeometricShapes : ExampleHelper
         camera.Fovy = 45.0f;
         camera.Projection = CameraProjection.Perspective;
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -56,7 +56,7 @@ public partial class ModelsGeometricShapes : ExampleHelper
                     DrawCapsule(new(-3.0f, 1.5f, -4.0f), new(-4.0f, -1.0f, -4.0f), 1.2f, 8, 8, Violet);
                     DrawCapsuleWires(new(-3.0f, 1.5f, -4.0f), new(-4.0f, -1.0f, -4.0f), 1.2f, 8, 8, Purple);
 
-                    DrawGrid(10, 1.0f);        // Draw a grid
+                    DrawGrid(10, 1.0f); // Draw a grid
 
                 }
                 EndMode3D();
@@ -68,7 +68,7 @@ public partial class ModelsGeometricShapes : ExampleHelper
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

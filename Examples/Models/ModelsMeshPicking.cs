@@ -19,19 +19,19 @@ public partial class ModelsMeshPicking : ExampleHelper
         // Define the camera to look into our 3d woRLGL.d
         Camera3D camera = new();
         camera.Position = new(20.0f, 20.0f, 20.0f); // Camera3D position
-        camera.Target = new(0.0f, 8.0f, 0.0f);      // Camera3D looking at point
-        camera.Up = new(0.0f, 1.6f, 0.0f);          // Camera3D up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
+        camera.Target = new(0.0f, 8.0f, 0.0f); // Camera3D looking at point
+        camera.Up = new(0.0f, 1.6f, 0.0f); // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f; // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera3D projection type
         _ = new
-        Ray();        // Picking ray
+        Ray(); // Picking ray
 
-        Model tower = LoadModel("resources/models/obj/turret.obj");                 // Load OBJ model
+        Model tower = LoadModel("resources/models/obj/turret.obj"); // Load OBJ model
         Texture texture = LoadTexture("resources/models/obj/turret_diffuse.png"); // Load model texture
-        tower.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture;            // Set model diffuse texture
+        tower.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture; // Set model diffuse texture
 
-        Vector3 towerPos = new(0.0f, 0.0f, 0.0f);                        // Set model position
-        BoundingBox towerBBox = GetMeshBoundingBox(tower.Meshes[0]);    // Get mesh bounding box
+        Vector3 towerPos = new(0.0f, 0.0f, 0.0f); // Set model position
+        BoundingBox towerBBox = GetMeshBoundingBox(tower.Meshes[0]); // Get mesh bounding box
 
         // Ground quad
         Vector3 g0 = new(-50.0f, 0.0f, -50.0f);
@@ -50,14 +50,14 @@ public partial class ModelsMeshPicking : ExampleHelper
         Vector3 sp = new(-30.0f, 5.0f, 5.0f);
         float sr = 4.0f;
 
-        SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
         {
             // Update
             if (IsCursorHidden())
             {
-                UpdateCamera(ref camera, CameraMode.FirstPerson);          // Update camera
+                UpdateCamera(ref camera, CameraMode.FirstPerson); // Update camera
             }
 
             // Toggle camera controls
@@ -140,7 +140,7 @@ public partial class ModelsMeshPicking : ExampleHelper
                             collision = meshHitInfo;
                         }
 
-                        break;  // Stop once one mesh collision is detected, the colliding mesh is m
+                        break; // Stop once one mesh collision is detected, the colliding mesh is m
                     }
                 }
 
@@ -229,10 +229,10 @@ public partial class ModelsMeshPicking : ExampleHelper
         }
 
         // De-Initialization
-        UnloadModel(tower);         // Unload model
-        UnloadTexture(texture);     // Unload texture
+        UnloadModel(tower); // Unload model
+        UnloadTexture(texture); // Unload texture
 
-        CloseWindow();              // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

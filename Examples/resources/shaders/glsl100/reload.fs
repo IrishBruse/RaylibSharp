@@ -3,13 +3,13 @@
 precision mediump float;
 
 // Input vertex attributes (from vertex shader)
-varying vec2 fragTexCoord;           // Texture coordinates (sampler2D)
-varying vec4 fragColor;              // Tint color
+varying vec2 fragTexCoord; // Texture coordinates (sampler2D)
+varying vec4 fragColor; // Tint color
 
 // Uniform inputs
-uniform vec2 resolution;        // Viewport resolution (in pixels)
-uniform vec2 mouse;             // Mouse pixel xy coordinates
-uniform float time;             // Total run time (in secods)
+uniform vec2 resolution; // Viewport resolution (in pixels)
+uniform vec2 mouse; // Mouse pixel xy coordinates
+uniform float time; // Total run time (in secods)
 
 // Draw circle
 vec4 DrawCircle(vec2 fragCoord, vec2 position, float radius, vec3 color)

@@ -13,12 +13,12 @@ public class CoreWindowShouldClose : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - core - window should close");
 
-        SetExitKey(Key.Null);       // Disable KEY_ESCAPE to close window, X-button still works
+        SetExitKey(Key.Null); // Disable KEY_ESCAPE to close window, X-button still works
 
-        bool exitWindowRequested = false;   // Flag to request window to exit
-        bool exitWindow = false;    // Flag to set window to exit
+        bool exitWindowRequested = false; // Flag to request window to exit
+        bool exitWindow = false; // Flag to set window to exit
 
-        SetTargetFPS(60);           // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!exitWindow)

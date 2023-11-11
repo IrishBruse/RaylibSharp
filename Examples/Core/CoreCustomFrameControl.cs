@@ -14,20 +14,20 @@ public class CoreCustomFrameControl : ExampleHelper
         InitWindow(screenWidth, screenHeight, "RaylibSharp - core - custom frame control");
 
         // Custom timming variables
-        double previousTime = GetTime();    // Previous time measure
-        float deltaTime = 0.0f;             // Frame time (Update + Draw + Wait time)
+        double previousTime = GetTime(); // Previous time measure
+        float deltaTime = 0.0f; // Frame time (Update + Draw + Wait time)
 
-        float timeCounter = 0.0f;           // Accumulative time counter (seconds)
-        float position = 0.0f;              // Circle position
-        bool pause = false;                 // Pause control flag
+        float timeCounter = 0.0f; // Accumulative time counter (seconds)
+        float position = 0.0f; // Circle position
+        bool pause = false; // Pause control flag
 
-        int targetFPS = 60;                 // Our initial target fps
+        int targetFPS = 60; // Our initial target fps
 
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
         {
             // Update
-            PollInputEvents();              // Poll input events (SUPPORT_CUSTOM_FRAME_CONTROL)
+            PollInputEvents(); // Poll input events (SUPPORT_CUSTOM_FRAME_CONTROL)
 
             if (IsKeyPressed(Key.Space))
             {
@@ -50,13 +50,13 @@ public class CoreCustomFrameControl : ExampleHelper
 
             if (!pause)
             {
-                position += 200 * deltaTime;  // We move at 200 pixels per second
+                position += 200 * deltaTime; // We move at 200 pixels per second
                 if (position >= GetScreenWidth())
                 {
                     position = 0;
                 }
 
-                timeCounter += deltaTime;   // We count time (seconds)
+                timeCounter += deltaTime; // We count time (seconds)
             }
 
             // Draw
@@ -85,7 +85,7 @@ public class CoreCustomFrameControl : ExampleHelper
             // NOTE: In case raylib is configured to SUPPORT_CUSTOM_FRAME_CONTROL,
             // Events polling, screen buffer swap and frame time control must be managed by the user
 
-            SwapScreenBuffer();         // Flip the back buffer to screen (front buffer)
+            SwapScreenBuffer(); // Flip the back buffer to screen (front buffer)
 
             double currentTime = GetTime();
             double updateDrawTime = currentTime - previousTime;
@@ -102,7 +102,7 @@ public class CoreCustomFrameControl : ExampleHelper
             }
             else
             {
-                deltaTime = (float)updateDrawTime;    // Framerate could be variable
+                deltaTime = (float)updateDrawTime; // Framerate could be variable
             }
 
             previousTime = currentTime;

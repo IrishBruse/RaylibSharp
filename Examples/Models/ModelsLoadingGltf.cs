@@ -17,11 +17,11 @@ public partial class ModelsLoadingGltf : ExampleHelper
 
         // Define the camera to look into our 3d woRLGL.d
         Camera3D camera = new();
-        camera.Position = new(5.0f, 5.0f, 5.0f);    // Camera3D position
-        camera.Target = new(0.0f, 2.0f, 0.0f);      // Camera3D looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
+        camera.Position = new(5.0f, 5.0f, 5.0f); // Camera3D position
+        camera.Target = new(0.0f, 2.0f, 0.0f); // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f; // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera3D projection type
 
         // Load gltf model
         Model model = LoadModel("resources/models/gltf/robot.Glb");
@@ -32,11 +32,11 @@ public partial class ModelsLoadingGltf : ExampleHelper
         int animCurrentFrame = 0;
         ModelAnimation[] modelAnimations = LoadModelAnimations("resources/models/gltf/robot.Glb", ref animsCount);
 
-        Vector3 position = new(0.0f, 0.0f, 0.0f);    // Set model position
+        Vector3 position = new(0.0f, 0.0f, 0.0f); // Set model position
 
-        DisableCursor();                    // Limit cursor to relative movement inside the window
+        DisableCursor(); // Limit cursor to relative movement inside the window
 
-        SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
@@ -67,7 +67,7 @@ public partial class ModelsLoadingGltf : ExampleHelper
                 BeginMode3D(camera);
                 {
 
-                    DrawModel(model, position, 1.0f, White);    // Draw animated model
+                    DrawModel(model, position, 1.0f, White); // Draw animated model
                     DrawGrid(10, 1.0f);
 
                 }
@@ -81,9 +81,9 @@ public partial class ModelsLoadingGltf : ExampleHelper
         }
 
         // De-Initialization
-        UnloadModel(model);         // Unload model and meshes/material
+        UnloadModel(model); // Unload model and meshes/material
 
-        CloseWindow();              // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

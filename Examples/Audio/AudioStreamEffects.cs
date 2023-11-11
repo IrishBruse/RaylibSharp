@@ -22,25 +22,25 @@ public partial class AudioStreamEffects : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "raylib [audio] example - stream effects");
 
-        InitAudioDevice();              // Initialize audio device
+        InitAudioDevice(); // Initialize audio device
 
         Music music = LoadMusicStream("resources/country.mp3");
 
         PlayMusicStream(music);
 
-        float timePlayed = 0.0f;        // Time played normalized [0.0f..1.0f]
-        bool pause = false;             // Music playing paused
+        float timePlayed = 0.0f; // Time played normalized [0.0f..1.0f]
+        bool pause = false; // Music playing paused
 
-        bool enableEffectLPF = false;   // Enable effect low-pass-filter
+        bool enableEffectLPF = false; // Enable effect low-pass-filter
         bool enableEffectDelay = false; // Enable effect delay (1 second)
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             // Update
-            UpdateMusicStream(music);   // Update music buffer with new stream data
+            UpdateMusicStream(music); // Update music buffer with new stream data
 
             // Restart music playing (stop and play)
             if (IsKeyPressed(Key.Space))
@@ -97,7 +97,7 @@ public partial class AudioStreamEffects : ExampleHelper
 
             if (timePlayed > 1.0f)
             {
-                timePlayed = 1.0f;   // Make sure time played is no longer than music
+                timePlayed = 1.0f; // Make sure time played is no longer than music
             }
 
             // Draw
@@ -121,11 +121,11 @@ public partial class AudioStreamEffects : ExampleHelper
         }
 
         // De-Initialization
-        UnloadMusicStream(music);   // Unload music stream buffers from RAM
+        UnloadMusicStream(music); // Unload music stream buffers from RAM
 
-        CloseAudioDevice();         // Close audio device (music streaming is automatically stopped)
+        CloseAudioDevice(); // Close audio device (music streaming is automatically stopped)
 
-        CloseWindow();              // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }
@@ -153,7 +153,7 @@ public partial class AudioStreamEffects : ExampleHelper
     {
         for (uint i = 0; i < frames * 2; i += 2)
         {
-            float leftDelay = delayBuffer[delayReadIndex++];    // ERROR: Reading buffer . WHY??? Maybe thread related???
+            float leftDelay = delayBuffer[delayReadIndex++]; // ERROR: Reading buffer . WHY??? Maybe thread related???
             float rightDelay = delayBuffer[delayReadIndex++];
 
             if (delayReadIndex == delayBufferSize)

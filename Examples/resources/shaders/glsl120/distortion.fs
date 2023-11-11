@@ -23,7 +23,7 @@ void main()
     vec2 ScreenCenter = fragTexCoord.x < 0.5 ? LeftScreenCenter : RightScreenCenter;
 
     // Scales input texture coordinates for distortion: vec2 HmdWarp(vec2 fragTexCoord, vec2 LensCenter)
-    vec2 theta = (fragTexCoord - LensCenter)*ScaleIn;   // Scales to [-1, 1]
+    vec2 theta = (fragTexCoord - LensCenter)*ScaleIn; // Scales to [-1, 1]
     float rSq = theta.x*theta.x + theta.y*theta.y;
     vec2 theta1 = theta*(HmdWarpParam.x + HmdWarpParam.y*rSq + HmdWarpParam.z*rSq*rSq + HmdWarpParam.w*rSq*rSq*rSq);
     //vec2 tc = LensCenter + Scale*theta1;

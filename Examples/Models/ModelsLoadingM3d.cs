@@ -18,18 +18,18 @@ public partial class ModelsLoadingM3d : ExampleHelper
 
         // Define the camera to look into our 3d woRLGL.d
         Camera3D camera = new();
-        camera.Position = new(1.5f, 1.5f, 1.5f);    // Camera3D position
-        camera.Target = new(0.0f, 0.4f, 0.0f);      // Camera3D looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
+        camera.Position = new(1.5f, 1.5f, 1.5f); // Camera3D position
+        camera.Target = new(0.0f, 0.4f, 0.0f); // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f; // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera3D projection type
 
-        Vector3 position = new(0.0f, 0.0f, 0.0f);            // Set model position
+        Vector3 position = new(0.0f, 0.0f, 0.0f); // Set model position
 
         string modelFileName = "resources/models/m3d/cesium_man.m3d";
         bool drawMesh = true;
         bool drawSkeleton = true;
-        bool animPlaying = false;   // Store anim state, what to draw
+        bool animPlaying = false; // Store anim state, what to draw
 
         // Load model
         Model model = LoadModel(modelFileName); // Load the bind-pose model mesh and basic data
@@ -39,9 +39,9 @@ public partial class ModelsLoadingM3d : ExampleHelper
         int animFrameCounter = 0, animId = 0;
         ModelAnimation[] anims = LoadModelAnimations(modelFileName, ref animsCount); // Load skeletal animation data
 
-        DisableCursor();                    // Limit cursor to relative movement inside the window
+        DisableCursor(); // Limit cursor to relative movement inside the window
 
-        SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
@@ -144,7 +144,7 @@ public partial class ModelsLoadingM3d : ExampleHelper
                         }
                     }
 
-                    DrawGrid(10, 1.0f);         // Draw a grid
+                    DrawGrid(10, 1.0f); // Draw a grid
 
                 }
                 EndMode3D();
@@ -163,9 +163,9 @@ public partial class ModelsLoadingM3d : ExampleHelper
         // Unload model animations data
         // UnloadModelAnimations(anims, animsCount);
 
-        UnloadModel(model);         // Unload model
+        UnloadModel(model); // Unload model
 
-        CloseWindow();              // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

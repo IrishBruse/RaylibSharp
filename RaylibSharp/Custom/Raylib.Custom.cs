@@ -127,6 +127,23 @@ public static unsafe partial class Raylib
         SetShaderValue(shader, locIndex, ref value, uniformType);
     }
 
+    /// <summary> Update GPU texture with new data </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void UpdateTexture<T>(Texture texture, T[] pixels) where T : unmanaged
+    {
+        UpdateTexture(texture, (ReadOnlySpan<T>)pixels);
+    }
+
+    /// <summary> Update GPU texture with new data </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void UpdateTexture<T>(Texture texture, ReadOnlySpan<T> pixels) where T : unmanaged
+    {
+        fixed (void* ptr = pixels)
+        {
+            UpdateTexture(texture, (nint)ptr);
+        }
+    }
+
     /// <summary> Set shader uniform value vector </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValueV")]
     public static partial void SetShaderValue(Shader shader, int locIndex, Vector2[] value, ShaderUniformDataType uniformType, int count);

@@ -18,13 +18,13 @@ public partial class ModelsOrthographicProjection : ExampleHelper
 
         // Define the camera to look into our 3d woRLGL.d
         Camera3D camera = new();
-        camera.Position = new(10.0f, 10.0f, 10.0f);  // Camera3D position
-        camera.Target = new(0.0f, 0.0f, 0.0f);       // Camera3D looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);           // Camera3D up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                    // Camera3D field-of-view Y
-        camera.Projection = CameraProjection.Perspective;       // Camera3D projection type
+        camera.Position = new(10.0f, 10.0f, 10.0f); // Camera3D position
+        camera.Target = new(0.0f, 0.0f, 0.0f); // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f; // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera3D projection type
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -67,7 +67,7 @@ public partial class ModelsOrthographicProjection : ExampleHelper
                     DrawCylinder(new(1.0f, 0.0f, -4.0f), 0.0f, 1.5f, 3.0f, 8, Gold);
                     DrawCylinderWires(new(1.0f, 0.0f, -4.0f), 0.0f, 1.5f, 3.0f, 8, Pink);
 
-                    DrawGrid(10, 1.0f);        // Draw a grid
+                    DrawGrid(10, 1.0f); // Draw a grid
 
                 }
                 EndMode3D();
@@ -90,7 +90,7 @@ public partial class ModelsOrthographicProjection : ExampleHelper
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

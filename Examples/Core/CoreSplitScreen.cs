@@ -6,7 +6,7 @@ using static RaylibSharp.Raylib;
 
 using Camera = RaylibSharp.Camera3D;
 
-public class CoreSplitScreen : ExampleHelper
+public class Core3dSplitScreen : ExampleHelper
 {
     private static Camera cameraPlayer1;
     private static Camera cameraPlayer2;
@@ -64,7 +64,7 @@ public class CoreSplitScreen : ExampleHelper
         // Build a flipped rectangle the size of the split view to use for drawing later
         RectangleF splitScreenRect = new(0.0f, 0.0f, screenPlayer1.Texture.Width, -screenPlayer1.Texture.Height);
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key

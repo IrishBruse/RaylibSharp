@@ -16,7 +16,7 @@ public partial class ShadersTextureDrawing : ExampleHelper
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shaders - texture drawing");
 
         Image imBlank = GenImageColor(1024, 1024, Blank);
-        Texture texture = LoadTextureFromImage(imBlank);  // Load blank texture to fill on shader
+        Texture texture = LoadTextureFromImage(imBlank); // Load blank texture to fill on shader
         UnloadImage(imBlank);
 
         int glslVersion = Environment.OSVersion.Platform == PlatformID.Other ? 100 : 330;
@@ -28,7 +28,7 @@ public partial class ShadersTextureDrawing : ExampleHelper
         int timeLoc = GetShaderLocation(shader, "uTime");
         SetShaderValue(shader, timeLoc, ref time, ShaderUniformDataType.ShaderUniformFloat);
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -45,9 +45,9 @@ public partial class ShadersTextureDrawing : ExampleHelper
 
                 BeginShaderMode(shader);
                 {    // Enable our custom shader for next shapes/textures drawings
-                    DrawTexture(texture, 0, 0, White);  // Drawing Blank texture, all magic happens on shader
+                    DrawTexture(texture, 0, 0, White); // Drawing Blank texture, all magic happens on shader
                 }
-                EndShaderMode();            // Disable our custom shader, return to default shader
+                EndShaderMode(); // Disable our custom shader, return to default shader
 
                 DrawText("BACKGROUND is PAINTED and ANIMATED on SHADER!", 10, 10, 20, Maroon);
 
@@ -58,7 +58,7 @@ public partial class ShadersTextureDrawing : ExampleHelper
         // De-Initialization
         UnloadShader(shader);
 
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

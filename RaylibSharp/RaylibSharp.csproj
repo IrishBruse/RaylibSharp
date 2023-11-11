@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -14,11 +14,35 @@
         <RootNamespace>RaylibSharp</RootNamespace>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <Version>0.1.0</Version>
+        <Authors>Ethan Conneely</Authors>
+        <Product>Raylib Sharp</Product>
+        <PackageId>raylibcsharp</PackageId>
+        <Description>Dotnet 7 Aot compatible,wasm and safe binding for Raylib</Description>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageTags>Raylib,Wasm,Aot,Dotnet 7</PackageTags>
+        <PackageIcon>Icon.png</PackageIcon>
+        <RepositoryType>git</RepositoryType>
+        <!-- <PackageProjectUrl>https://irishbruse.github.io/ldtk/</PackageProjectUrl> -->
+        <!-- <RepositoryUrl>https://github.com/IrishBruse/LDtkMonogame</RepositoryUrl> -->
+        <!-- <PackageReleaseNotes>https://irishbruse.github.io/ldtk/changelog/</PackageReleaseNotes> -->
+
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <PackageReadmeFile>Readme.md</PackageReadmeFile>
+
+        <PackageOutputDir>../Nuget/</PackageOutputDir>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+
     <ItemGroup>
         <!-- Runtime flag disable dynamic code generation -->
-        <RuntimeHostConfigurationOption Include="System.Runtime.CompilerServices.RuntimeFeature.IsDynamicCodeSupported" Value="false" Trim="true" />
+        <RuntimeHostConfigurationOption
+            Include="System.Runtime.CompilerServices.RuntimeFeature.IsDynamicCodeSupported"
+            Value="false" Trim="true" />
         <!-- Put Attribute on assembly -->
-        <AssemblyAttribute Include="System.Runtime.CompilerServices.DisableRuntimeMarshalling"/>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.DisableRuntimeMarshalling" />
 
         <Content Include="runtimes\**">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -37,5 +61,7 @@
 
     <ItemGroup>
         <EmbeddedResource Include="../Icon.png" LogicalName="RaylibSharp.Icon.png" />
+        <None Include="../Icon.png" Pack="true" PackagePath="" />
+        <None Include="../Readme.md" Pack="true" PackagePath="" />
     </ItemGroup>
 </Project>

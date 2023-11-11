@@ -63,7 +63,7 @@ public partial class ShadersHybridRender : ExampleHelper
         // Camera3D FOV is pre-calculated in the camera Distance.
         double camDist = 1.0 / Math.Tan(camera.Fovy * 0.5 * DEG2RAD);
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -124,7 +124,7 @@ public partial class ShadersHybridRender : ExampleHelper
         UnloadShader(shdrRaymarch);
         UnloadShader(shdrRaster);
 
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }
@@ -135,7 +135,7 @@ public partial class ShadersHybridRender : ExampleHelper
     {
         RenderTexture target = new();
 
-        target.Id = RLGL.LoadFramebuffer(width, height);   // Load an empty framebuffer
+        target.Id = RLGL.LoadFramebuffer(width, height); // Load an empty framebuffer
 
         if (target.Id > 0)
         {
@@ -152,7 +152,7 @@ public partial class ShadersHybridRender : ExampleHelper
             target.Depth.Id = RLGL.LoadTextureDepth(width, height, false);
             target.Depth.Width = width;
             target.Depth.Height = height;
-            target.Depth.Format = PixelFormat.CompressedPvrtRgba;       //DEPTH_COMPONENT_24BIT?
+            target.Depth.Format = PixelFormat.CompressedPvrtRgba; //DEPTH_COMPONENT_24BIT?
             target.Depth.Mipmaps = 1;
 
             // Attach color texture and depth texture to FBO

@@ -109,7 +109,7 @@ public partial class ShadersSpotlight : ExampleHelper
             SetShaderValue(shdrSpot, spots[i].radiusLoc, ref spots[i].radius, ShaderUniformDataType.ShaderUniformFloat);
         }
 
-        SetTargetFPS(60);               // Set  to run at 60 frames-per-second
+        SetTargetFPS(60); // Set  to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -206,7 +206,7 @@ public partial class ShadersSpotlight : ExampleHelper
         UnloadTexture(texRay);
         UnloadShader(shdrSpot);
 
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

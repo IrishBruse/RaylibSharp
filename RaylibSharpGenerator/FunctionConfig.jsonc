@@ -25,11 +25,10 @@
         "ExportDataAsCode",
         "LoadFileText",
         "UnloadFileText",
-
         // Text
         "TextFormat",
+        "TextToUpper",
         "TextIsEqual",
-
         // Unnecessary
         "GetMouseWheelMove",
         "MemAlloc",
@@ -39,8 +38,8 @@
         "DecompressData",
         "EncodeDataBase64",
         "DecodeDataBase64",
+        "ExportImageAsCode",
         "TraceLog", // Errors
-
         // Manually implemented
         "SetTraceLogCallback",
         "InitWindow",
@@ -186,6 +185,12 @@
         },
         "UploadMesh": {
             "mesh": "Mesh mesh"
+        },
+        "ImageDrawPixel": {
+            "dst": "ref Image dst"
+        },
+        "ImageDraw": {
+            "dst": "ref Image dst"
         }
     }
 }

@@ -57,13 +57,13 @@ public partial class EasingsTestbed : ExampleHelper
 
         Vector2 ballPosition = new(100.0f, 200.0f);
 
-        float t = 0.0f;             // Current time (in any unit measure, but same unit as duration)
-        float d = 300.0f;           // Total time it should take to complete (duration)
+        float t = 0.0f; // Current time (in any unit measure, but same unit as duration)
+        float d = 300.0f; // Total time it should take to complete (duration)
         bool paused = true;
-        bool boundedT = true;       // If true, t will stop when d >= td, otherwise t will keep adding td to its value every loop
+        bool boundedT = true; // If true, t will stop when d >= td, otherwise t will keep adding td to its value every loop
 
-        EasingTypes easingX = EasingTypes.EASING_NONE;  // Easing selected for x axis
-        EasingTypes easingY = EasingTypes.EASING_NONE;  // Easing selected for y axis
+        EasingTypes easingX = EasingTypes.EASING_NONE; // Easing selected for x axis
+        EasingTypes easingY = EasingTypes.EASING_NONE; // Easing selected for y axis
 
         SetTargetFPS(60);
 

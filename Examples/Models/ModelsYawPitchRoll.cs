@@ -18,20 +18,20 @@ public partial class ModelsYawPitchRoll : ExampleHelper
 
         Camera3D camera = new();
         camera.Position = new(0.0f, 50.0f, -120.0f);// Camera3D position perspective
-        camera.Target = new(0.0f, 0.0f, 0.0f);      // Camera3D looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
-        camera.Fovy = 30.0f;                                // Camera3D field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera3D type
+        camera.Target = new(0.0f, 0.0f, 0.0f); // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera3D up vector (rotation towards target)
+        camera.Fovy = 30.0f; // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera3D type
 
-        Model model = LoadModel("resources/models/obj/plane.obj");                  // Load model
-        Texture texture = LoadTexture("resources/models/obj/plane_diffuse.png");  // Load model texture
-        model.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture;            // Set map diffuse texture
+        Model model = LoadModel("resources/models/obj/plane.obj"); // Load model
+        Texture texture = LoadTexture("resources/models/obj/plane_diffuse.png"); // Load model texture
+        model.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture; // Set map diffuse texture
 
         float pitch = 0.0f;
         float roll = 0.0f;
         float yaw = 0.0f;
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -111,7 +111,7 @@ public partial class ModelsYawPitchRoll : ExampleHelper
                 // Draw 3D model (recomended to draw 3D always before 2D)
                 BeginMode3D(camera);
                 {
-                    DrawModel(model, new(0.0f, -8.0f, 0.0f), 1.0f, White);   // Draw 3d model with texture
+                    DrawModel(model, new(0.0f, -8.0f, 0.0f), 1.0f, White); // Draw 3d model with texture
                     DrawGrid(10, 10.0f);
                 }
                 EndMode3D();
@@ -129,9 +129,9 @@ public partial class ModelsYawPitchRoll : ExampleHelper
         }
 
         // De-Initialization
-        UnloadModel(model);     // Unload model data
+        UnloadModel(model); // Unload model data
 
-        CloseWindow();          // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

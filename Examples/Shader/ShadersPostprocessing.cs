@@ -49,23 +49,23 @@ public partial class ShadersPostprocessing : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        SetConfigFlags(WindowFlag.Msaa4xHint);      // Enable Multi Sampling Anti Aliasing 4x (if available)
+        SetConfigFlags(WindowFlag.Msaa4xHint); // Enable Multi Sampling Anti Aliasing 4x (if available)
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shaders - postprocessing shader");
 
         // Define the camera to look into our 3d world
         Camera3D camera = new();
-        camera.Position = new(2.0f, 3.0f, 2.0f);    // Camera3D position
-        camera.Target = new(0.0f, 1.0f, 0.0f);      // Camera3D looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
+        camera.Position = new(2.0f, 3.0f, 2.0f); // Camera3D position
+        camera.Target = new(0.0f, 1.0f, 0.0f); // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f; // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera3D projection type
 
-        Model model = LoadModel("resources/models/church.obj");                 // Load OBJ model
+        Model model = LoadModel("resources/models/church.obj"); // Load OBJ model
         Texture texture = LoadTexture("resources/models/church_diffuse.png"); // Load model texture (diffuse map)
-        model.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture;        // Set model diffuse texture
+        model.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture; // Set model diffuse texture
 
-        Vector3 position = new(0.0f, 0.0f, 0.0f);            // Set model position
+        Vector3 position = new(0.0f, 0.0f, 0.0f); // Set model position
 
         // Load all postpro shaders
         // NOTE 1: All postpro shader use the base vertex shader (DEFAULT_VERTEX_SHADER)
@@ -93,7 +93,7 @@ public partial class ShadersPostprocessing : ExampleHelper
         // Create a RenderTexture to be used for render to texture
         RenderTexture target = LoadRenderTexture(screenWidth, screenHeight);
 
-        SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
@@ -122,20 +122,20 @@ public partial class ShadersPostprocessing : ExampleHelper
             // Draw
             BeginTextureMode(target);
             {       // Enable drawing to texture
-                ClearBackground(RayWhite);  // Clear texture background
+                ClearBackground(RayWhite); // Clear texture background
 
                 BeginMode3D(camera);
                 {        // Begin 3d mode drawing
-                    DrawModel(model, position, 0.1f, White);   // Draw 3d model with texture
-                    DrawGrid(10, 1.0f);     // Draw a grid
+                    DrawModel(model, position, 0.1f, White); // Draw 3d model with texture
+                    DrawGrid(10, 1.0f); // Draw a grid
                 }
-                EndMode3D();                // End 3d mode drawing, returns to orthographic 2d mode
+                EndMode3D(); // End 3d mode drawing, returns to orthographic 2d mode
             }
-            EndTextureMode();               // End drawing to texture (now we have a texture available for next passes)
+            EndTextureMode(); // End drawing to texture (now we have a texture available for next passes)
 
             BeginDrawing();
             {
-                ClearBackground(RayWhite);  // Clear screen background
+                ClearBackground(RayWhite); // Clear screen background
 
                 // Render generated texture using selected postprocessing shader
                 BeginShaderMode(shaders[currentShader]);
@@ -164,11 +164,11 @@ public partial class ShadersPostprocessing : ExampleHelper
             UnloadShader(shaders[i]);
         }
 
-        UnloadTexture(texture);         // Unload texture
-        UnloadModel(model);             // Unload model
-        UnloadRenderTexture(target);    // Unload render texture
+        UnloadTexture(texture); // Unload texture
+        UnloadModel(model); // Unload model
+        UnloadRenderTexture(target); // Unload render texture
 
-        CloseWindow();                  // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

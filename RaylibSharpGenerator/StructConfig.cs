@@ -8,6 +8,7 @@ public class StructConfig
     public bool GenUnmanaged { get; set; } = true;
     public bool GenManaged { get; set; } = true;
     public bool UnmanagedAttribute { get; set; }
+    public Dictionary<string, string> FunctionTypeConversion { get; set; } = new Dictionary<string, string>();
 
     public static StructConfig Deserialize(string path)
     {

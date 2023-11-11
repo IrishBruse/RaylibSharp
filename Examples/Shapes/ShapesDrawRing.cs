@@ -27,7 +27,7 @@ public partial class ShapesDrawRing : ExampleHelper
         bool drawRingLines = false;
         bool drawCircleLines = false;
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -80,7 +80,7 @@ public partial class ShapesDrawRing : ExampleHelper
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

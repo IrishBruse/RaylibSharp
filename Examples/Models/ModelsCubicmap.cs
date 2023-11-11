@@ -18,27 +18,27 @@ public partial class ModelsCubicmap : ExampleHelper
 
         // Define the camera to look into our 3d woRLGL.d
         Camera3D camera = new();
-        camera.Position = new(16.0f, 14.0f, 16.0f);     // Camera3D position
-        camera.Target = new(0.0f, 0.0f, 0.0f);          // Camera3D looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);              // Camera3D up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                    // Camera3D field-of-view Y
-        camera.Projection = CameraProjection.Perspective;                 // Camera3D projection type
+        camera.Position = new(16.0f, 14.0f, 16.0f); // Camera3D position
+        camera.Target = new(0.0f, 0.0f, 0.0f); // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f; // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera3D projection type
 
-        Image image = LoadImage("resources/cubicmap.png");      // Load cubicmap image (RAM)
-        Texture cubicmap = LoadTextureFromImage(image);       // Convert image to texture to display (VRAM)
+        Image image = LoadImage("resources/cubicmap.png"); // Load cubicmap image (RAM)
+        Texture cubicmap = LoadTextureFromImage(image); // Convert image to texture to display (VRAM)
 
         Mesh mesh = GenMeshCubicmap(image, new(1.0f, 1.0f, 1.0f));
         Model model = LoadModelFromMesh(mesh);
 
         // NOTE: By default each cube is mapped to one part of texture atlas
-        Texture texture = LoadTexture("resources/cubicmap_atlas.png");    // Load map texture
-        model.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture;    // Set map diffuse texture
+        Texture texture = LoadTexture("resources/cubicmap_atlas.png"); // Load map texture
+        model.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = texture; // Set map diffuse texture
 
-        Vector3 mapPosition = new(-16.0f, 0.0f, -8.0f);          // Set model position
+        Vector3 mapPosition = new(-16.0f, 0.0f, -8.0f); // Set model position
 
-        UnloadImage(image);     // Unload cubesmap image from RAM, already uploaded to VRAM
+        UnloadImage(image); // Unload cubesmap image from RAM, already uploaded to VRAM
 
-        SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
@@ -73,11 +73,11 @@ public partial class ModelsCubicmap : ExampleHelper
         }
 
         // De-Initialization
-        UnloadTexture(cubicmap);    // Unload cubicmap texture
-        UnloadTexture(texture);     // Unload map texture
-        UnloadModel(model);         // Unload map model
+        UnloadTexture(cubicmap); // Unload cubicmap texture
+        UnloadTexture(texture); // Unload map texture
+        UnloadModel(model); // Unload map model
 
-        CloseWindow();              // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

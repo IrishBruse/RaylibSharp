@@ -7,10 +7,10 @@
 // Game Of Life Update Command
 // NOTE: matches the structure defined on main program
 struct GolUpdateCmd {
-    uint x;         // x coordinate of the gol command
-    uint y;         // y coordinate of the gol command
-    uint w;         // width of the filled zone
-    uint enabled;   // whether to enable or disable zone
+    uint x; // x coordinate of the gol command
+    uint y; // y coordinate of the gol command
+    uint w; // width of the filled zone
+    uint enabled; // whether to enable or disable zone
 };
 
 // Local compute unit size

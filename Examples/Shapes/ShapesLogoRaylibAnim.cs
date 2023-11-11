@@ -25,10 +25,10 @@ public partial class ShapesLogoRaylibAnim : ExampleHelper
         int bottomSideRecWidth = 16;
         int rightSideRecHeight = 16;
 
-        int state = 0;                  // Tracking animation states (State Machine)
-        float alpha = 1.0f;             // Useful for fading
+        int state = 0; // Tracking animation states (State Machine)
+        float alpha = 1.0f; // Useful for fading
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -41,7 +41,7 @@ public partial class ShapesLogoRaylibAnim : ExampleHelper
                 if (framesCounter == 120)
                 {
                     state = 1;
-                    framesCounter = 0;      // Reset counter... will be used later...
+                    framesCounter = 0; // Reset counter... will be used later...
                 }
             }
             else if (state == 1)            // State 1: Top and left bars growing
@@ -99,7 +99,7 @@ public partial class ShapesLogoRaylibAnim : ExampleHelper
                     rightSideRecHeight = 16;
 
                     alpha = 1.0f;
-                    state = 0;          // Return to State 0
+                    state = 0; // Return to State 0
                 }
             }
 
@@ -149,7 +149,7 @@ public partial class ShapesLogoRaylibAnim : ExampleHelper
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

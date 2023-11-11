@@ -24,11 +24,11 @@ public class Core3dCameraFirstPerson : ExampleHelper
 
         // Define the camera to look into our 3d world (position, target, up vector)
         Camera camera = new();
-        camera.Position = new(0.0f, 2.0f, 4.0f);    // Camera position
-        camera.Target = new(0.0f, 2.0f, 0.0f);      // Camera looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera up vector (rotation towards target)
-        camera.Fovy = 60.0f;                                // Camera field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera projection type
+        camera.Position = new(0.0f, 2.0f, 4.0f); // Camera position
+        camera.Target = new(0.0f, 2.0f, 0.0f); // Camera looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera up vector (rotation towards target)
+        camera.Fovy = 60.0f; // Camera field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera projection type
 
         CameraMode cameraMode = CameraMode.FirstPerson;
 
@@ -44,9 +44,9 @@ public class Core3dCameraFirstPerson : ExampleHelper
             colors[i] = Color.FromArgb(255, GetRandomValue(20, 255), GetRandomValue(10, 55), 30);
         }
 
-        DisableCursor();                    // Limit cursor to relative movement inside the window
+        DisableCursor(); // Limit cursor to relative movement inside the window
 
-        SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
@@ -128,9 +128,9 @@ public class Core3dCameraFirstPerson : ExampleHelper
                 BeginMode3D(camera);
                 {
                     DrawPlane(new(0.0f, 0.0f, 0.0f), new(32.0f, 32.0f), LightGray); // Draw ground
-                    DrawCube(new(-16.0f, 2.5f, 0.0f), 1.0f, 5.0f, 32.0f, Blue);     // Draw a blue wall
-                    DrawCube(new(16.0f, 2.5f, 0.0f), 1.0f, 5.0f, 32.0f, Lime);      // Draw a green wall
-                    DrawCube(new(0.0f, 2.5f, 16.0f), 32.0f, 5.0f, 1.0f, Gold);      // Draw a yellow wall
+                    DrawCube(new(-16.0f, 2.5f, 0.0f), 1.0f, 5.0f, 32.0f, Blue); // Draw a blue wall
+                    DrawCube(new(16.0f, 2.5f, 0.0f), 1.0f, 5.0f, 32.0f, Lime); // Draw a green wall
+                    DrawCube(new(0.0f, 2.5f, 16.0f), 32.0f, 5.0f, 1.0f, Gold); // Draw a yellow wall
 
                     // Draw some cubes around
                     for (int i = 0; i < MAX_COLUMNS; i++)

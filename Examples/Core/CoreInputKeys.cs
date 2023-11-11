@@ -17,7 +17,7 @@ public class CoreInputKeys : ExampleHelper
 
         Vector2 ballPosition = new((float)screenWidth / 2, (float)screenHeight / 2);
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key

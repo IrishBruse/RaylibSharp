@@ -7,7 +7,7 @@ varying vec2 fragTexCoord;
 varying vec4 fragColor;
 
 // Input uniform values
-uniform sampler2D texture0;     // Depth texture
+uniform sampler2D texture0; // Depth texture
 uniform vec4 colDiffuse;
 
 // NOTE: Add here your custom variables
@@ -15,7 +15,7 @@ uniform vec4 colDiffuse;
 void main()
 {
     float zNear = 0.01; // camera z near
-    float zFar = 10.0;  // camera z far
+    float zFar = 10.0; // camera z far
     float z = texture2D(texture0, fragTexCoord).x;
 
     // Linearize depth value

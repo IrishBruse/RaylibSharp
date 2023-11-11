@@ -28,7 +28,7 @@ public partial class ModelsDrawCubeTexture : ExampleHelper
         // Load texture to be applied to the cubes sides
         Texture texture = LoadTexture("resources/cubicmap_atlas.png");
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -52,7 +52,7 @@ public partial class ModelsDrawCubeTexture : ExampleHelper
                     DrawCubeTexture(texture, new(0, texture.Height / 2, texture.Width / 2, texture.Height / 2),
                         new(2.0f, 1.0f, 0.0f), 2.0f, 2.0f, 2.0f, White);
 
-                    DrawGrid(10, 1.0f);        // Draw a grid
+                    DrawGrid(10, 1.0f); // Draw a grid
 
                 }
                 EndMode3D();
@@ -66,7 +66,7 @@ public partial class ModelsDrawCubeTexture : ExampleHelper
         // De-Initialization
         UnloadTexture(texture); // Unload texture
 
-        CloseWindow();          // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }
@@ -94,41 +94,41 @@ public partial class ModelsDrawCubeTexture : ExampleHelper
         RLGL.Begin(RLGL.RlQuads);
         RLGL.Color4ub(color.R, color.G, color.B, color.A);
         // Front Face
-        RLGL.Normal3f(0.0f, 0.0f, 1.0f);       // Normal Pointing Towards Viewer
-        RLGL.TexCoord2f(0.0f, 0.0f); RLGL.Vertex3f(x - (width / 2), y - (height / 2), z + (length / 2));  // Bottom Left Of The Texture and Quad
-        RLGL.TexCoord2f(1.0f, 0.0f); RLGL.Vertex3f(x + (width / 2), y - (height / 2), z + (length / 2));  // Bottom Right Of The Texture and Quad
-        RLGL.TexCoord2f(1.0f, 1.0f); RLGL.Vertex3f(x + (width / 2), y + (height / 2), z + (length / 2));  // Top Right Of The Texture and Quad
-        RLGL.TexCoord2f(0.0f, 1.0f); RLGL.Vertex3f(x - (width / 2), y + (height / 2), z + (length / 2));  // Top Left Of The Texture and Quad
-                                                                                                          // Back Face
-        RLGL.Normal3f(0.0f, 0.0f, -1.0f);     // Normal Pointing Away From Viewer
-        RLGL.TexCoord2f(1.0f, 0.0f); RLGL.Vertex3f(x - (width / 2), y - (height / 2), z - (length / 2));  // Bottom Right Of The Texture and Quad
-        RLGL.TexCoord2f(1.0f, 1.0f); RLGL.Vertex3f(x - (width / 2), y + (height / 2), z - (length / 2));  // Top Right Of The Texture and Quad
-        RLGL.TexCoord2f(0.0f, 1.0f); RLGL.Vertex3f(x + (width / 2), y + (height / 2), z - (length / 2));  // Top Left Of The Texture and Quad
-        RLGL.TexCoord2f(0.0f, 0.0f); RLGL.Vertex3f(x + (width / 2), y - (height / 2), z - (length / 2));  // Bottom Left Of The Texture and Quad
-                                                                                                          // Top Face
-        RLGL.Normal3f(0.0f, 1.0f, 0.0f);       // Normal Pointing Up
-        RLGL.TexCoord2f(0.0f, 1.0f); RLGL.Vertex3f(x - (width / 2), y + (height / 2), z - (length / 2));  // Top Left Of The Texture and Quad
-        RLGL.TexCoord2f(0.0f, 0.0f); RLGL.Vertex3f(x - (width / 2), y + (height / 2), z + (length / 2));  // Bottom Left Of The Texture and Quad
-        RLGL.TexCoord2f(1.0f, 0.0f); RLGL.Vertex3f(x + (width / 2), y + (height / 2), z + (length / 2));  // Bottom Right Of The Texture and Quad
-        RLGL.TexCoord2f(1.0f, 1.0f); RLGL.Vertex3f(x + (width / 2), y + (height / 2), z - (length / 2));  // Top Right Of The Texture and Quad
-                                                                                                          // Bottom Face
-        RLGL.Normal3f(0.0f, -1.0f, 0.0f);     // Normal Pointing Down
-        RLGL.TexCoord2f(1.0f, 1.0f); RLGL.Vertex3f(x - (width / 2), y - (height / 2), z - (length / 2));  // Top Right Of The Texture and Quad
-        RLGL.TexCoord2f(0.0f, 1.0f); RLGL.Vertex3f(x + (width / 2), y - (height / 2), z - (length / 2));  // Top Left Of The Texture and Quad
-        RLGL.TexCoord2f(0.0f, 0.0f); RLGL.Vertex3f(x + (width / 2), y - (height / 2), z + (length / 2));  // Bottom Left Of The Texture and Quad
-        RLGL.TexCoord2f(1.0f, 0.0f); RLGL.Vertex3f(x - (width / 2), y - (height / 2), z + (length / 2));  // Bottom Right Of The Texture and Quad
-                                                                                                          // Right face
-        RLGL.Normal3f(1.0f, 0.0f, 0.0f);       // Normal Pointing Right
-        RLGL.TexCoord2f(1.0f, 0.0f); RLGL.Vertex3f(x + (width / 2), y - (height / 2), z - (length / 2));  // Bottom Right Of The Texture and Quad
-        RLGL.TexCoord2f(1.0f, 1.0f); RLGL.Vertex3f(x + (width / 2), y + (height / 2), z - (length / 2));  // Top Right Of The Texture and Quad
-        RLGL.TexCoord2f(0.0f, 1.0f); RLGL.Vertex3f(x + (width / 2), y + (height / 2), z + (length / 2));  // Top Left Of The Texture and Quad
-        RLGL.TexCoord2f(0.0f, 0.0f); RLGL.Vertex3f(x + (width / 2), y - (height / 2), z + (length / 2));  // Bottom Left Of The Texture and Quad
-                                                                                                          // Left Face
-        RLGL.Normal3f(-1.0f, 0.0f, 0.0f);    // Normal Pointing Left
-        RLGL.TexCoord2f(0.0f, 0.0f); RLGL.Vertex3f(x - (width / 2), y - (height / 2), z - (length / 2));  // Bottom Left Of The Texture and Quad
-        RLGL.TexCoord2f(1.0f, 0.0f); RLGL.Vertex3f(x - (width / 2), y - (height / 2), z + (length / 2));  // Bottom Right Of The Texture and Quad
-        RLGL.TexCoord2f(1.0f, 1.0f); RLGL.Vertex3f(x - (width / 2), y + (height / 2), z + (length / 2));  // Top Right Of The Texture and Quad
-        RLGL.TexCoord2f(0.0f, 1.0f); RLGL.Vertex3f(x - (width / 2), y + (height / 2), z - (length / 2));  // Top Left Of The Texture and Quad
+        RLGL.Normal3f(0.0f, 0.0f, 1.0f); // Normal Pointing Towards Viewer
+        RLGL.TexCoord2f(0.0f, 0.0f); RLGL.Vertex3f(x - (width / 2), y - (height / 2), z + (length / 2)); // Bottom Left Of The Texture and Quad
+        RLGL.TexCoord2f(1.0f, 0.0f); RLGL.Vertex3f(x + (width / 2), y - (height / 2), z + (length / 2)); // Bottom Right Of The Texture and Quad
+        RLGL.TexCoord2f(1.0f, 1.0f); RLGL.Vertex3f(x + (width / 2), y + (height / 2), z + (length / 2)); // Top Right Of The Texture and Quad
+        RLGL.TexCoord2f(0.0f, 1.0f); RLGL.Vertex3f(x - (width / 2), y + (height / 2), z + (length / 2)); // Top Left Of The Texture and Quad
+                                                                                                         // Back Face
+        RLGL.Normal3f(0.0f, 0.0f, -1.0f); // Normal Pointing Away From Viewer
+        RLGL.TexCoord2f(1.0f, 0.0f); RLGL.Vertex3f(x - (width / 2), y - (height / 2), z - (length / 2)); // Bottom Right Of The Texture and Quad
+        RLGL.TexCoord2f(1.0f, 1.0f); RLGL.Vertex3f(x - (width / 2), y + (height / 2), z - (length / 2)); // Top Right Of The Texture and Quad
+        RLGL.TexCoord2f(0.0f, 1.0f); RLGL.Vertex3f(x + (width / 2), y + (height / 2), z - (length / 2)); // Top Left Of The Texture and Quad
+        RLGL.TexCoord2f(0.0f, 0.0f); RLGL.Vertex3f(x + (width / 2), y - (height / 2), z - (length / 2)); // Bottom Left Of The Texture and Quad
+                                                                                                         // Top Face
+        RLGL.Normal3f(0.0f, 1.0f, 0.0f); // Normal Pointing Up
+        RLGL.TexCoord2f(0.0f, 1.0f); RLGL.Vertex3f(x - (width / 2), y + (height / 2), z - (length / 2)); // Top Left Of The Texture and Quad
+        RLGL.TexCoord2f(0.0f, 0.0f); RLGL.Vertex3f(x - (width / 2), y + (height / 2), z + (length / 2)); // Bottom Left Of The Texture and Quad
+        RLGL.TexCoord2f(1.0f, 0.0f); RLGL.Vertex3f(x + (width / 2), y + (height / 2), z + (length / 2)); // Bottom Right Of The Texture and Quad
+        RLGL.TexCoord2f(1.0f, 1.0f); RLGL.Vertex3f(x + (width / 2), y + (height / 2), z - (length / 2)); // Top Right Of The Texture and Quad
+                                                                                                         // Bottom Face
+        RLGL.Normal3f(0.0f, -1.0f, 0.0f); // Normal Pointing Down
+        RLGL.TexCoord2f(1.0f, 1.0f); RLGL.Vertex3f(x - (width / 2), y - (height / 2), z - (length / 2)); // Top Right Of The Texture and Quad
+        RLGL.TexCoord2f(0.0f, 1.0f); RLGL.Vertex3f(x + (width / 2), y - (height / 2), z - (length / 2)); // Top Left Of The Texture and Quad
+        RLGL.TexCoord2f(0.0f, 0.0f); RLGL.Vertex3f(x + (width / 2), y - (height / 2), z + (length / 2)); // Bottom Left Of The Texture and Quad
+        RLGL.TexCoord2f(1.0f, 0.0f); RLGL.Vertex3f(x - (width / 2), y - (height / 2), z + (length / 2)); // Bottom Right Of The Texture and Quad
+                                                                                                         // Right face
+        RLGL.Normal3f(1.0f, 0.0f, 0.0f); // Normal Pointing Right
+        RLGL.TexCoord2f(1.0f, 0.0f); RLGL.Vertex3f(x + (width / 2), y - (height / 2), z - (length / 2)); // Bottom Right Of The Texture and Quad
+        RLGL.TexCoord2f(1.0f, 1.0f); RLGL.Vertex3f(x + (width / 2), y + (height / 2), z - (length / 2)); // Top Right Of The Texture and Quad
+        RLGL.TexCoord2f(0.0f, 1.0f); RLGL.Vertex3f(x + (width / 2), y + (height / 2), z + (length / 2)); // Top Left Of The Texture and Quad
+        RLGL.TexCoord2f(0.0f, 0.0f); RLGL.Vertex3f(x + (width / 2), y - (height / 2), z + (length / 2)); // Bottom Left Of The Texture and Quad
+                                                                                                         // Left Face
+        RLGL.Normal3f(-1.0f, 0.0f, 0.0f); // Normal Pointing Left
+        RLGL.TexCoord2f(0.0f, 0.0f); RLGL.Vertex3f(x - (width / 2), y - (height / 2), z - (length / 2)); // Bottom Left Of The Texture and Quad
+        RLGL.TexCoord2f(1.0f, 0.0f); RLGL.Vertex3f(x - (width / 2), y - (height / 2), z + (length / 2)); // Bottom Right Of The Texture and Quad
+        RLGL.TexCoord2f(1.0f, 1.0f); RLGL.Vertex3f(x - (width / 2), y + (height / 2), z + (length / 2)); // Top Right Of The Texture and Quad
+        RLGL.TexCoord2f(0.0f, 1.0f); RLGL.Vertex3f(x - (width / 2), y + (height / 2), z - (length / 2)); // Top Left Of The Texture and Quad
         RLGL.End();
         //RLGL.PopMatrix();
 

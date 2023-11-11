@@ -27,9 +27,9 @@ public class CoreBasicScreenManager : ExampleHelper
 
         // TODO: Initialize all required variables and load all required data here!
 
-        int framesCounter = 0;          // Useful to count frames
+        int framesCounter = 0; // Useful to count frames
 
-        SetTargetFPS(60);               // Set desired framerate (frames-per-second)
+        SetTargetFPS(60); // Set desired framerate (frames-per-second)
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -41,7 +41,7 @@ public class CoreBasicScreenManager : ExampleHelper
                 {
                     // TODO: Update LOGO screen variables here!
 
-                    framesCounter++;    // Count frames
+                    framesCounter++; // Count frames
 
                     // Wait for 2 seconds (120 frames) before jumping to TITLE screen
                     if (framesCounter > 120)

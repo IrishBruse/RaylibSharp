@@ -23,7 +23,7 @@ public partial class ShadersTextureOutline : ExampleHelper
         Shader shdrOutline = LoadShader(null, $"resources/shaders/glsl{glslVersion}/outline.fs");
 
         float outlineSize = 2.0f;
-        Vector4 outlineColor = new(1.0f, 0.0f, 0.0f, 1.0f);     // Normalized Red color
+        Vector4 outlineColor = new(1.0f, 0.0f, 0.0f, 1.0f); // Normalized Red color
         Vector2 textureSize = new(texture.Width, texture.Height);
 
         // Get shader locations
@@ -36,7 +36,7 @@ public partial class ShadersTextureOutline : ExampleHelper
         SetShaderValue(shdrOutline, outlineColorLoc, ref outlineColor, ShaderUniformDataType.ShaderUniformVec4);
         SetShaderValue(shdrOutline, textureSizeLoc, ref textureSize, ShaderUniformDataType.ShaderUniformVec2);
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -74,7 +74,7 @@ public partial class ShadersTextureOutline : ExampleHelper
         UnloadTexture(texture);
         UnloadShader(shdrOutline);
 
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

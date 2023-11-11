@@ -20,7 +20,7 @@ public partial class ShapesDrawCircleSector : ExampleHelper
         float startAngle = 0.0f;
         float endAngle = 180.0f;
         int segments = 0;
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -55,7 +55,7 @@ public partial class ShapesDrawCircleSector : ExampleHelper
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

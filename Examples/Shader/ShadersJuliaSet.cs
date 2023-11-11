@@ -60,11 +60,11 @@ public partial class ShadersJuliaSet : ExampleHelper
         SetShaderValue(shader, zoomLoc, ref zoom, ShaderUniformDataType.ShaderUniformFloat);
         SetShaderValue(shader, offsetLoc, ref offset, ShaderUniformDataType.ShaderUniformVec2);
 
-        int incrementSpeed = 0;             // Multiplier of speed to change c value
-        bool showControls = true;           // Show controls
-        bool pause = false;                 // Pause animation
+        int incrementSpeed = 0; // Multiplier of speed to change c value
+        bool showControls = true; // Show controls
+        bool pause = false; // Pause animation
 
-        SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
@@ -108,12 +108,12 @@ public partial class ShadersJuliaSet : ExampleHelper
 
             if (IsKeyPressed(Key.Space))
             {
-                pause = !pause;                 // Pause animation (c change)
+                pause = !pause; // Pause animation (c change)
             }
 
             if (IsKeyPressed(Key.F1))
             {
-                showControls = !showControls;  // Toggle whether or not to show controls
+                showControls = !showControls; // Toggle whether or not to show controls
             }
 
             if (!pause)
@@ -170,7 +170,7 @@ public partial class ShadersJuliaSet : ExampleHelper
             // Using a render texture to draw Julia set
             BeginTextureMode(target);
             {       // Enable drawing to texture
-                ClearBackground(Black);     // Clear the render texture
+                ClearBackground(Black); // Clear the render texture
 
                 // Draw a rectangle in shader mode to be used as shader canvas
                 // NOTE: RectangleF uses font white character texture coordinates,
@@ -182,7 +182,7 @@ public partial class ShadersJuliaSet : ExampleHelper
 
             BeginDrawing();
             {
-                ClearBackground(Black);     // Clear screen background
+                ClearBackground(Black); // Clear screen background
 
                 // Draw the saved texture and rendered julia set with shader
                 // NOTE: We do not invert texture on Y, already considered inside shader
@@ -207,10 +207,10 @@ public partial class ShadersJuliaSet : ExampleHelper
         }
 
         // De-Initialization
-        UnloadShader(shader);               // Unload shader
-        UnloadRenderTexture(target);        // Unload render texture
+        UnloadShader(shader); // Unload shader
+        UnloadRenderTexture(target); // Unload render texture
 
-        CloseWindow();                      // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

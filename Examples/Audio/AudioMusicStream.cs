@@ -2,7 +2,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
-public static partial class AudioMusicStreams
+public partial class AudioMusicStream : ExampleHelper
 {
     // Program main entry point
     public static int Example()
@@ -13,20 +13,20 @@ public static partial class AudioMusicStreams
 
         InitWindow(screenWidth, screenHeight, "raylib [audio] example - music playing (streaming)");
 
-        InitAudioDevice();              // Initialize audio device
+        InitAudioDevice(); // Initialize audio device
 
         Music music = LoadMusicStream("resources/country.mp3");
 
         PlayMusicStream(music);
-        bool pause = false;             // Music playing paused
+        bool pause = false; // Music playing paused
 
-        SetTargetFPS(30);               // Set our game to run at 30 frames-per-second
+        SetTargetFPS(30); // Set our game to run at 30 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             // Update
-            UpdateMusicStream(music);   // Update music buffer with new stream data
+            UpdateMusicStream(music); // Update music buffer with new stream data
 
             // Restart music playing (stop and play)
             if (IsKeyPressed(Key.Space))
@@ -55,7 +55,7 @@ public static partial class AudioMusicStreams
 
             if (timePlayed > 1.0f)
             {
-                timePlayed = 1.0f;   // Make sure time played is no longer than music
+                timePlayed = 1.0f; // Make sure time played is no longer than music
             }
 
             // Draw
@@ -76,11 +76,11 @@ public static partial class AudioMusicStreams
         }
 
         // De-Initialization
-        UnloadMusicStream(music);   // Unload music stream buffers from RAM
+        UnloadMusicStream(music); // Unload music stream buffers from RAM
 
-        CloseAudioDevice();         // Close audio device (music streaming is automatically stopped)
+        CloseAudioDevice(); // Close audio device (music streaming is automatically stopped)
 
-        CloseWindow();              // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

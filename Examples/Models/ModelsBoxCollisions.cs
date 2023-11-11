@@ -31,7 +31,7 @@ public partial class ModelsBoxCollisions : ExampleHelper
 
         Vector3 enemySpherePos = new(4.0f, 0.0f, 0.0f);
         float enemySphereSize = 1.5f;
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -112,7 +112,7 @@ public partial class ModelsBoxCollisions : ExampleHelper
                     // Draw player
                     DrawCube(playerPosition, playerSize, playerColor);
 
-                    DrawGrid(10, 1.0f);        // Draw a grid
+                    DrawGrid(10, 1.0f); // Draw a grid
 
                 }
                 EndMode3D();
@@ -126,7 +126,7 @@ public partial class ModelsBoxCollisions : ExampleHelper
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Desktop", "Example
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaylibSharp", "RaylibSharp\RaylibSharp.csproj", "{6D1B126A-2C7E-46A3-93DB-2208A3201D1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheatsheetGenerator", "CheatsheetGenerator\CheatsheetGenerator.csproj", "{691C39A5-4B5B-414C-B540-9A0657DE8CA9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

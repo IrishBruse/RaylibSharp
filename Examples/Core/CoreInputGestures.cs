@@ -24,9 +24,9 @@ public class CoreInputGestures : ExampleHelper
 
         Gesture currentGesture = Gesture.None;
 
-        //SetGesturesEnabled(0b0000000000001001);   // Enable only some gestures to be detected
+        //SetGesturesEnabled(0b0000000000001001); // Enable only some gestures to be detected
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key

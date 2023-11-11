@@ -24,11 +24,11 @@ public partial class ShapesCollisionArea : ExampleHelper
 
         RectangleF boxCollision = new(); // Collision rectangle
 
-        int screenUpperLimit = 40;      // Top menu limits
+        int screenUpperLimit = 40; // Top menu limits
 
-        bool pause = false;             // Movement pause
+        bool pause = false; // Movement pause
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -111,7 +111,7 @@ public partial class ShapesCollisionArea : ExampleHelper
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

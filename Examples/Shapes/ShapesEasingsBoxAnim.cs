@@ -23,7 +23,7 @@ public partial class ShapesEasingsBoxAnim : ExampleHelper
         int state = 0;
         int framesCounter = 0;
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -117,7 +117,7 @@ public partial class ShapesEasingsBoxAnim : ExampleHelper
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

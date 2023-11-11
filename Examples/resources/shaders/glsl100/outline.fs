@@ -16,7 +16,7 @@ uniform vec4 outlineColor;
 
 void main()
 {
-    vec4 texel = texture2D(texture0, fragTexCoord);   // Get texel color
+    vec4 texel = texture2D(texture0, fragTexCoord); // Get texel color
     vec2 texelScale = vec2(0.0);
     texelScale.x = outlineSize/textureSize.x;
     texelScale.y = outlineSize/textureSize.y;

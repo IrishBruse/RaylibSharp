@@ -40,7 +40,7 @@ public class CoreWindowFlags : ExampleHelper
 
         int framesCounter = 0;
 
-        //SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        //SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -48,7 +48,7 @@ public class CoreWindowFlags : ExampleHelper
             // Update
             if (IsKeyPressed(Key.F))
             {
-                ToggleFullscreen();  // modifies window size when scaling!
+                ToggleFullscreen(); // modifies window size when scaling!
             }
 
             if (IsKeyPressed(Key.R))

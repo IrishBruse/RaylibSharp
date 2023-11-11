@@ -13,9 +13,9 @@ public class CoreInputMouseWheel : ExampleHelper
         InitWindow(screenWidth, screenHeight, "RaylibSharp - core - input mouse wheel");
 
         int boxPositionY = (screenHeight / 2) - 40;
-        int scrollSpeed = 4;            // Scrolling speed in pixels
+        int scrollSpeed = 4; // Scrolling speed in pixels
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key

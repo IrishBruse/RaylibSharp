@@ -14,7 +14,7 @@ public partial class ShapesBasicShapes : ExampleHelper
 
         float rotation = 0.0f;
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -37,7 +37,7 @@ public partial class ShapesBasicShapes : ExampleHelper
                 // RectangleF shapes and lines
                 DrawRectangle((screenWidth / 4 * 2) - 60, 100, 120, 60, Red);
                 DrawRectangleGradientH((screenWidth / 4 * 2) - 90, 170, 180, 130, Maroon, Gold);
-                DrawRectangleLines((screenWidth / 4 * 2) - 40, 320, 80, 60, Orange);  // NOTE: Uses QUADS internally, not lines
+                DrawRectangleLines((screenWidth / 4 * 2) - 40, 320, 80, 60, Orange); // NOTE: Uses QUADS internally, not lines
 
                 // Triangle shapes and lines
                 DrawTriangle(new(screenWidth / 4.0f * 3.0f, 80.0f), new((screenWidth / 4.0f * 3.0f) - 60.0f, 150.0f), new((screenWidth / 4.0f * 3.0f) + 60.0f, 150.0f), Violet);
@@ -56,7 +56,7 @@ public partial class ShapesBasicShapes : ExampleHelper
         }
 
         // De-Initialization
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

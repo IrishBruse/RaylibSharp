@@ -40,7 +40,7 @@ void main()
 {
     vec4 color = vec4(1.0);
     float scale = 1000.0; // Makes 100x100 square grid. Change this variable to make a smaller or larger grid.
-    int value = int(scale*floor(fragTexCoord.y*scale)+floor(fragTexCoord.x*scale));  // Group pixels into boxes representing integer values
+    int value = int(scale*floor(fragTexCoord.y*scale)+floor(fragTexCoord.x*scale)); // Group pixels into boxes representing integer values
 
     if ((value == 0) || (value == 1) || (value == 2)) finalColor = vec4(1.0);
     else
@@ -50,7 +50,7 @@ void main()
             if ((value - i*floor(float(value)/float(i))) == 0)
             {
                 color = Colorizer(float(i), scale);
-                //break;    // Uncomment to color by the largest factor instead
+                //break; // Uncomment to color by the largest factor instead
             }
         }
 

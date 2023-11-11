@@ -24,7 +24,7 @@ public partial class ShadersShapesTextures : ExampleHelper
         // NOTE 2: Defining 0 (null) for vertex shader forces usage of internal default vertex shader
         Shader shader = LoadShader(null, $"resources/shaders/glsl{glslVersion}/grayscale.fs");
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -76,7 +76,7 @@ public partial class ShadersShapesTextures : ExampleHelper
                 BeginShaderMode(shader);
                 {
 
-                    DrawTexture(fudesumi, 500, -30, White);    // Using custom shader
+                    DrawTexture(fudesumi, 500, -30, White); // Using custom shader
 
                     // Activate our default shader for next drawings
                 }
@@ -89,10 +89,10 @@ public partial class ShadersShapesTextures : ExampleHelper
         }
 
         // De-Initialization
-        UnloadShader(shader);       // Unload shader
-        UnloadTexture(fudesumi);    // Unload texture
+        UnloadShader(shader); // Unload shader
+        UnloadTexture(fudesumi); // Unload texture
 
-        CloseWindow();              // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

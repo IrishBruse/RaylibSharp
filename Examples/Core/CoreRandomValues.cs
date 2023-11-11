@@ -11,13 +11,13 @@ public class CoreRandomValues : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - core - generate random values");
 
-        // SetRandomSeed(0xaabbccff);   // Set a custom random seed if desired, by default: "time(NULL)"
+        // SetRandomSeed(0xaabbccff); // Set a custom random seed if desired, by default: "time(NULL)"
 
-        int randValue = GetRandomValue(-8, 5);   // Get a random integer number between -8 and 5 (both included)
+        int randValue = GetRandomValue(-8, 5); // Get a random integer number between -8 and 5 (both included)
 
-        int framesCounter = 0;          // Variable used to count frames
+        int framesCounter = 0; // Variable used to count frames
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key

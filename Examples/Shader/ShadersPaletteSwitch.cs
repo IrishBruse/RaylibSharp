@@ -71,7 +71,7 @@ public partial class ShadersPaletteSwitch : ExampleHelper
         int currentPalette = 0;
         int lineHeight = screenHeight / COLORS_PER_PALETTE;
 
-        SetTargetFPS(60);                       // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())            // Detect window close button or ESC key
@@ -129,9 +129,9 @@ public partial class ShadersPaletteSwitch : ExampleHelper
         }
 
         // De-Initialization
-        UnloadShader(shader);       // Unload shader
+        UnloadShader(shader); // Unload shader
 
-        CloseWindow();              // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

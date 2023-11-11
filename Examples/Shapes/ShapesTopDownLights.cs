@@ -20,14 +20,14 @@ public partial class ShapesTopDownLights : ExampleHelper
     // Light info type
     public class LightInfo
     {
-        public bool active;                // Is this light slot active?
-        public bool dirty;                 // Does this light need to be updated?
-        public bool valid;                 // Is this light in a valid position?
+        public bool active; // Is this light slot active?
+        public bool dirty; // Does this light need to be updated?
+        public bool valid; // Is this light in a valid position?
 
-        public Vector2 position;           // Light position
-        public RenderTexture mask;         // Alpha mask for the light
-        public float outerRadius;          // The distance the light touches
-        public RectangleF bounds;          // A cached rectangle of the light bounds to help with culling
+        public Vector2 position; // Light position
+        public RenderTexture mask; // Alpha mask for the light
+        public float outerRadius; // The distance the light touches
+        public RectangleF bounds; // A cached rectangle of the light bounds to help with culling
 
         public Vector2[] shadows = new Vector2[MAX_SHADOWS * 4];
         public int shadowCount;
@@ -115,7 +115,7 @@ public partial class ShapesTopDownLights : ExampleHelper
     private static void SetupLight(int slot, float x, float y, float radius)
     {
         lights[slot].active = true;
-        lights[slot].valid = false;  // The light must prove it is valid
+        lights[slot].valid = false; // The light must prove it is valid
         lights[slot].mask = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
         lights[slot].outerRadius = radius;
 
@@ -249,7 +249,7 @@ public partial class ShapesTopDownLights : ExampleHelper
 
         bool showLines = false;
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -375,7 +375,7 @@ public partial class ShapesTopDownLights : ExampleHelper
             }
         }
 
-        CloseWindow();        // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

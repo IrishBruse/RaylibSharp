@@ -67,17 +67,17 @@ public class CoreVrSimulator : ExampleHelper
 
         // Define the camera to look into our 3d world
         Camera camera = new();
-        camera.Position = new(5.0f, 2.0f, 5.0f);    // Camera position
-        camera.Target = new(0.0f, 2.0f, 0.0f);      // Camera looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera up vector
-        camera.Fovy = 60.0f;                                // Camera field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera projection type
+        camera.Position = new(5.0f, 2.0f, 5.0f); // Camera position
+        camera.Target = new(0.0f, 2.0f, 0.0f); // Camera looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera up vector
+        camera.Fovy = 60.0f; // Camera field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera projection type
 
         Vector3 cubePosition = new(0.0f, 0.0f, 0.0f);
 
-        DisableCursor();                    // Limit cursor to relative movement inside the window
+        DisableCursor(); // Limit cursor to relative movement inside the window
 
-        SetTargetFPS(90);                   // Set our game to run at 90 frames-per-second
+        SetTargetFPS(90); // Set our game to run at 90 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
@@ -113,10 +113,10 @@ public class CoreVrSimulator : ExampleHelper
         }
 
         // De-Initialization
-        UnloadVrStereoConfig(config);   // Unload stereo config
+        UnloadVrStereoConfig(config); // Unload stereo config
 
-        UnloadRenderTexture(target);    // Unload stereo render fbo
-        UnloadShader(distortion);       // Unload distortion shader
+        UnloadRenderTexture(target); // Unload stereo render fbo
+        UnloadShader(distortion); // Unload distortion shader
 
         CloseWindow();
 

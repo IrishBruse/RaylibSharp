@@ -7,10 +7,10 @@ in vec4 fragColor;
 // Output fragment color
 out vec4 finalColor;
 
-uniform vec2 screenDims;        // Dimensions of the screen
-uniform vec2 c;                 // c.x = real, c.y = imaginary component. Equation done is z^2 + c
-uniform vec2 offset;            // Offset of the scale.
-uniform float zoom;             // Zoom of the scale.
+uniform vec2 screenDims; // Dimensions of the screen
+uniform vec2 c; // c.x = real, c.y = imaginary component. Equation done is z^2 + c
+uniform vec2 offset; // Offset of the scale.
+uniform float zoom; // Zoom of the scale.
 
 const int MAX_ITERATIONS = 255; // Max iterations to do.
 
@@ -59,7 +59,7 @@ void main()
     int iterations = 0;
     for (iterations = 0; iterations < MAX_ITERATIONS; iterations++)
     {
-        z = ComplexSquare(z) + c;  // Iterate function
+        z = ComplexSquare(z) + c; // Iterate function
 
         if (dot(z, z) > 4.0) break;
     }

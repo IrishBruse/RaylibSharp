@@ -6,14 +6,14 @@ precision mediump float;
 varying vec2 fragTexCoord;
 varying vec4 fragColor;
 
-uniform vec2 screenDims;        // Dimensions of the screen
-uniform vec2 c;                 // c.x = real, c.y = imaginary component. Equation done is z^2 + c
-uniform vec2 offset;            // Offset of the scale.
-uniform float zoom;             // Zoom of the scale.
+uniform vec2 screenDims; // Dimensions of the screen
+uniform vec2 c; // c.x = real, c.y = imaginary component. Equation done is z^2 + c
+uniform vec2 offset; // Offset of the scale.
+uniform float zoom; // Zoom of the scale.
 
 // NOTE: Maximum number of shader for-loop iterations depend on GPU,
 // for example, on RasperryPi for this examply only supports up to 60
-const int MAX_ITERATIONS = 48;  // Max iterations to do
+const int MAX_ITERATIONS = 48; // Max iterations to do
 
 // Square a complex number
 vec2 ComplexSquare(vec2 z)
@@ -60,7 +60,7 @@ void main()
     int iter = 0;
     for (int iterations = 0; iterations < 60; iterations++)
     {
-        z = ComplexSquare(z) + c;  // Iterate function
+        z = ComplexSquare(z) + c; // Iterate function
         if (dot(z, z) > 4.0) break;
 
         iter = iterations;

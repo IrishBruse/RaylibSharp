@@ -18,11 +18,11 @@ public partial class ShadersRaymarching : ExampleHelper
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shaders - raymarching shapes");
 
         Camera3D camera = new();
-        camera.Position = new(2.5f, 2.5f, 3.0f);    // Camera3D position
-        camera.Target = new(0.0f, 0.0f, 0.7f);      // Camera3D looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
-        camera.Fovy = 65.0f;                                // Camera3D field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
+        camera.Position = new(2.5f, 2.5f, 3.0f); // Camera3D position
+        camera.Target = new(0.0f, 0.0f, 0.7f); // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera3D up vector (rotation towards target)
+        camera.Fovy = 65.0f; // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera3D projection type
 
         int glslVersion = Environment.OSVersion.Platform == PlatformID.Other ? 100 : 330;
 
@@ -41,8 +41,8 @@ public partial class ShadersRaymarching : ExampleHelper
 
         float runTime = 0.0f;
 
-        DisableCursor();                    // Limit cursor to relative movement inside the window
-        SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+        DisableCursor(); // Limit cursor to relative movement inside the window
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
@@ -89,9 +89,9 @@ public partial class ShadersRaymarching : ExampleHelper
         }
 
         // De-Initialization
-        UnloadShader(shader);           // Unload shader
+        UnloadShader(shader); // Unload shader
 
-        CloseWindow();                  // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

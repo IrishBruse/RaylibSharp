@@ -10,7 +10,7 @@ public class Utility
     public static readonly string MeshMarshal = "MarshalUsing(typeof(MeshMarshaller))";
     public static readonly string ModelAnimationMarshal = "MarshalUsing(typeof(ModelAnimationMarshaller))";
 
-    public static readonly string[] Colors = {
+    public static readonly string[] Colors = [
         "RayWhite",
         "LightGray",
         "DarkGray",
@@ -37,9 +37,9 @@ public class Utility
         "Black",
         "Blank",
         "Magenta",
-    };
+    ];
 
-    public static readonly string[] Keys = {
+    public static readonly string[] Keys = [
         "Null","Apostrophe",
         "Comma","Minus",
         "Period","Slash",
@@ -92,9 +92,9 @@ public class Utility
         "S","T","U",
         "V","W","X",
         "Y","Z",
-    };
+    ];
 
-    public static readonly string[] MaterialMapIndex = {
+    public static readonly string[] MaterialMapIndex = [
         "Albedo",
         "Metalness",
         "Normal",
@@ -106,7 +106,7 @@ public class Utility
         "Irradiance",
         "Prefilter",
         "Brdf",
-    };
+    ];
 
     public static string ConvertTypeFunction(string t)
     {
@@ -144,7 +144,7 @@ public class Utility
 
     private static string HandleFunctionTypeConversions(string type)
     {
-        if (type.EndsWith("*"))
+        if (type.EndsWith('*'))
         {
             return "IntPtr";
         }

@@ -1,6 +1,6 @@
-#version 100             
-#extension GL_EXT_frag_depth : enable   // Extension required for writing depth         
-precision mediump float;                // Precision required for OpenGL ES2 (WebGL)
+#version 100
+#extension GL_EXT_frag_depth : enable   // Extension required for writing depth
+precision mediump float; // Precision required for OpenGL ES2 (WebGL)
 
 varying vec2 fragTexCoord;
 varying vec4 fragColor;

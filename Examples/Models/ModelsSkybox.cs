@@ -22,11 +22,11 @@ public partial class ModelsSkybox : ExampleHelper
 
         // Define the camera to look into our 3d woRLGL.d
         Camera3D camera = new();
-        camera.Position = new(1.0f, 1.0f, 1.0f);    // Camera3D position
-        camera.Target = new(4.0f, 1.0f, 4.0f);      // Camera3D looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                // Camera3D field-of-view Y
-        camera.Projection = CameraProjection.Perspective;             // Camera3D projection type
+        camera.Position = new(1.0f, 1.0f, 1.0f); // Camera3D position
+        camera.Target = new(4.0f, 1.0f, 4.0f); // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f; // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera3D projection type
 
         // Load skybox model
         Mesh cube = GenMeshCube(1.0f, 1.0f, 1.0f);
@@ -63,18 +63,18 @@ public partial class ModelsSkybox : ExampleHelper
             // despite texture can be successfully created.. so using PIXELFORMAT_UNCOMPRESSED_R8G8B8A8 instead of PIXELFORMAT_UNCOMPRESSED_R32G32B32A32
             skybox.Materials[0].Maps[(int)MaterialMapIndex.Cubemap].Texture = GenTextureCubemap(shdrCubemap, panorama, 1024, PixelFormat.UncompressedR8g8b8a8);
 
-            //UnloadTexture(panorama);    // Texture not required anymore, cubemap already generated
+            //UnloadTexture(panorama); // Texture not required anymore, cubemap already generated
         }
         else
         {
             Image img = LoadImage("resources/skybox.png");
-            skybox.Materials[0].Maps[(int)MaterialMapIndex.Cubemap].Texture = LoadTextureCubemap(img, CubemapLayout.AutoDetect);    // CUBEMAP_LAYOUT_PANORAMA
+            skybox.Materials[0].Maps[(int)MaterialMapIndex.Cubemap].Texture = LoadTextureCubemap(img, CubemapLayout.AutoDetect); // CUBEMAP_LAYOUT_PANORAMA
             UnloadImage(img);
         }
 
-        DisableCursor();                    // Limit cursor to relative movement inside the window
+        DisableCursor(); // Limit cursor to relative movement inside the window
 
-        SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
@@ -114,7 +114,7 @@ public partial class ModelsSkybox : ExampleHelper
                     }
                 }
 
-                UnloadDroppedFiles(droppedFiles);    // Unload filepaths from memory
+                UnloadDroppedFiles(droppedFiles); // Unload filepaths from memory
             }
 
             // Draw
@@ -159,9 +159,9 @@ public partial class ModelsSkybox : ExampleHelper
         UnloadShader(skybox.Materials[0].Shader);
         UnloadTexture(skybox.Materials[0].Maps[(int)MaterialMapIndex.Cubemap].Texture);
 
-        UnloadModel(skybox);        // Unload skybox model
+        UnloadModel(skybox); // Unload skybox model
 
-        CloseWindow();              // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }
@@ -171,7 +171,7 @@ public partial class ModelsSkybox : ExampleHelper
     {
         TextureCubemap cubemap = new();
 
-        RLGL.DisableBackfaceCulling();     // Disable backface culling to render inside the cube
+        RLGL.DisableBackfaceCulling(); // Disable backface culling to render inside the cube
 
         // STEP 1: Setup framebuffer
         uint rbo = RLGL.LoadTextureDepth(size, size, true);
@@ -205,7 +205,7 @@ public partial class ModelsSkybox : ExampleHelper
             Matrix4x4.CreateLookAt(new(0.0f,0.0f, 0.0f), new( 0.0f, 0.0f, -1.0f), new(0.0f,-1.0f,  0.0f))
         };
 
-        RLGL.Viewport(0, 0, size, size);   // Set viewport to current fbo dimensions
+        RLGL.Viewport(0, 0, size, size); // Set viewport to current fbo dimensions
 
         // Activate and enable texture for drawing to cubemap faces
         RLGL.ActiveTextureSlot(0);
@@ -235,10 +235,10 @@ public partial class ModelsSkybox : ExampleHelper
         }
 
         // STEP 3: Unload framebuffer and reset state
-        RLGL.DisableShader();          // Unbind shader
-        RLGL.DisableTexture();         // Unbind texture
-        RLGL.DisableFramebuffer();     // Unbind framebuffer
-        RLGL.UnloadFramebuffer(fbo);   // Unload framebuffer (and automatically attached depth texture/renderbuffer)
+        RLGL.DisableShader(); // Unbind shader
+        RLGL.DisableTexture(); // Unbind texture
+        RLGL.DisableFramebuffer(); // Unbind framebuffer
+        RLGL.UnloadFramebuffer(fbo); // Unload framebuffer (and automatically attached depth texture/renderbuffer)
 
         // Reset viewport dimensions to default
         RLGL.Viewport(0, 0, RLGL.GetFramebufferWidth(), RLGL.GetFramebufferHeight());

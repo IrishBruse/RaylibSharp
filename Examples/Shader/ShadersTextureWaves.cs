@@ -51,7 +51,7 @@ public partial class ShadersTextureWaves : ExampleHelper
 
         float seconds = 0.0f;
 
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
         // -------------------------------------------------------------------------------------------------------------
 
         // Main game loop
@@ -82,10 +82,10 @@ public partial class ShadersTextureWaves : ExampleHelper
         }
 
         // De-Initialization
-        UnloadShader(shader);         // Unload shader
-        UnloadTexture(texture);       // Unload texture
+        UnloadShader(shader); // Unload shader
+        UnloadTexture(texture); // Unload texture
 
-        CloseWindow();              // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

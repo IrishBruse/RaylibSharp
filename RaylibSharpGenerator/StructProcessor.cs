@@ -7,9 +7,10 @@ using System.Text.Json;
 
 public static class StructProcessor
 {
-    private static Dictionary<string, StructConfig> structConfig = new();
+    private static Dictionary<string, StructConfig> structConfig = [];
+    private static readonly JsonSerializerOptions Options = new() { ReadCommentHandling = JsonCommentHandling.Skip };
 
-    private static readonly string[] Ignore = {
+    private static readonly string[] Ignore = [
         "Vector4",
         "Vector3",
         "Vector2",
@@ -17,13 +18,13 @@ public static class StructProcessor
         "Color",
         "Matrix",
         "Rectangle",
-    };
+    ];
 
-    private static HashSet<string> generated = new();
+    private static HashSet<string> generated = [];
 
     public static void Emit(RaylibApi api)
     {
-        structConfig = JsonSerializer.Deserialize<Dictionary<string, StructConfig>>(File.ReadAllText("./StructConfig.jsonc"), new JsonSerializerOptions { ReadCommentHandling = JsonCommentHandling.Skip })!;
+        structConfig = JsonSerializer.Deserialize<Dictionary<string, StructConfig>>(File.ReadAllText("./StructConfig.jsonc"), Options)!;
 
         StringBuilder sb = new();
         foreach (Struct s in api.Structs)
@@ -199,7 +200,15 @@ public static class StructProcessor
                     type = "PixelFormat";
                 }
 
-                sb.AppendLine($"    public {type} {titleCaseName};");
+                if (config.FunctionTypeConversion.TryGetValue(titleCaseName, out string? funcType))
+                {
+                    sb.AppendLine($"    public {funcType};");
+                }
+                else
+                {
+                    sb.AppendLine($"    public {type} {titleCaseName};");
+                }
+
             }
         }
 

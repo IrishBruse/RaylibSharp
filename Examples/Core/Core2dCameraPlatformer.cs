@@ -175,11 +175,7 @@ public class Core2dCameraPlatformer : ExampleHelper
         {
             EnvItem ei = envItems[i];
             ref Vector2 p = ref player.Position;
-            if (ei.Blocking &&
-            ei.Rect.X <= p.X &&
-            ei.Rect.X + ei.Rect.Width >= p.X &&
-            ei.Rect.Y >= p.Y &&
-            ei.Rect.Y <= p.Y + (player.Speed * delta))
+            if (ei.Blocking && ei.Rect.X <= p.X && ei.Rect.X + ei.Rect.Width >= p.X && ei.Rect.Y >= p.Y && ei.Rect.Y <= p.Y + (player.Speed * delta))
             {
                 hitObstacle = true;
                 player.Speed = 0.0f;

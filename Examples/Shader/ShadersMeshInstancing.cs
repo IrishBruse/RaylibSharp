@@ -22,17 +22,17 @@ public partial class ShadersMeshInstancing : ExampleHelper
 
         // Define the camera to look into our 3d world
         Camera3D camera = new();
-        camera.Position = new(-125.0f, 125.0f, -125.0f);    // Camera3D position
-        camera.Target = new(0.0f, 0.0f, 0.0f);              // Camera3D looking at point
-        camera.Up = new(0.0f, 1.0f, 0.0f);                  // Camera3D up vector (rotation towards target)
-        camera.Fovy = 45.0f;                                        // Camera3D field-of-view Y
-        camera.Projection = CameraProjection.Perspective;                     // Camera3D projection type
+        camera.Position = new(-125.0f, 125.0f, -125.0f); // Camera3D position
+        camera.Target = new(0.0f, 0.0f, 0.0f); // Camera3D looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f); // Camera3D up vector (rotation towards target)
+        camera.Fovy = 45.0f; // Camera3D field-of-view Y
+        camera.Projection = CameraProjection.Perspective; // Camera3D projection type
 
         // Define mesh to be instanced
         Mesh cube = GenMeshCube(1.0f, 1.0f, 1.0f);
 
         // Define transforms to be uploaded to GPU for instances
-        Matrix4x4[] transforms = new Matrix4x4[MAX_INSTANCES];   // Pre-multiplied transformations passed toRLGL.Gl
+        Matrix4x4[] transforms = new Matrix4x4[MAX_INSTANCES]; // Pre-multiplied transformations passed toRLGL.Gl
 
         // Translate and rotate cubes randomly
         for (int i = 0; i < MAX_INSTANCES; i++)
@@ -72,7 +72,7 @@ public partial class ShadersMeshInstancing : ExampleHelper
         Material matDefault = LoadMaterialDefault();
         matDefault.Maps[(int)MaterialMapIndex.Albedo].Color = Blue;
 
-        SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
@@ -110,9 +110,9 @@ public partial class ShadersMeshInstancing : ExampleHelper
         }
 
         // De-Initialization
-        // RLGL.RlFree(transforms);    // Free transforms
+        // RLGL.RlFree(transforms); // Free transforms
 
-        CloseWindow();          // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

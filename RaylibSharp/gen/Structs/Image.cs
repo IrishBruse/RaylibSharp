@@ -19,7 +19,7 @@ public unsafe partial struct Image
     /// <summary> Mipmap levels, 1 by default </summary>
     public int Mipmaps;
     /// <summary> Data format (PixelFormat type) </summary>
-    public int Format;
+    public PixelFormat Format;
 }
 
 #pragma warning restore CA1711,IDE0005

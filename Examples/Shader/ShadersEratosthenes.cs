@@ -24,7 +24,7 @@ public partial class ShadersEratosthenes : ExampleHelper
         // NOTE: Defining 0 (null) for vertex shader forces usage of internal default vertex shader
         Shader shader = LoadShader(null, $"resources/shaders/glsl{glslVersion}/eratosthenes.fs");
 
-        SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
@@ -35,7 +35,7 @@ public partial class ShadersEratosthenes : ExampleHelper
             // Draw
             BeginTextureMode(target);
             {       // Enable drawing to texture
-                ClearBackground(Black);     // Clear the render texture
+                ClearBackground(Black); // Clear the render texture
 
                 // Draw a rectangle in shader mode to be used as shader canvas
                 // NOTE: RectangleF uses font white character texture coordinates,
@@ -43,11 +43,11 @@ public partial class ShadersEratosthenes : ExampleHelper
                 // do not represent full screen coordinates (space where want to apply shader)
                 DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Black);
             }
-            EndTextureMode();               // End drawing to texture (now we have a blank texture available for the shader)
+            EndTextureMode(); // End drawing to texture (now we have a blank texture available for the shader)
 
             BeginDrawing();
             {
-                ClearBackground(RayWhite);  // Clear screen background
+                ClearBackground(RayWhite); // Clear screen background
 
                 BeginShaderMode(shader);
                 {
@@ -60,10 +60,10 @@ public partial class ShadersEratosthenes : ExampleHelper
         }
 
         // De-Initialization
-        UnloadShader(shader);               // Unload shader
-        UnloadRenderTexture(target);        // Unload render texture
+        UnloadShader(shader); // Unload shader
+        UnloadRenderTexture(target); // Unload render texture
 
-        CloseWindow();                      // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

@@ -37,7 +37,7 @@ public partial class ShadersHotReloading : ExampleHelper
         float totalTime = 0.0f;
         bool shaderAutoReloading = false;
 
-        SetTargetFPS(60);                       // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
         // Main game loop
         while (!WindowShouldClose())            // Detect window close button or ESC key
@@ -111,9 +111,9 @@ public partial class ShadersHotReloading : ExampleHelper
         }
 
         // De-Initialization
-        UnloadShader(shader);           // Unload shader
+        UnloadShader(shader); // Unload shader
 
-        CloseWindow();                  // Close window and OpenGL context
+        CloseWindow(); // Close window and OpenGL context
 
         return 0;
     }

@@ -1,9 +1,9 @@
 namespace RaylibSharp;
 
-using System.Drawing;
-using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
+using System.Numerics;
+using System.Drawing;
 
 public static unsafe partial class Raylib
 {
@@ -894,11 +894,6 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "ExportImageToMemory")]
     public static partial byte* ExportImageToMemory(Image image, [MarshalAs(UnmanagedType.LPStr)] string fileType, IntPtr fileSize);
 
-    /// <summary> Export image as code file defining an array of bytes, returns true on success </summary>
-    [LibraryImport(LIB, EntryPoint = "ExportImageAsCode")]
-    [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool ExportImageAsCode(Image image, [MarshalAs(UnmanagedType.LPStr)] string fileName);
-
     /// <summary> Generate image: plain color </summary>
     [LibraryImport(LIB, EntryPoint = "GenImageColor")]
     public static partial Image GenImageColor(int width, int height, [MarshalUsing(typeof(ColorMarshaller))] Color color);
@@ -1070,7 +1065,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Draw pixel within an image </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawPixel")]
-    public static partial void ImageDrawPixel(IntPtr dst, int posX, int posY, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageDrawPixel(ref Image dst, int posX, int posY, [MarshalUsing(typeof(ColorMarshaller))] Color color);
 
     /// <summary> Draw pixel within an image (Vector version) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawPixelV")]
@@ -1118,7 +1113,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Draw a source image within a destination image (tint applied to source) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDraw")]
-    public static partial void ImageDraw(IntPtr dst, Image src, RectangleF srcRec, RectangleF dstRec, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void ImageDraw(ref Image dst, Image src, RectangleF srcRec, RectangleF dstRec, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
 
     /// <summary> Draw text (using default font) within an image (destination) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawText")]
@@ -1445,11 +1440,6 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "TextFindIndex")]
     public static partial int TextFindIndex([MarshalAs(UnmanagedType.LPStr)] string text, [MarshalAs(UnmanagedType.LPStr)] string find);
 
-    /// <summary> Get upper case version of provided string </summary>
-    [LibraryImport(LIB, EntryPoint = "TextToUpper")]
-    [return: MarshalAs(UnmanagedType.LPStr)]
-    public static partial string TextToUpper([MarshalAs(UnmanagedType.LPStr)] string text);
-
     /// <summary> Get lower case version of provided string </summary>
     [LibraryImport(LIB, EntryPoint = "TextToLower")]
     [return: MarshalAs(UnmanagedType.LPStr)]
@@ -1704,7 +1694,7 @@ public static unsafe partial class Raylib
     public static partial void SetModelMeshMaterial(IntPtr model, int meshId, int materialId);
 
     /// <summary> Load model animations from file </summary>
-    [return: MarshalUsing(CountElementName = "animCount")]
+[return: MarshalUsing(CountElementName = "animCount")]
     [LibraryImport(LIB, EntryPoint = "LoadModelAnimations")]
     public static partial ModelAnimation[] LoadModelAnimations([MarshalAs(UnmanagedType.LPStr)] string fileName, ref uint animCount);
 
@@ -2024,3 +2014,4 @@ public static unsafe partial class Raylib
     public static partial void DetachAudioMixedProcessor(AudioCallback processor);
 
 }
+
