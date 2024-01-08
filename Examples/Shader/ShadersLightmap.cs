@@ -9,7 +9,7 @@ using static RaylibSharp.Raylib;
 public partial class ShadersLightmap : ExampleHelper
 {
 
-    private const int MAP_SIZE = 10;
+    const int MAP_SIZE = 10;
 
     // Program main entry point
     public static int Example()

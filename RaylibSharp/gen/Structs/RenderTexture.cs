@@ -2,9 +2,9 @@ namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Runtime.InteropServices;
-using System.Numerics;
 using System.Drawing;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> RenderTexture, fbo for texture rendering </summary>
@@ -20,7 +20,7 @@ public unsafe partial struct RenderTexture
 
 /// <summary> RenderTexture, fbo for texture rendering </summary>
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct UnmanagedRenderTexture
+unsafe struct UnmanagedRenderTexture
 {
     /// <summary> OpenGL framebuffer object id </summary>
     public uint Id;

@@ -141,7 +141,7 @@ public static class ExamplePicker
         }
     }
 
-    private static float Lerp(float firstFloat, float secondFloat, float by)
+    static float Lerp(float firstFloat, float secondFloat, float by)
     {
         return (firstFloat * (1 - by)) + (secondFloat * by);
     }

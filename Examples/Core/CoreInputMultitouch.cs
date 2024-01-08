@@ -4,7 +4,7 @@ using static RaylibSharp.Raylib;
 
 public class CoreInputMultitouch : ExampleHelper
 {
-    private static readonly int MAX_TOUCH_POINTS = 10;
+    static readonly int MAX_TOUCH_POINTS = 10;
 
     // Program main entry point
     public static int Example()

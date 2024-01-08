@@ -9,7 +9,7 @@ using Camera = RaylibSharp.Camera3D;
 
 public class CoreVrSimulator : ExampleHelper
 {
-    private static readonly int GLSL_VERSION = 330;
+    static readonly int GLSL_VERSION = 330;
 
     // Program main entry point
     public static int Example()
@@ -47,15 +47,15 @@ public class CoreVrSimulator : ExampleHelper
         Shader distortion = LoadShader(null, $"resources/distortion{GLSL_VERSION}.fs");
 
         // Update distortion shader with lens and distortion-scale parameters
-        SetShaderValue(distortion, GetShaderLocation(distortion, "leftLensCenter"), ref config.LeftLensCenter, ShaderUniformDataType.ShaderUniformVec2);
-        SetShaderValue(distortion, GetShaderLocation(distortion, "rightLensCenter"), ref config.RightLensCenter, ShaderUniformDataType.ShaderUniformVec2);
-        SetShaderValue(distortion, GetShaderLocation(distortion, "leftScreenCenter"), ref config.LeftScreenCenter, ShaderUniformDataType.ShaderUniformVec2);
-        SetShaderValue(distortion, GetShaderLocation(distortion, "rightScreenCenter"), ref config.RightScreenCenter, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(distortion, GetShaderLocation(distortion, "leftLensCenter"), config.LeftLensCenter, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(distortion, GetShaderLocation(distortion, "rightLensCenter"), config.RightLensCenter, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(distortion, GetShaderLocation(distortion, "leftScreenCenter"), config.LeftScreenCenter, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(distortion, GetShaderLocation(distortion, "rightScreenCenter"), config.RightScreenCenter, ShaderUniformDataType.ShaderUniformVec2);
 
-        SetShaderValue(distortion, GetShaderLocation(distortion, "scale"), ref config.Scale, ShaderUniformDataType.ShaderUniformVec2);
-        SetShaderValue(distortion, GetShaderLocation(distortion, "scaleIn"), ref config.ScaleIn, ShaderUniformDataType.ShaderUniformVec2);
-        SetShaderValue(distortion, GetShaderLocation(distortion, "deviceWarpParam"), ref device.LensDistortionValues, ShaderUniformDataType.ShaderUniformVec4);
-        SetShaderValue(distortion, GetShaderLocation(distortion, "chromaAbParam"), ref device.ChromaAbCorrection, ShaderUniformDataType.ShaderUniformVec4);
+        SetShaderValue(distortion, GetShaderLocation(distortion, "scale"), config.Scale, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(distortion, GetShaderLocation(distortion, "scaleIn"), config.ScaleIn, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(distortion, GetShaderLocation(distortion, "deviceWarpParam"), device.LensDistortionValues, ShaderUniformDataType.ShaderUniformVec4);
+        SetShaderValue(distortion, GetShaderLocation(distortion, "chromaAbParam"), device.ChromaAbCorrection, ShaderUniformDataType.ShaderUniformVec4);
 
         // Initialize framebuffer for stereo rendering
         // NOTE: Screen size should match HMD aspect ratio

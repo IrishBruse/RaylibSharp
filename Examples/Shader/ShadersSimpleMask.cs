@@ -77,7 +77,7 @@ public partial class ShadersSimpleMask : ExampleHelper
             rotation.Z -= 0.0025f;
 
             // Send frames counter to shader for animation
-            SetShaderValue(shader, shaderFrame, ref framesCounter, ShaderUniformDataType.ShaderUniformInt);
+            SetShaderValue(shader, shaderFrame, framesCounter, ShaderUniformDataType.ShaderUniformInt);
 
             // Rotate one of the models
             model1.Transform = Matrix4x4.CreateRotationX(rotation.X) * Matrix4x4.CreateRotationY(rotation.Y) * Matrix4x4.CreateRotationZ(rotation.Z);

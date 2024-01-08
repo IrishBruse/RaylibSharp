@@ -7,7 +7,7 @@ using static RaylibSharp.Raylib;
 
 public partial class ShadersMeshInstancing : ExampleHelper
 {
-    private const int MAX_INSTANCES = 10000;
+    const int MAX_INSTANCES = 10000;
 
     // Program main entry point
     public static int Example()
@@ -55,7 +55,7 @@ public partial class ShadersMeshInstancing : ExampleHelper
         // Set shader value: ambient light level
         int ambientLoc = GetShaderLocation(shader, "ambient");
         Vector4 color = new(0.2f, 0.2f, 0.2f, 1.0f);
-        SetShaderValue(shader, ambientLoc, ref color, ShaderUniformDataType.ShaderUniformVec4);
+        SetShaderValue(shader, ambientLoc, color, ShaderUniformDataType.ShaderUniformVec4);
 
         // Create one light
         RlLights.CreateLight(LightType.LightDirectional, new(50.0f, 50.0f, 0.0f), Vector3.Zero, White, shader);
@@ -82,7 +82,7 @@ public partial class ShadersMeshInstancing : ExampleHelper
 
             // Update the light shader with the camera view position
             Vector3 cameraPos = new(camera.Position.X, camera.Position.Y, camera.Position.Z);
-            SetShaderValue(shader, shader.Locs[(int)ShaderLocationIndex.ShaderLocVectorView], ref cameraPos, ShaderUniformDataType.ShaderUniformVec3);
+            SetShaderValue(shader, shader.Locs[(int)ShaderLocationIndex.ShaderLocVectorView], cameraPos, ShaderUniformDataType.ShaderUniformVec3);
 
             // Draw
             BeginDrawing();

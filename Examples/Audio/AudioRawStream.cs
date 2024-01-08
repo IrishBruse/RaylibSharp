@@ -7,23 +7,23 @@ using static RaylibSharp.Raylib;
 
 public partial class AudioRawStream : ExampleHelper
 {
-    private static readonly int MAX_SAMPLES = 512;
-    private static readonly int MAX_SAMPLES_PER_UPDATE = 4096;
+    static readonly int MAX_SAMPLES = 512;
+    static readonly int MAX_SAMPLES_PER_UPDATE = 4096;
 
     // Cycles per second (hz)
-    private static float frequency = 440.0f;
+    static float frequency = 440.0f;
 
     // Audio frequency, for smoothing
-    private static float audioFrequency = 440.0f;
+    static float audioFrequency = 440.0f;
 
     // Previous value, used to test if sine needs to be rewritten, and to smoothly modulate frequency
-    private static float oldFrequency = 1.0f;
+    static float oldFrequency = 1.0f;
 
     // Index for audio rendering
-    private static float sineIdx;
+    static float sineIdx;
 
     // Audio input processing callback
-    private static unsafe void AudioInputCallback(IntPtr buffer, uint frames)
+    static unsafe void AudioInputCallback(IntPtr buffer, uint frames)
     {
         audioFrequency = frequency + ((audioFrequency - frequency) * 0.95f);
         audioFrequency += 1.0f;

@@ -41,9 +41,9 @@ public partial class ModelsSkybox : ExampleHelper
         skybox.Materials[0].Shader = LoadShader($"resources/shaders/glsl{glslVersion}/skybox.vs", $"resources/shaders/gls{glslVersion}/skybox.fs");
 
         int matMap = (int)MaterialMapIndex.Cubemap;
-        SetShaderValue(skybox.Materials[0].Shader, GetShaderLocation(skybox.Materials[0].Shader, "environmentMap"), ref matMap, ShaderUniformDataType.ShaderUniformInt);
-        SetShaderValue(skybox.Materials[0].Shader, GetShaderLocation(skybox.Materials[0].Shader, "doGamma"), ref useHDR, ShaderUniformDataType.ShaderUniformInt);
-        SetShaderValue(skybox.Materials[0].Shader, GetShaderLocation(skybox.Materials[0].Shader, "vflipped"), ref useHDR, ShaderUniformDataType.ShaderUniformInt);
+        SetShaderValue(skybox.Materials[0].Shader, GetShaderLocation(skybox.Materials[0].Shader, "environmentMap"), matMap, ShaderUniformDataType.ShaderUniformInt);
+        SetShaderValue(skybox.Materials[0].Shader, GetShaderLocation(skybox.Materials[0].Shader, "doGamma"), useHDR, ShaderUniformDataType.ShaderUniformInt);
+        SetShaderValue(skybox.Materials[0].Shader, GetShaderLocation(skybox.Materials[0].Shader, "vflipped"), useHDR, ShaderUniformDataType.ShaderUniformInt);
 
         // Load cubemap shader and setup required shader locations
         Shader shdrCubemap = LoadShader($"resources/shaders/glsl{glslVersion}/cubemap.vs", $"resources/shaders/glsl{glslVersion}/cubemap.fs");
@@ -167,7 +167,7 @@ public partial class ModelsSkybox : ExampleHelper
     }
 
     // Generate cubemap texture from HDR texture
-    private static TextureCubemap GenTextureCubemap(Shader shader, TextureCubemap panorama, int size, PixelFormat format)
+    static TextureCubemap GenTextureCubemap(Shader shader, TextureCubemap panorama, int size, PixelFormat format)
     {
         TextureCubemap cubemap = new();
 

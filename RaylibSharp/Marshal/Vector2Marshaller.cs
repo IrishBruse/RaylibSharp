@@ -4,7 +4,7 @@ using System.Numerics;
 using System.Runtime.InteropServices.Marshalling;
 
 [CustomMarshaller(typeof(Vector2), MarshalMode.ManagedToUnmanagedIn, typeof(Vector2Marshaller))]
-internal static unsafe class Vector2Marshaller
+static unsafe class Vector2Marshaller
 {
     public static UnmanagedVector2 ConvertToUnmanaged(Vector2 managed)
     {
@@ -16,7 +16,7 @@ internal static unsafe class Vector2Marshaller
     }
 }
 
-internal struct UnmanagedVector2
+struct UnmanagedVector2
 {
     public float X;
     public float Y;

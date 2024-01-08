@@ -4,8 +4,8 @@ using System.Text;
 
 public class FunctionProcessor
 {
-    private static FunctionConfig config;
-    private const bool DebugOutput = false;
+    static FunctionConfig config;
+    const bool DebugOutput = false;
 
     public static void Emit(RaylibApi api)
     {
@@ -91,7 +91,7 @@ public class FunctionProcessor
         File.WriteAllText(Path.Join("../RaylibSharp/gen/", api.ClassName + ".cs"), sb.ToString());
     }
 
-    private static string ConvertFunctionToUseOverloading(string name)
+    static string ConvertFunctionToUseOverloading(string name)
     {
         if (name.EndsWith('V') && char.IsAsciiLetterLower(name[^2]))
         {
@@ -109,7 +109,7 @@ public class FunctionProcessor
         return name;
     }
 
-    private static string EmitParameter(Param p, Function f)
+    static string EmitParameter(Param p, Function f)
     {
         if (config.FunctionTypeConversion.TryGetValue(f.Name, out Dictionary<string, string>? conversion))
         {

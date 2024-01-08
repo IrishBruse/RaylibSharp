@@ -2,9 +2,9 @@ namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Runtime.InteropServices;
-using System.Numerics;
 using System.Drawing;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> RayCollision, ray hit information </summary>
@@ -22,7 +22,7 @@ public unsafe partial struct RayCollision
 
 /// <summary> RayCollision, ray hit information </summary>
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct UnmanagedRayCollision
+unsafe struct UnmanagedRayCollision
 {
     /// <summary> Did the ray hit something? </summary>
     public bool Hit;

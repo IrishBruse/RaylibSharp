@@ -5,13 +5,13 @@ using static RaylibSharp.Raylib;
 public partial class AudioStreamEffects : ExampleHelper
 {
     // Required delay effect variables
-    private static int delayBufferSize = 48000 * 2;
+    static int delayBufferSize = 48000 * 2;
 
     // Allocate buffer for the delay effect
     // 1 second delay (device sampleRate*channels)
-    private static float[] delayBuffer = new float[delayBufferSize];
-    private static uint delayReadIndex = 2;
-    private static uint delayWriteIndex;
+    static float[] delayBuffer = new float[delayBufferSize];
+    static uint delayReadIndex = 2;
+    static uint delayWriteIndex;
 
     // Program main entry point
     public static int Example()
@@ -132,7 +132,7 @@ public partial class AudioStreamEffects : ExampleHelper
 
     // Module Functions Definition
     // Audio effect: lowpass filter
-    private static unsafe void AudioProcessEffectLPF(nint buffer, uint frames)
+    static unsafe void AudioProcessEffectLPF(nint buffer, uint frames)
     {
         float[] low = new float[2];
         const float cutoff = 70.0f / 44100.0f; // 70 Hz lowpass filter
@@ -149,7 +149,7 @@ public partial class AudioStreamEffects : ExampleHelper
     }
 
     // Audio effect: delay
-    private static unsafe void AudioProcessEffectDelay(nint buffer, uint frames)
+    static unsafe void AudioProcessEffectDelay(nint buffer, uint frames)
     {
         for (uint i = 0; i < frames * 2; i += 2)
         {

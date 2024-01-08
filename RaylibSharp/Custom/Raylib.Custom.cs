@@ -1,5 +1,6 @@
 namespace RaylibSharp;
 
+using System.Drawing;
 using System.Numerics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -8,7 +9,7 @@ using System.Runtime.Versioning;
 
 public static unsafe partial class Raylib
 {
-    private const string LIB = "raylib";
+    const string LIB = "raylib";
 
     /// <summary> Initialize window and OpenGL context </summary>
     [LibraryImport(LIB, EntryPoint = "InitWindow")]
@@ -31,7 +32,7 @@ public static unsafe partial class Raylib
         }
     }
 
-    private static void LoadIcon()
+    static void LoadIcon()
     {
         Assembly assembly = Assembly.GetEntryAssembly()!;
 
@@ -40,7 +41,7 @@ public static unsafe partial class Raylib
             return;
         }
 
-        List<string> list = assembly.GetManifestResourceNames().ToList();
+        List<string> list = [.. assembly.GetManifestResourceNames().ToList()];
         string? iconResourcePath = list.FirstOrDefault(x => x!.EndsWith("Icon.png"), null);
 
         Stream logoStream;
@@ -91,6 +92,34 @@ public static unsafe partial class Raylib
         traceLogCallback = callback;
     }
 
+    /// <summary> Load shader from file and bind default locations </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Shader LoadVertexShader(string path)
+    {
+        return LoadShader(path, null);
+    }
+
+    /// <summary> Load shader from file and bind default locations </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Shader LoadFragmentShader(string path)
+    {
+        return LoadShader(null, path);
+    }
+
+    /// <summary> Load shader from file and bind default locations </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Shader LoadVertexShaderFromMemory(string code)
+    {
+        return LoadShaderFromMemory(code, null);
+    }
+
+    /// <summary> Load shader from file and bind default locations </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Shader LoadFragmentShaderFromMemory(string code)
+    {
+        return LoadShaderFromMemory(null, code);
+    }
+
     /// <summary> Set custom trace log </summary>
     [UnsupportedOSPlatform("browser")]
     [LibraryImport(LIB, EntryPoint = "SetTraceLogCallback")]
@@ -98,33 +127,33 @@ public static unsafe partial class Raylib
 
     /// <summary> Set shader uniform value </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
-    public static partial void SetShaderValue(Shader shader, int locIndex, ref Vector2 value, ShaderUniformDataType uniformType);
+    public static partial void SetShaderValue(Shader shader, int locIndex, Vector2 value, ShaderUniformDataType uniformType = ShaderUniformDataType.ShaderUniformVec2);
 
     /// <summary> Set shader uniform value </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
-    public static partial void SetShaderValue(Shader shader, int locIndex, ref Vector3 value, ShaderUniformDataType uniformType);
+    public static partial void SetShaderValue(Shader shader, int locIndex, Vector3 value, ShaderUniformDataType uniformType = ShaderUniformDataType.ShaderUniformVec3);
 
     /// <summary> Set shader uniform value </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
-    public static partial void SetShaderValue(Shader shader, int locIndex, ref Vector4 value, ShaderUniformDataType uniformType);
+    public static partial void SetShaderValue(Shader shader, int locIndex, Vector4 value, ShaderUniformDataType uniformType = ShaderUniformDataType.ShaderUniformVec4);
 
     /// <summary> Set shader uniform value </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
-    public static partial void SetShaderValue(Shader shader, int locIndex, ref float value, ShaderUniformDataType uniformType);
+    public static partial void SetShaderValue(Shader shader, int locIndex, float value, ShaderUniformDataType uniformType = ShaderUniformDataType.ShaderUniformFloat);
 
     /// <summary> Set shader uniform value </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
-    public static partial void SetShaderValue(Shader shader, int locIndex, ref int value, ShaderUniformDataType uniformType);
+    public static partial void SetShaderValue(Shader shader, int locIndex, int value, ShaderUniformDataType uniformType = ShaderUniformDataType.ShaderUniformInt);
 
     /// <summary> Set shader uniform value </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
-    public static partial void SetShaderValue(Shader shader, int locIndex, [MarshalAs(UnmanagedType.I1)] ref bool value, ShaderUniformDataType uniformType);
+    public static partial void SetShaderValue(Shader shader, int locIndex, [MarshalAs(UnmanagedType.I1)] bool value, ShaderUniformDataType uniformType = ShaderUniformDataType.ShaderUniformInt);
 
     /// <summary> Set shader uniform value </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetShaderValue<T>(Shader shader, int locIndex, ref T value, ShaderUniformDataType uniformType) where T : Enum
+    public static void SetShaderValue<T>(Shader shader, int locIndex, T value, ShaderUniformDataType uniformType) where T : Enum
     {
-        SetShaderValue(shader, locIndex, ref value, uniformType);
+        SetShaderValue(shader, locIndex, value, uniformType);
     }
 
     /// <summary> Update GPU texture with new data </summary>
@@ -132,6 +161,16 @@ public static unsafe partial class Raylib
     public static void UpdateTexture<T>(Texture texture, T[] pixels) where T : unmanaged
     {
         UpdateTexture(texture, (ReadOnlySpan<T>)pixels);
+    }
+
+    /// <summary> Update GPU texture with new data </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void UpdateTexture(Texture texture, Color[] pixels)
+    {
+        fixed (Color* ptr = pixels)
+        {
+            UpdateTexture(texture, (nint)ptr);
+        }
     }
 
     /// <summary> Update GPU texture with new data </summary>

@@ -7,9 +7,9 @@ using static RaylibSharp.Raylib;
 
 public partial class AudioModulePlaying : ExampleHelper
 {
-    private static readonly int MAX_CIRCLES = 64;
+    static readonly int MAX_CIRCLES = 64;
 
-    private sealed class CircleWave
+    sealed class CircleWave
     {
         public Vector2 position;
         public float radius;

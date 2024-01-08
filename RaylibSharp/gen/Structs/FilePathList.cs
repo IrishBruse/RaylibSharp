@@ -2,9 +2,9 @@ namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Runtime.InteropServices;
-using System.Numerics;
 using System.Drawing;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> File path list </summary>
@@ -22,7 +22,7 @@ public unsafe partial struct FilePathList
 
 /// <summary> File path list </summary>
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct UnmanagedFilePathList
+unsafe struct UnmanagedFilePathList
 {
     /// <summary> Filepaths max entries </summary>
     public uint Capacity;

@@ -2,9 +2,9 @@ namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Runtime.InteropServices;
-using System.Numerics;
 using System.Drawing;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> ModelAnimation </summary>
@@ -25,7 +25,7 @@ public unsafe partial struct ModelAnimation
 
 /// <summary> ModelAnimation </summary>
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct UnmanagedModelAnimation
+unsafe struct UnmanagedModelAnimation
 {
     /// <summary> Number of bones </summary>
     public int BoneCount;

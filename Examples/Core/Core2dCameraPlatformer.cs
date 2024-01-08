@@ -8,9 +8,9 @@ using static RaylibSharp.Raylib;
 
 public class Core2dCameraPlatformer : ExampleHelper
 {
-    private static readonly int G = 400;
-    private static readonly float PLAYER_JUMP_SPD = 350.0f;
-    private static readonly float PLAYER_HOR_SPD = 200.0f;
+    static readonly int G = 400;
+    static readonly float PLAYER_JUMP_SPD = 350.0f;
+    static readonly float PLAYER_HOR_SPD = 200.0f;
 
     public class Player
     {
@@ -19,18 +19,11 @@ public class Core2dCameraPlatformer : ExampleHelper
         public bool CanJump;
     }
 
-    public class EnvItem
+    public class EnvItem(RectangleF rect, bool blocking, Color color)
     {
-        public RectangleF Rect;
-        public bool Blocking;
-        public Color Color;
-
-        public EnvItem(RectangleF rect, bool blocking, Color color)
-        {
-            Rect = rect;
-            Blocking = blocking;
-            Color = color;
-        }
+        public RectangleF Rect = rect;
+        public bool Blocking = blocking;
+        public Color Color = color;
     }
 
     // Program main entry point
@@ -152,7 +145,7 @@ public class Core2dCameraPlatformer : ExampleHelper
         return 0;
     }
 
-    private static void UpdatePlayer(Player player, EnvItem[] envItems, int envItemsLength, float delta)
+    static void UpdatePlayer(Player player, EnvItem[] envItems, int envItemsLength, float delta)
     {
         if (IsKeyDown(Key.Left))
         {
@@ -195,13 +188,13 @@ public class Core2dCameraPlatformer : ExampleHelper
         }
     }
 
-    private static void UpdateCameraCenter(ref Camera2D camera, Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height)
+    static void UpdateCameraCenter(ref Camera2D camera, Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height)
     {
         camera.Offset = new(width / 2.0f, height / 2.0f);
         camera.Target = player.Position;
     }
 
-    private static void UpdateCameraCenterInsideMap(ref Camera2D camera, Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height)
+    static void UpdateCameraCenterInsideMap(ref Camera2D camera, Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height)
     {
         camera.Target = player.Position;
         camera.Offset = new(width / 2.0f, height / 2.0f);
@@ -240,7 +233,7 @@ public class Core2dCameraPlatformer : ExampleHelper
         }
     }
 
-    private static void UpdateCameraCenterSmoothFollow(ref Camera2D camera, Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height)
+    static void UpdateCameraCenterSmoothFollow(ref Camera2D camera, Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height)
     {
         const float minSpeed = 30;
         const float minEffectLength = 10;
@@ -257,11 +250,11 @@ public class Core2dCameraPlatformer : ExampleHelper
         }
     }
 
-    private static float evenOutTarget;
-    private static float evenOutSpeed = 700;
-    private static bool eveningOut;
+    static float evenOutTarget;
+    static float evenOutSpeed = 700;
+    static bool eveningOut;
 
-    private static void UpdateCameraEvenOutOnLanding(ref Camera2D camera, Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height)
+    static void UpdateCameraEvenOutOnLanding(ref Camera2D camera, Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height)
     {
 
         camera.Offset = new(width / 2.0f, height / 2.0f);
@@ -300,7 +293,7 @@ public class Core2dCameraPlatformer : ExampleHelper
         }
     }
 
-    private static void UpdateCameraPlayerBoundsPush(ref Camera2D camera, Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height)
+    static void UpdateCameraPlayerBoundsPush(ref Camera2D camera, Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height)
     {
         Vector2 bbox = new(0.2f, 0.2f);
 
@@ -329,5 +322,5 @@ public class Core2dCameraPlatformer : ExampleHelper
         }
     }
 
-    private delegate void CameraAction(ref Camera2D camera, Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height);
+    delegate void CameraAction(ref Camera2D camera, Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height);
 }

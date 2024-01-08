@@ -10,7 +10,7 @@ using static RaylibSharp.Raylib;
 public partial class ShadersHybridRender : ExampleHelper
 {
     // Declare custom Structs
-    private struct RayLocs
+    struct RayLocs
     {
         public int camPos;
         public int camDir;
@@ -45,7 +45,7 @@ public partial class ShadersHybridRender : ExampleHelper
 
         // Transfer screenCenter position to shader. Which is used to calculate ray direction.
         Vector2 screenCenter = new(screenWidth / 2.0f, screenHeight / 2.0f);
-        SetShaderValue(shdrRaymarch, marchLocs.screenCenter, ref screenCenter, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(shdrRaymarch, marchLocs.screenCenter, screenCenter, ShaderUniformDataType.ShaderUniformVec2);
 
         // Use Customized function to create writable depth texture buffer
         RenderTexture target = LoadRenderTextureDepthTex(screenWidth, screenHeight);
@@ -72,11 +72,11 @@ public partial class ShadersHybridRender : ExampleHelper
             UpdateCamera(ref camera, CameraMode.Orbital);
 
             // Update Camera3D Postion in the ray march shader.
-            SetShaderValue(shdrRaymarch, marchLocs.camPos, ref camera.Position, ShaderUniformDataType.ShaderUniformVec3);
+            SetShaderValue(shdrRaymarch, marchLocs.camPos, camera.Position, ShaderUniformDataType.ShaderUniformVec3);
 
             // Update Camera3D Looking Vector. Vector length determines FOV.
             Vector3 camDir = Vector3.Multiply(Vector3.Normalize(Vector3.Subtract(camera.Target, camera.Position)), (float)camDist);
-            SetShaderValue(shdrRaymarch, marchLocs.camDir, ref camDir, ShaderUniformDataType.ShaderUniformVec3);
+            SetShaderValue(shdrRaymarch, marchLocs.camDir, camDir, ShaderUniformDataType.ShaderUniformVec3);
 
             // Draw
             // Draw into our custom render texture (framebuffer)
@@ -131,7 +131,7 @@ public partial class ShadersHybridRender : ExampleHelper
 
     // Define custom functions required for the example
     // Load custom render texture, create a writable depth texture buffer
-    private static RenderTexture LoadRenderTextureDepthTex(int width, int height)
+    static RenderTexture LoadRenderTextureDepthTex(int width, int height)
     {
         RenderTexture target = new();
 
@@ -176,7 +176,7 @@ public partial class ShadersHybridRender : ExampleHelper
     }
 
     // Unload render texture from GPU memory (VRAM)
-    private static void UnloadRenderTextureDepthTex(RenderTexture target)
+    static void UnloadRenderTextureDepthTex(RenderTexture target)
     {
         if (target.Id > 0)
         {

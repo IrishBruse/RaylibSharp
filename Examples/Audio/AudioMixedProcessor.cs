@@ -6,11 +6,11 @@ using static RaylibSharp.Raylib;
 
 public partial class AudioMixedProcessor : ExampleHelper
 {
-    private static float exponent = 1.0f; // Audio exponentiation value
-    private static float[] averageVolume = new float[400]; // Average volume history
+    static float exponent = 1.0f; // Audio exponentiation value
+    static float[] averageVolume = new float[400]; // Average volume history
 
     // Audio processing function
-    private static unsafe void ProcessAudio(IntPtr buffer, uint frames)
+    static unsafe void ProcessAudio(IntPtr buffer, uint frames)
     {
         float* samples = (float*)buffer; // Samples internally stored as <float>s
         float average = 0.0f; // Temporary average volume

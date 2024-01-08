@@ -7,7 +7,7 @@ using static RaylibSharp.Raylib;
 public class CoreCustomLogging : ExampleHelper
 {
     // Custom logging function
-    private static void CustomLog(TraceLogLevel msgType, string text)
+    static void CustomLog(TraceLogLevel msgType, string text)
     {
         Console.Write(DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
 

@@ -6,8 +6,7 @@ using RaylibSharp.GL;
 
 [CustomMarshaller(typeof(VertexBuffer), MarshalMode.ManagedToUnmanagedIn, typeof(VertexBufferMarshaller))]
 [CustomMarshaller(typeof(VertexBuffer), MarshalMode.ManagedToUnmanagedOut, typeof(VertexBufferMarshaller))]
-// TODO: might not be fully accurate yet improve implementation
-internal static unsafe class VertexBufferMarshaller
+static unsafe class VertexBufferMarshaller
 {
     public static UnmanagedVertexBuffer ConvertToUnmanaged(VertexBuffer managed)
     {

@@ -2,9 +2,9 @@ namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Runtime.InteropServices;
-using System.Numerics;
 using System.Drawing;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> Font, font texture and GlyphInfo array data </summary>
@@ -27,7 +27,7 @@ public unsafe partial struct Font
 
 /// <summary> Font, font texture and GlyphInfo array data </summary>
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct UnmanagedFont
+unsafe struct UnmanagedFont
 {
     /// <summary> Base size (default chars height) </summary>
     public int BaseSize;

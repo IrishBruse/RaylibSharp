@@ -37,7 +37,7 @@ public partial class ShadersRaymarching : ExampleHelper
         int resolutionLoc = GetShaderLocation(shader, "resolution");
 
         Vector2 screenSize = new(screenWidth, screenHeight);
-        SetShaderValue(shader, resolutionLoc, ref screenSize, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(shader, resolutionLoc, screenSize, ShaderUniformDataType.ShaderUniformVec2);
 
         float runTime = 0.0f;
 
@@ -57,15 +57,15 @@ public partial class ShadersRaymarching : ExampleHelper
             runTime += deltaTime;
 
             // Set shader required uniform values
-            SetShaderValue(shader, viewEyeLoc, ref cameraPos, ShaderUniformDataType.ShaderUniformVec3);
-            SetShaderValue(shader, viewCenterLoc, ref cameraTarget, ShaderUniformDataType.ShaderUniformVec3);
-            SetShaderValue(shader, runTimeLoc, ref runTime, ShaderUniformDataType.ShaderUniformFloat);
+            SetShaderValue(shader, viewEyeLoc, cameraPos, ShaderUniformDataType.ShaderUniformVec3);
+            SetShaderValue(shader, viewCenterLoc, cameraTarget, ShaderUniformDataType.ShaderUniformVec3);
+            SetShaderValue(shader, runTimeLoc, runTime, ShaderUniformDataType.ShaderUniformFloat);
 
             // Check if screen is resized
             if (IsWindowResized())
             {
                 Vector2 resolution = new(GetScreenWidth(), GetScreenHeight());
-                SetShaderValue(shader, resolutionLoc, ref resolution, ShaderUniformDataType.ShaderUniformVec2);
+                SetShaderValue(shader, resolutionLoc, resolution, ShaderUniformDataType.ShaderUniformVec2);
             }
 
             // Draw

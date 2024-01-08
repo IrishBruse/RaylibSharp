@@ -7,10 +7,10 @@ using static RaylibSharp.Raylib;
 
 public partial class ShadersPaletteSwitch : ExampleHelper
 {
-    private const int MAX_PALETTES = 3;
-    private const int COLORS_PER_PALETTE = 8;
-    private const int VALUES_PER_COLOR = 3;
-    private static byte[][] palettes = {
+    const int MAX_PALETTES = 3;
+    const int COLORS_PER_PALETTE = 8;
+    const int VALUES_PER_COLOR = 3;
+    static byte[][] palettes = {
         new byte[] {   // 3-BIT RGB
             0, 0, 0,
             255, 0, 0,
@@ -42,7 +42,7 @@ public partial class ShadersPaletteSwitch : ExampleHelper
             255, 245, 247
         }
     };
-    private static string[] paletteText = new string[]{
+    static string[] paletteText = new string[]{
         "3-BIT RGB",
         "AMMO-8 (GameBoy-like)",
         "RKBV (2-strip film)"

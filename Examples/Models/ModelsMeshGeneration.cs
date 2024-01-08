@@ -6,7 +6,7 @@ using static RaylibSharp.Raylib;
 
 public partial class ModelsMeshGeneration : ExampleHelper
 {
-    private const int NUM_MODELS = 9;
+    const int NUM_MODELS = 9;
 
     // Program main entry point
     public static int Example()
@@ -146,7 +146,7 @@ public partial class ModelsMeshGeneration : ExampleHelper
     }
 
     // Generate a simple triangle mesh from code
-    private static Mesh GenMeshCustom()
+    static Mesh GenMeshCustom()
     {
         Mesh mesh = new();
         mesh.TriangleCount = 1;

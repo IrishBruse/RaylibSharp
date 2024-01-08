@@ -84,7 +84,7 @@ public static unsafe partial class Raylib
         }
     }
 
-    private static double Vector3Angle(Vector3 vector1, Vector3 vector2)
+    static double Vector3Angle(Vector3 vector1, Vector3 vector2)
     {
         double sin = (vector1.X * vector2.Y) - (vector2.X * vector1.Y);
         double cos = (vector1.X * vector2.X) + (vector1.Y * vector2.Y);
@@ -92,7 +92,7 @@ public static unsafe partial class Raylib
         return Math.Atan2(sin, cos) * (180 / Math.PI);
     }
 
-    private static Vector3 Vector3RotateByAxisAngle(Vector3 vector, Vector3 axis, float angle)
+    static Vector3 Vector3RotateByAxisAngle(Vector3 vector, Vector3 axis, float angle)
     {
         Quaternion rotation = Quaternion.CreateFromAxisAngle(axis, angle);
         return Vector3.Transform(vector, rotation);

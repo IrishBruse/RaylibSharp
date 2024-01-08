@@ -7,9 +7,9 @@ using static RaylibSharp.Raylib;
 
 public class CoreStorageValues : ExampleHelper
 {
-    private const int STORAGE_POSITION_SCORE = 0;
-    private const int STORAGE_POSITION_HISCORE = 1;
-    private const string STORAGE_DATA_FILE = "storage.data";
+    const int STORAGE_POSITION_SCORE = 0;
+    const int STORAGE_POSITION_HISCORE = 1;
+    const string STORAGE_DATA_FILE = "storage.data";
 
     // Program main entry point
     public static int Example()
@@ -75,7 +75,7 @@ public class CoreStorageValues : ExampleHelper
 
     // Save integer value to storage file (to defined position)
     // NOTE: Storage positions is directly related to file memory layout (4 bytes each integer)
-    private static bool SaveStorageValue(int position, int value)
+    static bool SaveStorageValue(int position, int value)
     {
         try
         {
@@ -93,7 +93,7 @@ public class CoreStorageValues : ExampleHelper
 
     // Load integer value from storage file (from defined position)
     // NOTE: If requested position could not be found, value 0 is returned
-    private static int LoadStorageValue(int position)
+    static int LoadStorageValue(int position)
     {
         if (!File.Exists(STORAGE_DATA_FILE))
         {

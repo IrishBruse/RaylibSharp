@@ -6,7 +6,7 @@ using static RaylibSharp.Raylib;
 
 public class Core2dCamera : ExampleHelper
 {
-    private static readonly int MAX_BUILDINGS = 100;
+    static readonly int MAX_BUILDINGS = 100;
 
     // Program main entry point
     public static int Example()

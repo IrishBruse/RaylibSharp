@@ -6,24 +6,27 @@ using RaylibSharp.GL;
 
 [CustomMarshaller(typeof(RenderBatch), MarshalMode.ManagedToUnmanagedIn, typeof(RenderBatchMarshaller))]
 [CustomMarshaller(typeof(RenderBatch), MarshalMode.ManagedToUnmanagedOut, typeof(RenderBatchMarshaller))]
-internal static unsafe class RenderBatchMarshaller
+static unsafe class RenderBatchMarshaller
 {
     // TODO: Fix this as it is not working yet
     public static UnmanagedRenderBatch ConvertToUnmanaged(RenderBatch managed)
     {
-        fixed (DrawCall* drawsPtr = managed.Draws)
-        fixed (VertexBuffer* vertexBuffersPtr = managed.VertexBuffer)
-        {
-            return new()
-            {
-                BufferCount = managed.BufferCount,
-                CurrentBuffer = managed.CurrentBuffer,
-                CurrentDepth = managed.CurrentDepth,
-                DrawCounter = managed.DrawCounter,
-                Draws = drawsPtr,
-                // Vertexbuffer = vertexBuffersPtr,
-            };
-        }
+        // UnmanagedVertexBuffer vertexBuffers = VertexBufferMarshaller.ConvertToUnmanaged(managed.VertexBuffer);
+        // fixed (DrawCall* drawsPtr = managed.Draws)
+        // fixed (UnmanagedVertexBuffer vertexBuffersPtr = vertexBuffers)
+        // {
+        //     return new()
+        //     {
+        //         BufferCount = managed.BufferCount,
+        //         CurrentBuffer = managed.CurrentBuffer,
+        //         VertexBuffer = vertexBuffersPtr,
+        //         Draws = drawsPtr,
+        //         CurrentDepth = managed.CurrentDepth,
+        //         DrawCounter = managed.DrawCounter,
+        //     };
+        // }
+
+        throw new NotImplementedException();
     }
 
     public static RenderBatch ConvertToManaged(UnmanagedRenderBatch unmanaged)

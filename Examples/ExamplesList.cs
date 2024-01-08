@@ -9,6 +9,7 @@ public static class ExamplesList
 {
     public static readonly Example[] Examples = new Example[]
     {
+        //
         new("./resources/images/core_basic_window.png",              CoreBasicWindow.Example,              Raylib.Purple, 1),
         new("./resources/images/core_basic_screen_manager.png",      CoreBasicScreenManager.Example,       Raylib.Purple, 1),
         new("./resources/images/core_2d_camera.png",                 Core2dCamera.Example,                 Raylib.Purple, 2),
@@ -40,11 +41,11 @@ public static class ExamplesList
         new("./resources/images/core_window_letterbox.png",          CoreWindowLetterbox.Example,          Raylib.Purple, 2),
         new("./resources/images/core_window_should_close.png",       CoreWindowShouldClose.Example,        Raylib.Purple, 1),
         new("./resources/images/core_world_screen.png",              CoreWorldScreen.Example,              Raylib.Purple, 2),
-
+        //
         new("./resources/images/shapes_basic_shapes.png",            ShapesBasicShapes.Example,            Raylib.Purple, 1),
         new("./resources/images/shapes_bouncing_ball.png",           ShapesBouncingBall.Example,           Raylib.Purple, 1),
         new("./resources/images/shapes_colors_palette.png",          ShapesColorsPalette.Example,          Raylib.Purple, 2),
-        new("./resources/images/shapes_logo_ raylib.png",            ShapesLogoRaylib.Example,             Raylib.Purple, 1),
+        new("./resources/images/shapes_logo_raylib.png",            ShapesLogoRaylib.Example,             Raylib.Purple, 1),
         new("./resources/images/shapes_logo_raylib_anim.png",        ShapesLogoRaylibAnim.Example,         Raylib.Purple, 2),
         new("./resources/images/shapes_rectangle_scaling.png",       ShapesRectangleScaling.Example,       Raylib.Purple, 2),
         new("./resources/images/shapes_lines_bezier.png",            ShapesLinesBezier.Example,            Raylib.Purple, 1),
@@ -59,44 +60,44 @@ public static class ExamplesList
         // new("./resources/images/shapes_splines_drawing.png",         ShapesSplinesDrawing.Example,         Raylib.Purple, 3),
         new("./resources/images/shapes_top_down_lights.png",         ShapesTopDownLights.Example,          Raylib.Purple, 4),
         // Textures
-        new("./resources/images/textures_logo_ raylib.png",          TexturesLogoRaylib.Example,           Raylib.Purple, 1),
-        new("./resources/images/textures_srcrec_dstrec.png",         TexturesSrcrecDstrec.Example,         Raylib.Purple, 3),
-        new("./resources/images/textures_image_drawing.png",         TexturesImageDrawing.Example,         Raylib.Purple, 2),
-        new("./resources/images/textures_image_generation.png",      TexturesImageGeneration.Example,      Raylib.Purple, 2),
-        new("./resources/images/textures_image_loading.png",         TexturesImageLoading.Example,         Raylib.Purple, 1),
-        new("./resources/images/textures_image_processing.png",      TexturesImageProcessing.Example,      Raylib.Purple, 3),
-        new("./resources/images/textures_image_text.png",            TexturesImageText.Example,            Raylib.Purple, 2),
-        new("./resources/images/textures_to_image.png",              TexturesToImage.Example,              Raylib.Purple, 1),
-        new("./resources/images/textures_raw_data.png",              TexturesRawData.Example,              Raylib.Purple, 3),
-        new("./resources/images/textures_particles_blending.png",    TexturesParticlesBlending.Example,    Raylib.Purple, 1),
-        new("./resources/images/textures_npatch_drawing.png",        TexturesNpatchDrawing.Example,        Raylib.Purple, 3),
-        new("./resources/images/textures_background_scrolling.png",  TexturesBackgroundScrolling.Example,  Raylib.Purple, 1),
-        new("./resources/images/textures_sprite_anim.png",           TexturesSpriteAnim.Example,           Raylib.Purple, 2),
-        new("./resources/images/textures_sprite_button.png",         TexturesSpriteButton.Example,         Raylib.Purple, 2),
-        new("./resources/images/textures_sprite_explosion.png",      TexturesSpriteExplosion.Example,      Raylib.Purple, 2),
-        new("./resources/images/textures_svg_loading.png",           TexturesSvgLoading.Example,           Raylib.Purple, 2),
-        new("./resources/images/textures_bunnymark.png",             TexturesBunnymark.Example,            Raylib.Purple, 3),
-        new("./resources/images/textures_mouse_painting.png",        TexturesMousePainting.Example,        Raylib.Purple, 3),
-        new("./resources/images/textures_blend_modes.png",           TexturesBlendModes.Example,           Raylib.Purple, 1),
-        new("./resources/images/textures_draw_tiled.png",            TexturesDrawTiled.Example,            Raylib.Purple, 3),
-        new("./resources/images/textures_polygon.png",               TexturesPolygon.Example,              Raylib.Purple, 1),
-        new("./resources/images/textures_fog_of_war.png",            TexturesFogOfWar.Example,             Raylib.Purple, 3),
-        new("./resources/images/textures_gif_player.png",            TexturesGifPlayer.Example,            Raylib.Purple, 3),
-        new("./resources/images/textures_textured_curve.png",        TexturesTexturedCurve.Example,        Raylib.Purple, 3),
-        // Text
-        new("./resources/images/text_raylib_fonts.png",              TextRaylibFonts.Example,              Raylib.Purple, 1),
-        new("./resources/images/text_font_spritefont.png",           TextFontSpritefont.Example,           Raylib.Purple, 1),
-        new("./resources/images/text_font_filters.png",              TextFontFilters.Example,              Raylib.Purple, 2),
-        new("./resources/images/text_font_loading.png",              TextFontLoading.Example,              Raylib.Purple, 1),
-        new("./resources/images/text_font_sdf.png",                  TextFontSdf.Example,                  Raylib.Purple, 3),
-        new("./resources/images/text_format_text.png",               TextFormatText.Example,               Raylib.Purple, 1),
-        new("./resources/images/text_input_box.png",                 TextInputBox.Example,                 Raylib.Purple, 2),
-        new("./resources/images/text_writing_anim.png",              TextWritingAnim.Example,              Raylib.Purple, 2),
-        new("./resources/images/text_rectangle_bounds.png",          TextRectangleBounds.Example,          Raylib.Purple, 4),
-        new("./resources/images/text_unicode.png",                   TextUnicode.Example,                  Raylib.Purple, 4),
-        new("./resources/images/text_draw_3d.png",                   TextDraw3d.Example,                   Raylib.Purple, 4),
-        new("./resources/images/text_codepoints_loading.png",        TextCodepointsLoading.Example,        Raylib.Purple, 3),
-
+        // new("./resources/images/textures_logo_raylib.png",          TexturesLogoRaylib.Example,           Raylib.Purple, 1),
+        // new("./resources/images/textures_srcrec_dstrec.png",         TexturesSrcrecDstrec.Example,         Raylib.Purple, 3),
+        // new("./resources/images/textures_image_drawing.png",         TexturesImageDrawing.Example,         Raylib.Purple, 2),
+        // new("./resources/images/textures_image_generation.png",      TexturesImageGeneration.Example,      Raylib.Purple, 2),
+        // new("./resources/images/textures_image_loading.png",         TexturesImageLoading.Example,         Raylib.Purple, 1),
+        // new("./resources/images/textures_image_processing.png",      TexturesImageProcessing.Example,      Raylib.Purple, 3),
+        // new("./resources/images/textures_image_text.png",            TexturesImageText.Example,            Raylib.Purple, 2),
+        // new("./resources/images/textures_to_image.png",              TexturesToImage.Example,              Raylib.Purple, 1),
+        // new("./resources/images/textures_raw_data.png",              TexturesRawData.Example,              Raylib.Purple, 3),
+        // new("./resources/images/textures_particles_blending.png",    TexturesParticlesBlending.Example,    Raylib.Purple, 1),
+        // new("./resources/images/textures_npatch_drawing.png",        TexturesNpatchDrawing.Example,        Raylib.Purple, 3),
+        // new("./resources/images/textures_background_scrolling.png",  TexturesBackgroundScrolling.Example,  Raylib.Purple, 1),
+        // new("./resources/images/textures_sprite_anim.png",           TexturesSpriteAnim.Example,           Raylib.Purple, 2),
+        // new("./resources/images/textures_sprite_button.png",         TexturesSpriteButton.Example,         Raylib.Purple, 2),
+        // new("./resources/images/textures_sprite_explosion.png",      TexturesSpriteExplosion.Example,      Raylib.Purple, 2),
+        // new("./resources/images/textures_svg_loading.png",           TexturesSvgLoading.Example,           Raylib.Purple, 2),
+        // new("./resources/images/textures_bunnymark.png",             TexturesBunnymark.Example,            Raylib.Purple, 3),
+        // new("./resources/images/textures_mouse_painting.png",        TexturesMousePainting.Example,        Raylib.Purple, 3),
+        // new("./resources/images/textures_blend_modes.png",           TexturesBlendModes.Example,           Raylib.Purple, 1),
+        // new("./resources/images/textures_draw_tiled.png",            TexturesDrawTiled.Example,            Raylib.Purple, 3),
+        // new("./resources/images/textures_polygon.png",               TexturesPolygon.Example,              Raylib.Purple, 1),
+        // new("./resources/images/textures_fog_of_war.png",            TexturesFogOfWar.Example,             Raylib.Purple, 3),
+        // new("./resources/images/textures_gif_player.png",            TexturesGifPlayer.Example,            Raylib.Purple, 3),
+        // new("./resources/images/textures_textured_curve.png",        TexturesTexturedCurve.Example,        Raylib.Purple, 3),
+        // // Text
+        // new("./resources/images/text_raylib_fonts.png",              TextRaylibFonts.Example,              Raylib.Purple, 1),
+        // new("./resources/images/text_font_spritefont.png",           TextFontSpritefont.Example,           Raylib.Purple, 1),
+        // new("./resources/images/text_font_filters.png",              TextFontFilters.Example,              Raylib.Purple, 2),
+        // new("./resources/images/text_font_loading.png",              TextFontLoading.Example,              Raylib.Purple, 1),
+        // new("./resources/images/text_font_sdf.png",                  TextFontSdf.Example,                  Raylib.Purple, 3),
+        // new("./resources/images/text_format_text.png",               TextFormatText.Example,               Raylib.Purple, 1),
+        // new("./resources/images/text_input_box.png",                 TextInputBox.Example,                 Raylib.Purple, 2),
+        // new("./resources/images/text_writing_anim.png",              TextWritingAnim.Example,              Raylib.Purple, 2),
+        // new("./resources/images/text_rectangle_bounds.png",          TextRectangleBounds.Example,          Raylib.Purple, 4),
+        // new("./resources/images/text_unicode.png",                   TextUnicode.Example,                  Raylib.Purple, 4),
+        // new("./resources/images/text_draw_3d.png",                   TextDraw3d.Example,                   Raylib.Purple, 4),
+        // new("./resources/images/text_codepoints_loading.png",        TextCodepointsLoading.Example,        Raylib.Purple, 3),
+        // Models
         new("./resources/images/models_animation.png",               ModelsAnimation.Example,              Raylib.Purple, 2),
         new("./resources/images/models_billboard.png",               ModelsBillboard.Example,              Raylib.Purple, 3),
         new("./resources/images/models_box_collisions.png",          ModelsBoxCollisions.Example,          Raylib.Purple, 1),
@@ -116,7 +117,7 @@ public static class ExamplesList
         new("./resources/images/models_heightmap.png",               ModelsHeightmap.Example,              Raylib.Purple, 1),
         new("./resources/images/models_skybox.png",                  ModelsSkybox.Example,                 Raylib.Purple, 2),
         new("./resources/images/models_draw_cube_texture.png",       ModelsDrawCubeTexture.Example,        Raylib.Purple, 2),
-
+        // Shaders
         new("./resources/images/shaders_basic_lighting.png",         ShadersBasicLighting.Example,         Raylib.Purple, 4),
         new("./resources/images/shaders_model_shader.png",           ShadersModelShader.Example,           Raylib.Purple, 2),
         new("./resources/images/shaders_shapes_textures.png",        ShadersShapesTextures.Example,        Raylib.Purple, 2),
@@ -140,7 +141,7 @@ public static class ExamplesList
         new("./resources/images/shaders_write_depth.png",            ShadersWriteDepth.Example,            Raylib.Purple, 2),
         new("./resources/images/shaders_hybrid_render.png",          ShadersHybridRender.Example,          Raylib.Purple, 4),
         // new("./resources/images/shaders_deferred_render.png",        ShadersDeferredRender.Example,        Raylib.Purple, 4),
-
+        // Audio
         new("./resources/images/audio_module_playing.png",           AudioModulePlaying.Example,           Raylib.Purple, 1),
         new("./resources/images/audio_music_stream.png",             AudioMusicStream.Example,             Raylib.Purple, 1),
         new("./resources/images/audio_raw_stream.png",               AudioRawStream.Example,               Raylib.Purple, 3),
@@ -148,8 +149,6 @@ public static class ExamplesList
         // new("./resources/images/audio_sound_multi.png",              AudioSoundMulti.Example,              Raylib.Purple, 2),
         new("./resources/images/audio_stream_effects.png",           AudioStreamEffects.Example,           Raylib.Purple, 4),
         new("./resources/images/audio_mixed_processor.png",          AudioMixedProcessor.Example,          Raylib.Purple, 4),
-
-
     };
 }
 

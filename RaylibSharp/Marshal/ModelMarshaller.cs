@@ -4,7 +4,7 @@ using System.Runtime.InteropServices.Marshalling;
 
 [CustomMarshaller(typeof(Model), MarshalMode.ManagedToUnmanagedIn, typeof(ModelMarshaller))]
 [CustomMarshaller(typeof(Model), MarshalMode.ManagedToUnmanagedOut, typeof(ModelMarshaller))]
-internal static unsafe class ModelMarshaller
+static unsafe class ModelMarshaller
 {
     public static UnmanagedModel ConvertToUnmanaged(Model managed)
     {

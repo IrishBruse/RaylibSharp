@@ -46,11 +46,11 @@ public partial class ShadersFog : ExampleHelper
         // Ambient light level
         int ambientLoc = GetShaderLocation(shader, "ambient");
         Vector4 color = new(0.2f, 0.2f, 0.2f, 1.0f);
-        SetShaderValue(shader, ambientLoc, ref color, ShaderUniformDataType.ShaderUniformVec4);
+        SetShaderValue(shader, ambientLoc, color, ShaderUniformDataType.ShaderUniformVec4);
 
         float fogDensity = 0.15f;
         int fogDensityLoc = GetShaderLocation(shader, "fogDensity");
-        SetShaderValue(shader, fogDensityLoc, ref fogDensity, ShaderUniformDataType.ShaderUniformFloat);
+        SetShaderValue(shader, fogDensityLoc, fogDensity, ShaderUniformDataType.ShaderUniformFloat);
 
         // NOTE: All models share the same shader
         modelA.Materials[0].Shader = shader;
@@ -86,14 +86,14 @@ public partial class ShadersFog : ExampleHelper
                 }
             }
 
-            SetShaderValue(shader, fogDensityLoc, ref fogDensity, ShaderUniformDataType.ShaderUniformFloat);
+            SetShaderValue(shader, fogDensityLoc, fogDensity, ShaderUniformDataType.ShaderUniformFloat);
 
             // Rotate the torus
             modelA.Transform = Matrix4x4.Multiply(modelA.Transform, Matrix4x4.CreateRotationX(-0.025f));
             modelA.Transform = Matrix4x4.Multiply(modelA.Transform, Matrix4x4.CreateRotationZ(0.012f));
 
             // Update the light shader with the camera view position
-            SetShaderValue(shader, shader.Locs[(int)ShaderLocationIndex.ShaderLocVectorView], ref camera.Position.X, ShaderUniformDataType.ShaderUniformVec3);
+            SetShaderValue(shader, shader.Locs[(int)ShaderLocationIndex.ShaderLocVectorView], camera.Position.X, ShaderUniformDataType.ShaderUniformVec3);
 
             // Draw
             BeginDrawing();

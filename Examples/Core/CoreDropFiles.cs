@@ -15,7 +15,7 @@ public class CoreDropFiles : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - core - drop files");
 
-        string[] filePaths = Array.Empty<string>();
+        string[] filePaths = [];
 
         SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 

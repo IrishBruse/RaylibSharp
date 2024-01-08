@@ -32,7 +32,7 @@ public partial class ShadersHotReloading : ExampleHelper
         int timeLoc = GetShaderLocation(shader, "time");
 
         Vector2 resolution = new(screenWidth, screenHeight);
-        SetShaderValue(shader, resolutionLoc, ref resolution, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(shader, resolutionLoc, resolution, ShaderUniformDataType.ShaderUniformVec2);
 
         float totalTime = 0.0f;
         bool shaderAutoReloading = false;
@@ -48,8 +48,8 @@ public partial class ShadersHotReloading : ExampleHelper
             Vector2 mousePos = new(mouse.X, mouse.Y);
 
             // Set shader required uniform values
-            SetShaderValue(shader, timeLoc, ref totalTime, ShaderUniformDataType.ShaderUniformFloat);
-            SetShaderValue(shader, mouseLoc, ref mousePos, ShaderUniformDataType.ShaderUniformVec2);
+            SetShaderValue(shader, timeLoc, totalTime, ShaderUniformDataType.ShaderUniformFloat);
+            SetShaderValue(shader, mouseLoc, mousePos, ShaderUniformDataType.ShaderUniformVec2);
 
             // Hot shader reloading
             if (shaderAutoReloading || IsMouseButtonPressed(MouseButton.Left))
@@ -73,7 +73,7 @@ public partial class ShadersHotReloading : ExampleHelper
                         timeLoc = GetShaderLocation(shader, "time");
 
                         // Reset required uniforms
-                        SetShaderValue(shader, resolutionLoc, ref resolution, ShaderUniformDataType.ShaderUniformVec2);
+                        SetShaderValue(shader, resolutionLoc, resolution, ShaderUniformDataType.ShaderUniformVec2);
                     }
 
                     fragShaderFileModTime = currentFragShaderModTime;

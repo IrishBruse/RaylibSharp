@@ -8,7 +8,7 @@ using static RaylibSharp.Raylib;
 public class RlLights
 {
     public const int MAXLIGHTS = 4; // Max dynamic lights supported by shader
-    private static int lightsCount; // Current amount of created lights
+    static int lightsCount; // Current amount of created lights
 
     // Create a light and get shader locations
     public static Light CreateLight(LightType type, Vector3 position, Vector3 target, Color color, Shader shader)
@@ -43,19 +43,19 @@ public class RlLights
     public static void UpdateLightValues(Shader shader, Light light)
     {
         // Send to shader light enabled state and type
-        SetShaderValue(shader, light.enabledLoc, ref light.enabled, ShaderUniformDataType.ShaderUniformInt);
-        SetShaderValue(shader, light.typeLoc, ref light.type, ShaderUniformDataType.ShaderUniformInt);
+        SetShaderValue(shader, light.enabledLoc, light.enabled, ShaderUniformDataType.ShaderUniformInt);
+        SetShaderValue(shader, light.typeLoc, light.type, ShaderUniformDataType.ShaderUniformInt);
 
         // Send to shader light position values
-        SetShaderValue(shader, light.positionLoc, ref light.position, ShaderUniformDataType.ShaderUniformVec3);
+        SetShaderValue(shader, light.positionLoc, light.position, ShaderUniformDataType.ShaderUniformVec3);
 
         // Send to shader light target position values
         Vector3 target = new(light.target.X, light.target.Y, light.target.Z);
-        SetShaderValue(shader, light.targetLoc, ref target, ShaderUniformDataType.ShaderUniformVec3);
+        SetShaderValue(shader, light.targetLoc, target, ShaderUniformDataType.ShaderUniformVec3);
 
         // Send to shader light color values
         Vector4 color = new(light.color.R / 255f, light.color.G / 255f, light.color.B / 255f, light.color.A / 255f);
-        SetShaderValue(shader, light.colorLoc, ref color, ShaderUniformDataType.ShaderUniformVec4);
+        SetShaderValue(shader, light.colorLoc, color, ShaderUniformDataType.ShaderUniformVec4);
     }
 
 }

@@ -9,13 +9,13 @@ using static RaylibSharp.Raylib;
 public partial class ShapesTopDownLights : ExampleHelper
 {
     // Custom Blend Modes
-    private const int RLGL_SRC_ALPHA = 0x0302;
-    private const int RLGL_MIN = 0x8007;
-    private const int RLGL_MAX = 0x8008;
+    const int RLGL_SRC_ALPHA = 0x0302;
+    const int RLGL_MIN = 0x8007;
+    const int RLGL_MAX = 0x8008;
 
-    private const int MAX_BOXES = 20;
-    private const int MAX_SHADOWS = MAX_BOXES * 3;
-    private const int MAX_LIGHTS = 16;
+    const int MAX_BOXES = 20;
+    const int MAX_SHADOWS = MAX_BOXES * 3;
+    const int MAX_LIGHTS = 16;
 
     // Light info type
     public class LightInfo
@@ -33,10 +33,10 @@ public partial class ShapesTopDownLights : ExampleHelper
         public int shadowCount;
     }
 
-    private static LightInfo[] lights = new LightInfo[MAX_LIGHTS];
+    static LightInfo[] lights = new LightInfo[MAX_LIGHTS];
 
     // Move a light and mark it as dirty so that we update it's mask next frame
-    private static void MoveLight(int slot, float x, float y)
+    static void MoveLight(int slot, float x, float y)
     {
         lights[slot].dirty = true;
         lights[slot].position.X = x;
@@ -49,7 +49,7 @@ public partial class ShapesTopDownLights : ExampleHelper
 
     // Compute a shadow volume for the edge
     // It takes the edge and projects it back by the light radius and turns it into a quad
-    private static void ComputeShadowVolumeForEdge(int slot, Vector2 sp, Vector2 ep)
+    static void ComputeShadowVolumeForEdge(int slot, Vector2 sp, Vector2 ep)
     {
         if (lights[slot].shadowCount >= MAX_SHADOWS)
         {
@@ -73,7 +73,7 @@ public partial class ShapesTopDownLights : ExampleHelper
     }
 
     // Draw the light and shadows to the mask for a light
-    private static void DrawLightMask(int slot)
+    static void DrawLightMask(int slot)
     {
         // Use the light mask
         BeginTextureMode(lights[slot].mask);
@@ -112,7 +112,7 @@ public partial class ShapesTopDownLights : ExampleHelper
     }
 
     // Setup a light
-    private static void SetupLight(int slot, float x, float y, float radius)
+    static void SetupLight(int slot, float x, float y, float radius)
     {
         lights[slot].active = true;
         lights[slot].valid = false; // The light must prove it is valid
@@ -129,7 +129,7 @@ public partial class ShapesTopDownLights : ExampleHelper
     }
 
     // See if a light needs to update it's mask
-    private static bool UpdateLight(int slot, RectangleF[] boxes, int count)
+    static bool UpdateLight(int slot, RectangleF[] boxes, int count)
     {
         if (!lights[slot].active || !lights[slot].dirty)
         {
@@ -205,7 +205,7 @@ public partial class ShapesTopDownLights : ExampleHelper
     }
 
     // Set up some boxes
-    private static void SetupBoxes(RectangleF[] boxes, ref int count)
+    static void SetupBoxes(RectangleF[] boxes, ref int count)
     {
         boxes[0] = new(150, 80, 40, 40);
         boxes[1] = new(1200, 700, 40, 40);

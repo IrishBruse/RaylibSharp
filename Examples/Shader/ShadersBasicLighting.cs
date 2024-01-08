@@ -42,7 +42,7 @@ public partial class ShadersBasicLighting : ExampleHelper
         // Ambient light level (some basic lighting)
         int ambientLoc = GetShaderLocation(shader, "ambient");
         Vector4 color = new(1.0f, 0.1f, 0.1f, 0.1f);
-        SetShaderValue(shader, ambientLoc, ref color, ShaderUniformDataType.ShaderUniformVec4);
+        SetShaderValue(shader, ambientLoc, color, ShaderUniformDataType.ShaderUniformVec4);
 
         // Assign out lighting shader to model
         model.Materials[0].Shader = shader;
@@ -65,7 +65,7 @@ public partial class ShadersBasicLighting : ExampleHelper
 
             // Update the shader with the camera view vector (points towards new(0.0f,0.0f, 0.0f))
             Vector3 cameraPos = new(camera.Position.X, camera.Position.Y, camera.Position.Z);
-            SetShaderValue(shader, shader.Locs[(int)ShaderLocationIndex.ShaderLocVectorView], ref cameraPos, ShaderUniformDataType.ShaderUniformVec3);
+            SetShaderValue(shader, shader.Locs[(int)ShaderLocationIndex.ShaderLocVectorView], cameraPos, ShaderUniformDataType.ShaderUniformVec3);
 
             // Check key inputs to enable/disable lights
             if (IsKeyPressed(Key.Y)) { lights[0].enabled = !lights[0].enabled; }

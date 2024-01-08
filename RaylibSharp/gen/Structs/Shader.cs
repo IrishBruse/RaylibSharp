@@ -2,9 +2,9 @@ namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Runtime.InteropServices;
-using System.Numerics;
 using System.Drawing;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> Shader </summary>
@@ -19,7 +19,7 @@ public unsafe partial struct Shader
 
 /// <summary> Shader </summary>
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct UnmanagedShader
+unsafe struct UnmanagedShader
 {
     /// <summary> Shader program id </summary>
     public uint Id;

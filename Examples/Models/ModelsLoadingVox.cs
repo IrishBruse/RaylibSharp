@@ -8,7 +8,7 @@ using static RaylibSharp.Raylib;
 public partial class ModelsLoadingVox : ExampleHelper
 {
 
-    private const int MAX_VOX_FILES = 3;
+    const int MAX_VOX_FILES = 3;
 
     // Program main entry point
     public static int Example()

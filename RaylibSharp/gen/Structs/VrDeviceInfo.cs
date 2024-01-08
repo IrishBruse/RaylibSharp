@@ -2,9 +2,9 @@ namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Runtime.InteropServices;
-using System.Numerics;
 using System.Drawing;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> VrDeviceInfo, Head-Mounted-Display device parameters </summary>
@@ -34,7 +34,7 @@ public unsafe partial struct VrDeviceInfo
 
 /// <summary> VrDeviceInfo, Head-Mounted-Display device parameters </summary>
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct UnmanagedVrDeviceInfo
+unsafe struct UnmanagedVrDeviceInfo
 {
     /// <summary> Horizontal resolution in pixels </summary>
     public int HResolution;

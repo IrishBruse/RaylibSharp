@@ -4,8 +4,8 @@ using static RaylibSharp.Raylib;
 
 public partial class ModelsOrthographicProjection : ExampleHelper
 {
-    private const float FOVY_PERSPECTIVE = 45.0f;
-    private const float WIDTH_ORTHOGRAPHIC = 10.0f;
+    const float FOVY_PERSPECTIVE = 45.0f;
+    const float WIDTH_ORTHOGRAPHIC = 10.0f;
 
     // Program main entry point
     public static int Example()

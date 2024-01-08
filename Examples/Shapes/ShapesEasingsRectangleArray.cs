@@ -7,13 +7,13 @@ using static RaylibSharp.Raylib;
 public partial class ShapesEasingsRectangleArray : ExampleHelper
 {
 
-    private const int RECS_WIDTH = 50;
-    private const int RECS_HEIGHT = 50;
+    const int RECS_WIDTH = 50;
+    const int RECS_HEIGHT = 50;
 
-    private const int MAX_RECS_X = 800 / RECS_WIDTH;
-    private const int MAX_RECS_Y = 450 / RECS_HEIGHT;
+    const int MAX_RECS_X = 800 / RECS_WIDTH;
+    const int MAX_RECS_Y = 450 / RECS_HEIGHT;
 
-    private const int PLAY_TIME_IN_FRAMES = 240;
+    const int PLAY_TIME_IN_FRAMES = 240;
 
     // Program main entry point
     public static int Example()

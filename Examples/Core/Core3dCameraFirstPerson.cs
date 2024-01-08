@@ -11,7 +11,7 @@ using Camera = RaylibSharp.Camera3D;
 
 public class Core3dCameraFirstPerson : ExampleHelper
 {
-    private static readonly int MAX_COLUMNS = 20;
+    static readonly int MAX_COLUMNS = 20;
 
     // Program main entry point
     public static int Example()

@@ -5,7 +5,7 @@ using System.Text;
 
 public static class EnumProcessor
 {
-    private static HashSet<string> generated = new();
+    static HashSet<string> generated = new();
 
     public static void Emit(RaylibApi api)
     {
@@ -89,6 +89,10 @@ public static class EnumProcessor
                 else if (e.Name == "MaterialMapIndex")
                 {
                     valueName = valueName[11..];
+                }
+                else if (e.Name == "Npatch")
+                {
+                    valueName = valueName[6..];
                 }
 
                 sb.AppendLine($"    /// <summary> {value.Description} </summary>");

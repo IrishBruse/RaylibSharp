@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 
 #pragma warning disable CA2255
 
-internal static class SharedLibraryLoader
+static class SharedLibraryLoader
 {
-    private static IntPtr? libHandle;
+    static IntPtr? libHandle;
 
     [ModuleInitializer]
     internal static void Init()
@@ -17,7 +17,7 @@ internal static class SharedLibraryLoader
         NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), Resolve);
     }
 
-    private static IntPtr Resolve(string libName, Assembly assembly, DllImportSearchPath? searchPath)
+    static IntPtr Resolve(string libName, Assembly assembly, DllImportSearchPath? searchPath)
     {
         if (libHandle.HasValue)
         {
@@ -41,7 +41,7 @@ internal static class SharedLibraryLoader
         }
     }
 
-    private static string RuntimeID()
+    static string RuntimeID()
     {
         string runtimeId;
 

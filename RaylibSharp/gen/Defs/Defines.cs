@@ -9,6 +9,5 @@ public static unsafe partial class Raylib
     /// <summary> RaylibVersionPatch </summary>
     public static readonly int RaylibVersionPatch = 0;
     /// <summary> RaylibVersion </summary>
-    public static readonly string RaylibVersion = "4.6-dev";
+    public static readonly string RaylibVersion = "5.0";
 }
-

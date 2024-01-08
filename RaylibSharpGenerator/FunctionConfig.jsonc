@@ -127,8 +127,15 @@
             "animCount": "ref uint animCount"
         },
         "LoadShader": {
-            "fsFileName": "[MarshalAs(UnmanagedType.LPStr)] string? fsFileName",
-            "vsFileName": "[MarshalAs(UnmanagedType.LPStr)] string? vsFileName"
+            "fsFileName": "[MarshalAs(UnmanagedType.LPStr)] string? fragmentShaderPath",
+            "vsFileName": "[MarshalAs(UnmanagedType.LPStr)] string? vertexShaderPath"
+        },
+        "LoadShaderFromMemory": {
+            "vsCode": "[MarshalAs(UnmanagedType.LPStr)] string? fragmentShaderCode",
+            "fsCode": "[MarshalAs(UnmanagedType.LPStr)] string? vertexShaderCode"
+        },
+        "LoadImageAnim": {
+            "frames": "ref int frames"
         },
         "LoadTextureCubemap": {
             "layout": "CubemapLayout layout"
@@ -191,6 +198,58 @@
         },
         "ImageDraw": {
             "dst": "ref Image dst"
+        },
+        "ImageResize": {
+            "image": "ref Image image"
+        },
+        "ImageCrop": {
+            "image": "ref Image image"
+        },
+        "ImageDrawCircleLines": {
+            "dst": "ref Image dst"
+        },
+        "ImageDrawRectangle": {
+            "dst": "ref Image dst"
+        },
+        "ImageDrawText": {
+            "dst": "ref Image dst"
+        },
+        "ImageDrawTextEx": {
+            "dst": "ref Image dst"
+        },
+        "ImageFormat": {
+            "image": "ref Image image",
+            "newFormat": "PixelFormat newFormat"
+        },
+        "ImageColorGrayscale": {
+            "image": "ref Image image"
+        },
+        "ImageColorTint": {
+            "image": "ref Image image"
+        },
+        "ImageColorInvert": {
+            "image": "ref Image image"
+        },
+        "ImageColorContrast": {
+            "image": "ref Image image"
+        },
+        "ImageColorBrightness": {
+            "image": "ref Image image"
+        },
+        "ImageBlurGaussian": {
+            "image": "ref Image image"
+        },
+        "ImageFlipVertical": {
+            "image": "ref Image image"
+        },
+        "ImageFlipHorizontal": {
+            "image": "ref Image image"
+        },
+        "ImageRotate": {
+            "image": "ref Image image"
+        },
+        "LoadImageRaw": {
+            "format": "PixelFormat format"
         }
     }
 }

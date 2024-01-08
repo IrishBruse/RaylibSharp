@@ -28,7 +28,6 @@ dotnet_diagnostic.IDE0078.severity = none
 dotnet_diagnostic.IDE0058.severity = none # Discard variable _ =
 dotnet_diagnostic.IDE0063.severity = warning
 dotnet_diagnostic.IDE0130.severity = warning
-dotnet_diagnostic.IDE0300.severity = none # Simplify array initialization TODO remove me when extension cataches up
 dotnet_diagnostic.CA1805.severity = none # explicitly set to default value
 dotnet_diagnostic.CA1310.severity = none # string local/culture ignored
 dotnet_diagnostic.CA1304.severity = none # string local/culture ignored
@@ -125,6 +124,7 @@ dotnet_style_prefer_auto_properties = true:warning
 dotnet_style_prefer_compound_assignment = true:warning
 dotnet_style_prefer_conditional_expression_over_assignment = false:error
 dotnet_style_prefer_conditional_expression_over_return = false:warning
+dotnet_style_prefer_collection_expression = false:warning
 dotnet_style_prefer_inferred_anonymous_type_member_names = true:warning
 dotnet_style_prefer_inferred_tuple_names = true:warning
 dotnet_style_prefer_is_null_check_over_reference_equality_method = true:warning
@@ -135,7 +135,7 @@ dotnet_style_qualification_for_field = false:warning # this. and Me. preferences
 dotnet_style_qualification_for_method = false:warning # this. and Me. preferences
 dotnet_style_qualification_for_property = false:warning # this. and Me. preferences
 dotnet_style_readonly_field = false:warning # Field preferences
-dotnet_style_require_accessibility_modifiers = for_non_interface_members:warning # Modifier preferences
+dotnet_style_require_accessibility_modifiers = omit_if_default:warning # Modifier preferences
 
 # Naming
 

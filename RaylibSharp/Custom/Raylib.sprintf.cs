@@ -64,13 +64,13 @@ public unsafe partial class Raylib
         return sb.ToString();
     }
 
-    private static string IntParser(int val, int zeros, int decimals, char c)
+    static string IntParser(int val, int zeros, int decimals, char c)
     {
         // int pre = zeros - decimals - 1 - (val < 0 ? 1 : 0);
         return val.ToString();
     }
 
-    private static string FloatParser(double val, int zeros, int decimals, char c)
+    static string FloatParser(double val, int zeros, int decimals, char c)
     {
         int pre;
         if (zeros < decimals)
@@ -86,7 +86,7 @@ public unsafe partial class Raylib
     }
 
     /// <summary> Text formatting with variables (sprintf() style) </summary>
-    private static string SprintF(sbyte* formatPtr, IntPtr argsPtr)
+    static string SprintF(sbyte* formatPtr, IntPtr argsPtr)
     {
         string format = new(formatPtr);
 
@@ -181,7 +181,7 @@ public unsafe partial class Raylib
 }
 
 [Flags]
-internal enum FormatFlags
+enum FormatFlags
 {
     Zeropad,
     Left,

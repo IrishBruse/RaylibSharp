@@ -32,9 +32,9 @@ public partial class ShadersTextureOutline : ExampleHelper
         int textureSizeLoc = GetShaderLocation(shdrOutline, "textureSize");
 
         // Set shader values (they can be changed later)
-        SetShaderValue(shdrOutline, outlineSizeLoc, ref outlineSize, ShaderUniformDataType.ShaderUniformFloat);
-        SetShaderValue(shdrOutline, outlineColorLoc, ref outlineColor, ShaderUniformDataType.ShaderUniformVec4);
-        SetShaderValue(shdrOutline, textureSizeLoc, ref textureSize, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(shdrOutline, outlineSizeLoc, outlineSize, ShaderUniformDataType.ShaderUniformFloat);
+        SetShaderValue(shdrOutline, outlineColorLoc, outlineColor, ShaderUniformDataType.ShaderUniformVec4);
+        SetShaderValue(shdrOutline, textureSizeLoc, textureSize, ShaderUniformDataType.ShaderUniformVec2);
 
         SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
@@ -48,7 +48,7 @@ public partial class ShadersTextureOutline : ExampleHelper
                 outlineSize = 1.0f;
             }
 
-            SetShaderValue(shdrOutline, outlineSizeLoc, ref outlineSize, ShaderUniformDataType.ShaderUniformFloat);
+            SetShaderValue(shdrOutline, outlineSizeLoc, outlineSize, ShaderUniformDataType.ShaderUniformFloat);
 
             // Draw
             BeginDrawing();

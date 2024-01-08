@@ -86,7 +86,7 @@ public partial class ShadersWriteDepth : ExampleHelper
 
     // Define custom functions required for the example
     // Load custom render texture, create a writable depth texture buffer
-    private static RenderTexture LoadRenderTextureDepthTex(int width, int height)
+    static RenderTexture LoadRenderTextureDepthTex(int width, int height)
     {
         RenderTexture target = new();
 
@@ -131,7 +131,7 @@ public partial class ShadersWriteDepth : ExampleHelper
     }
 
     // Unload render texture from GPU memory (VRAM)
-    private static void UnloadRenderTextureDepthTex(RenderTexture target)
+    static void UnloadRenderTextureDepthTex(RenderTexture target)
     {
         if (target.Id > 0)
         {

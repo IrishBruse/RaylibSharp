@@ -46,16 +46,13 @@ public partial class ModelsHeightmap : ExampleHelper
             // Draw
             BeginDrawing();
             {
-
                 ClearBackground(RayWhite);
 
                 BeginMode3D(camera);
                 {
-
                     DrawModel(model, mapPosition, 1.0f, Red);
 
                     DrawGrid(20, 1.0f);
-
                 }
                 EndMode3D();
 
@@ -63,7 +60,6 @@ public partial class ModelsHeightmap : ExampleHelper
                 DrawRectangleLines(screenWidth - texture.Width - 20, 20, texture.Width, texture.Height, Green);
 
                 DrawFPS(10, 10);
-
             }
             EndDrawing();
         }

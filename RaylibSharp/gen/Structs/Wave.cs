@@ -2,9 +2,9 @@ namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Runtime.InteropServices;
-using System.Numerics;
 using System.Drawing;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> Wave, audio wave data </summary>
@@ -24,7 +24,7 @@ public unsafe partial struct Wave
 
 /// <summary> Wave, audio wave data </summary>
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct UnmanagedWave
+unsafe struct UnmanagedWave
 {
     /// <summary> Total number of frames (considering channels) </summary>
     public uint FrameCount;

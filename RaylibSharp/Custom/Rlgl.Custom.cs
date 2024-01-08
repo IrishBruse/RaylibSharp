@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 /// <summary> A multi-OpenGL abstraction layer with an immediate-mode style API </summary>
 public static unsafe partial class RLGL
 {
-    private const string LIB = "raylib";
+    const string LIB = "raylib";
 
     /// <summary> Load a render batch system </summary>
     public static RenderBatch LoadRenderBatch(int numBuffers, int bufferElements)

@@ -6,7 +6,7 @@ using System.Runtime.InteropServices.Marshalling;
 [CustomMarshaller(typeof(Color), MarshalMode.ManagedToUnmanagedIn, typeof(ColorMarshaller))]
 [CustomMarshaller(typeof(Color), MarshalMode.ManagedToUnmanagedOut, typeof(ColorMarshaller))]
 [CustomMarshaller(typeof(Color), MarshalMode.ElementOut, typeof(Out))]
-internal static unsafe class ColorMarshaller
+static unsafe class ColorMarshaller
 {
     public static UnmanagedColor ConvertToUnmanaged(Color managed)
     {
@@ -32,10 +32,15 @@ internal static unsafe class ColorMarshaller
         }
 
         public static void Free(UnmanagedColor unmanaged) => throw new NotImplementedException();
+
+        public static UnmanagedColor ConvertToUnmanaged(Color managed)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
-internal struct UnmanagedColor
+struct UnmanagedColor
 {
     public byte R;
     public byte G;

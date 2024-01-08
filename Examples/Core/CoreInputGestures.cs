@@ -7,7 +7,7 @@ using static RaylibSharp.Raylib;
 
 public class CoreInputGestures : ExampleHelper
 {
-    private static readonly int MAX_GESTURE_STRINGS = 20;
+    static readonly int MAX_GESTURE_STRINGS = 20;
 
     // Program main entry point
     public static int Example()

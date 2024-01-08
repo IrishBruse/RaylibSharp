@@ -8,7 +8,7 @@ using static RaylibSharp.Raylib;
 public partial class ShapesColorsPalette : ExampleHelper
 {
 
-    private const int MAX_COLORS_COUNT = 21;
+    const int MAX_COLORS_COUNT = 21;
 
     // Program main entry point
     public static int Example()

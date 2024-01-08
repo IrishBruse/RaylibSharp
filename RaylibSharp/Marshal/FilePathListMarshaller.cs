@@ -5,7 +5,7 @@ using System.Runtime.InteropServices.Marshalling;
 
 [CustomMarshaller(typeof(FilePathList), MarshalMode.ManagedToUnmanagedIn, typeof(FilePathListMarshaller))]
 [CustomMarshaller(typeof(FilePathList), MarshalMode.ManagedToUnmanagedOut, typeof(FilePathListMarshaller))]
-internal static unsafe class FilePathListMarshaller
+static unsafe class FilePathListMarshaller
 {
     public static UnmanagedFilePathList ConvertToUnmanaged(FilePathList managed)
     {

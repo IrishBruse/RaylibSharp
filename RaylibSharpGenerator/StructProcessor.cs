@@ -7,10 +7,10 @@ using System.Text.Json;
 
 public static class StructProcessor
 {
-    private static Dictionary<string, StructConfig> structConfig = [];
-    private static readonly JsonSerializerOptions Options = new() { ReadCommentHandling = JsonCommentHandling.Skip };
+    static Dictionary<string, StructConfig> structConfig = [];
+    static readonly JsonSerializerOptions Options = new() { ReadCommentHandling = JsonCommentHandling.Skip };
 
-    private static readonly string[] Ignore = [
+    static readonly string[] Ignore = [
         "Vector4",
         "Vector3",
         "Vector2",
@@ -20,7 +20,7 @@ public static class StructProcessor
         "Rectangle",
     ];
 
-    private static HashSet<string> generated = [];
+    static HashSet<string> generated = [];
 
     public static void Emit(RaylibApi api)
     {
@@ -73,7 +73,7 @@ public static class StructProcessor
         }
     }
 
-    private static void UnmanagedStruct(StringBuilder sb, Struct s)
+    static void UnmanagedStruct(StringBuilder sb, Struct s)
     {
         sb.AppendLine($"/// <summary> {s.Description} </summary>");
         sb.AppendLine($"[StructLayout(LayoutKind.Sequential)]");
@@ -150,7 +150,7 @@ public static class StructProcessor
         sb.AppendLine();
     }
 
-    private static void ManagedStruct(StringBuilder sb, Struct s, StructConfig config)
+    static void ManagedStruct(StringBuilder sb, Struct s, StructConfig config)
     {
         sb.AppendLine($"/// <summary> {s.Description} </summary>");
 
@@ -225,7 +225,7 @@ public static class StructProcessor
     }
 
 
-    private static string ConvertManagedTypeStruct(string t)
+    static string ConvertManagedTypeStruct(string t)
     {
         t = t.Replace(" *", "*");
 
@@ -306,7 +306,7 @@ public static class StructProcessor
         };
     }
 
-    private static StructConfig GetConfig(string name)
+    static StructConfig GetConfig(string name)
     {
         if (structConfig.TryGetValue(name, out StructConfig? val))
         {

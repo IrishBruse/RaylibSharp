@@ -7,11 +7,11 @@ using static RaylibSharp.Raylib;
 
 public partial class ShadersSpotlight : ExampleHelper
 {
-    private const int MAX_SPOTS = 3;
-    private const int MAX_STARS = 400;
+    const int MAX_SPOTS = 3;
+    const int MAX_STARS = 400;
 
     // Spot data
-    private class Spot
+    sealed class Spot
     {
         public Vector2 position;
         public Vector2 speed;
@@ -25,7 +25,7 @@ public partial class ShadersSpotlight : ExampleHelper
     }
 
     // Stars in the star field have a position and velocity
-    private struct Star
+    struct Star
     {
         public Vector2 position;
         public Vector2 speed;
@@ -85,7 +85,7 @@ public partial class ShadersSpotlight : ExampleHelper
         // a pitch black half and a dimly lit half.
         int wLoc = GetShaderLocation(shdrSpot, "screenWidth");
         float sw = GetScreenWidth();
-        SetShaderValue(shdrSpot, wLoc, ref sw, ShaderUniformDataType.ShaderUniformFloat);
+        SetShaderValue(shdrSpot, wLoc, sw, ShaderUniformDataType.ShaderUniformFloat);
 
         // Randomize the locations and velocities of the spotlights
         // and initialize the shader locations
@@ -104,9 +104,9 @@ public partial class ShadersSpotlight : ExampleHelper
             spots[i].inner = 28.0f * (i + 1);
             spots[i].radius = 48.0f * (i + 1);
 
-            SetShaderValue(shdrSpot, spots[i].positionLoc, ref spots[i].position.X, ShaderUniformDataType.ShaderUniformVec2);
-            SetShaderValue(shdrSpot, spots[i].innerLoc, ref spots[i].inner, ShaderUniformDataType.ShaderUniformFloat);
-            SetShaderValue(shdrSpot, spots[i].radiusLoc, ref spots[i].radius, ShaderUniformDataType.ShaderUniformFloat);
+            SetShaderValue(shdrSpot, spots[i].positionLoc, spots[i].position.X, ShaderUniformDataType.ShaderUniformVec2);
+            SetShaderValue(shdrSpot, spots[i].innerLoc, spots[i].inner, ShaderUniformDataType.ShaderUniformFloat);
+            SetShaderValue(shdrSpot, spots[i].radiusLoc, spots[i].radius, ShaderUniformDataType.ShaderUniformFloat);
         }
 
         SetTargetFPS(60); // Set  to run at 60 frames-per-second
@@ -158,7 +158,7 @@ public partial class ShadersSpotlight : ExampleHelper
                     }
                 }
 
-                SetShaderValue(shdrSpot, spots[i].positionLoc, ref spots[i].position.X, ShaderUniformDataType.ShaderUniformVec2);
+                SetShaderValue(shdrSpot, spots[i].positionLoc, spots[i].position.X, ShaderUniformDataType.ShaderUniformVec2);
             }
 
             // Draw
@@ -211,7 +211,7 @@ public partial class ShadersSpotlight : ExampleHelper
         return 0;
     }
 
-    private static void ResetStar(Star s)
+    static void ResetStar(Star s)
     {
         s.position = new(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
 
@@ -225,7 +225,7 @@ public partial class ShadersSpotlight : ExampleHelper
         s.position = Vector2.Add(s.position, Vector2.Multiply(s.speed, new Vector2(8.0f, 8.0f)));
     }
 
-    private static void UpdateStar(Star s)
+    static void UpdateStar(Star s)
     {
         s.position = Vector2.Add(s.position, s.speed);
 

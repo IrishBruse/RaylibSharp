@@ -2,9 +2,9 @@ namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Runtime.InteropServices;
-using System.Numerics;
 using System.Drawing;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> VrStereoConfig, VR stereo rendering configuration for simulator </summary>
@@ -34,7 +34,7 @@ public unsafe partial struct VrStereoConfig
 
 /// <summary> VrStereoConfig, VR stereo rendering configuration for simulator </summary>
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct UnmanagedVrStereoConfig
+unsafe struct UnmanagedVrStereoConfig
 {
     /// <summary> VR projection matrices (per eye) </summary>
     public fixed float ProjectionL[16];

@@ -7,7 +7,7 @@ using static RaylibSharp.Raylib;
 
 public partial class ShapesRectangleScaling : ExampleHelper
 {
-    private const int MOUSE_SCALE_MARK_SIZE = 12;
+    const int MOUSE_SCALE_MARK_SIZE = 12;
 
     // Program main entry point
     public static int Example()

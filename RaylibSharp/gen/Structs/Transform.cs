@@ -2,9 +2,9 @@ namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Runtime.InteropServices;
-using System.Numerics;
 using System.Drawing;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> Transform, vertex transformation data </summary>
@@ -20,7 +20,7 @@ public unsafe partial struct Transform
 
 /// <summary> Transform, vertex transformation data </summary>
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct UnmanagedTransform
+unsafe struct UnmanagedTransform
 {
     /// <summary> Translation </summary>
     public Vector3 Translation;

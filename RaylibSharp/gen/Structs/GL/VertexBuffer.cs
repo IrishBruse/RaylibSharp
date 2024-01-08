@@ -3,9 +3,6 @@ namespace RaylibSharp.GL;
 #pragma warning disable CA1711,IDE0005,CA1051
 
 using System.Runtime.InteropServices;
-using System.Numerics;
-using System.Drawing;
-using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> Dynamic vertex buffers (position + texcoords + colors + indices arrays) </summary>
 public unsafe partial struct VertexBuffer
@@ -34,7 +31,7 @@ public unsafe partial struct VertexBuffer
 
 /// <summary> Dynamic vertex buffers (position + texcoords + colors + indices arrays) </summary>
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct UnmanagedVertexBuffer
+unsafe struct UnmanagedVertexBuffer
 {
     /// <summary> Number of elements in the buffer (QUADS) </summary>
     public int ElementCount;

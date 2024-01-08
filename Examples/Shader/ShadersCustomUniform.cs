@@ -63,7 +63,7 @@ public partial class ShadersCustomUniform : ExampleHelper
             swirlCenter[1] = screenHeight - mousePosition.Y;
 
             // Send new value to the shader to be used on drawing
-            SetShaderValue(shader, swirlCenterLoc, ref swirlCenter, ShaderUniformDataType.ShaderUniformVec2);
+            SetShaderValue(shader, swirlCenterLoc, swirlCenter, ShaderUniformDataType.ShaderUniformVec2);
 
             // Draw
             BeginTextureMode(target);

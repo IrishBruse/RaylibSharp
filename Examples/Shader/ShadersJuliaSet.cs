@@ -8,7 +8,7 @@ using static RaylibSharp.Raylib;
 public partial class ShadersJuliaSet : ExampleHelper
 {
     // A few good julia sets
-    private static readonly Vector2[] pointsOfInterest =
+    static readonly Vector2[] pointsOfInterest =
     {
         new(-0.348827f,0.607167f),
         new(-0.786268f,0.169728f),
@@ -54,11 +54,11 @@ public partial class ShadersJuliaSet : ExampleHelper
 
         // Tell the shader what the screen dimensions, zoom, offset and c are
         Vector2 screenDims = new(GetScreenWidth(), GetScreenHeight());
-        SetShaderValue(shader, GetShaderLocation(shader, "screenDims"), ref screenDims, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(shader, GetShaderLocation(shader, "screenDims"), screenDims, ShaderUniformDataType.ShaderUniformVec2);
 
-        SetShaderValue(shader, cLoc, ref c, ShaderUniformDataType.ShaderUniformVec2);
-        SetShaderValue(shader, zoomLoc, ref zoom, ShaderUniformDataType.ShaderUniformFloat);
-        SetShaderValue(shader, offsetLoc, ref offset, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(shader, cLoc, c, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(shader, zoomLoc, zoom, ShaderUniformDataType.ShaderUniformFloat);
+        SetShaderValue(shader, offsetLoc, offset, ShaderUniformDataType.ShaderUniformVec2);
 
         int incrementSpeed = 0; // Multiplier of speed to change c value
         bool showControls = true; // Show controls
@@ -103,7 +103,7 @@ public partial class ShadersJuliaSet : ExampleHelper
                     c = pointsOfInterest[5];
                 }
 
-                SetShaderValue(shader, cLoc, ref c, ShaderUniformDataType.ShaderUniformVec2);
+                SetShaderValue(shader, cLoc, c, ShaderUniformDataType.ShaderUniformVec2);
             }
 
             if (IsKeyPressed(Key.Space))
@@ -155,15 +155,15 @@ public partial class ShadersJuliaSet : ExampleHelper
                     offsetSpeed = new(0.0f, 0.0f);
                 }
 
-                SetShaderValue(shader, zoomLoc, ref zoom, ShaderUniformDataType.ShaderUniformFloat);
-                SetShaderValue(shader, offsetLoc, ref offset, ShaderUniformDataType.ShaderUniformVec2);
+                SetShaderValue(shader, zoomLoc, zoom, ShaderUniformDataType.ShaderUniformFloat);
+                SetShaderValue(shader, offsetLoc, offset, ShaderUniformDataType.ShaderUniformVec2);
 
                 // Increment c value with time
                 float amount = GetFrameTime() * incrementSpeed * 0.0005f;
                 c[0] += amount;
                 c[1] += amount;
 
-                SetShaderValue(shader, cLoc, ref c, ShaderUniformDataType.ShaderUniformVec2);
+                SetShaderValue(shader, cLoc, c, ShaderUniformDataType.ShaderUniformVec2);
             }
 
             // Draw

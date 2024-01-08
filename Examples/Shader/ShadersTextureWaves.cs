@@ -41,13 +41,13 @@ public partial class ShadersTextureWaves : ExampleHelper
         float speedY = 8.0f;
 
         Vector2 screenSize = new(GetScreenWidth(), GetScreenHeight());
-        SetShaderValue(shader, GetShaderLocation(shader, "size"), ref screenSize, ShaderUniformDataType.ShaderUniformVec2);
-        SetShaderValue(shader, freqXLoc, ref freqX, ShaderUniformDataType.ShaderUniformFloat);
-        SetShaderValue(shader, freqYLoc, ref freqY, ShaderUniformDataType.ShaderUniformFloat);
-        SetShaderValue(shader, ampXLoc, ref ampX, ShaderUniformDataType.ShaderUniformFloat);
-        SetShaderValue(shader, ampYLoc, ref ampY, ShaderUniformDataType.ShaderUniformFloat);
-        SetShaderValue(shader, speedXLoc, ref speedX, ShaderUniformDataType.ShaderUniformFloat);
-        SetShaderValue(shader, speedYLoc, ref speedY, ShaderUniformDataType.ShaderUniformFloat);
+        SetShaderValue(shader, GetShaderLocation(shader, "size"), screenSize, ShaderUniformDataType.ShaderUniformVec2);
+        SetShaderValue(shader, freqXLoc, freqX, ShaderUniformDataType.ShaderUniformFloat);
+        SetShaderValue(shader, freqYLoc, freqY, ShaderUniformDataType.ShaderUniformFloat);
+        SetShaderValue(shader, ampXLoc, ampX, ShaderUniformDataType.ShaderUniformFloat);
+        SetShaderValue(shader, ampYLoc, ampY, ShaderUniformDataType.ShaderUniformFloat);
+        SetShaderValue(shader, speedXLoc, speedX, ShaderUniformDataType.ShaderUniformFloat);
+        SetShaderValue(shader, speedYLoc, speedY, ShaderUniformDataType.ShaderUniformFloat);
 
         float seconds = 0.0f;
 
@@ -60,7 +60,7 @@ public partial class ShadersTextureWaves : ExampleHelper
             // Update
             seconds += GetFrameTime();
 
-            SetShaderValue(shader, secondsLoc, ref seconds, ShaderUniformDataType.ShaderUniformFloat);
+            SetShaderValue(shader, secondsLoc, seconds, ShaderUniformDataType.ShaderUniformFloat);
 
             // Draw
             BeginDrawing();

@@ -13,10 +13,10 @@ public static unsafe partial class Raylib
     }
 
     // Todo Fix this as this locks the binding to a single instance
-    private static TraceLogCallback traceLogCallback = ConsoleLog;
+    static TraceLogCallback traceLogCallback = ConsoleLog;
 
     [UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvCdecl) })]
-    private static unsafe void NativeLog(int msgType, sbyte* text, sbyte* args)
+    static unsafe void NativeLog(int msgType, sbyte* text, sbyte* args)
     {
         IntPtr textPtr = new(text);
         IntPtr argsPtr = new(args);
@@ -38,7 +38,7 @@ public static unsafe partial class Raylib
         traceLogCallback?.Invoke((TraceLogLevel)msgType, mySprintf);
     }
 
-    private static string Snprintf(IntPtr textPtr, IntPtr argsPtr)
+    static string Snprintf(IntPtr textPtr, IntPtr argsPtr)
     {
         int byteLength = vsnprintf(IntPtr.Zero, 0, textPtr, argsPtr) + 1;
         Span<byte> span = new byte[byteLength];
@@ -53,7 +53,7 @@ public static unsafe partial class Raylib
     }
 
     // Custom logging function
-    private static void ConsoleLog(TraceLogLevel msgType, string text)
+    static void ConsoleLog(TraceLogLevel msgType, string text)
     {
         switch (msgType)
         {
@@ -83,7 +83,7 @@ public static unsafe partial class Raylib
         }
     }
 
-    private static void LogMessage(string prefix, string text, ConsoleColor color)
+    static void LogMessage(string prefix, string text, ConsoleColor color)
     {
         Console.ForegroundColor = color;
         Console.WriteLine(prefix + text);

@@ -7,9 +7,9 @@ using static RaylibSharp.Raylib;
 
 public partial class ShadersPostprocessing : ExampleHelper
 {
-    private const int MAX_POSTPRO_SHADERS = 12;
+    const int MAX_POSTPRO_SHADERS = 12;
 
-    private enum PostproShader
+    enum PostproShader
     {
         FX_GraySCALE = 0,
         FX_POSTERIZATION,
@@ -26,7 +26,7 @@ public partial class ShadersPostprocessing : ExampleHelper
         //FX_FXAA
     }
 
-    private static string[] postproShaderText = new string[]{
+    static string[] postproShaderText = new string[]{
         "GraySCALE",
         "POSTERIZATION",
         "DREAM_VISION",

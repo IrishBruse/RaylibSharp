@@ -6,7 +6,7 @@ public class CoreBasicScreenManager : ExampleHelper
 {
 
     // Types and Structures Definition
-    private enum GameScreen
+    enum GameScreen
     {
         LOGO = 0,
         TITLE,

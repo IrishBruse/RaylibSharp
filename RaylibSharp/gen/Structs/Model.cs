@@ -2,9 +2,9 @@ namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Runtime.InteropServices;
-using System.Numerics;
 using System.Drawing;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> Model, meshes, materials and animation data </summary>
@@ -33,7 +33,7 @@ public unsafe partial struct Model
 
 /// <summary> Model, meshes, materials and animation data </summary>
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct UnmanagedModel
+unsafe struct UnmanagedModel
 {
     /// <summary> Local transform matrix </summary>
     public Matrix4x4 Transform;

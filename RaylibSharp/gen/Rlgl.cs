@@ -1,9 +1,7 @@
 namespace RaylibSharp.GL;
 
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.Marshalling;
 using System.Numerics;
-using System.Drawing;
+using System.Runtime.InteropServices;
 
 public static unsafe partial class RLGL
 {

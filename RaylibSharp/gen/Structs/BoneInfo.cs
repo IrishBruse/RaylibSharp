@@ -2,9 +2,9 @@ namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Runtime.InteropServices;
-using System.Numerics;
 using System.Drawing;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> Bone, skeletal animation bone </summary>
@@ -18,7 +18,7 @@ public unsafe partial struct BoneInfo
 
 /// <summary> Bone, skeletal animation bone </summary>
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct UnmanagedBoneInfo
+unsafe struct UnmanagedBoneInfo
 {
     /// <summary> Bone name </summary>
     public fixed char Name[32];

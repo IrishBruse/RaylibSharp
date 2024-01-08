@@ -74,7 +74,7 @@ public partial class ModelsDrawCubeTexture : ExampleHelper
     // Custom Functions Definition
     // Draw cube textured
     // NOTE: Cube position is the center position
-    private static void DrawCubeTexture(Texture texture, Vector3 position, float width, float height, float length, Color color)
+    static void DrawCubeTexture(Texture texture, Vector3 position, float width, float height, float length, Color color)
     {
         float x = position.X;
         float y = position.Y;
@@ -136,7 +136,7 @@ public partial class ModelsDrawCubeTexture : ExampleHelper
     }
 
     // Draw cube with texture piece applied to all faces
-    private static void DrawCubeTexture(Texture texture, RectangleF source, Vector3 position, float width, float height, float length, Color color)
+    static void DrawCubeTexture(Texture texture, RectangleF source, Vector3 position, float width, float height, float length, Color color)
     {
         float x = position.X;
         float y = position.Y;

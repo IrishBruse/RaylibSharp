@@ -26,7 +26,7 @@ public partial class ShadersTextureDrawing : ExampleHelper
 
         float time = 0.0f;
         int timeLoc = GetShaderLocation(shader, "uTime");
-        SetShaderValue(shader, timeLoc, ref time, ShaderUniformDataType.ShaderUniformFloat);
+        SetShaderValue(shader, timeLoc, time, ShaderUniformDataType.ShaderUniformFloat);
 
         SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
@@ -35,7 +35,7 @@ public partial class ShadersTextureDrawing : ExampleHelper
         {
             // Update
             time = (float)GetTime();
-            SetShaderValue(shader, timeLoc, ref time, ShaderUniformDataType.ShaderUniformFloat);
+            SetShaderValue(shader, timeLoc, time, ShaderUniformDataType.ShaderUniformFloat);
 
             // Draw
             BeginDrawing();

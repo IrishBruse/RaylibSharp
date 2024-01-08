@@ -4,7 +4,7 @@ using System.Runtime.InteropServices.Marshalling;
 
 [CustomMarshaller(typeof(Material), MarshalMode.ManagedToUnmanagedIn, typeof(MaterialMarshaller))]
 [CustomMarshaller(typeof(Material), MarshalMode.ManagedToUnmanagedOut, typeof(MaterialMarshaller))]
-internal static unsafe class MaterialMarshaller
+static unsafe class MaterialMarshaller
 {
     public static UnmanagedMaterial ConvertToUnmanaged(Material managed)
     {

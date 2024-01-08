@@ -1,9 +1,9 @@
 namespace RaylibSharp;
 
+using System.Drawing;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
-using System.Numerics;
-using System.Drawing;
 
 public static unsafe partial class Raylib
 {
@@ -314,11 +314,11 @@ public static unsafe partial class Raylib
 
     /// <summary> Load shader from files and bind default locations </summary>
     [LibraryImport(LIB, EntryPoint = "LoadShader")]
-    public static partial Shader LoadShader([MarshalAs(UnmanagedType.LPStr)] string? vsFileName, [MarshalAs(UnmanagedType.LPStr)] string? fsFileName);
+    public static partial Shader LoadShader([MarshalAs(UnmanagedType.LPStr)] string? vertexShaderPath, [MarshalAs(UnmanagedType.LPStr)] string? fragmentShaderPath);
 
     /// <summary> Load shader from code strings and bind default locations </summary>
     [LibraryImport(LIB, EntryPoint = "LoadShaderFromMemory")]
-    public static partial Shader LoadShaderFromMemory([MarshalAs(UnmanagedType.LPStr)] string vsCode, [MarshalAs(UnmanagedType.LPStr)] string fsCode);
+    public static partial Shader LoadShaderFromMemory([MarshalAs(UnmanagedType.LPStr)] string? fragmentShaderCode, [MarshalAs(UnmanagedType.LPStr)] string? vertexShaderCode);
 
     /// <summary> Check if a shader is ready </summary>
     [LibraryImport(LIB, EntryPoint = "IsShaderReady")]
@@ -858,11 +858,11 @@ public static unsafe partial class Raylib
 
     /// <summary> Load image from RAW file data </summary>
     [LibraryImport(LIB, EntryPoint = "LoadImageRaw")]
-    public static partial Image LoadImageRaw([MarshalAs(UnmanagedType.LPStr)] string fileName, int width, int height, int format, int headerSize);
+    public static partial Image LoadImageRaw([MarshalAs(UnmanagedType.LPStr)] string fileName, int width, int height, PixelFormat format, int headerSize);
 
     /// <summary> Load image sequence from file (frames appended to image.data) </summary>
     [LibraryImport(LIB, EntryPoint = "LoadImageAnim")]
-    public static partial Image LoadImageAnim([MarshalAs(UnmanagedType.LPStr)] string fileName, IntPtr frames);
+    public static partial Image LoadImageAnim([MarshalAs(UnmanagedType.LPStr)] string fileName, ref int frames);
 
     /// <summary> Load image from memory buffer, fileType refers to extension: i.e. '.png' </summary>
     [LibraryImport(LIB, EntryPoint = "LoadImageFromMemory")]
@@ -948,7 +948,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Convert image data to desired format </summary>
     [LibraryImport(LIB, EntryPoint = "ImageFormat")]
-    public static partial void ImageFormat(IntPtr image, int newFormat);
+    public static partial void ImageFormat(ref Image image, PixelFormat newFormat);
 
     /// <summary> Convert image to POT (power-of-two) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageToPOT")]
@@ -956,7 +956,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Crop an image to a defined rectangle </summary>
     [LibraryImport(LIB, EntryPoint = "ImageCrop")]
-    public static partial void ImageCrop(IntPtr image, RectangleF crop);
+    public static partial void ImageCrop(ref Image image, RectangleF crop);
 
     /// <summary> Crop image depending on alpha value </summary>
     [LibraryImport(LIB, EntryPoint = "ImageAlphaCrop")]
@@ -976,11 +976,11 @@ public static unsafe partial class Raylib
 
     /// <summary> Apply Gaussian blur using a box blur approximation </summary>
     [LibraryImport(LIB, EntryPoint = "ImageBlurGaussian")]
-    public static partial void ImageBlurGaussian(IntPtr image, int blurSize);
+    public static partial void ImageBlurGaussian(ref Image image, int blurSize);
 
     /// <summary> Resize image (Bicubic scaling algorithm) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageResize")]
-    public static partial void ImageResize(IntPtr image, int newWidth, int newHeight);
+    public static partial void ImageResize(ref Image image, int newWidth, int newHeight);
 
     /// <summary> Resize image (Nearest-Neighbor scaling algorithm) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageResizeNN")]
@@ -1000,15 +1000,15 @@ public static unsafe partial class Raylib
 
     /// <summary> Flip image vertically </summary>
     [LibraryImport(LIB, EntryPoint = "ImageFlipVertical")]
-    public static partial void ImageFlipVertical(IntPtr image);
+    public static partial void ImageFlipVertical(ref Image image);
 
     /// <summary> Flip image horizontally </summary>
     [LibraryImport(LIB, EntryPoint = "ImageFlipHorizontal")]
-    public static partial void ImageFlipHorizontal(IntPtr image);
+    public static partial void ImageFlipHorizontal(ref Image image);
 
     /// <summary> Rotate image by input angle in degrees (-359 to 359) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageRotate")]
-    public static partial void ImageRotate(IntPtr image, int degrees);
+    public static partial void ImageRotate(ref Image image, int degrees);
 
     /// <summary> Rotate image clockwise 90deg </summary>
     [LibraryImport(LIB, EntryPoint = "ImageRotateCW")]
@@ -1020,23 +1020,23 @@ public static unsafe partial class Raylib
 
     /// <summary> Modify image color: tint </summary>
     [LibraryImport(LIB, EntryPoint = "ImageColorTint")]
-    public static partial void ImageColorTint(IntPtr image, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageColorTint(ref Image image, [MarshalUsing(typeof(ColorMarshaller))] Color color);
 
     /// <summary> Modify image color: invert </summary>
     [LibraryImport(LIB, EntryPoint = "ImageColorInvert")]
-    public static partial void ImageColorInvert(IntPtr image);
+    public static partial void ImageColorInvert(ref Image image);
 
     /// <summary> Modify image color: grayscale </summary>
     [LibraryImport(LIB, EntryPoint = "ImageColorGrayscale")]
-    public static partial void ImageColorGrayscale(IntPtr image);
+    public static partial void ImageColorGrayscale(ref Image image);
 
     /// <summary> Modify image color: contrast (-100 to 100) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageColorContrast")]
-    public static partial void ImageColorContrast(IntPtr image, float contrast);
+    public static partial void ImageColorContrast(ref Image image, float contrast);
 
     /// <summary> Modify image color: brightness (-255 to 255) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageColorBrightness")]
-    public static partial void ImageColorBrightness(IntPtr image, int brightness);
+    public static partial void ImageColorBrightness(ref Image image, int brightness);
 
     /// <summary> Modify image color: replace color </summary>
     [LibraryImport(LIB, EntryPoint = "ImageColorReplace")]
@@ -1089,7 +1089,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Draw circle outline within an image </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawCircleLines")]
-    public static partial void ImageDrawCircleLines(IntPtr dst, int centerX, int centerY, int radius, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageDrawCircleLines(ref Image dst, int centerX, int centerY, int radius, [MarshalUsing(typeof(ColorMarshaller))] Color color);
 
     /// <summary> Draw circle outline within an image (Vector version) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawCircleLinesV")]
@@ -1097,7 +1097,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Draw rectangle within an image </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawRectangle")]
-    public static partial void ImageDrawRectangle(IntPtr dst, int posX, int posY, int width, int height, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageDrawRectangle(ref Image dst, int posX, int posY, int width, int height, [MarshalUsing(typeof(ColorMarshaller))] Color color);
 
     /// <summary> Draw rectangle within an image (Vector version) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawRectangleV")]
@@ -1117,11 +1117,11 @@ public static unsafe partial class Raylib
 
     /// <summary> Draw text (using default font) within an image (destination) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawText")]
-    public static partial void ImageDrawText(IntPtr dst, [MarshalAs(UnmanagedType.LPStr)] string text, int posX, int posY, int fontSize, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageDrawText(ref Image dst, [MarshalAs(UnmanagedType.LPStr)] string text, int posX, int posY, int fontSize, [MarshalUsing(typeof(ColorMarshaller))] Color color);
 
     /// <summary> Draw text (custom sprite font) within an image (destination) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawTextEx")]
-    public static partial void ImageDrawText(IntPtr dst, Font font, [MarshalAs(UnmanagedType.LPStr)] string text, Vector2 position, float fontSize, float spacing, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void ImageDrawText(ref Image dst, Font font, [MarshalAs(UnmanagedType.LPStr)] string text, Vector2 position, float fontSize, float spacing, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
 
     /// <summary> Load texture from file into GPU memory (VRAM) </summary>
     [LibraryImport(LIB, EntryPoint = "LoadTexture")]
@@ -1694,7 +1694,7 @@ public static unsafe partial class Raylib
     public static partial void SetModelMeshMaterial(IntPtr model, int meshId, int materialId);
 
     /// <summary> Load model animations from file </summary>
-[return: MarshalUsing(CountElementName = "animCount")]
+    [return: MarshalUsing(CountElementName = "animCount")]
     [LibraryImport(LIB, EntryPoint = "LoadModelAnimations")]
     public static partial ModelAnimation[] LoadModelAnimations([MarshalAs(UnmanagedType.LPStr)] string fileName, ref uint animCount);
 

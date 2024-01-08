@@ -2,9 +2,9 @@ namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Runtime.InteropServices;
-using System.Numerics;
 using System.Drawing;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> Mesh, vertex data and vao/vbo </summary>
@@ -45,7 +45,7 @@ public unsafe partial struct Mesh
 
 /// <summary> Mesh, vertex data and vao/vbo </summary>
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct UnmanagedMesh
+unsafe struct UnmanagedMesh
 {
     /// <summary> Number of vertices stored in arrays </summary>
     public int VertexCount;

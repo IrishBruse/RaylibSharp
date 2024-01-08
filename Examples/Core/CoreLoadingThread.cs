@@ -6,16 +6,16 @@ using static RaylibSharp.Raylib;
 
 public class CoreLoadingThread : ExampleHelper
 {
-    private enum State
+    enum State
     {
         Waiting,
         Loading,
         Finished
     }
 
-    private static int done;
-    private static int progress;
-    private static Thread? thread;
+    static int done;
+    static int progress;
+    static Thread? thread;
 
     public static int Example()
     {
@@ -131,7 +131,7 @@ public class CoreLoadingThread : ExampleHelper
     }
 
     // Loading data thread function definition
-    private static void LoadDataThread()
+    static void LoadDataThread()
     {
         // We simulate data loading with a time counter for 5 seconds
         for (int i = 0; i < 5000; i++)

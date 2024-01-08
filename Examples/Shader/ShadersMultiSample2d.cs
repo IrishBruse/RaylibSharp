@@ -59,7 +59,7 @@ public partial class ShadersMultiSample2d : ExampleHelper
                 dividerValue = 1.0f;
             }
 
-            SetShaderValue(shader, dividerLoc, ref dividerValue, ShaderUniformDataType.ShaderUniformFloat);
+            SetShaderValue(shader, dividerLoc, dividerValue, ShaderUniformDataType.ShaderUniformFloat);
 
             // Draw
             BeginDrawing();

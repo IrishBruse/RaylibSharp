@@ -2,9 +2,9 @@ namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Runtime.InteropServices;
-using System.Numerics;
 using System.Drawing;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> AudioStream, custom audio stream </summary>
@@ -24,7 +24,7 @@ public unsafe partial struct AudioStream
 
 /// <summary> AudioStream, custom audio stream </summary>
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct UnmanagedAudioStream
+unsafe struct UnmanagedAudioStream
 {
     /// <summary> Pointer to internal data used by the audio system </summary>
     public IntPtr Buffer;

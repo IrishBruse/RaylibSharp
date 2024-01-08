@@ -104,7 +104,7 @@ public partial class ModelsRlglSolarSystem : ExampleHelper
 
     // Draw sphere without any matrix transformation
     // NOTE: Sphere is drawn in woRLGL.d position ( 0, 0, 0 ) with radius 1.0f
-    private static void DrawSphereBasic(Color color)
+    static void DrawSphereBasic(Color color)
     {
         int rings = 16;
         int slices = 16;

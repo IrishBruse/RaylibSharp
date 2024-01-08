@@ -7,13 +7,13 @@ using static RaylibSharp.Raylib;
 
 public partial class EasingsTestbed : ExampleHelper
 {
-    private const int FONT_SIZE = 20;
+    const int FONT_SIZE = 20;
 
-    private const float D_STEP = 20.0f;
-    private const float D_STEP_FINE = 2.0f;
-    private const float D_MIN = 1.0f;
-    private const float D_MAX = 10000.0f;
-    private static Dictionary<EasingTypes, Easing> Easings = new()
+    const float D_STEP = 20.0f;
+    const float D_STEP_FINE = 2.0f;
+    const float D_MIN = 1.0f;
+    const float D_MAX = 10000.0f;
+    static Dictionary<EasingTypes, Easing> Easings = new()
     {
         {EasingTypes.EASE_LINEAR_NONE ,new Easing("EaseLinearNone", EaseLinearNone)},
         {EasingTypes.EASE_LINEAR_IN ,new Easing("EaseLinearIn", EaseLinearIn)},
@@ -198,25 +198,19 @@ public partial class EasingsTestbed : ExampleHelper
     }
 
     // NoEase function, used when "no easing" is selected for any axis. It just ignores all parameters besides b.
-    private static float NoEase(float t, float b, float c, float d)
+    static float NoEase(float t, float b, float c, float d)
     {
         return b;
     }
 
-    private struct Easing
+    struct Easing(string name, EasingFunction func)
     {
-        public string name;
-        public EasingFunction func;
-
-        public Easing(string name, EasingFunction func)
-        {
-            this.name = name;
-            this.func = func;
-        }
+        public string name = name;
+        public EasingFunction func = func;
     }
 
     // Easing types
-    private enum EasingTypes
+    enum EasingTypes
     {
         EASE_LINEAR_NONE = 0,
         EASE_LINEAR_IN,

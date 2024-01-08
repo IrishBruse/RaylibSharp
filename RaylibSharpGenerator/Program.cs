@@ -2,7 +2,7 @@
 
 public class Program
 {
-    private static void Main()
+    static void Main()
     {
         RaylibApi api;
 
@@ -19,10 +19,10 @@ public class Program
 
         Generate(api);
 
-        // ExampleProcessor.Emit();
+        ExampleProcessor.Emit();
     }
 
-    private static void Generate(RaylibApi api)
+    static void Generate(RaylibApi api)
     {
         EnumProcessor.Emit(api);
         DefineProcessor.Emit(api);

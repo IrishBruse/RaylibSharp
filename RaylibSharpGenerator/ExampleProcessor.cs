@@ -13,9 +13,6 @@ public partial class ExampleProcessor
         {
             string name = Path.GetFileNameWithoutExtension(cFile);
             string pascalName = Utility.ToPascalCase(name);
-
-
-            string csFile = "../Examples/Gen";
             if (pascalName == "ShapesTopDownLights" || pascalName == "ExamplesTemplate" || pascalName.StartsWith("temp/"))
             {
                 continue;
@@ -31,47 +28,40 @@ public partial class ExampleProcessor
             }
             else if (pascalName.StartsWith("Shapes"))
             {
-                csFile = $"../Examples/Shapes/{pascalName}.cs";
+                continue;
             }
             else if (pascalName.StartsWith("Models"))
             {
-                // csFile = $"{csFile}/Models/{pascalName}.cs";
                 continue;
             }
             else if (pascalName.StartsWith("Shader"))
             {
-                csFile = $"{csFile}/Shader/{pascalName}.cs";
-            }
-            else if (pascalName.StartsWith("Text"))
-            {
-                // csFile = $"{csFile}/Text/{pascalName}.cs";
                 continue;
             }
             else if (pascalName.StartsWith("Texture"))
             {
-                csFile = $"{csFile}/Texture/{pascalName}.cs";
+                continue;
+            }
+            else if (pascalName.StartsWith("Text"))
+            {
+                continue;
             }
             else
             {
                 continue;
             }
-
-            Console.WriteLine("Example " + pascalName);
-
-            string[] lines = File.ReadAllLines(cFile);
-            GenerateExample(lines, csFile);
         }
 
         // Process.Start("dotnet", "format ../Example/Example.csproj").WaitForExit();
     }
 
-    private static void GenerateExample(string[] input, string outputFile)
+    static void GenerateExample(string[] input, string outputFile)
     {
         Directory.CreateDirectory(Path.GetDirectoryName(outputFile)!);
 
         string exampleName = Path.GetFileNameWithoutExtension(outputFile);
 
-        string[] fileHeader = {
+        string[] fileHeader = [
             "using System.Numerics;",
             "using System.Drawing;",
             "using System;",
@@ -81,13 +71,13 @@ public partial class ExampleProcessor
             "",
             "using static RaylibSharp.Raylib;",
             "",
-        };
+        ];
 
-        List<string> output = new()
-        {
+        List<string> output =
+        [
             string.Join("\n", fileHeader),
             "public partial class " + exampleName + " : ExampleHelper \n{",
-        };
+        ];
 
         bool headerRemoved = false;
         bool lastLineEmpty = false;
@@ -154,7 +144,7 @@ public partial class ExampleProcessor
         File.WriteAllLines(outputFile, output);
     }
 
-    private static string? ProcessLine(string? l)
+    static string? ProcessLine(string? l)
     {
         StringBuilder line = new(l);
 
@@ -350,7 +340,7 @@ public partial class ExampleProcessor
     [GeneratedRegex("bool (\\w+?) = 1;")] private static partial Regex BoolTrue();
 }
 
-internal static class Extensions
+static class Extensions
 {
     public static void ReplaceAll(this StringBuilder sb, string find, string replace)
     {

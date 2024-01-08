@@ -5,7 +5,7 @@ using System.Runtime.InteropServices.Marshalling;
 [CustomMarshaller(typeof(ModelAnimation), MarshalMode.ManagedToUnmanagedIn, typeof(ModelAnimationMarshaller))]
 [CustomMarshaller(typeof(ModelAnimation), MarshalMode.ManagedToUnmanagedOut, typeof(ModelAnimationMarshaller))]
 [CustomMarshaller(typeof(ModelAnimation), MarshalMode.ElementOut, typeof(Out))]
-internal static unsafe class ModelAnimationMarshaller
+static unsafe class ModelAnimationMarshaller
 {
     public static UnmanagedModelAnimation ConvertToUnmanaged(ModelAnimation managed)
     {
@@ -25,6 +25,11 @@ internal static unsafe class ModelAnimationMarshaller
         }
 
         public static void Free(UnmanagedColor unmanaged)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static UnmanagedColor ConvertToUnmanaged(ModelAnimation managed)
         {
             throw new NotImplementedException();
         }

@@ -8,11 +8,11 @@ using Camera = RaylibSharp.Camera3D;
 
 public class Core3dSplitScreen : ExampleHelper
 {
-    private static Camera cameraPlayer1;
-    private static Camera cameraPlayer2;
+    static Camera cameraPlayer1;
+    static Camera cameraPlayer2;
 
     // Scene drawing
-    private static void DrawScene()
+    static void DrawScene()
     {
         int count = 5;
         float spacing = 4;

@@ -6,8 +6,8 @@ using Texture2D = RaylibSharp.Texture;
 
 public class CoreInputGamepad : ExampleHelper
 {
-    private const string XBOX360_NAME_ID = "Xbox 360 Controller";
-    private const string PS3_NAME_ID = "PLAYSTATION(R)3 Controller";
+    const string XBOX360_NAME_ID = "Xbox 360 Controller";
+    const string PS3_NAME_ID = "PLAYSTATION(R)3 Controller";
 
     // Program main entry point
     public static int Example()

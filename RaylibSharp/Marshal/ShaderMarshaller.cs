@@ -4,10 +4,10 @@ using System.Runtime.InteropServices.Marshalling;
 
 [CustomMarshaller(typeof(Shader), MarshalMode.ManagedToUnmanagedIn, typeof(ShaderMarshaller))]
 [CustomMarshaller(typeof(Shader), MarshalMode.ManagedToUnmanagedOut, typeof(ShaderMarshaller))]
-internal static unsafe class ShaderMarshaller
+static unsafe class ShaderMarshaller
 {
     // https://github.com/raysan5/raylib/blob/334e96d470c5cb09d154e1c849d04adb721a7a8c/src/rlgl.h#L227C13-L227C53
-    private const int RL_MAX_SHADER_LOCATIONS = 32;
+    const int RL_MAX_SHADER_LOCATIONS = 32;
 
     public static UnmanagedShader ConvertToUnmanaged(Shader managed)
     {

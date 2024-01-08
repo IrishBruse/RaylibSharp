@@ -3,9 +3,6 @@ namespace RaylibSharp.GL;
 #pragma warning disable CA1711,IDE0005,CA1051
 
 using System.Runtime.InteropServices;
-using System.Numerics;
-using System.Drawing;
-using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> rlRenderBatch type </summary>
 public unsafe partial struct RenderBatch
@@ -26,7 +23,7 @@ public unsafe partial struct RenderBatch
 
 /// <summary> rlRenderBatch type </summary>
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct UnmanagedRenderBatch
+unsafe struct UnmanagedRenderBatch
 {
     /// <summary> Number of vertex buffers (multi-buffering support) </summary>
     public int BufferCount;

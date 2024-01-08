@@ -4,7 +4,7 @@ using System.Runtime.InteropServices.Marshalling;
 
 [CustomMarshaller(typeof(Mesh), MarshalMode.ManagedToUnmanagedIn, typeof(MeshMarshaller))]
 [CustomMarshaller(typeof(Mesh), MarshalMode.ManagedToUnmanagedOut, typeof(MeshMarshaller))]
-internal static unsafe class MeshMarshaller
+static unsafe class MeshMarshaller
 {
     public static UnmanagedMesh ConvertToUnmanaged(Mesh managed)
     {
