@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -26,10 +25,10 @@ public partial class TexturesSpriteButton : ExampleHelper
 
         // Define frame rectangle for drawing
         float frameHeight = (float)button.Height / NUM_FRAMES;
-        RectangleF sourceRec = new(0, 0, button.Width, frameHeight);
+        Rectangle sourceRec = new(0, 0, button.Width, frameHeight);
 
         // Define button bounds on screen
-        RectangleF btnBounds = new((screenWidth / 2.0f) - (button.Width / 2.0f), (screenHeight / 2.0f) - (button.Height / NUM_FRAMES / 2.0f), button.Width, frameHeight);
+        Rectangle btnBounds = new((screenWidth / 2.0f) - (button.Width / 2.0f), (screenHeight / 2.0f) - (button.Height / NUM_FRAMES / 2.0f), button.Width, frameHeight);
 
         int btnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
         bool btnAction = false;         // Button action should be activated

@@ -1,7 +1,6 @@
 namespace Examples;
 
 using System;
-using System.Drawing;
 
 using RaylibSharp;
 

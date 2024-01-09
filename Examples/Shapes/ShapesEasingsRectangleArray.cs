@@ -1,4 +1,3 @@
-using System.Drawing;
 
 using RaylibSharp;
 
@@ -24,7 +23,7 @@ public partial class ShapesEasingsRectangleArray : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shapes - easings rectangle array");
 
-        RectangleF[] recs = new RectangleF[MAX_RECS_X * MAX_RECS_Y];
+        Rectangle[] recs = new Rectangle[MAX_RECS_X * MAX_RECS_Y];
 
         for (int y = 0; y < MAX_RECS_Y; y++)
         {

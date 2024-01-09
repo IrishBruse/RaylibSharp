@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -33,7 +32,7 @@ public class CoreWindowLetterbox : ExampleHelper
         Color[] colors = new Color[10];
         for (int i = 0; i < 10; i++)
         {
-            colors[i] = Color.FromArgb(255, GetRandomValue(100, 250), GetRandomValue(50, 150), GetRandomValue(10, 100));
+            colors[i] = new Color(GetRandomValue(100, 250), GetRandomValue(50, 150), GetRandomValue(10, 100));
         }
 
         SetTargetFPS(60); // Set our game to run at 60 frames-per-second
@@ -50,7 +49,7 @@ public class CoreWindowLetterbox : ExampleHelper
                 // Recalculate random colors for the bars
                 for (int i = 0; i < 10; i++)
                 {
-                    colors[i] = Color.FromArgb(255, GetRandomValue(100, 250), GetRandomValue(50, 150), GetRandomValue(10, 100));
+                    colors[i] = new Color(GetRandomValue(100, 250), GetRandomValue(50, 150), GetRandomValue(10, 100));
                 }
             }
 
@@ -84,14 +83,14 @@ public class CoreWindowLetterbox : ExampleHelper
             {
                 ClearBackground(Black); // Clear screen background
 
-                RectangleF source = new(
+                Rectangle source = new(
                     0.0f,
                     0.0f,
                     target.Texture.Width,
                      -target.Texture.Height
                 );
 
-                RectangleF dest = new(
+                Rectangle dest = new(
                     (GetScreenWidth() - (gameScreenWidth * scale)) * 0.5f,
                     (GetScreenHeight() - (gameScreenHeight * scale)) * 0.5f,
                     gameScreenWidth * scale,

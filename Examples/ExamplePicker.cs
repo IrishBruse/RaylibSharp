@@ -1,7 +1,6 @@
 namespace Examples;
 
 using System;
-using System.Drawing;
 using System.IO;
 using System.Numerics;
 
@@ -92,13 +91,13 @@ public static class ExamplePicker
 
                         int px = (x * previewWidth) + pad + (x == 0 ? -6 : 6);
                         int py = imagesStartHeight + (y * previewHeight) + (12 * y) + (int)Math.Floor(scroll);
-                        RectangleF rect = new(px, py, previewWidth, previewHeight);
+                        Rectangle rect = new(px, py, previewWidth, previewHeight);
 
                         Raylib.DrawTexture(textures[i], new(px, py), 0, .5f, Raylib.White);
 
                         if (rect.Contains(mousePos.X, mousePos.Y))
                         {
-                            Raylib.DrawRectangle(rect, Color.FromArgb(96, 200, 200, 200));
+                            Raylib.DrawRectangle(rect, new(200, 200, 200, 96));
                             Raylib.DrawRectangleLines(rect, lineThick: 10, examples[i].Color);
                             hovered = true;
                             exampleIndex = i;

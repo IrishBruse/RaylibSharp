@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 
 using RaylibSharp;
 
@@ -112,7 +111,7 @@ public partial class ShadersPaletteSwitch : ExampleHelper
                     {
                         // Draw horizontal screen-wide rectangles with increasing "palette index"
                         // The used palette index is encoded in the RGB components of the pixel
-                        DrawRectangle(0, lineHeight * i, GetScreenWidth(), lineHeight, Color.FromArgb(255, i, i, i));
+                        DrawRectangle(0, lineHeight * i, GetScreenWidth(), lineHeight, new Color(i, i, i));
                     }
 
                 }

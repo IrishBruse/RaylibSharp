@@ -1,4 +1,3 @@
-using System.Drawing;
 
 using RaylibSharp;
 
@@ -52,7 +51,7 @@ public partial class TexturesImageProcessing : ExampleHelper
         ImageProcess currentProcess = ImageProcess.None;
         bool textureReload = false;
 
-        RectangleF[] toggleRecs = new RectangleF[(int)ImageProcess.Count];
+        Rectangle[] toggleRecs = new Rectangle[(int)ImageProcess.Count];
         int mouseHoverRec = -1;
 
         for (int i = 0; i < (int)ImageProcess.Count; i++)

@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -32,12 +31,12 @@ public class ExampleHelper
 
     // Temp gui stubs TODO: replace when raygui is ported
 
-    public static float GuiSliderBar(RectangleF rect, string textLeft, string? textRight, float? value, float minAngle, float maxAngle)
+    public static float GuiSliderBar(Rectangle rect, string textLeft, string? textRight, float? value, float minAngle, float maxAngle)
     {
         return 0;
     }
 
-    public static bool GuiCheckBox(RectangleF rect, string text, bool check)
+    public static bool GuiCheckBox(Rectangle rect, string text, bool check)
     {
         return false;
     }

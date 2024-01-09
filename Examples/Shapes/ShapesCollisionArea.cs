@@ -1,4 +1,3 @@
-using System.Drawing;
 
 using RaylibSharp;
 
@@ -16,13 +15,13 @@ public partial class ShapesCollisionArea : ExampleHelper
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shapes - collision area");
 
         // Box A: Moving box
-        RectangleF boxA = new(10, (GetScreenHeight() / 2.0f) - 50, 200, 100);
+        Rectangle boxA = new(10, (GetScreenHeight() / 2.0f) - 50, 200, 100);
         int boxASpeedX = 4;
 
         // Box B: Mouse moved box
-        RectangleF boxB = new((GetScreenWidth() / 2.0f) - 30, (GetScreenHeight() / 2.0f) - 30, 60, 60);
+        Rectangle boxB = new((GetScreenWidth() / 2.0f) - 30, (GetScreenHeight() / 2.0f) - 30, 60, 60);
 
-        RectangleF boxCollision = new(); // Collision rectangle
+        Rectangle boxCollision = new(); // Collision rectangle
 
         int screenUpperLimit = 40; // Top menu limits
 

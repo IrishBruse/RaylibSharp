@@ -1,4 +1,3 @@
-using System.Drawing;
 
 using RaylibSharp;
 
@@ -16,7 +15,7 @@ public partial class ShapesEasingsBoxAnim : ExampleHelper
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shapes - easings box anim");
 
         // Box variables to be animated with easings
-        RectangleF rec = new(GetScreenWidth() / 2.0f, -100, 100, 100);
+        Rectangle rec = new(GetScreenWidth() / 2.0f, -100, 100, 100);
         float rotation = 0.0f;
         float alpha = 1.0f;
 

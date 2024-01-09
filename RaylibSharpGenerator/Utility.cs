@@ -6,7 +6,6 @@ public class Utility
 {
     public static readonly string StringMarshal = "MarshalAs(UnmanagedType.LPStr)";
     public static readonly string BoolMarshal = "MarshalAs(UnmanagedType.I1)";
-    public static readonly string ColorMarshal = "MarshalUsing(typeof(ColorMarshaller))";
     public static readonly string MeshMarshal = "MarshalUsing(typeof(MeshMarshaller))";
     public static readonly string ModelAnimationMarshal = "MarshalUsing(typeof(ModelAnimationMarshaller))";
 
@@ -220,7 +219,6 @@ public class Utility
             "Texture2D" => "Texture",
             "RenderTexture2D" => "RenderTexture",
             "Matrix" => "Matrix4x4",
-            "Rectangle" => "RectangleF",
             _ => t,
         };
     }

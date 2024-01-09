@@ -77,7 +77,7 @@ public static class StructProcessor
     {
         sb.AppendLine($"/// <summary> {s.Description} </summary>");
         sb.AppendLine($"[StructLayout(LayoutKind.Sequential)]");
-        sb.AppendLine($"internal unsafe struct Unmanaged{s.Name}");
+        sb.AppendLine($"unsafe struct Unmanaged{s.Name}");
         sb.AppendLine("{");
 
         foreach (Fields field in s.Fields)

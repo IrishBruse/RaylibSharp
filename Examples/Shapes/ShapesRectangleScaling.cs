@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -18,7 +17,7 @@ public partial class ShapesRectangleScaling : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - shapes - rectangle scaling mouse");
 
-        RectangleF rec = new(100, 100, 200, 80);
+        Rectangle rec = new(100, 100, 200, 80);
         bool mouseScaleMode = false;
 
         SetTargetFPS(60); // Set our game to run at 60 frames-per-second

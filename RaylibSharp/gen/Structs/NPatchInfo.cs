@@ -2,16 +2,16 @@ namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Drawing;
-using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Numerics;
+using System.Drawing;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> NPatchInfo, n-patch layout info </summary>
 public unsafe partial struct NPatchInfo
 {
     /// <summary> Texture source rectangle </summary>
-    public RectangleF Source;
+    public Rectangle Source;
     /// <summary> Left border offset </summary>
     public int Left;
     /// <summary> Top border offset </summary>

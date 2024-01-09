@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -25,10 +24,10 @@ public partial class TexturesSrcrecDstrec : ExampleHelper
         int frameHeight = scarfy.Height;
 
         // Source rectangle (part of the texture to use for drawing)
-        RectangleF sourceRec = new(0.0f, 0.0f, frameWidth, frameHeight);
+        Rectangle sourceRec = new(0.0f, 0.0f, frameWidth, frameHeight);
 
         // Destination rectangle (screen rectangle where drawing part of texture)
-        RectangleF destRec = new(screenWidth / 2.0f, screenHeight / 2.0f, frameWidth * 2.0f, frameHeight * 2.0f);
+        Rectangle destRec = new(screenWidth / 2.0f, screenHeight / 2.0f, frameWidth * 2.0f, frameHeight * 2.0f);
 
         // Origin of the texture (rotation/scale point), it's relative to destination rectangle size
         Vector2 origin = new(frameWidth, frameHeight);

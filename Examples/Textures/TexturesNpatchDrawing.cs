@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -24,10 +23,10 @@ public partial class TexturesNpatchDrawing : ExampleHelper
         Vector2 origin = new(0.0f, 0.0f);
 
         // Position and size of the n-patches
-        RectangleF dstRec1 = new(480.0f, 160.0f, 32.0f, 32.0f);
-        RectangleF dstRec2 = new(160.0f, 160.0f, 32.0f, 32.0f);
-        RectangleF dstRecH = new(160.0f, 93.0f, 32.0f, 32.0f);
-        RectangleF dstRecV = new(92.0f, 160.0f, 32.0f, 32.0f);
+        Rectangle dstRec1 = new(480.0f, 160.0f, 32.0f, 32.0f);
+        Rectangle dstRec2 = new(160.0f, 160.0f, 32.0f, 32.0f);
+        Rectangle dstRecH = new(160.0f, 93.0f, 32.0f, 32.0f);
+        Rectangle dstRecV = new(92.0f, 160.0f, 32.0f, 32.0f);
 
         // A 9-patch (NPATCH_NINE_PATCH) changes its sizes in both axis
         NPatchInfo ninePatchInfo1 = new(new(0.0f, 0.0f, 64.0f, 64.0f), 12, 40, 12, 12, NPatchLayout.NpatchNinePatch);

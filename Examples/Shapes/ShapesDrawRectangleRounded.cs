@@ -1,4 +1,5 @@
-using System.Drawing;
+
+using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
@@ -29,7 +30,7 @@ public partial class ShapesDrawRectangleRounded : ExampleHelper
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             // Update
-            RectangleF rec = new(((float)GetScreenWidth() - width - 250) / 2, (GetScreenHeight() - height) / 2.0f, width, height);
+            Rectangle rec = new(((float)GetScreenWidth() - width - 250) / 2, (GetScreenHeight() - height) / 2.0f, width, height);
 
             // Draw
             BeginDrawing();

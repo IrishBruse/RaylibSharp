@@ -19,17 +19,17 @@ static unsafe class ModelAnimationMarshaller
 
     internal static class Out
     {
-        public static ModelAnimation ConvertToManaged(UnmanagedColor unmanaged)
+        public static ModelAnimation ConvertToManaged(Color unmanaged)
         {
             throw new NotImplementedException();
         }
 
-        public static void Free(UnmanagedColor unmanaged)
+        public static void Free(Color unmanaged)
         {
             throw new NotImplementedException();
         }
 
-        public static UnmanagedColor ConvertToUnmanaged(ModelAnimation managed)
+        public static Color ConvertToUnmanaged(ModelAnimation managed)
         {
             throw new NotImplementedException();
         }

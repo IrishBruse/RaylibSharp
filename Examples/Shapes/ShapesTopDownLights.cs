@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -27,7 +26,7 @@ public partial class ShapesTopDownLights : ExampleHelper
         public Vector2 position; // Light position
         public RenderTexture mask; // Alpha mask for the light
         public float outerRadius; // The distance the light touches
-        public RectangleF bounds; // A cached rectangle of the light bounds to help with culling
+        public Rectangle bounds; // A cached rectangle of the light bounds to help with culling
 
         public Vector2[] shadows = new Vector2[MAX_SHADOWS * 4];
         public int shadowCount;
@@ -129,7 +128,7 @@ public partial class ShapesTopDownLights : ExampleHelper
     }
 
     // See if a light needs to update it's mask
-    static bool UpdateLight(int slot, RectangleF[] boxes, int count)
+    static bool UpdateLight(int slot, Rectangle[] boxes, int count)
     {
         if (!lights[slot].active || !lights[slot].dirty)
         {
@@ -205,7 +204,7 @@ public partial class ShapesTopDownLights : ExampleHelper
     }
 
     // Set up some boxes
-    static void SetupBoxes(RectangleF[] boxes, ref int count)
+    static void SetupBoxes(Rectangle[] boxes, ref int count)
     {
         boxes[0] = new(150, 80, 40, 40);
         boxes[1] = new(1200, 700, 40, 40);
@@ -232,7 +231,7 @@ public partial class ShapesTopDownLights : ExampleHelper
 
         // Initialize our 'world' of boxes
         int boxCount = 0;
-        RectangleF[] boxes = new RectangleF[MAX_BOXES];
+        Rectangle[] boxes = new Rectangle[MAX_BOXES];
         SetupBoxes(boxes, ref boxCount);
 
         // Create a checkerboard ground texture

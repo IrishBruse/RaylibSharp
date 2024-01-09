@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -31,7 +30,7 @@ public partial class ShapesColorsPalette : ExampleHelper
             "LightGray", "Pink", "Yellow", "Green", "SkyBlue", "Purple", "Beige"
         };
 
-        RectangleF[] colorsRecs = new RectangleF[MAX_COLORS_COUNT]; // Rectangles array
+        Rectangle[] colorsRecs = new Rectangle[MAX_COLORS_COUNT]; // Rectangles array
 
         // Fills colorsRecs data (for every rectangle)
         for (int i = 0; i < MAX_COLORS_COUNT; i++)

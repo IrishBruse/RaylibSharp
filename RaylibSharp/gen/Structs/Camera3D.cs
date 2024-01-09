@@ -2,9 +2,9 @@ namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Drawing;
-using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Numerics;
+using System.Drawing;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> Camera, defines position/orientation in 3d space </summary>

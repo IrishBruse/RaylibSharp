@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -37,7 +36,7 @@ public partial class TexturesParticlesBlending : ExampleHelper
         for (int i = 0; i < MAX_PARTICLES; i++)
         {
             mouseTail[i].Position = new(0, 0);
-            mouseTail[i].Color = Color.FromArgb(255, GetRandomValue(0, 255), GetRandomValue(0, 255), GetRandomValue(0, 255));
+            mouseTail[i].Color = new Color(GetRandomValue(0, 255), GetRandomValue(0, 255), GetRandomValue(0, 255));
             mouseTail[i].Alpha = 1.0f;
             mouseTail[i].Size = GetRandomValue(1, 30) / 20.0f;
             mouseTail[i].Rotation = GetRandomValue(0, 360);

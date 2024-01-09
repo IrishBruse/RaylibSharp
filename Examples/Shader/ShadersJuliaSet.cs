@@ -173,7 +173,7 @@ public partial class ShadersJuliaSet : ExampleHelper
                 ClearBackground(Black); // Clear the render texture
 
                 // Draw a rectangle in shader mode to be used as shader canvas
-                // NOTE: RectangleF uses font white character texture coordinates,
+                // NOTE: Rectangle uses font white character texture coordinates,
                 // so shader can not be applied here directly because input vertexTexCoord
                 // do not represent full screen coordinates (space where want to apply shader)
                 DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Black);

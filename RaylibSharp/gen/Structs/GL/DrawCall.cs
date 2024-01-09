@@ -2,9 +2,9 @@ namespace RaylibSharp.GL;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Drawing;
-using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Numerics;
+using System.Drawing;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> of those state-change happens (this is done in core module) </summary>

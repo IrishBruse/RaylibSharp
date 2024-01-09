@@ -34,7 +34,7 @@ public partial class ShapesBasicShapes : ExampleHelper
                 DrawCircleGradient(screenWidth / 5, 220, 60, Green, SkyBlue);
                 DrawCircleLines(screenWidth / 5, 340, 80, DarkBlue);
 
-                // RectangleF shapes and lines
+                // Rectangle shapes and lines
                 DrawRectangle((screenWidth / 4 * 2) - 60, 100, 120, 60, Red);
                 DrawRectangleGradientH((screenWidth / 4 * 2) - 90, 170, 180, 130, Maroon, Gold);
                 DrawRectangleLines((screenWidth / 4 * 2) - 40, 320, 80, 60, Orange); // NOTE: Uses QUADS internally, not lines

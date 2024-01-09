@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -26,7 +25,7 @@ public partial class TexturesDrawTiled : ExampleHelper
         SetTextureFilter(texPattern, TextureFilter.Trilinear); // Makes the texture smoother when upscaled
 
         // Coordinates for all patterns inside the texture
-        RectangleF[] recPattern = new RectangleF[]
+        Rectangle[] recPattern = new Rectangle[]
         {
             new( 3, 3, 66, 66 ),
             new( 75, 3, 100, 100 ),
@@ -38,7 +37,7 @@ public partial class TexturesDrawTiled : ExampleHelper
 
         // Setup colors
         Color[] colors = [Black, Maroon, Orange, Blue, Purple, Beige, Lime, Red, DarkGray, SkyBlue];
-        RectangleF[] colorRec = new RectangleF[colors.Length];
+        Rectangle[] colorRec = new Rectangle[colors.Length];
 
         // Calculate rectangle for each color
         for (int i = 0, x = 0, y = 0; i < colors.Length; i++)
@@ -177,7 +176,7 @@ public partial class TexturesDrawTiled : ExampleHelper
     }
 
     // Draw part of a texture (defined by a rectangle) with rotation and scale tiled into dest.
-    static void DrawTextureTiled(Texture texture, RectangleF source, RectangleF dest, Vector2 origin, float rotation, float scale, Color tint)
+    static void DrawTextureTiled(Texture texture, Rectangle source, Rectangle dest, Vector2 origin, float rotation, float scale, Color tint)
     {
         if ((texture.Id <= 0) || (scale <= 0.0f))
         {
@@ -195,8 +194,8 @@ public partial class TexturesDrawTiled : ExampleHelper
             // Can fit only one tile
             DrawTexture(
                 texture,
-                new RectangleF(source.X, source.Y, (float)(dest.Width / tileWidth * source.Width), (float)(dest.Height / tileHeight * source.Height)),
-                new RectangleF(dest.X, dest.Y, dest.Width, dest.Height),
+                new Rectangle(source.X, source.Y, (float)(dest.Width / tileWidth * source.Width), (float)(dest.Height / tileHeight * source.Height)),
+                new Rectangle(dest.X, dest.Y, dest.Width, dest.Height),
                 origin,
                 rotation,
                 tint
@@ -208,14 +207,14 @@ public partial class TexturesDrawTiled : ExampleHelper
             int dy = 0;
             for (; dy + tileHeight < dest.Height; dy += tileHeight)
             {
-                DrawTexture(texture, new RectangleF(source.X, source.Y, (float)dest.Width / tileWidth * source.Width, source.Height), new RectangleF(dest.X, dest.Y + dy, dest.Width, tileHeight), origin, rotation, tint);
+                DrawTexture(texture, new Rectangle(source.X, source.Y, dest.Width / tileWidth * source.Width, source.Height), new Rectangle(dest.X, dest.Y + dy, dest.Width, tileHeight), origin, rotation, tint);
             }
 
             // Fit last tile
             if (dy < dest.Height)
             {
-                DrawTexture(texture, new RectangleF(source.X, source.Y, (float)dest.Width / tileWidth * source.Width, (float)(dest.Height - dy) / tileHeight * source.Height),
-                        new RectangleF(dest.X, dest.Y + dy, dest.Width, dest.Height - dy), origin, rotation, tint);
+                DrawTexture(texture, new Rectangle(source.X, source.Y, dest.Width / tileWidth * source.Width, (float)(dest.Height - dy) / tileHeight * source.Height),
+                        new Rectangle(dest.X, dest.Y + dy, dest.Width, dest.Height - dy), origin, rotation, tint);
             }
         }
         else if (dest.Height <= tileHeight)
@@ -226,12 +225,12 @@ public partial class TexturesDrawTiled : ExampleHelper
             {
                 DrawTexture(
                     texture,
-                    new RectangleF(
+                    new Rectangle(
                         source.X,
                         source.Y,
                         source.Width,
-                        (float)dest.Height / tileHeight * source.Height),
-                    new RectangleF(
+                        dest.Height / tileHeight * source.Height),
+                    new Rectangle(
                         dest.X + dx,
                         dest.Y,
                         tileWidth,
@@ -248,13 +247,13 @@ public partial class TexturesDrawTiled : ExampleHelper
             {
                 DrawTexture(
                     texture,
-                    new RectangleF(
+                    new Rectangle(
                         source.X,
                         source.Y,
                         (float)(dest.Width - dx) / tileWidth * source.Width,
-                        (float)dest.Height / tileHeight * source.Height
+                        dest.Height / tileHeight * source.Height
                     ),
-                    new RectangleF(
+                    new Rectangle(
                         dest.X + dx,
                         dest.Y,
                         dest.Width - dx,
@@ -275,13 +274,13 @@ public partial class TexturesDrawTiled : ExampleHelper
                 int dy = 0;
                 for (; dy + tileHeight < dest.Height; dy += tileHeight)
                 {
-                    DrawTexture(texture, source, new RectangleF(dest.X + dx, dest.Y + dy, tileWidth, tileHeight), origin, rotation, tint);
+                    DrawTexture(texture, source, new Rectangle(dest.X + dx, dest.Y + dy, tileWidth, tileHeight), origin, rotation, tint);
                 }
 
                 if (dy < dest.Height)
                 {
-                    DrawTexture(texture, new RectangleF(source.X, source.Y, source.Width, (float)(dest.Height - dy) / tileHeight * source.Height),
-                                new RectangleF(dest.X + dx, dest.Y + dy, tileWidth, dest.Height - dy), origin, rotation, tint);
+                    DrawTexture(texture, new Rectangle(source.X, source.Y, source.Width, (float)(dest.Height - dy) / tileHeight * source.Height),
+                                new Rectangle(dest.X + dx, dest.Y + dy, tileWidth, dest.Height - dy), origin, rotation, tint);
                 }
             }
 
@@ -291,15 +290,15 @@ public partial class TexturesDrawTiled : ExampleHelper
                 int dy = 0;
                 for (; dy + tileHeight < dest.Height; dy += tileHeight)
                 {
-                    DrawTexture(texture, new RectangleF(source.X, source.Y, (float)(dest.Width - dx) / tileWidth * source.Width, source.Height),
-                            new RectangleF(dest.X + dx, dest.Y + dy, dest.Width - dx, tileHeight), origin, rotation, tint);
+                    DrawTexture(texture, new Rectangle(source.X, source.Y, (float)(dest.Width - dx) / tileWidth * source.Width, source.Height),
+                            new Rectangle(dest.X + dx, dest.Y + dy, dest.Width - dx, tileHeight), origin, rotation, tint);
                 }
 
                 // Draw final tile in the bottom right corner
                 if (dy < dest.Height)
                 {
-                    DrawTexture(texture, new RectangleF(source.X, source.Y, (float)(dest.Width - dx) / tileWidth * source.Width, (float)(dest.Height - dy) / tileHeight * source.Height),
-                                        new RectangleF(dest.X + dx, dest.Y + dy, dest.Width - dx, dest.Height - dy), origin, rotation, tint);
+                    DrawTexture(texture, new Rectangle(source.X, source.Y, (float)(dest.Width - dx) / tileWidth * source.Width, (float)(dest.Height - dy) / tileHeight * source.Height),
+                                        new Rectangle(dest.X + dx, dest.Y + dy, dest.Width - dx, dest.Height - dy), origin, rotation, tint);
                 }
             }
         }

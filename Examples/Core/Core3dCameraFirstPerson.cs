@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -41,7 +40,7 @@ public class Core3dCameraFirstPerson : ExampleHelper
         {
             heights[i] = GetRandomValue(1, 12);
             positions[i] = new(GetRandomValue(-15, 15), heights[i] / 2.0f, GetRandomValue(-15, 15));
-            colors[i] = Color.FromArgb(255, GetRandomValue(20, 255), GetRandomValue(10, 55), 30);
+            colors[i] = new Color(GetRandomValue(20, 255), GetRandomValue(10, 55), 30);
         }
 
         DisableCursor(); // Limit cursor to relative movement inside the window

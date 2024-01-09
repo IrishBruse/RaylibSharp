@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 
 using RaylibSharp;
 
@@ -18,11 +17,11 @@ public partial class ShadersMultiSample2d : ExampleHelper
 
         int glslVersion = Environment.OSVersion.Platform == PlatformID.Other ? 100 : 330;
 
-        Image imRed = GenImageColor(800, 450, Color.FromArgb(255, 255, 0, 0));
+        Image imRed = GenImageColor(800, 450, new Color(255, 0, 0));
         Texture texRed = LoadTextureFromImage(imRed);
         UnloadImage(imRed);
 
-        Image imBlue = GenImageColor(800, 450, Color.FromArgb(255, 0, 0, 255));
+        Image imBlue = GenImageColor(800, 450, new Color(0, 0, 255));
         Texture texBlue = LoadTextureFromImage(imBlue);
         UnloadImage(imBlue);
 

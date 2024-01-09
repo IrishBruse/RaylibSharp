@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -89,7 +88,7 @@ public partial class ShadersCustomUniform : ExampleHelper
                 BeginShaderMode(shader);
                 {
                     // NOTE: Render texture must be y-flipped due to default OpenGL coordinates (left-bottom)
-                    DrawTexture(target.Texture, new RectangleF(0, 0, target.Texture.Width, -target.Texture.Height), new Vector2(0, 0), White);
+                    DrawTexture(target.Texture, new Rectangle(0, 0, target.Texture.Width, -target.Texture.Height), new Vector2(0, 0), White);
                 }
                 EndShaderMode();
 

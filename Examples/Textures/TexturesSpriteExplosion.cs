@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -34,7 +33,7 @@ public partial class TexturesSpriteExplosion : ExampleHelper
         int currentFrame = 0;
         int currentLine = 0;
 
-        RectangleF frameRec = new(0, 0, frameWidth, frameHeight);
+        Rectangle frameRec = new(0, 0, frameWidth, frameHeight);
         Vector2 position = new(0.0f, 0.0f);
 
         bool active = false;

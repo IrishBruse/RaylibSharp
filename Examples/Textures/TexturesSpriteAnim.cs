@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -23,7 +22,7 @@ public partial class TexturesSpriteAnim : ExampleHelper
         Texture scarfy = LoadTexture("resources/scarfy.png"); // Texture loading
 
         Vector2 position = new(350.0f, 280.0f);
-        RectangleF frameRec = new(0.0f, 0.0f, (float)scarfy.Width / 6, scarfy.Height);
+        Rectangle frameRec = new(0.0f, 0.0f, (float)scarfy.Width / 6, scarfy.Height);
         int currentFrame = 0;
 
         int framesCounter = 0;

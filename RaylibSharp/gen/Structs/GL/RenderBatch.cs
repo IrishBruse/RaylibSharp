@@ -3,6 +3,9 @@ namespace RaylibSharp.GL;
 #pragma warning disable CA1711,IDE0005,CA1051
 
 using System.Runtime.InteropServices;
+using System.Numerics;
+using System.Drawing;
+using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> rlRenderBatch type </summary>
 public unsafe partial struct RenderBatch

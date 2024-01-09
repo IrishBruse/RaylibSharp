@@ -1,9 +1,8 @@
 namespace RaylibSharp;
 
-using System.Drawing;
-using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
+using System.Numerics;
 
 public static unsafe partial class Raylib
 {
@@ -238,7 +237,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Set background color (framebuffer clear color) </summary>
     [LibraryImport(LIB, EntryPoint = "ClearBackground")]
-    public static partial void ClearBackground([MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ClearBackground(Color color);
 
     /// <summary> Setup canvas (framebuffer) to start drawing </summary>
     [LibraryImport(LIB, EntryPoint = "BeginDrawing")]
@@ -653,160 +652,160 @@ public static unsafe partial class Raylib
 
     /// <summary> Set texture and rectangle to be used on shapes drawing </summary>
     [LibraryImport(LIB, EntryPoint = "SetShapesTexture")]
-    public static partial void SetShapesTexture(Texture texture, RectangleF source);
+    public static partial void SetShapesTexture(Texture texture, Rectangle source);
 
     /// <summary> Draw a pixel </summary>
     [LibraryImport(LIB, EntryPoint = "DrawPixel")]
-    public static partial void DrawPixel(int posX, int posY, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawPixel(int posX, int posY, Color color);
 
     /// <summary> Draw a pixel (Vector version) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawPixelV")]
-    public static partial void DrawPixel(Vector2 position, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawPixel(Vector2 position, Color color);
 
     /// <summary> Draw a line </summary>
     [LibraryImport(LIB, EntryPoint = "DrawLine")]
-    public static partial void DrawLine(int startPosX, int startPosY, int endPosX, int endPosY, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawLine(int startPosX, int startPosY, int endPosX, int endPosY, Color color);
 
     /// <summary> Draw a line (Vector version) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawLineV")]
-    public static partial void DrawLine(Vector2 startPos, Vector2 endPos, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawLine(Vector2 startPos, Vector2 endPos, Color color);
 
     /// <summary> Draw a line defining thickness </summary>
     [LibraryImport(LIB, EntryPoint = "DrawLineEx")]
-    public static partial void DrawLine(Vector2 startPos, Vector2 endPos, float thick, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawLine(Vector2 startPos, Vector2 endPos, float thick, Color color);
 
     /// <summary> Draw a line using cubic-bezier curves in-out </summary>
     [LibraryImport(LIB, EntryPoint = "DrawLineBezier")]
-    public static partial void DrawLineBezier(Vector2 startPos, Vector2 endPos, float thick, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawLineBezier(Vector2 startPos, Vector2 endPos, float thick, Color color);
 
     /// <summary> Draw line using quadratic bezier curves with a control point </summary>
     [LibraryImport(LIB, EntryPoint = "DrawLineBezierQuad")]
-    public static partial void DrawLineBezierQuad(Vector2 startPos, Vector2 endPos, Vector2 controlPos, float thick, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawLineBezierQuad(Vector2 startPos, Vector2 endPos, Vector2 controlPos, float thick, Color color);
 
     /// <summary> Draw line using cubic bezier curves with 2 control points </summary>
     [LibraryImport(LIB, EntryPoint = "DrawLineBezierCubic")]
-    public static partial void DrawLineBezierCubic(Vector2 startPos, Vector2 endPos, Vector2 startControlPos, Vector2 endControlPos, float thick, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawLineBezierCubic(Vector2 startPos, Vector2 endPos, Vector2 startControlPos, Vector2 endControlPos, float thick, Color color);
 
     /// <summary> Draw lines sequence </summary>
     [LibraryImport(LIB, EntryPoint = "DrawLineStrip")]
-    public static partial void DrawLineStrip(IntPtr points, int pointCount, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawLineStrip(IntPtr points, int pointCount, Color color);
 
     /// <summary> Draw a color-filled circle </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCircle")]
-    public static partial void DrawCircle(int centerX, int centerY, float radius, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawCircle(int centerX, int centerY, float radius, Color color);
 
     /// <summary> Draw a piece of a circle </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCircleSector")]
-    public static partial void DrawCircleSector(Vector2 center, float radius, float startAngle, float endAngle, int segments, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawCircleSector(Vector2 center, float radius, float startAngle, float endAngle, int segments, Color color);
 
     /// <summary> Draw circle sector outline </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCircleSectorLines")]
-    public static partial void DrawCircleSectorLines(Vector2 center, float radius, float startAngle, float endAngle, int segments, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawCircleSectorLines(Vector2 center, float radius, float startAngle, float endAngle, int segments, Color color);
 
     /// <summary> Draw a gradient-filled circle </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCircleGradient")]
-    public static partial void DrawCircleGradient(int centerX, int centerY, float radius, [MarshalUsing(typeof(ColorMarshaller))] Color color1, [MarshalUsing(typeof(ColorMarshaller))] Color color2);
+    public static partial void DrawCircleGradient(int centerX, int centerY, float radius, Color color1, Color color2);
 
     /// <summary> Draw a color-filled circle (Vector version) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCircleV")]
-    public static partial void DrawCircle(Vector2 center, float radius, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawCircle(Vector2 center, float radius, Color color);
 
     /// <summary> Draw circle outline </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCircleLines")]
-    public static partial void DrawCircleLines(int centerX, int centerY, float radius, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawCircleLines(int centerX, int centerY, float radius, Color color);
 
     /// <summary> Draw ellipse </summary>
     [LibraryImport(LIB, EntryPoint = "DrawEllipse")]
-    public static partial void DrawEllipse(int centerX, int centerY, float radiusH, float radiusV, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawEllipse(int centerX, int centerY, float radiusH, float radiusV, Color color);
 
     /// <summary> Draw ellipse outline </summary>
     [LibraryImport(LIB, EntryPoint = "DrawEllipseLines")]
-    public static partial void DrawEllipseLines(int centerX, int centerY, float radiusH, float radiusV, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawEllipseLines(int centerX, int centerY, float radiusH, float radiusV, Color color);
 
     /// <summary> Draw ring </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRing")]
-    public static partial void DrawRing(Vector2 center, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawRing(Vector2 center, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, Color color);
 
     /// <summary> Draw ring outline </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRingLines")]
-    public static partial void DrawRingLines(Vector2 center, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawRingLines(Vector2 center, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, Color color);
 
     /// <summary> Draw a color-filled rectangle </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRectangle")]
-    public static partial void DrawRectangle(int posX, int posY, int width, int height, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawRectangle(int posX, int posY, int width, int height, Color color);
 
     /// <summary> Draw a color-filled rectangle (Vector version) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRectangleV")]
-    public static partial void DrawRectangle(Vector2 position, Vector2 size, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawRectangle(Vector2 position, Vector2 size, Color color);
 
     /// <summary> Draw a color-filled rectangle </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRectangleRec")]
-    public static partial void DrawRectangle(RectangleF rec, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawRectangle(Rectangle rec, Color color);
 
     /// <summary> Draw a color-filled rectangle with pro parameters </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRectanglePro")]
-    public static partial void DrawRectangle(RectangleF rec, Vector2 origin, float rotation, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawRectangle(Rectangle rec, Vector2 origin, float rotation, Color color);
 
     /// <summary> Draw a vertical-gradient-filled rectangle </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRectangleGradientV")]
-    public static partial void DrawRectangleGradient(int posX, int posY, int width, int height, [MarshalUsing(typeof(ColorMarshaller))] Color color1, [MarshalUsing(typeof(ColorMarshaller))] Color color2);
+    public static partial void DrawRectangleGradient(int posX, int posY, int width, int height, Color color1, Color color2);
 
     /// <summary> Draw a horizontal-gradient-filled rectangle </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRectangleGradientH")]
-    public static partial void DrawRectangleGradientH(int posX, int posY, int width, int height, [MarshalUsing(typeof(ColorMarshaller))] Color color1, [MarshalUsing(typeof(ColorMarshaller))] Color color2);
+    public static partial void DrawRectangleGradientH(int posX, int posY, int width, int height, Color color1, Color color2);
 
     /// <summary> Draw a gradient-filled rectangle with custom vertex colors </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRectangleGradientEx")]
-    public static partial void DrawRectangleGradient(RectangleF rec, [MarshalUsing(typeof(ColorMarshaller))] Color col1, [MarshalUsing(typeof(ColorMarshaller))] Color col2, [MarshalUsing(typeof(ColorMarshaller))] Color col3, [MarshalUsing(typeof(ColorMarshaller))] Color col4);
+    public static partial void DrawRectangleGradient(Rectangle rec, Color col1, Color col2, Color col3, Color col4);
 
     /// <summary> Draw rectangle outline </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRectangleLines")]
-    public static partial void DrawRectangleLines(int posX, int posY, int width, int height, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawRectangleLines(int posX, int posY, int width, int height, Color color);
 
     /// <summary> Draw rectangle outline with extended parameters </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRectangleLinesEx")]
-    public static partial void DrawRectangleLines(RectangleF rec, float lineThick, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawRectangleLines(Rectangle rec, float lineThick, Color color);
 
     /// <summary> Draw rectangle with rounded edges </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRectangleRounded")]
-    public static partial void DrawRectangleRounded(RectangleF rec, float roundness, int segments, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawRectangleRounded(Rectangle rec, float roundness, int segments, Color color);
 
     /// <summary> Draw rectangle with rounded edges outline </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRectangleRoundedLines")]
-    public static partial void DrawRectangleRoundedLines(RectangleF rec, float roundness, int segments, float lineThick, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawRectangleRoundedLines(Rectangle rec, float roundness, int segments, float lineThick, Color color);
 
     /// <summary> Draw a color-filled triangle (vertex in counter-clockwise order!) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTriangle")]
-    public static partial void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color);
 
     /// <summary> Draw triangle outline (vertex in counter-clockwise order!) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTriangleLines")]
-    public static partial void DrawTriangleLines(Vector2 v1, Vector2 v2, Vector2 v3, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawTriangleLines(Vector2 v1, Vector2 v2, Vector2 v3, Color color);
 
     /// <summary> Draw a triangle fan defined by points (first vertex is the center) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTriangleFan")]
-    public static partial void DrawTriangleFan(Vector2[] points, int pointCount, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawTriangleFan(Vector2[] points, int pointCount, Color color);
 
     /// <summary> Draw a triangle strip defined by points </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTriangleStrip")]
-    public static partial void DrawTriangleStrip(IntPtr points, int pointCount, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawTriangleStrip(IntPtr points, int pointCount, Color color);
 
     /// <summary> Draw a regular polygon (Vector version) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawPoly")]
-    public static partial void DrawPoly(Vector2 center, int sides, float radius, float rotation, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawPoly(Vector2 center, int sides, float radius, float rotation, Color color);
 
     /// <summary> Draw a polygon outline of n sides </summary>
     [LibraryImport(LIB, EntryPoint = "DrawPolyLines")]
-    public static partial void DrawPolyLines(Vector2 center, int sides, float radius, float rotation, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawPolyLines(Vector2 center, int sides, float radius, float rotation, Color color);
 
     /// <summary> Draw a polygon outline of n sides with extended parameters </summary>
     [LibraryImport(LIB, EntryPoint = "DrawPolyLinesEx")]
-    public static partial void DrawPolyLines(Vector2 center, int sides, float radius, float rotation, float lineThick, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawPolyLines(Vector2 center, int sides, float radius, float rotation, float lineThick, Color color);
 
     /// <summary> Check collision between two rectangles </summary>
     [LibraryImport(LIB, EntryPoint = "CheckCollisionRecs")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool CheckCollisionRecs(RectangleF rec1, RectangleF rec2);
+    public static partial bool CheckCollisionRecs(Rectangle rec1, Rectangle rec2);
 
     /// <summary> Check collision between two circles </summary>
     [LibraryImport(LIB, EntryPoint = "CheckCollisionCircles")]
@@ -816,12 +815,12 @@ public static unsafe partial class Raylib
     /// <summary> Check collision between circle and rectangle </summary>
     [LibraryImport(LIB, EntryPoint = "CheckCollisionCircleRec")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool CheckCollisionCircle(Vector2 center, float radius, RectangleF rec);
+    public static partial bool CheckCollisionCircle(Vector2 center, float radius, Rectangle rec);
 
     /// <summary> Check if point is inside rectangle </summary>
     [LibraryImport(LIB, EntryPoint = "CheckCollisionPointRec")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool CheckCollisionPoint(Vector2 point, RectangleF rec);
+    public static partial bool CheckCollisionPoint(Vector2 point, Rectangle rec);
 
     /// <summary> Check if point is inside circle </summary>
     [LibraryImport(LIB, EntryPoint = "CheckCollisionPointCircle")]
@@ -850,7 +849,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Get collision rectangle for two rectangles collision </summary>
     [LibraryImport(LIB, EntryPoint = "GetCollisionRec")]
-    public static partial RectangleF GetCollision(RectangleF rec1, RectangleF rec2);
+    public static partial Rectangle GetCollision(Rectangle rec1, Rectangle rec2);
 
     /// <summary> Load image from file into CPU memory (RAM) </summary>
     [LibraryImport(LIB, EntryPoint = "LoadImage")]
@@ -896,23 +895,23 @@ public static unsafe partial class Raylib
 
     /// <summary> Generate image: plain color </summary>
     [LibraryImport(LIB, EntryPoint = "GenImageColor")]
-    public static partial Image GenImageColor(int width, int height, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial Image GenImageColor(int width, int height, Color color);
 
     /// <summary> Generate image: linear gradient, direction in degrees [0..360], 0=Vertical gradient </summary>
     [LibraryImport(LIB, EntryPoint = "GenImageGradientLinear")]
-    public static partial Image GenImageGradientLinear(int width, int height, int direction, [MarshalUsing(typeof(ColorMarshaller))] Color start, [MarshalUsing(typeof(ColorMarshaller))] Color end);
+    public static partial Image GenImageGradientLinear(int width, int height, int direction, Color start, Color end);
 
     /// <summary> Generate image: radial gradient </summary>
     [LibraryImport(LIB, EntryPoint = "GenImageGradientRadial")]
-    public static partial Image GenImageGradientRadial(int width, int height, float density, [MarshalUsing(typeof(ColorMarshaller))] Color inner, [MarshalUsing(typeof(ColorMarshaller))] Color outer);
+    public static partial Image GenImageGradientRadial(int width, int height, float density, Color inner, Color outer);
 
     /// <summary> Generate image: square gradient </summary>
     [LibraryImport(LIB, EntryPoint = "GenImageGradientSquare")]
-    public static partial Image GenImageGradientSquare(int width, int height, float density, [MarshalUsing(typeof(ColorMarshaller))] Color inner, [MarshalUsing(typeof(ColorMarshaller))] Color outer);
+    public static partial Image GenImageGradientSquare(int width, int height, float density, Color inner, Color outer);
 
     /// <summary> Generate image: checked </summary>
     [LibraryImport(LIB, EntryPoint = "GenImageChecked")]
-    public static partial Image GenImageChecked(int width, int height, int checksX, int checksY, [MarshalUsing(typeof(ColorMarshaller))] Color col1, [MarshalUsing(typeof(ColorMarshaller))] Color col2);
+    public static partial Image GenImageChecked(int width, int height, int checksX, int checksY, Color col1, Color col2);
 
     /// <summary> Generate image: white noise </summary>
     [LibraryImport(LIB, EntryPoint = "GenImageWhiteNoise")]
@@ -936,15 +935,15 @@ public static unsafe partial class Raylib
 
     /// <summary> Create an image from another image piece </summary>
     [LibraryImport(LIB, EntryPoint = "ImageFromImage")]
-    public static partial Image ImageFromImage(Image image, RectangleF rec);
+    public static partial Image ImageFromImage(Image image, Rectangle rec);
 
     /// <summary> Create an image from text (default font) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageText")]
-    public static partial Image ImageText([MarshalAs(UnmanagedType.LPStr)] string text, int fontSize, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial Image ImageText([MarshalAs(UnmanagedType.LPStr)] string text, int fontSize, Color color);
 
     /// <summary> Create an image from text (custom sprite font) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageTextEx")]
-    public static partial Image ImageText(Font font, [MarshalAs(UnmanagedType.LPStr)] string text, float fontSize, float spacing, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial Image ImageText(Font font, [MarshalAs(UnmanagedType.LPStr)] string text, float fontSize, float spacing, Color tint);
 
     /// <summary> Convert image data to desired format </summary>
     [LibraryImport(LIB, EntryPoint = "ImageFormat")]
@@ -952,11 +951,11 @@ public static unsafe partial class Raylib
 
     /// <summary> Convert image to POT (power-of-two) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageToPOT")]
-    public static partial void ImageToPOT(IntPtr image, [MarshalUsing(typeof(ColorMarshaller))] Color fill);
+    public static partial void ImageToPOT(IntPtr image, Color fill);
 
     /// <summary> Crop an image to a defined rectangle </summary>
     [LibraryImport(LIB, EntryPoint = "ImageCrop")]
-    public static partial void ImageCrop(ref Image image, RectangleF crop);
+    public static partial void ImageCrop(ref Image image, Rectangle crop);
 
     /// <summary> Crop image depending on alpha value </summary>
     [LibraryImport(LIB, EntryPoint = "ImageAlphaCrop")]
@@ -964,7 +963,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Clear alpha channel to desired color </summary>
     [LibraryImport(LIB, EntryPoint = "ImageAlphaClear")]
-    public static partial void ImageAlphaClear(IntPtr image, [MarshalUsing(typeof(ColorMarshaller))] Color color, float threshold);
+    public static partial void ImageAlphaClear(IntPtr image, Color color, float threshold);
 
     /// <summary> Apply alpha mask to image </summary>
     [LibraryImport(LIB, EntryPoint = "ImageAlphaMask")]
@@ -988,7 +987,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Resize canvas and fill with color </summary>
     [LibraryImport(LIB, EntryPoint = "ImageResizeCanvas")]
-    public static partial void ImageResizeCanvas(IntPtr image, int newWidth, int newHeight, int offsetX, int offsetY, [MarshalUsing(typeof(ColorMarshaller))] Color fill);
+    public static partial void ImageResizeCanvas(IntPtr image, int newWidth, int newHeight, int offsetX, int offsetY, Color fill);
 
     /// <summary> Compute all mipmap levels for a provided image </summary>
     [LibraryImport(LIB, EntryPoint = "ImageMipmaps")]
@@ -1020,7 +1019,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Modify image color: tint </summary>
     [LibraryImport(LIB, EntryPoint = "ImageColorTint")]
-    public static partial void ImageColorTint(ref Image image, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageColorTint(ref Image image, Color color);
 
     /// <summary> Modify image color: invert </summary>
     [LibraryImport(LIB, EntryPoint = "ImageColorInvert")]
@@ -1040,7 +1039,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Modify image color: replace color </summary>
     [LibraryImport(LIB, EntryPoint = "ImageColorReplace")]
-    public static partial void ImageColorReplace(IntPtr image, [MarshalUsing(typeof(ColorMarshaller))] Color color, [MarshalUsing(typeof(ColorMarshaller))] Color replace);
+    public static partial void ImageColorReplace(IntPtr image, Color color, Color replace);
 
     /// <summary> Load colors palette from image as a Color array (RGBA - 32bit) </summary>
     [LibraryImport(LIB, EntryPoint = "LoadImagePalette")]
@@ -1052,76 +1051,75 @@ public static unsafe partial class Raylib
 
     /// <summary> Get image alpha border rectangle </summary>
     [LibraryImport(LIB, EntryPoint = "GetImageAlphaBorder")]
-    public static partial RectangleF GetImageAlphaBorder(Image image, float threshold);
+    public static partial Rectangle GetImageAlphaBorder(Image image, float threshold);
 
     /// <summary> Get image pixel color at (x, y) position </summary>
     [LibraryImport(LIB, EntryPoint = "GetImageColor")]
-    [return: MarshalUsing(typeof(ColorMarshaller))]
     public static partial Color GetImageColor(Image image, int x, int y);
 
     /// <summary> Clear image background with given color </summary>
     [LibraryImport(LIB, EntryPoint = "ImageClearBackground")]
-    public static partial void ImageClearBackground(IntPtr dst, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageClearBackground(IntPtr dst, Color color);
 
     /// <summary> Draw pixel within an image </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawPixel")]
-    public static partial void ImageDrawPixel(ref Image dst, int posX, int posY, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageDrawPixel(ref Image dst, int posX, int posY, Color color);
 
     /// <summary> Draw pixel within an image (Vector version) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawPixelV")]
-    public static partial void ImageDrawPixel(IntPtr dst, Vector2 position, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageDrawPixel(IntPtr dst, Vector2 position, Color color);
 
     /// <summary> Draw line within an image </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawLine")]
-    public static partial void ImageDrawLine(IntPtr dst, int startPosX, int startPosY, int endPosX, int endPosY, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageDrawLine(IntPtr dst, int startPosX, int startPosY, int endPosX, int endPosY, Color color);
 
     /// <summary> Draw line within an image (Vector version) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawLineV")]
-    public static partial void ImageDrawLine(IntPtr dst, Vector2 start, Vector2 end, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageDrawLine(IntPtr dst, Vector2 start, Vector2 end, Color color);
 
     /// <summary> Draw a filled circle within an image </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawCircle")]
-    public static partial void ImageDrawCircle(IntPtr dst, int centerX, int centerY, int radius, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageDrawCircle(IntPtr dst, int centerX, int centerY, int radius, Color color);
 
     /// <summary> Draw a filled circle within an image (Vector version) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawCircleV")]
-    public static partial void ImageDrawCircle(IntPtr dst, Vector2 center, int radius, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageDrawCircle(IntPtr dst, Vector2 center, int radius, Color color);
 
     /// <summary> Draw circle outline within an image </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawCircleLines")]
-    public static partial void ImageDrawCircleLines(ref Image dst, int centerX, int centerY, int radius, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageDrawCircleLines(ref Image dst, int centerX, int centerY, int radius, Color color);
 
     /// <summary> Draw circle outline within an image (Vector version) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawCircleLinesV")]
-    public static partial void ImageDrawCircleLines(IntPtr dst, Vector2 center, int radius, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageDrawCircleLines(IntPtr dst, Vector2 center, int radius, Color color);
 
     /// <summary> Draw rectangle within an image </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawRectangle")]
-    public static partial void ImageDrawRectangle(ref Image dst, int posX, int posY, int width, int height, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageDrawRectangle(ref Image dst, int posX, int posY, int width, int height, Color color);
 
     /// <summary> Draw rectangle within an image (Vector version) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawRectangleV")]
-    public static partial void ImageDrawRectangle(IntPtr dst, Vector2 position, Vector2 size, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageDrawRectangle(IntPtr dst, Vector2 position, Vector2 size, Color color);
 
     /// <summary> Draw rectangle within an image </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawRectangleRec")]
-    public static partial void ImageDrawRectangle(IntPtr dst, RectangleF rec, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageDrawRectangle(IntPtr dst, Rectangle rec, Color color);
 
     /// <summary> Draw rectangle lines within an image </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawRectangleLines")]
-    public static partial void ImageDrawRectangleLines(IntPtr dst, RectangleF rec, int thick, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageDrawRectangleLines(IntPtr dst, Rectangle rec, int thick, Color color);
 
     /// <summary> Draw a source image within a destination image (tint applied to source) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDraw")]
-    public static partial void ImageDraw(ref Image dst, Image src, RectangleF srcRec, RectangleF dstRec, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void ImageDraw(ref Image dst, Image src, Rectangle srcRec, Rectangle dstRec, Color tint);
 
     /// <summary> Draw text (using default font) within an image (destination) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawText")]
-    public static partial void ImageDrawText(ref Image dst, [MarshalAs(UnmanagedType.LPStr)] string text, int posX, int posY, int fontSize, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void ImageDrawText(ref Image dst, [MarshalAs(UnmanagedType.LPStr)] string text, int posX, int posY, int fontSize, Color color);
 
     /// <summary> Draw text (custom sprite font) within an image (destination) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawTextEx")]
-    public static partial void ImageDrawText(ref Image dst, Font font, [MarshalAs(UnmanagedType.LPStr)] string text, Vector2 position, float fontSize, float spacing, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void ImageDrawText(ref Image dst, Font font, [MarshalAs(UnmanagedType.LPStr)] string text, Vector2 position, float fontSize, float spacing, Color tint);
 
     /// <summary> Load texture from file into GPU memory (VRAM) </summary>
     [LibraryImport(LIB, EntryPoint = "LoadTexture")]
@@ -1163,7 +1161,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Update GPU texture rectangle with new data </summary>
     [LibraryImport(LIB, EntryPoint = "UpdateTextureRec")]
-    public static partial void UpdateTexture(Texture texture, RectangleF rec, IntPtr pixels);
+    public static partial void UpdateTexture(Texture texture, Rectangle rec, IntPtr pixels);
 
     /// <summary> Generate GPU mipmaps for a texture </summary>
     [LibraryImport(LIB, EntryPoint = "GenTextureMipmaps")]
@@ -1179,93 +1177,83 @@ public static unsafe partial class Raylib
 
     /// <summary> Draw a Texture2D </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTexture")]
-    public static partial void DrawTexture(Texture texture, int posX, int posY, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawTexture(Texture texture, int posX, int posY, Color tint);
 
     /// <summary> Draw a Texture2D with position defined as Vector2 </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTextureV")]
-    public static partial void DrawTexture(Texture texture, Vector2 position, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawTexture(Texture texture, Vector2 position, Color tint);
 
     /// <summary> Draw a Texture2D with extended parameters </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTextureEx")]
-    public static partial void DrawTexture(Texture texture, Vector2 position, float rotation, float scale, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawTexture(Texture texture, Vector2 position, float rotation, float scale, Color tint);
 
     /// <summary> Draw a part of a texture defined by a rectangle </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTextureRec")]
-    public static partial void DrawTexture(Texture texture, RectangleF source, Vector2 position, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawTexture(Texture texture, Rectangle source, Vector2 position, Color tint);
 
     /// <summary> Draw a part of a texture defined by a rectangle with 'pro' parameters </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTexturePro")]
-    public static partial void DrawTexture(Texture texture, RectangleF source, RectangleF dest, Vector2 origin, float rotation, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawTexture(Texture texture, Rectangle source, Rectangle dest, Vector2 origin, float rotation, Color tint);
 
     /// <summary> Draws a texture (or part of it) that stretches or shrinks nicely </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTextureNPatch")]
-    public static partial void DrawTextureNPatch(Texture texture, NPatchInfo nPatchInfo, RectangleF dest, Vector2 origin, float rotation, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawTextureNPatch(Texture texture, NPatchInfo nPatchInfo, Rectangle dest, Vector2 origin, float rotation, Color tint);
 
     /// <summary> Get color with alpha applied, alpha goes from 0.0f to 1.0f </summary>
     [LibraryImport(LIB, EntryPoint = "Fade")]
-    [return: MarshalUsing(typeof(ColorMarshaller))]
-    public static partial Color Fade([MarshalUsing(typeof(ColorMarshaller))] Color color, float alpha);
+    public static partial Color Fade(Color color, float alpha);
 
     /// <summary> Get hexadecimal value for a Color </summary>
     [LibraryImport(LIB, EntryPoint = "ColorToInt")]
-    public static partial int ColorToInt([MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial int ColorToInt(Color color);
 
     /// <summary> Get Color normalized as float [0..1] </summary>
     [LibraryImport(LIB, EntryPoint = "ColorNormalize")]
-    public static partial Vector4 ColorNormalize([MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial Vector4 ColorNormalize(Color color);
 
     /// <summary> Get Color from normalized values [0..1] </summary>
     [LibraryImport(LIB, EntryPoint = "ColorFromNormalized")]
-    [return: MarshalUsing(typeof(ColorMarshaller))]
     public static partial Color ColorFromNormalized(Vector4 normalized);
 
     /// <summary> Get HSV values for a Color, hue [0..360], saturation/value [0..1] </summary>
     [LibraryImport(LIB, EntryPoint = "ColorToHSV")]
-    public static partial Vector3 ColorToHSV([MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial Vector3 ColorToHSV(Color color);
 
     /// <summary> Get a Color from HSV values, hue [0..360], saturation/value [0..1] </summary>
     [LibraryImport(LIB, EntryPoint = "ColorFromHSV")]
-    [return: MarshalUsing(typeof(ColorMarshaller))]
     public static partial Color ColorFromHSV(float hue, float saturation, float value);
 
     /// <summary> Get color multiplied with another color </summary>
     [LibraryImport(LIB, EntryPoint = "ColorTint")]
-    [return: MarshalUsing(typeof(ColorMarshaller))]
-    public static partial Color ColorTint([MarshalUsing(typeof(ColorMarshaller))] Color color, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial Color ColorTint(Color color, Color tint);
 
     /// <summary> Get color with brightness correction, brightness factor goes from -1.0f to 1.0f </summary>
     [LibraryImport(LIB, EntryPoint = "ColorBrightness")]
-    [return: MarshalUsing(typeof(ColorMarshaller))]
-    public static partial Color ColorBrightness([MarshalUsing(typeof(ColorMarshaller))] Color color, float factor);
+    public static partial Color ColorBrightness(Color color, float factor);
 
     /// <summary> Get color with contrast correction, contrast values between -1.0f and 1.0f </summary>
     [LibraryImport(LIB, EntryPoint = "ColorContrast")]
-    [return: MarshalUsing(typeof(ColorMarshaller))]
-    public static partial Color ColorContrast([MarshalUsing(typeof(ColorMarshaller))] Color color, float contrast);
+    public static partial Color ColorContrast(Color color, float contrast);
 
     /// <summary> Get color with alpha applied, alpha goes from 0.0f to 1.0f </summary>
     [LibraryImport(LIB, EntryPoint = "ColorAlpha")]
-    [return: MarshalUsing(typeof(ColorMarshaller))]
-    public static partial Color ColorAlpha([MarshalUsing(typeof(ColorMarshaller))] Color color, float alpha);
+    public static partial Color ColorAlpha(Color color, float alpha);
 
     /// <summary> Get src alpha-blended into dst color with tint </summary>
     [LibraryImport(LIB, EntryPoint = "ColorAlphaBlend")]
-    [return: MarshalUsing(typeof(ColorMarshaller))]
-    public static partial Color ColorAlphaBlend([MarshalUsing(typeof(ColorMarshaller))] Color dst, [MarshalUsing(typeof(ColorMarshaller))] Color src, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial Color ColorAlphaBlend(Color dst, Color src, Color tint);
 
     /// <summary> Get Color structure from hexadecimal value </summary>
     [LibraryImport(LIB, EntryPoint = "GetColor")]
-    [return: MarshalUsing(typeof(ColorMarshaller))]
     public static partial Color GetColor(uint hexValue);
 
     /// <summary> Get Color from a source pixel pointer of certain format </summary>
     [LibraryImport(LIB, EntryPoint = "GetPixelColor")]
-    [return: MarshalUsing(typeof(ColorMarshaller))]
     public static partial Color GetPixelColor(IntPtr srcPtr, int format);
 
     /// <summary> Set color formatted into destination pixel pointer </summary>
     [LibraryImport(LIB, EntryPoint = "SetPixelColor")]
-    public static partial void SetPixelColor(IntPtr dstPtr, [MarshalUsing(typeof(ColorMarshaller))] Color color, int format);
+    public static partial void SetPixelColor(IntPtr dstPtr, Color color, int format);
 
     /// <summary> Get pixel data size in bytes for certain format </summary>
     [LibraryImport(LIB, EntryPoint = "GetPixelDataSize")]
@@ -1285,7 +1273,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Load font from Image (XNA style) </summary>
     [LibraryImport(LIB, EntryPoint = "LoadFontFromImage")]
-    public static partial Font LoadFontFromImage(Image image, [MarshalUsing(typeof(ColorMarshaller))] Color key, int firstChar);
+    public static partial Font LoadFontFromImage(Image image, Color key, int firstChar);
 
     /// <summary> Load font from memory buffer, fileType refers to extension: i.e. '.ttf' </summary>
     [LibraryImport(LIB, EntryPoint = "LoadFontFromMemory")]
@@ -1323,23 +1311,23 @@ public static unsafe partial class Raylib
 
     /// <summary> Draw text (using default font) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawText")]
-    public static partial void DrawText([MarshalAs(UnmanagedType.LPStr)] string text, int posX, int posY, int fontSize, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawText([MarshalAs(UnmanagedType.LPStr)] string text, int posX, int posY, int fontSize, Color color);
 
     /// <summary> Draw text using font and additional parameters </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTextEx")]
-    public static partial void DrawText(Font font, [MarshalAs(UnmanagedType.LPStr)] string text, Vector2 position, float fontSize, float spacing, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawText(Font font, [MarshalAs(UnmanagedType.LPStr)] string text, Vector2 position, float fontSize, float spacing, Color tint);
 
     /// <summary> Draw text using Font and pro parameters (rotation) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTextPro")]
-    public static partial void DrawText(Font font, [MarshalAs(UnmanagedType.LPStr)] string text, Vector2 position, Vector2 origin, float rotation, float fontSize, float spacing, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawText(Font font, [MarshalAs(UnmanagedType.LPStr)] string text, Vector2 position, Vector2 origin, float rotation, float fontSize, float spacing, Color tint);
 
     /// <summary> Draw one character (codepoint) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTextCodepoint")]
-    public static partial void DrawTextCodepoint(Font font, int codepoint, Vector2 position, float fontSize, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawTextCodepoint(Font font, int codepoint, Vector2 position, float fontSize, Color tint);
 
     /// <summary> Draw multiple character (codepoint) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTextCodepoints")]
-    public static partial void DrawTextCodepoints(Font font, IntPtr codepoints, int count, Vector2 position, float fontSize, float spacing, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawTextCodepoints(Font font, IntPtr codepoints, int count, Vector2 position, float fontSize, float spacing, Color tint);
 
     /// <summary> Set vertical line spacing when drawing with line-breaks </summary>
     [LibraryImport(LIB, EntryPoint = "SetTextLineSpacing")]
@@ -1363,7 +1351,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Get glyph rectangle in font atlas for a codepoint (unicode character), fallback to '?' if not found </summary>
     [LibraryImport(LIB, EntryPoint = "GetGlyphAtlasRec")]
-    public static partial RectangleF GetGlyphAtlas(Font font, int codepoint);
+    public static partial Rectangle GetGlyphAtlas(Font font, int codepoint);
 
     /// <summary> Load UTF-8 text encoded from codepoints array </summary>
     [LibraryImport(LIB, EntryPoint = "LoadUTF8")]
@@ -1456,83 +1444,83 @@ public static unsafe partial class Raylib
 
     /// <summary> Draw a line in 3D world space </summary>
     [LibraryImport(LIB, EntryPoint = "DrawLine3D")]
-    public static partial void DrawLine3D(Vector3 startPos, Vector3 endPos, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawLine3D(Vector3 startPos, Vector3 endPos, Color color);
 
     /// <summary> Draw a point in 3D space, actually a small line </summary>
     [LibraryImport(LIB, EntryPoint = "DrawPoint3D")]
-    public static partial void DrawPoint3D(Vector3 position, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawPoint3D(Vector3 position, Color color);
 
     /// <summary> Draw a circle in 3D world space </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCircle3D")]
-    public static partial void DrawCircle3D(Vector3 center, float radius, Vector3 rotationAxis, float rotationAngle, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawCircle3D(Vector3 center, float radius, Vector3 rotationAxis, float rotationAngle, Color color);
 
     /// <summary> Draw a color-filled triangle (vertex in counter-clockwise order!) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTriangle3D")]
-    public static partial void DrawTriangle3D(Vector3 v1, Vector3 v2, Vector3 v3, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawTriangle3D(Vector3 v1, Vector3 v2, Vector3 v3, Color color);
 
     /// <summary> Draw a triangle strip defined by points </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTriangleStrip3D")]
-    public static partial void DrawTriangleStrip3D(IntPtr points, int pointCount, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawTriangleStrip3D(IntPtr points, int pointCount, Color color);
 
     /// <summary> Draw cube </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCube")]
-    public static partial void DrawCube(Vector3 position, float width, float height, float length, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawCube(Vector3 position, float width, float height, float length, Color color);
 
     /// <summary> Draw cube (Vector version) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCubeV")]
-    public static partial void DrawCube(Vector3 position, Vector3 size, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawCube(Vector3 position, Vector3 size, Color color);
 
     /// <summary> Draw cube wires </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCubeWires")]
-    public static partial void DrawCubeWires(Vector3 position, float width, float height, float length, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawCubeWires(Vector3 position, float width, float height, float length, Color color);
 
     /// <summary> Draw cube wires (Vector version) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCubeWiresV")]
-    public static partial void DrawCubeWires(Vector3 position, Vector3 size, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawCubeWires(Vector3 position, Vector3 size, Color color);
 
     /// <summary> Draw sphere </summary>
     [LibraryImport(LIB, EntryPoint = "DrawSphere")]
-    public static partial void DrawSphere(Vector3 centerPos, float radius, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawSphere(Vector3 centerPos, float radius, Color color);
 
     /// <summary> Draw sphere with extended parameters </summary>
     [LibraryImport(LIB, EntryPoint = "DrawSphereEx")]
-    public static partial void DrawSphere(Vector3 centerPos, float radius, int rings, int slices, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawSphere(Vector3 centerPos, float radius, int rings, int slices, Color color);
 
     /// <summary> Draw sphere wires </summary>
     [LibraryImport(LIB, EntryPoint = "DrawSphereWires")]
-    public static partial void DrawSphereWires(Vector3 centerPos, float radius, int rings, int slices, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawSphereWires(Vector3 centerPos, float radius, int rings, int slices, Color color);
 
     /// <summary> Draw a cylinder/cone </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCylinder")]
-    public static partial void DrawCylinder(Vector3 position, float radiusTop, float radiusBottom, float height, int slices, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawCylinder(Vector3 position, float radiusTop, float radiusBottom, float height, int slices, Color color);
 
     /// <summary> Draw a cylinder with base at startPos and top at endPos </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCylinderEx")]
-    public static partial void DrawCylinder(Vector3 startPos, Vector3 endPos, float startRadius, float endRadius, int sides, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawCylinder(Vector3 startPos, Vector3 endPos, float startRadius, float endRadius, int sides, Color color);
 
     /// <summary> Draw a cylinder/cone wires </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCylinderWires")]
-    public static partial void DrawCylinderWires(Vector3 position, float radiusTop, float radiusBottom, float height, int slices, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawCylinderWires(Vector3 position, float radiusTop, float radiusBottom, float height, int slices, Color color);
 
     /// <summary> Draw a cylinder wires with base at startPos and top at endPos </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCylinderWiresEx")]
-    public static partial void DrawCylinderWires(Vector3 startPos, Vector3 endPos, float startRadius, float endRadius, int sides, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawCylinderWires(Vector3 startPos, Vector3 endPos, float startRadius, float endRadius, int sides, Color color);
 
     /// <summary> Draw a capsule with the center of its sphere caps at startPos and endPos </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCapsule")]
-    public static partial void DrawCapsule(Vector3 startPos, Vector3 endPos, float radius, int slices, int rings, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawCapsule(Vector3 startPos, Vector3 endPos, float radius, int slices, int rings, Color color);
 
     /// <summary> Draw capsule wireframe with the center of its sphere caps at startPos and endPos </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCapsuleWires")]
-    public static partial void DrawCapsuleWires(Vector3 startPos, Vector3 endPos, float radius, int slices, int rings, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawCapsuleWires(Vector3 startPos, Vector3 endPos, float radius, int slices, int rings, Color color);
 
     /// <summary> Draw a plane XZ </summary>
     [LibraryImport(LIB, EntryPoint = "DrawPlane")]
-    public static partial void DrawPlane(Vector3 centerPos, Vector2 size, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawPlane(Vector3 centerPos, Vector2 size, Color color);
 
     /// <summary> Draw a ray line </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRay")]
-    public static partial void DrawRay(Ray ray, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawRay(Ray ray, Color color);
 
     /// <summary> Draw a grid (centered at (0, 0, 0)) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawGrid")]
@@ -1561,35 +1549,35 @@ public static unsafe partial class Raylib
 
     /// <summary> Draw a model (with texture if set) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawModel")]
-    public static partial void DrawModel(Model model, Vector3 position, float scale, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawModel(Model model, Vector3 position, float scale, Color tint);
 
     /// <summary> Draw a model with extended parameters </summary>
     [LibraryImport(LIB, EntryPoint = "DrawModelEx")]
-    public static partial void DrawModel(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawModel(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, Color tint);
 
     /// <summary> Draw a model wires (with texture if set) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawModelWires")]
-    public static partial void DrawModelWires(Model model, Vector3 position, float scale, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawModelWires(Model model, Vector3 position, float scale, Color tint);
 
     /// <summary> Draw a model wires (with texture if set) with extended parameters </summary>
     [LibraryImport(LIB, EntryPoint = "DrawModelWiresEx")]
-    public static partial void DrawModelWires(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawModelWires(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, Color tint);
 
     /// <summary> Draw bounding box (wires) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawBoundingBox")]
-    public static partial void DrawBoundingBox(BoundingBox box, [MarshalUsing(typeof(ColorMarshaller))] Color color);
+    public static partial void DrawBoundingBox(BoundingBox box, Color color);
 
     /// <summary> Draw a billboard texture </summary>
     [LibraryImport(LIB, EntryPoint = "DrawBillboard")]
-    public static partial void DrawBillboard(Camera3D camera, Texture texture, Vector3 position, float size, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawBillboard(Camera3D camera, Texture texture, Vector3 position, float size, Color tint);
 
     /// <summary> Draw a billboard texture defined by source </summary>
     [LibraryImport(LIB, EntryPoint = "DrawBillboardRec")]
-    public static partial void DrawBillboard(Camera3D camera, Texture texture, RectangleF source, Vector3 position, Vector2 size, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawBillboard(Camera3D camera, Texture texture, Rectangle source, Vector3 position, Vector2 size, Color tint);
 
     /// <summary> Draw a billboard texture defined by source and rotation </summary>
     [LibraryImport(LIB, EntryPoint = "DrawBillboardPro")]
-    public static partial void DrawBillboard(Camera3D camera, Texture texture, RectangleF source, Vector3 position, Vector3 up, Vector2 size, Vector2 origin, float rotation, [MarshalUsing(typeof(ColorMarshaller))] Color tint);
+    public static partial void DrawBillboard(Camera3D camera, Texture texture, Rectangle source, Vector3 position, Vector3 up, Vector2 size, Vector2 origin, float rotation, Color tint);
 
     /// <summary> Upload mesh vertex data in GPU and provide VAO/VBO ids </summary>
     [LibraryImport(LIB, EntryPoint = "UploadMesh")]

@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -30,7 +29,7 @@ public partial class ModelsBillboard : ExampleHelper
         Vector3 billPositionRotating = new(1.0f, 2.0f, 1.0f); // Position of rotating billboard
 
         // Entire billboard texture, source is used to take a segment from a larger texture.
-        RectangleF source = new(0.0f, 0.0f, bill.Width, bill.Height);
+        Rectangle source = new(0.0f, 0.0f, bill.Width, bill.Height);
 
         // NOTE: Billboard locked on axis-Y
         Vector3 billUp = new(0.0f, 1.0f, 0.0f);

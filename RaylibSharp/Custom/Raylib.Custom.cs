@@ -1,6 +1,5 @@
 namespace RaylibSharp;
 
-using System.Drawing;
 using System.Numerics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -15,7 +14,7 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "InitWindow")]
     internal static partial void _InitWindow(int width, int height, [MarshalAs(UnmanagedType.LPStr)] string title);
 
-    /// <summary> Initialize window and logging and load an embedded Icon.png file falling back on default </summary>
+    /// <summary> Initialize window, logging and load an embedded Icon.png file falling back on default </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void InitWindow(int width, int height, string title)
     {
@@ -132,6 +131,12 @@ public static unsafe partial class Raylib
     /// <summary> Set shader uniform value </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
     public static partial void SetShaderValue(Shader shader, int locIndex, Vector3 value, ShaderUniformDataType uniformType = ShaderUniformDataType.ShaderUniformVec3);
+
+    /// <summary> Set shader uniform value </summary>
+    public static void SetShaderValue(Shader shader, int locIndex, Color value)
+    {
+        SetShaderValue(shader, locIndex, new Vector4(value.R, value.G, value.B, value.A) / 255f, ShaderUniformDataType.ShaderUniformVec4);
+    }
 
     /// <summary> Set shader uniform value </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValue")]

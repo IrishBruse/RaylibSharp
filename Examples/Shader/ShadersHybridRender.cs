@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -113,7 +112,7 @@ public partial class ShadersHybridRender : ExampleHelper
         {
             ClearBackground(RayWhite);
 
-            DrawTexture(target.Texture, new RectangleF(0, 0, screenWidth, -screenHeight), new(0, 0), White);
+            DrawTexture(target.Texture, new Rectangle(0, 0, screenWidth, -screenHeight), new(0, 0), White);
             DrawFPS(10, 10);
         }
         EndDrawing();

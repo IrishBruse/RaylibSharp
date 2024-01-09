@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -19,9 +18,9 @@ public class Core2dCameraPlatformer : ExampleHelper
         public bool CanJump;
     }
 
-    public class EnvItem(RectangleF rect, bool blocking, Color color)
+    public class EnvItem(Rectangle rect, bool blocking, Color color)
     {
-        public RectangleF Rect = rect;
+        public Rectangle Rect = rect;
         public bool Blocking = blocking;
         public Color Color = color;
     }
@@ -121,7 +120,7 @@ public class Core2dCameraPlatformer : ExampleHelper
                         DrawRectangle(envItems[i].Rect, envItems[i].Color);
                     }
 
-                    RectangleF playerRect = new(player.Position.X - 20, player.Position.Y - 40, 40, 40);
+                    Rectangle playerRect = new(player.Position.X - 20, player.Position.Y - 40, 40, 40);
                     DrawRectangle(playerRect, Red);
 
                 }

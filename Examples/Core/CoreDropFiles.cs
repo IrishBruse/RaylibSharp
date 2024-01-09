@@ -1,5 +1,3 @@
-using System;
-
 using RaylibSharp;
 
 using static RaylibSharp.Raylib;

@@ -2,6 +2,7 @@ namespace RaylibSharp;
 
 using System.Numerics;
 
+/// <summary> Raylib </summary>
 public static unsafe partial class Raylib
 {
     /// <summary>

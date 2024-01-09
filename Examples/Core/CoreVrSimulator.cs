@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -62,8 +61,8 @@ public class CoreVrSimulator : ExampleHelper
         RenderTexture target = LoadRenderTexture(device.HResolution, device.VResolution);
 
         // The target's height is flipped (in the source Rectangle), due to OpenGL reasons
-        RectangleF sourceRec = new(0.0f, 0.0f, target.Texture.Width, -(float)target.Texture.Height);
-        RectangleF destRec = new(0.0f, 0.0f, GetScreenWidth(), GetScreenHeight());
+        Rectangle sourceRec = new(0.0f, 0.0f, target.Texture.Width, -(float)target.Texture.Height);
+        Rectangle destRec = new(0.0f, 0.0f, GetScreenWidth(), GetScreenHeight());
 
         // Define the camera to look into our 3d world
         Camera camera = new();

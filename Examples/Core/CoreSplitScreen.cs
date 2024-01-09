@@ -1,4 +1,3 @@
-using System.Drawing;
 
 using RaylibSharp;
 
@@ -62,7 +61,7 @@ public class Core3dSplitScreen : ExampleHelper
         RenderTexture screenPlayer2 = LoadRenderTexture(screenWidth / 2, screenHeight);
 
         // Build a flipped rectangle the size of the split view to use for drawing later
-        RectangleF splitScreenRect = new(0.0f, 0.0f, screenPlayer1.Texture.Width, -screenPlayer1.Texture.Height);
+        Rectangle splitScreenRect = new(0.0f, 0.0f, screenPlayer1.Texture.Width, -screenPlayer1.Texture.Height);
 
         SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 

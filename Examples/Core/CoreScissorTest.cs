@@ -1,4 +1,3 @@
-using System.Drawing;
 
 using RaylibSharp;
 
@@ -15,7 +14,7 @@ public class CoreScissorTest : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - core - scissor test");
 
-        RectangleF scissorArea = new(0, 0, 300, 300);
+        Rectangle scissorArea = new(0, 0, 300, 300);
         bool scissorMode = true;
 
         SetTargetFPS(60); // Set our game to run at 60 frames-per-second

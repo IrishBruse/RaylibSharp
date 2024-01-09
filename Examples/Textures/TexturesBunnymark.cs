@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -53,8 +52,7 @@ public partial class TexturesBunnymark : ExampleHelper
                         bunnies[bunniesCount].position = GetMousePosition();
                         bunnies[bunniesCount].speed.X = GetRandomValue(-250, 250) / 60.0f;
                         bunnies[bunniesCount].speed.Y = GetRandomValue(-250, 250) / 60.0f;
-                        bunnies[bunniesCount].color = Color.FromArgb(
-                            255,
+                        bunnies[bunniesCount].color = new(
                             GetRandomValue(50, 240),
                             GetRandomValue(80, 240),
                             GetRandomValue(100, 240)

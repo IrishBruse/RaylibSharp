@@ -1,5 +1,3 @@
-using System.Drawing;
-
 using RaylibSharp;
 
 using static RaylibSharp.Raylib;
@@ -17,8 +15,8 @@ public class Core2dCamera : ExampleHelper
 
         InitWindow(screenWidth, screenHeight, "RaylibSharp - core - 2d camera");
 
-        RectangleF player = new(400, 280, 40, 40);
-        RectangleF[] buildings = new RectangleF[MAX_BUILDINGS];
+        Rectangle player = new(400, 280, 40, 40);
+        Rectangle[] buildings = new Rectangle[MAX_BUILDINGS];
         Color[] buildColors = new Color[MAX_BUILDINGS];
 
         int spacing = 0;
@@ -32,7 +30,7 @@ public class Core2dCamera : ExampleHelper
 
             spacing += (int)buildings[i].Width;
 
-            buildColors[i] = Color.FromArgb(255, GetRandomValue(200, 240), GetRandomValue(200, 240), GetRandomValue(200, 250));
+            buildColors[i] = new Color(GetRandomValue(200, 240), GetRandomValue(200, 240), GetRandomValue(200, 250));
         }
 
         Camera2D camera = new();

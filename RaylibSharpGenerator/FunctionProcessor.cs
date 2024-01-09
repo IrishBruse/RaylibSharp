@@ -17,7 +17,6 @@ public class FunctionProcessor
         sb.AppendLine("using System.Runtime.InteropServices;");
         sb.AppendLine("using System.Runtime.InteropServices.Marshalling;");
         sb.AppendLine("using System.Numerics;");
-        sb.AppendLine("using System.Drawing;");
         sb.AppendLine();
         sb.AppendLine($"public static unsafe partial class {api.ClassName}");
         sb.AppendLine("{");
@@ -49,7 +48,7 @@ public class FunctionProcessor
 
                 if (conversion.TryGetValue("@", out string? extraAttributes))
                 {
-                    sb.AppendLine(extraAttributes);
+                    sb.AppendLine("    " + extraAttributes);
                 }
             }
 
@@ -67,10 +66,6 @@ public class FunctionProcessor
             else if (type == "string")
             {
                 sb.AppendLine($"    [return: {Utility.StringMarshal}]");
-            }
-            else if (type == "Color")
-            {
-                sb.AppendLine($"    [return: {Utility.ColorMarshal}]");
             }
 
             f.Name = ConvertFunctionToUseOverloading(f.Name);
@@ -125,8 +120,6 @@ public class FunctionProcessor
         {
             "bool" => $"[{Utility.BoolMarshal}] {type} {p.Name}",
             "string" => $"[{Utility.StringMarshal}] {type} {p.Name}",
-            "Color" => $"[{Utility.ColorMarshal}] {type} {p.Name}",
-
             _ => $"{type} {p.Name}"
         };
     }

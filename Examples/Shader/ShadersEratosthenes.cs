@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 
 using RaylibSharp;
 
@@ -38,7 +37,7 @@ public partial class ShadersEratosthenes : ExampleHelper
                 ClearBackground(Black); // Clear the render texture
 
                 // Draw a rectangle in shader mode to be used as shader canvas
-                // NOTE: RectangleF uses font white character texture coordinates,
+                // NOTE: Rectangle uses font white character texture coordinates,
                 // so shader can not be applied here directly because input vertexTexCoord
                 // do not represent full screen coordinates (space where want to apply shader)
                 DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Black);
@@ -52,7 +51,7 @@ public partial class ShadersEratosthenes : ExampleHelper
                 BeginShaderMode(shader);
                 {
                     // NOTE: Render texture must be y-flipped due to default OpenGL coordinates (left-bottom)
-                    DrawTexture(target.Texture, new RectangleF(0, 0, target.Texture.Width, -target.Texture.Height), new(0.0f, 0.0f), White);
+                    DrawTexture(target.Texture, new Rectangle(0, 0, target.Texture.Width, -target.Texture.Height), new(0.0f, 0.0f), White);
                 }
                 EndShaderMode();
             }

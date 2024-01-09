@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -25,7 +24,7 @@ public partial class TexturesMousePainting : ExampleHelper
             LightGray, Gray, DarkGray, Black };
 
         // Define colorsRecs data (for every rectangle)
-        RectangleF[] colorsRecs = new RectangleF[MAX_COLORS_COUNT];
+        Rectangle[] colorsRecs = new Rectangle[MAX_COLORS_COUNT];
 
         for (int i = 0; i < MAX_COLORS_COUNT; i++)
         {
@@ -41,7 +40,7 @@ public partial class TexturesMousePainting : ExampleHelper
         float brushSize = 20.0f;
         bool mouseWasPressed = false;
 
-        RectangleF btnSaveRec = new(750, 10, 40, 30);
+        Rectangle btnSaveRec = new(750, 10, 40, 30);
         bool showSaveMessage = false;
         int saveMessageCounter = 0;
 
@@ -205,7 +204,7 @@ public partial class TexturesMousePainting : ExampleHelper
                 ClearBackground(RayWhite);
 
                 // NOTE: Render texture must be y-flipped due to default OpenGL coordinates (left-bottom)
-                DrawTexture(target.Texture, new RectangleF(0, 0, target.Texture.Width, -target.Texture.Height), new(0, 0), White);
+                DrawTexture(target.Texture, new Rectangle(0, 0, target.Texture.Width, -target.Texture.Height), new(0, 0), White);
 
                 // Draw drawing circle for reference
                 if (mousePos.Y > 50)
@@ -237,7 +236,7 @@ public partial class TexturesMousePainting : ExampleHelper
                     DrawRectangle(colorsRecs[colorMouseHover], Fade(White, 0.6f));
                 }
 
-                DrawRectangleLines(new RectangleF(colorsRecs[colorSelected].X - 2, colorsRecs[colorSelected].Y - 2, colorsRecs[colorSelected].Width + 4, colorsRecs[colorSelected].Height + 4), 2, Black);
+                DrawRectangleLines(new Rectangle(colorsRecs[colorSelected].X - 2, colorsRecs[colorSelected].Y - 2, colorsRecs[colorSelected].Width + 4, colorsRecs[colorSelected].Height + 4), 2, Black);
                 // Draw save image button
                 DrawRectangleLines(btnSaveRec, 2, btnSaveMouseHover ? Red : Black);
                 DrawText("SAVE!", 755, 20, 10, btnSaveMouseHover ? Red : Black);

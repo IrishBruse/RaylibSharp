@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using System.Numerics;
 
 using RaylibSharp;
@@ -30,13 +29,13 @@ public class CoreSmoothPixelperfect : ExampleHelper
 
         RenderTexture target = LoadRenderTexture(virtualScreenWidth, virtualScreenHeight); // This is where we'll draw all our objects.
 
-        RectangleF rec01 = new(70.0f, 35.0f, 20.0f, 20.0f);
-        RectangleF rec02 = new(90.0f, 55.0f, 30.0f, 10.0f);
-        RectangleF rec03 = new(80.0f, 65.0f, 15.0f, 25.0f);
+        Rectangle rec01 = new(70.0f, 35.0f, 20.0f, 20.0f);
+        Rectangle rec02 = new(90.0f, 55.0f, 30.0f, 10.0f);
+        Rectangle rec03 = new(80.0f, 65.0f, 15.0f, 25.0f);
 
         // The target's height is flipped (in the source Rectangle), due to OpenGL reasons
-        RectangleF sourceRec = new(0.0f, 0.0f, target.Texture.Width, -(float)target.Texture.Height);
-        RectangleF destRec = new(-virtualRatio, -virtualRatio, screenWidth + (virtualRatio * 2), screenHeight + (virtualRatio * 2));
+        Rectangle sourceRec = new(0.0f, 0.0f, target.Texture.Width, -(float)target.Texture.Height);
+        Rectangle destRec = new(-virtualRatio, -virtualRatio, screenWidth + (virtualRatio * 2), screenHeight + (virtualRatio * 2));
 
         Vector2 origin = new(0.0f, 0.0f);
 
