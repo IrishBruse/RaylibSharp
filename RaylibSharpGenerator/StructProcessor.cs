@@ -3,15 +3,11 @@ namespace RaylibSharp.Generator;
 using System;
 using System.Globalization;
 using System.Text;
-using System.Text.Json;
 
 #pragma warning disable IDE0058
 
 public static class StructProcessor
 {
-    static Dictionary<string, StructConfig> structConfig = [];
-    static readonly JsonSerializerOptions Options = new() { ReadCommentHandling = JsonCommentHandling.Skip };
-
     static readonly string[] Ignore = [
         "Vector4",
         "Vector3",
@@ -26,8 +22,6 @@ public static class StructProcessor
 
     public static void Emit(RaylibApi api)
     {
-        structConfig = JsonSerializer.Deserialize<Dictionary<string, StructConfig>>(File.ReadAllText("./StructConfig.jsonc"), Options)!;
-
         StringBuilder sb = new();
         foreach (Struct s in api.Structs)
         {
@@ -36,7 +30,7 @@ public static class StructProcessor
                 continue;
             }
 
-            StructConfig config = GetConfig(s.Name);
+            StructConfig config = StructConfig.Data.GetValueOrDefault(s.Name, new StructConfig());
 
             if (Ignore.Contains(s.Name))
             {
@@ -318,18 +312,6 @@ public static class StructProcessor
 
             _ => Utility.ConvertTypeRemoveAlias(t),
         };
-    }
-
-    static StructConfig GetConfig(string name)
-    {
-        if (structConfig.TryGetValue(name, out StructConfig? val))
-        {
-            return val;
-        }
-        else
-        {
-            return new();
-        }
     }
 }
 

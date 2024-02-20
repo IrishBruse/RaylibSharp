@@ -27,6 +27,7 @@ static unsafe class ModelMarshaller
 
     public static Model ConvertToManaged(UnmanagedModel unmanaged)
     {
+        _ = unmanaged;
         return new();
     }
 }

@@ -12,7 +12,7 @@ public partial class AudioMusicStream : ExampleHelper
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [audio] example - music playing (streaming)");
+        InitWindow(width: screenWidth, screenHeight, "raylib [audio] example - music playing (streaming)");
 
         InitAudioDevice(); // Initialize audio device
 

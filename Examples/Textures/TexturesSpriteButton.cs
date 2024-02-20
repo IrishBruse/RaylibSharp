@@ -30,20 +30,15 @@ public partial class TexturesSpriteButton : ExampleHelper
         // Define button bounds on screen
         Rectangle btnBounds = new((screenWidth / 2.0f) - (button.Width / 2.0f), (screenHeight / 2.0f) - (button.Height / NUM_FRAMES / 2.0f), button.Width, frameHeight);
 
-        int btnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
-        bool btnAction = false;         // Button action should be activated
-
-        Vector2 mousePoint = new(0.0f, 0.0f);
-
         SetTargetFPS(60);
 
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             // Update
-            mousePoint = GetMousePosition();
-            btnAction = false;
-
+            Vector2 mousePoint = GetMousePosition();
+            bool btnAction = false;
+            int btnState;
             // Check button state
             if (CheckCollisionPoint(mousePoint, btnBounds))
             {
