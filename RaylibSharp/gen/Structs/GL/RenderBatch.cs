@@ -4,7 +4,6 @@ namespace RaylibSharp.GL;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
-using System.Drawing;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> rlRenderBatch type </summary>

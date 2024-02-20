@@ -31,9 +31,6 @@
         "TextIsEqual",
         // Unnecessary
         "GetMouseWheelMove",
-        "MemAlloc",
-        "MemRealloc",
-        "MemFree",
         "CompressData",
         "DecompressData",
         "EncodeDataBase64",
@@ -154,7 +151,7 @@
             "format": "PixelFormat format"
         },
         "rlLoadVertexBuffer": {
-            "buffer": "float[] buffer"
+            "buffer": "float* buffer"
         },
         "rlSetBlendMode": {
             "mode": "BlendMode mode"
@@ -191,7 +188,7 @@
             "mode": "CameraMode mode"
         },
         "UploadMesh": {
-            "mesh": "Mesh mesh"
+            "mesh": "ref Mesh mesh"
         },
         "ImageDrawPixel": {
             "dst": "ref Image dst"

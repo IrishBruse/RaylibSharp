@@ -31,6 +31,12 @@ public static unsafe partial class Raylib
         }
     }
 
+    /// <summary> Internal Raylib allocator </summary>
+    public static T* Allocate<T>(int elements) where T : unmanaged
+    {
+        return (T*)MemAlloc((uint)(elements * sizeof(T)));
+    }
+
     static void LoadIcon()
     {
         Assembly assembly = Assembly.GetEntryAssembly()!;
@@ -200,4 +206,9 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "SetShaderValueV")]
     public static partial void SetShaderValue(Shader shader, int locIndex, byte[] value, ShaderUniformDataType uniformType, int count);
 
+    /// <summary> Set background color (framebuffer clear color) </summary>
+    public static void ClearBackground(byte r, byte g, byte b)
+    {
+        ClearBackground(new Color(r, g, b));
+    }
 }

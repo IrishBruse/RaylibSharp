@@ -34,17 +34,19 @@ public partial class ShadersLightmap : ExampleHelper
         Mesh mesh = GenMeshPlane(MAP_SIZE, MAP_SIZE, 1, 1);
 
         // GenMeshPlane doesn't generate texcoords2 so we will upload them separately
-        mesh.Texcoords2 = new float[mesh.VertexCount * 2];
-
-        // X                          // Y
-        mesh.Texcoords2[0] = 0.0f; mesh.Texcoords2[1] = 0.0f;
-        mesh.Texcoords2[2] = 1.0f; mesh.Texcoords2[3] = 0.0f;
-        mesh.Texcoords2[4] = 0.0f; mesh.Texcoords2[5] = 1.0f;
-        mesh.Texcoords2[6] = 1.0f; mesh.Texcoords2[7] = 1.0f;
+        mesh.TexCoords2 = new Vector2[]{
+            new(0, 0),
+            new(1, 0),
+            new(0, 1),
+            new(1, 1)
+        };
 
         // Load a new texcoords2 attributes buffer
-        mesh.VboId[(int)ShaderLocationIndex.ShaderLocVertexTexcoord02] = RLGL.LoadVertexBuffer(mesh.Texcoords2, mesh.VertexCount * 2 * sizeof(float), false);
-        RLGL.EnableVertexArray(mesh.VaoId);
+        unsafe
+        {
+            mesh.VboId[(int)ShaderLocationIndex.ShaderLocVertexTexcoord02] = RLGL.LoadVertexBuffer(mesh.texCoords2, mesh.VertexCount * 2 * sizeof(float), false);
+        }
+        RLGL.EnableVertexArray(mesh.vaoId);
 
         // Index 5 is for texcoords2
         RLGL.SetVertexAttribute(5, 2, RLGL.RlFloat, false, 0, 0);

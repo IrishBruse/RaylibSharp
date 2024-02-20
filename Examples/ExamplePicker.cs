@@ -99,6 +99,11 @@ public static class ExamplePicker
                         {
                             Raylib.DrawRectangle(rect, new(200, 200, 200, 96));
                             Raylib.DrawRectangleLines(rect, lineThick: 10, examples[i].Color);
+
+                            int textWidth = Raylib.MeasureText(examples[i].Name, 20);
+
+                            Raylib.DrawText(examples[i].Name, px + (previewWidth / 2) - (textWidth / 2), py + previewHeight - 35, 20, Color.Black);
+
                             hovered = true;
                             exampleIndex = i;
                         }
@@ -135,7 +140,8 @@ public static class ExamplePicker
             }
 
             IsExample = true;
-            examples[exampleIndex].Entry.Invoke();
+            int exitCode = examples[exampleIndex].Entry.Invoke();
+            _ = exitCode;// TODO: Handle exit code
             IsExample = false;
         }
     }

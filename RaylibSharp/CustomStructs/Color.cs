@@ -27,11 +27,11 @@ public struct Color
     }
 
     /// <summary> Color constructor (RGBA) </summary>
-    public Color(byte v, byte a = 255)
+    public Color(byte gray, byte a = 255)
     {
-        R = v;
-        G = v;
-        B = v;
+        R = gray;
+        G = gray;
+        B = gray;
         A = a;
     }
 

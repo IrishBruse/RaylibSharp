@@ -4,7 +4,6 @@ namespace RaylibSharp;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
-using System.Drawing;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> Music, audio stream, anything longer than ~10 seconds should be streamed </summary>

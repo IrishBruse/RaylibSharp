@@ -120,6 +120,7 @@ public class FunctionProcessor
         {
             "bool" => $"[{Utility.BoolMarshal}] {type} {p.Name}",
             "string" => $"[{Utility.StringMarshal}] {type} {p.Name}",
+            "Matrix4x4" => $"[MarshalUsing(typeof(Matrix4x4Marshaller))] {type} {p.Name}",
             _ => $"{type} {p.Name}"
         };
     }

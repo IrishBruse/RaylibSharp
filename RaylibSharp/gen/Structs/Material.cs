@@ -4,7 +4,6 @@ namespace RaylibSharp;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
-using System.Drawing;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> Material, includes shader and maps </summary>
@@ -26,7 +25,7 @@ unsafe struct UnmanagedMaterial
     /// <summary> Material shader </summary>
     public UnmanagedShader Shader;
     /// <summary> Material maps array (MAX_MATERIAL_MAPS) </summary>
-    public UnmanagedMaterialMap* Maps;
+    public MaterialMap* Maps;
     /// <summary> Material generic parameters (if required) </summary>
     public fixed float Params[4];
 }

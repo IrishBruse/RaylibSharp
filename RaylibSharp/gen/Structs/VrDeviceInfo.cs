@@ -4,7 +4,6 @@ namespace RaylibSharp;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
-using System.Drawing;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> VrDeviceInfo, Head-Mounted-Display device parameters </summary>

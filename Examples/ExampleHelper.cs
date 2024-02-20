@@ -33,11 +33,20 @@ public class ExampleHelper
 
     public static float GuiSliderBar(Rectangle rect, string textLeft, string? textRight, float? value, float minAngle, float maxAngle)
     {
+        _ = rect;
+        _ = textLeft;
+        _ = textRight;
+        _ = value;
+        _ = minAngle;
+        _ = maxAngle;
         return 0;
     }
 
     public static bool GuiCheckBox(Rectangle rect, string text, bool check)
     {
+        _ = rect;
+        _ = text;
+        _ = check;
         return false;
     }
 

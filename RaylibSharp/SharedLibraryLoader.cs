@@ -13,7 +13,9 @@ static class SharedLibraryLoader
     [ModuleInitializer]
     internal static void Init()
     {
-        Console.WriteLine("Locating native Raylib dll");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine("INFO: Locating native Raylib dll");
+        Console.ResetColor();
         NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), Resolve);
     }
 
@@ -28,17 +30,23 @@ static class SharedLibraryLoader
 
         string dllPath = $"{AppContext.BaseDirectory}/runtimes/{runtimeId}/native/{libName}";
 
-        Console.WriteLine($"Loaded native Raylib dll from {dllPath}");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine($"INFO: Loaded native Raylib dll from {dllPath}");
+        Console.ResetColor();
 
         if (NativeLibrary.TryLoad(dllPath, out IntPtr handle))
         {
             libHandle = handle;
             return handle;
         }
-        else
+
+        if (NativeLibrary.TryLoad("./" + libName, out handle))
         {
-            return IntPtr.Zero;
+            libHandle = handle;
+            return handle;
         }
+
+        return IntPtr.Zero;
     }
 
     static string RuntimeID()

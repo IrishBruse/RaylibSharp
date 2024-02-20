@@ -342,7 +342,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Set shader uniform value (matrix 4x4) </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValueMatrix")]
-    public static partial void SetShaderValueMatrix(Shader shader, int locIndex, Matrix4x4 mat);
+    public static partial void SetShaderValueMatrix(Shader shader, int locIndex, [MarshalUsing(typeof(Matrix4x4Marshaller))] Matrix4x4 mat);
 
     /// <summary> Set shader uniform value for texture (sampler2d) </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValueTexture")]
@@ -407,6 +407,18 @@ public static unsafe partial class Raylib
     /// <summary> Set the current threshold (minimum) log level </summary>
     [LibraryImport(LIB, EntryPoint = "SetTraceLogLevel")]
     public static partial void SetTraceLogLevel(TraceLogLevel logLevel);
+
+    /// <summary> Internal memory allocator </summary>
+    [LibraryImport(LIB, EntryPoint = "MemAlloc")]
+    public static partial IntPtr MemAlloc(uint size);
+
+    /// <summary> Internal memory reallocator </summary>
+    [LibraryImport(LIB, EntryPoint = "MemRealloc")]
+    public static partial IntPtr MemRealloc(IntPtr ptr, uint size);
+
+    /// <summary> Internal memory free </summary>
+    [LibraryImport(LIB, EntryPoint = "MemFree")]
+    public static partial void MemFree(IntPtr ptr);
 
     /// <summary> Open URL with default system browser (if available) </summary>
     [LibraryImport(LIB, EntryPoint = "OpenURL")]
@@ -1581,7 +1593,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Upload mesh vertex data in GPU and provide VAO/VBO ids </summary>
     [LibraryImport(LIB, EntryPoint = "UploadMesh")]
-    public static partial void UploadMesh(Mesh mesh, [MarshalAs(UnmanagedType.I1)] bool dynamic);
+    public static partial void UploadMesh(ref Mesh mesh, [MarshalAs(UnmanagedType.I1)] bool dynamic);
 
     /// <summary> Update mesh vertex data in GPU for a specific buffer index </summary>
     [LibraryImport(LIB, EntryPoint = "UpdateMeshBuffer")]
@@ -1593,7 +1605,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Draw a 3d mesh with material and transform </summary>
     [LibraryImport(LIB, EntryPoint = "DrawMesh")]
-    public static partial void DrawMesh(Mesh mesh, Material material, Matrix4x4 transform);
+    public static partial void DrawMesh(Mesh mesh, Material material, [MarshalUsing(typeof(Matrix4x4Marshaller))] Matrix4x4 transform);
 
     /// <summary> Draw multiple mesh instances with material and different transforms </summary>
     [LibraryImport(LIB, EntryPoint = "DrawMeshInstanced")]
@@ -1728,7 +1740,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Get collision info between ray and mesh </summary>
     [LibraryImport(LIB, EntryPoint = "GetRayCollisionMesh")]
-    public static partial RayCollision GetRayCollisionMesh(Ray ray, Mesh mesh, Matrix4x4 transform);
+    public static partial RayCollision GetRayCollisionMesh(Ray ray, Mesh mesh, [MarshalUsing(typeof(Matrix4x4Marshaller))] Matrix4x4 transform);
 
     /// <summary> Get collision info between ray and triangle </summary>
     [LibraryImport(LIB, EntryPoint = "GetRayCollisionTriangle")]

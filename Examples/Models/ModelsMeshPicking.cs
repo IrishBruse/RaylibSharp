@@ -125,7 +125,7 @@ public partial class ModelsMeshPicking : ExampleHelper
 
                 // Check ray collision against model meshes
                 RayCollision meshHitInfo = new();
-                for (int m = 0; m < tower.MeshCount; m++)
+                for (int m = 0; m < tower.Meshes.Length; m++)
                 {
                     // NOTE: We consider the model.transform for the collision check but
                     // it can be checked against any transform Matrix, used when checking against same

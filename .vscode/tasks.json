@@ -16,6 +16,17 @@
             "problemMatcher": []
         },
         {
+            "label": "Watch Examples.Desktop",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "--project",
+                "${workspaceFolder}/Examples.Desktop\\Examples.Desktop.csproj"
+            ],
+            "problemMatcher": []
+        },
+        {
             "label": "Build RaylibSharpGenerator",
             "command": "dotnet",
             "type": "process",

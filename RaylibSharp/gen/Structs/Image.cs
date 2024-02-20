@@ -4,7 +4,6 @@ namespace RaylibSharp;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
-using System.Drawing;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> Image, pixel data stored in CPU memory (RAM) </summary>

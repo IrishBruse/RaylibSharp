@@ -5,6 +5,8 @@ using System.Globalization;
 using System.Text;
 using System.Text.Json;
 
+#pragma warning disable IDE0058
+
 public static class StructProcessor
 {
     static Dictionary<string, StructConfig> structConfig = [];
@@ -48,7 +50,6 @@ public static class StructProcessor
             sb.AppendLine();
             sb.AppendLine("using System.Runtime.InteropServices;");
             sb.AppendLine("using System.Numerics;");
-            sb.AppendLine("using System.Drawing;");
             sb.AppendLine("using System.Runtime.InteropServices.Marshalling;");
             sb.AppendLine();
 
@@ -64,7 +65,7 @@ public static class StructProcessor
 
             if (config.GenUnmanaged)
             {
-                UnmanagedStruct(sb, s);
+                UnmanagedStruct(sb, s, config);
             }
 
             sb.AppendLine("#pragma warning restore CA1711,IDE0005");
@@ -73,7 +74,7 @@ public static class StructProcessor
         }
     }
 
-    static void UnmanagedStruct(StringBuilder sb, Struct s)
+    static void UnmanagedStruct(StringBuilder sb, Struct s, StructConfig config)
     {
         sb.AppendLine($"/// <summary> {s.Description} </summary>");
         sb.AppendLine($"[StructLayout(LayoutKind.Sequential)]");
@@ -82,6 +83,12 @@ public static class StructProcessor
 
         foreach (Fields field in s.Fields)
         {
+            if (config.UnmanagedRemove.Contains(field.Name))
+            {
+                Console.WriteLine("Removing unmanaged field: " + field.Name);
+                continue;
+            }
+
             string titleCaseName = char.ToUpper(field.Name[0]) + field.Name[1..];
 
             if (titleCaseName.StartsWith(s.Name, true, CultureInfo.CurrentCulture))
@@ -134,6 +141,8 @@ public static class StructProcessor
                     type.Contains("Quaternion") ||
                     type.Contains("Texture") ||
                     type.Contains("Image") ||
+                    type.Contains("MaterialMap") ||
+                    type.Contains("Mesh") ||
                     type.Contains("void")
                 )
                 {
@@ -164,6 +173,12 @@ public static class StructProcessor
 
         foreach (Fields field in s.Fields)
         {
+            if (config.Remove.Contains(field.Name))
+            {
+                Console.WriteLine("Removing field: " + field.Name);
+                continue;
+            }
+
             string titleCaseName = char.ToUpper(field.Name[0]) + field.Name[1..];
 
             if (titleCaseName.StartsWith(s.Name, true, CultureInfo.CurrentCulture))
@@ -239,7 +254,7 @@ public static class StructProcessor
 
             "void*" => "IntPtr",
 
-            "Rectangle*" => "RectangleF[]",
+            "Rectangle*" => "Rectangle[]",
             "GlyphInfo*" => "GlyphInfo[]",
             "MaterialMap*" => "MaterialMap[]",
 
@@ -286,7 +301,6 @@ public static class StructProcessor
             "float[4]" => "fixed float",
             "Matrix[2]" => "fixed Matrix4x4",
             "char[32]" => "fixed char",
-            "Rectangle*" => "RectangleF*",
 
             "Color" => "uint",
 
@@ -318,3 +332,5 @@ public static class StructProcessor
         }
     }
 }
+
+#pragma warning restore

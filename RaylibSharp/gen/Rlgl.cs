@@ -359,7 +359,7 @@ public static unsafe partial class RLGL
 
     /// <summary> Load a vertex buffer attribute </summary>
     [LibraryImport(LIB, EntryPoint = "rlLoadVertexBuffer")]
-    public static partial uint LoadVertexBuffer(float[] buffer, int size, [MarshalAs(UnmanagedType.I1)] bool dynamic);
+    public static partial uint LoadVertexBuffer(float* buffer, int size, [MarshalAs(UnmanagedType.I1)] bool dynamic);
 
     /// <summary> Load a new attributes element buffer </summary>
     [LibraryImport(LIB, EntryPoint = "rlLoadVertexBufferElement")]
@@ -497,7 +497,7 @@ public static unsafe partial class RLGL
 
     /// <summary> Set shader value matrix </summary>
     [LibraryImport(LIB, EntryPoint = "rlSetUniformMatrix")]
-    public static partial void SetUniformMatrix(int locIndex, Matrix4x4 mat);
+    public static partial void SetUniformMatrix(int locIndex, [MarshalUsing(typeof(Matrix4x4Marshaller))] Matrix4x4 mat);
 
     /// <summary> Set shader value sampler </summary>
     [LibraryImport(LIB, EntryPoint = "rlSetUniformSampler")]
@@ -569,19 +569,19 @@ public static unsafe partial class RLGL
 
     /// <summary> Set a custom projection matrix (replaces internal projection matrix) </summary>
     [LibraryImport(LIB, EntryPoint = "rlSetMatrixProjection")]
-    public static partial void SetMatrixProjection(Matrix4x4 proj);
+    public static partial void SetMatrixProjection([MarshalUsing(typeof(Matrix4x4Marshaller))] Matrix4x4 proj);
 
     /// <summary> Set a custom modelview matrix (replaces internal modelview matrix) </summary>
     [LibraryImport(LIB, EntryPoint = "rlSetMatrixModelview")]
-    public static partial void SetMatrixModelview(Matrix4x4 view);
+    public static partial void SetMatrixModelview([MarshalUsing(typeof(Matrix4x4Marshaller))] Matrix4x4 view);
 
     /// <summary> Set eyes projection matrices for stereo rendering </summary>
     [LibraryImport(LIB, EntryPoint = "rlSetMatrixProjectionStereo")]
-    public static partial void SetMatrixProjectionStereo(Matrix4x4 right, Matrix4x4 left);
+    public static partial void SetMatrixProjectionStereo([MarshalUsing(typeof(Matrix4x4Marshaller))] Matrix4x4 right, [MarshalUsing(typeof(Matrix4x4Marshaller))] Matrix4x4 left);
 
     /// <summary> Set eyes view offsets matrices for stereo rendering </summary>
     [LibraryImport(LIB, EntryPoint = "rlSetMatrixViewOffsetStereo")]
-    public static partial void SetMatrixViewOffsetStereo(Matrix4x4 right, Matrix4x4 left);
+    public static partial void SetMatrixViewOffsetStereo([MarshalUsing(typeof(Matrix4x4Marshaller))] Matrix4x4 right, [MarshalUsing(typeof(Matrix4x4Marshaller))] Matrix4x4 left);
 
     /// <summary> Load and draw a cube </summary>
     [LibraryImport(LIB, EntryPoint = "rlLoadDrawCube")]

@@ -5,6 +5,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
+#pragma warning disable CA1711
 public partial class AudioRawStream : ExampleHelper
 {
     static readonly int MAX_SAMPLES = 512;

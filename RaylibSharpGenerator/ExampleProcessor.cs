@@ -57,13 +57,12 @@ public partial class ExampleProcessor
 
     static void GenerateExample(string[] input, string outputFile)
     {
-        Directory.CreateDirectory(Path.GetDirectoryName(outputFile)!);
+        _ = Directory.CreateDirectory(Path.GetDirectoryName(outputFile)!);
 
         string exampleName = Path.GetFileNameWithoutExtension(outputFile);
 
         string[] fileHeader = [
             "using System.Numerics;",
-            "using System.Drawing;",
             "using System;",
             "",
             "using RaylibSharp;",
@@ -153,11 +152,9 @@ public partial class ExampleProcessor
 
         line.Replace(StructAssignment(), "= new($1)");
 
-        line.ReplaceAll("Rectangle ", "RectangleF ");
-        line.ReplaceAll("Rectangle[", "RectangleF[");
         // line.ReplaceAll("&", "ref ");
 
-        line.Replace("ModelAnimation *", "ModelAnimation[]");
+        _ = line.Replace("ModelAnimation *", "ModelAnimation[]");
 
         // Change Alias
         line.ReplaceAll("MATERIAL_MAP_DIFFUSE", "MATERIAL_MAP_ALBEDO");
@@ -322,7 +319,7 @@ public partial class ExampleProcessor
     [GeneratedRegex(@"\{ (.*?f), (.*?f), (.*?f) \}")] private static partial Regex Vector3AssignReplace(); // { 0.0f, 0.0f, 0.0f }
     [GeneratedRegex(@"\(Vector2\).?\{((.*?),(.*?))\}")] private static partial Regex Vector2Replace(); // (Vector2){ , }
     [GeneratedRegex(@"\{ (.*?f), (.*?f) \}")] private static partial Regex Vector2AssignReplace(); // { , }
-    [GeneratedRegex(@"(int |float |const char \*|Color |Light |RectangleF )(\w+)(\[.*\]) = (\{ 0 \})?")] private static partial Regex ArrayReplace(); // int x[10];
+    [GeneratedRegex(@"(int |float |const char \*|Color |Light |Rectangle )(\w+)(\[.*\]) = (\{ 0 \})?")] private static partial Regex ArrayReplace(); // int x[10];
     [GeneratedRegex(@"void \w+\(")] private static partial Regex VoidFunctionMatch();
     [GeneratedRegex(@"(bool \w+ =) 0")] private static partial Regex FalseBooleanAssignment(); // bool varname = 0
     [GeneratedRegex(@"raylib \[(\w+)\] example - ")] private static partial Regex ExampleName(); // raylib [core] example => RaylibSharp - core -

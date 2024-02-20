@@ -8,7 +8,21 @@ static unsafe class ModelMarshaller
 {
     public static UnmanagedModel ConvertToUnmanaged(Model managed)
     {
-        return new();
+        fixed (Mesh* meshes = managed.Meshes)
+        {
+            return new()
+            {
+                Transform = managed.Transform,
+                MeshCount = managed.Meshes.Length,
+                MaterialCount = managed.Materials.Length,
+                BoneCount = managed.Bones.Length,
+                Meshes = meshes,
+                // Materials = managed.Materials,
+                // MeshMaterial = managed.MeshMaterial,
+                // Bones = managed.Bones,
+                // BindPose = managed.BindPose,
+            };
+        }
     }
 
     public static Model ConvertToManaged(UnmanagedModel unmanaged)

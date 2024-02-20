@@ -148,45 +148,37 @@ public partial class ModelsMeshGeneration : ExampleHelper
     // Generate a simple triangle mesh from code
     static Mesh GenMeshCustom()
     {
-        Mesh mesh = new();
-        mesh.TriangleCount = 1;
-        mesh.VertexCount = mesh.TriangleCount * 3;
-        mesh.Vertices = new float[mesh.VertexCount * 3 * sizeof(float)]; // 3 vertices, 3 coordinates each (x, y, z)
-        mesh.Texcoords = new float[mesh.VertexCount * 2 * sizeof(float)]; // 3 vertices, 2 coordinates each (x, y)
-        mesh.Normals = new float[mesh.VertexCount * 3 * sizeof(float)]; // 3 vertices, 3 coordinates each (x, y, z)
+        int triangleCount = 1;
+        Vector3[] Vertices = new Vector3[triangleCount * 3]; // 3 vertices, 3 coordinates each (x, y, z)
+        Vector2[] TexCoords = new Vector2[Vertices.Length]; // 3 vertices, 2 coordinates each (x, y)
+        Vector3[] Normals = new Vector3[Vertices.Length]; // 3 vertices, 3 coordinates each (x, y, z)
 
         // Vertex at (0, 0, 0)
-        mesh.Vertices[0] = 0;
-        mesh.Vertices[1] = 0;
-        mesh.Vertices[2] = 0;
-        mesh.Normals[0] = 0;
-        mesh.Normals[1] = 1;
-        mesh.Normals[2] = 0;
-        mesh.Texcoords[0] = 0;
-        mesh.Texcoords[1] = 0;
+        Vertices[0] = new(0);
+        Normals[0] = Vector3.UnitY;
+        TexCoords[0] = Vector2.Zero;
 
         // Vertex at (1, 0, 2)
-        mesh.Vertices[3] = 1;
-        mesh.Vertices[4] = 0;
-        mesh.Vertices[5] = 2;
-        mesh.Normals[3] = 0;
-        mesh.Normals[4] = 1;
-        mesh.Normals[5] = 0;
-        mesh.Texcoords[2] = 0.5f;
-        mesh.Texcoords[3] = 1.0f;
+        Vertices[1] = new(1, 0, 2);
+        Normals[1] = Vector3.UnitY;
+        TexCoords[1] = new(0.5f, 1f);
 
         // Vertex at (2, 0, 0)
-        mesh.Vertices[6] = 2;
-        mesh.Vertices[7] = 0;
-        mesh.Vertices[8] = 0;
-        mesh.Normals[6] = 0;
-        mesh.Normals[7] = 1;
-        mesh.Normals[8] = 0;
-        mesh.Texcoords[4] = 1;
-        mesh.Texcoords[5] = 0;
+        Vertices[2] = new(2, 0, 0);
+        Normals[2] = Vector3.UnitY;
+        TexCoords[2] = new(1f, 0f);
+
+
+        Mesh mesh = new()
+        {
+            Vertices = Vertices,
+            Normals = Normals,
+            TexCoords = TexCoords,
+        };
+        mesh.TriangleCount = 1;
 
         // Upload mesh data from CPU (RAM) to GPU (VRAM) memory
-        UploadMesh(mesh, false);
+        UploadMesh(ref mesh, false);
 
         return mesh;
     }

@@ -65,7 +65,7 @@ public partial class ModelsAnimation : ExampleHelper
 
                     DrawModel(model, position, new(1.0f, 0.0f, 0.0f), -90.0f, new(1.0f, 1.0f, 1.0f), White);
 
-                    for (int i = 0; i < model.BoneCount; i++)
+                    for (int i = 0; i < model.Bones.Length; i++)
                     {
                         DrawCube(anims[0].FramePoses[animFrameCounter][i].Translation, 0.2f, 0.2f, 0.2f, Red);
                     }

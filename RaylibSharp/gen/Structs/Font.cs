@@ -4,7 +4,6 @@ namespace RaylibSharp;
 
 using System.Runtime.InteropServices;
 using System.Numerics;
-using System.Drawing;
 using System.Runtime.InteropServices.Marshalling;
 
 /// <summary> Font, font texture and GlyphInfo array data </summary>
@@ -20,7 +19,7 @@ public unsafe partial struct Font
     /// <summary> Texture atlas containing the glyphs </summary>
     public Texture Texture;
     /// <summary> Rectangles in texture for the glyphs </summary>
-    public RectangleF[] Recs;
+    public Rectangle[] Recs;
     /// <summary> Glyphs info data </summary>
     public GlyphInfo[] Glyphs;
 }
@@ -38,7 +37,7 @@ unsafe struct UnmanagedFont
     /// <summary> Texture atlas containing the glyphs </summary>
     public Texture Texture;
     /// <summary> Rectangles in texture for the glyphs </summary>
-    public RectangleF* Recs;
+    public Rectangle* Recs;
     /// <summary> Glyphs info data </summary>
     public GlyphInfo* Glyphs;
 }

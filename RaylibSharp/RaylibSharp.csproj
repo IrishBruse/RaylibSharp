@@ -7,7 +7,7 @@
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
-        <NoWarn>IDE0130,CA1069,CS8795,CA1401</NoWarn>
+        <NoWarn>IDE0130,CA1069,CS8795,CA1401,CA1720</NoWarn>
 
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
 

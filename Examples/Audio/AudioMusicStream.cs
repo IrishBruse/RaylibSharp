@@ -2,6 +2,7 @@ using RaylibSharp;
 
 using static RaylibSharp.Raylib;
 
+#pragma warning disable CA1711
 public partial class AudioMusicStream : ExampleHelper
 {
     // Program main entry point

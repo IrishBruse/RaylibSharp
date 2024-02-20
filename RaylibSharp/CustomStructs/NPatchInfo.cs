@@ -1,13 +1,11 @@
 namespace RaylibSharp;
 
-using System.Drawing;
-
 #pragma warning disable IDE0290
 
 public partial struct NPatchInfo
 {
     /// <summary> NPatchInfo Constructor </summary>
-    public NPatchInfo(RectangleF source, int left, int top, int right, int bottom, NPatchLayout layout)
+    public NPatchInfo(Rectangle source, int left, int top, int right, int bottom, NPatchLayout layout)
     {
         Source = source;
         Left = left;
