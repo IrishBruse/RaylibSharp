@@ -23,7 +23,8 @@ public class StructConfig
         {
             "Shader",
             new StructConfig() {
-                UnmanagedAttribute = true
+                UnmanagedAttribute = true,
+                GenUnmanaged = false,
             }
         },
         {
@@ -66,7 +67,10 @@ public class StructConfig
         {
             "Material",
             new StructConfig() {
-                UnmanagedAttribute = true
+                UnmanagedAttribute = true,
+                UnmanagedRemove = [
+                    "shader"
+                ]
             }
         },
         {

@@ -6,8 +6,6 @@ using System.Runtime.InteropServices;
 [StructLayout(LayoutKind.Explicit)]
 public struct Color
 {
-    /// <summary> Raw color data </summary>
-    [FieldOffset(0)] public uint RGBA;
     /// <summary> Red </summary>
     [FieldOffset(0)] public byte R;
     /// <summary> Green </summary>
@@ -44,10 +42,19 @@ public struct Color
         A = Convert.ToByte(a);
     }
 
+    /// <summary> Color constructor (RGBA) </summary>
+    public Color(uint rgba)
+    {
+        A = (byte)(rgba & 0xFF);
+        B = (byte)((rgba >> 8) & 0xFF);
+        G = (byte)((rgba >> 16) & 0xFF);
+        R = (byte)((rgba >> 24) & 0xFF);
+    }
+
     /// <summary> Returns hexadecimal value for a Color </summary>
     public override readonly string ToString()
     {
-        return $"0x{RGBA:X8}";
+        return $"0x{R:X2}{G:X2}{B:X2}{A:X2}";
     }
 
     /// <summary> LightGray from Raylibs color pallet  </summary>

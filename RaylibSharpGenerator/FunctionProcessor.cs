@@ -4,12 +4,11 @@ using System.Text;
 
 public class FunctionProcessor
 {
-    static FunctionConfig config;
+    static FunctionConfig config = FunctionConfig.Data;
     const bool DebugOutput = false;
 
     public static void Emit(RaylibApi api)
     {
-        config = FunctionConfig.Deserialize("./FunctionConfig.jsonc")!;
         StringBuilder sb = new();
 
         sb.AppendLine($"namespace {api.Namespace};");

@@ -62,22 +62,12 @@ public unsafe partial struct Mesh : IDisposable
     public uint* vboId;
 
     /// <inheritdoc cref="vboId" />
-    public readonly Span<uint> VboId => new(vboId, 7);// https://github.com/raysan5/raylib/blob/54e0af40c1c534b3f3958264c67270434183639e/src/rmodels.c#L133
+    public readonly Span<uint> VboId => new(vboId, Raylib.MAX_MESH_VERTEX_BUFFERS);
 
     /// <summary> Vertex position (XYZ - 3 components per vertex) (shader-location = 0) </summary>
     public Vector3[] Vertices
     {
-        set
-        {
-            Copy(value, ref vertices);
-            VertexCount = value.Length;
-        }
-    }
-
-    /// <inheritdoc cref="normals" />
-    public Vector3[] Normals
-    {
-        set => Copy(value, ref normals);
+        set => Copy(value, ref vertices);
     }
 
     /// <inheritdoc cref="texCoords" />
@@ -92,16 +82,28 @@ public unsafe partial struct Mesh : IDisposable
         set => Copy(value, ref texCoords2);
     }
 
-    /// <inheritdoc cref="indices" />
-    public ushort[] Indices
+    /// <inheritdoc cref="normals" />
+    public Vector3[] Normals
     {
-        set => Copy(value, ref indices);
+        set => Copy(value, ref normals);
+    }
+
+    /// <inheritdoc cref="tangents" />
+    public Vector4[] Tangents
+    {
+        set => Copy(value, ref normals);
     }
 
     /// <inheritdoc cref="colors" />
     public Color[] Colors
     {
         set => Copy(value, ref colors);
+    }
+
+    /// <inheritdoc cref="indices" />
+    public ushort[] Indices
+    {
+        set => Copy(value, ref indices);
     }
 
     readonly void Copy<Src, Dst>(Src[] src, ref Dst* dst) where Src : unmanaged where Dst : unmanaged

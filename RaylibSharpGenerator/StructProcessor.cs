@@ -16,6 +16,8 @@ public static class StructProcessor
         "Color",
         "Matrix",
         "Rectangle",
+        "Shader",
+        "Material",
     ];
 
     static HashSet<string> generated = [];
@@ -232,7 +234,6 @@ public static class StructProcessor
         sb.AppendLine("}");
         sb.AppendLine();
     }
-
 
     static string ConvertManagedTypeStruct(string t)
     {

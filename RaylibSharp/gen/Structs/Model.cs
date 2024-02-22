@@ -37,7 +37,7 @@ unsafe struct UnmanagedModel
     /// <summary> Meshes array </summary>
     public Mesh* Meshes;
     /// <summary> Materials array </summary>
-    public UnmanagedMaterial* Materials;
+    public Material* Materials;
     /// <summary> Mesh material number </summary>
     public int* MeshMaterial;
     /// <summary> Number of bones </summary>
