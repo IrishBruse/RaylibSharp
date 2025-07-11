@@ -31,10 +31,17 @@ Add an EmbeddedResource to use a custom Icon, if none is specified the default R
 
 ## Examples
 
-Examples generated from raylib git version `70286c7cdc6d972c63704ad957c18065f6a44cfe`
+Examples generated from raylib 5.5
+
+## Development instructions
+
+clone raylib into root
+
+`git clone --depth=1 --branch 5.5 https://github.com/raysan5/raylib.git`
 
 ### References
 
 -   [DotnetRaylibWasm](https://github.com/disketteman/DotnetRaylibWasm/)
 -   [Raylib-CsLo](https://github.com/NotNotTech/Raylib-CsLo)
 -   [Raylib-cs](https://github.com/ChrisDill/Raylib-cs)
+

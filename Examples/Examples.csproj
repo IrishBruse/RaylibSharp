@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <IsPackable>false</IsPackable>
-        <NoWarn>IDE0055,CA1050,CA1051,IDE1006</NoWarn>
+        <NoWarn>IDE0055,CA1050,CA1051,IDE1006,IDE0004,IDE0011,IDE0047</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>

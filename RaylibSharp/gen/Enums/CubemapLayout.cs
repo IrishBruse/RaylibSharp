@@ -15,8 +15,6 @@ public enum CubemapLayout
     CrossThreeByFour = 3,
     /// <summary> Layout is defined by a 4x3 cross with cubemap faces </summary>
     CrossFourByThree = 4,
-    /// <summary> Layout is defined by a panorama image (equirrectangular map) </summary>
-    Panorama = 5,
 }
 
 #pragma warning restore CA1711

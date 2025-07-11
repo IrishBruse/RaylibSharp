@@ -69,31 +69,12 @@ public struct FunctionConfig
             {"ImageFlipHorizontal", new() { { "image", "ref Image image" } }},
             {"ImageRotate", new() { { "image", "ref Image image" } }},
             {"LoadImageRaw", new() { { "format", "PixelFormat format" } }},
-            {"ImageFormat", new() {
-                {"image", "ref Image image"},
-                {"newFormat", "PixelFormat newFormat"}
-            }},
-            {"SetMaterialTexture", new() {
-                {"mapType", "MaterialMapIndex mapType"},
-                {"material", "Material material"}
-            }},
-            {"rlFramebufferAttach", new() {
-                {"attachType", "FramebufferAttachType attachType"},
-                {"texType", "FramebufferAttachTextureType texType"}
-            }},
-            {"LoadModelAnimations", new() {
-                {"_", "ModelAnimation[]"},
-                {"@", "[return: MarshalUsing(CountElementName = \"animCount\")]"},
-                {"animCount", "ref uint animCount"}
-            }},
-            {"LoadShader", new() {
-                {"fsFileName", "[MarshalAs(UnmanagedType.LPStr)] string? fragmentShaderPath"},
-                {"vsFileName", "[MarshalAs(UnmanagedType.LPStr)] string? vertexShaderPath"}
-            }},
-            {"LoadShaderFromMemory", new() {
-                {"vsCode", "[MarshalAs(UnmanagedType.LPStr)] string? fragmentShaderCode"},
-                {"fsCode", "[MarshalAs(UnmanagedType.LPStr)] string? vertexShaderCode"}
-            }}
+            {"ImageFormat", new() { {"image", "ref Image image"}, {"newFormat", "PixelFormat newFormat"} }},
+            {"SetMaterialTexture", new() { {"mapType", "MaterialMapIndex mapType"}, {"material", "Material material"} }},
+            {"rlFramebufferAttach", new() { {"attachType", "FramebufferAttachType attachType"}, {"texType", "FramebufferAttachTextureType texType"} }},
+            {"LoadModelAnimations", new() { {"_", "ModelAnimation[]"}, {"@", "[return: MarshalUsing(CountElementName = \"animCount\")]"}, {"animCount", "ref uint animCount"} }},
+            {"LoadShader", new() { {"fsFileName", "[MarshalAs(UnmanagedType.LPStr)] string? fragmentShaderPath"}, {"vsFileName", "[MarshalAs(UnmanagedType.LPStr)] string? vertexShaderPath"} }},
+            {"LoadShaderFromMemory", new() { {"vsCode", "[MarshalAs(UnmanagedType.LPStr)] string? fragmentShaderCode"}, {"fsCode", "[MarshalAs(UnmanagedType.LPStr)] string? vertexShaderCode"} }}
         };
 
         Data.FunctionTypeConversion = data;

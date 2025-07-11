@@ -57,6 +57,12 @@ public enum ShaderLocationIndex
     ShaderLocMapPrefilter = 24,
     /// <summary> Shader location: sampler2d texture: brdf </summary>
     ShaderLocMapBrdf = 25,
+    /// <summary> Shader location: vertex attribute: boneIds </summary>
+    ShaderLocVertexBoneids = 26,
+    /// <summary> Shader location: vertex attribute: boneWeights </summary>
+    ShaderLocVertexBoneweights = 27,
+    /// <summary> Shader location: array of matrices uniform: boneMatrices </summary>
+    ShaderLocBoneMatrices = 28,
 }
 
 #pragma warning restore CA1711

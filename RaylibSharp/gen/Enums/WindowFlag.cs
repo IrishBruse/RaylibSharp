@@ -31,6 +31,8 @@ public enum WindowFlag
     Highdpi = 8192,
     /// <summary> Set to support mouse passthrough, only supported when FLAG_WINDOW_UNDECORATED </summary>
     MousePassthrough = 16384,
+    /// <summary> Set to run program in borderless windowed mode </summary>
+    BorderlessWindowedMode = 32768,
     /// <summary> Set to try enabling MSAA 4X </summary>
     Msaa4xHint = 32,
     /// <summary> Set to try enabling interlaced video format (for V3D) </summary>

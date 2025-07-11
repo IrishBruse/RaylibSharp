@@ -17,8 +17,6 @@ public unsafe partial struct VrDeviceInfo
     public float HScreenSize;
     /// <summary> Vertical size in meters </summary>
     public float VScreenSize;
-    /// <summary> Screen center in meters </summary>
-    public float VScreenCenter;
     /// <summary> Distance between eye and display in meters </summary>
     public float EyeToScreenDistance;
     /// <summary> Lens separation distance in meters </summary>
@@ -43,8 +41,6 @@ unsafe struct UnmanagedVrDeviceInfo
     public float HScreenSize;
     /// <summary> Vertical size in meters </summary>
     public float VScreenSize;
-    /// <summary> Screen center in meters </summary>
-    public float VScreenCenter;
     /// <summary> Distance between eye and display in meters </summary>
     public float EyeToScreenDistance;
     /// <summary> Lens separation distance in meters </summary>

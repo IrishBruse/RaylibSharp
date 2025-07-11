@@ -7,49 +7,54 @@ public partial class ExampleProcessor
 {
     public static void Emit()
     {
-        IEnumerable<string> files = Directory.GetFiles("./examples/", "*.c", SearchOption.AllDirectories).ToList();
+        IEnumerable<string> files = Directory.GetFiles("../raylib/examples/", "*.c", SearchOption.AllDirectories).ToList();
 
         foreach (string cFile in files)
         {
-            string name = Path.GetFileNameWithoutExtension(cFile);
-            string pascalName = Utility.ToPascalCase(name);
+            string path = cFile.Replace("../raylib/examples/", "");
+            string pascalName = Utility.ToPascalCase(Path.GetFileNameWithoutExtension(path));
+
+            // GenerateExample(File.ReadAllLines(cFile),);
             if (pascalName == "ShapesTopDownLights" || pascalName == "ExamplesTemplate" || pascalName.StartsWith("temp/"))
             {
                 continue;
             }
 
-            if (pascalName.StartsWith("Core"))
+            string[] lines = File.ReadAllLines(cFile);
+
+            if (pascalName.StartsWith("Core") && pascalName == "Core2dCamera")
             {
+                GenerateExample(lines, $"../Examples/Core/{pascalName}.cs");
                 continue;
             }
-            else if (pascalName.StartsWith("Audio"))
-            {
-                continue;
-            }
-            else if (pascalName.StartsWith("Shapes"))
-            {
-                continue;
-            }
-            else if (pascalName.StartsWith("Models"))
-            {
-                continue;
-            }
-            else if (pascalName.StartsWith("Shader"))
-            {
-                continue;
-            }
-            else if (pascalName.StartsWith("Texture"))
-            {
-                continue;
-            }
-            else if (pascalName.StartsWith("Text"))
-            {
-                continue;
-            }
-            else
-            {
-                continue;
-            }
+            // else if (pascalName.StartsWith("Audio"))
+            // {
+            //     continue;
+            // }
+            // else if (pascalName.StartsWith("Shapes"))
+            // {
+            //     continue;
+            // }
+            // else if (pascalName.StartsWith("Models"))
+            // {
+            //     continue;
+            // }
+            // else if (pascalName.StartsWith("Shader"))
+            // {
+            //     continue;
+            // }
+            // else if (pascalName.StartsWith("Texture"))
+            // {
+            //     continue;
+            // }
+            // else if (pascalName.StartsWith("Text"))
+            // {
+            //     continue;
+            // }
+            // else
+            // {
+            //     continue;
+            // }
         }
 
         // Process.Start("dotnet", "format ../Example/Example.csproj").WaitForExit();

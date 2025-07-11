@@ -17,17 +17,17 @@ public enum GamepadButton
     LeftFaceLeft = 4,
     /// <summary> Gamepad right button up (i.e. PS3: Triangle, Xbox: Y) </summary>
     RightFaceUp = 5,
-    /// <summary> Gamepad right button right (i.e. PS3: Square, Xbox: X) </summary>
+    /// <summary> Gamepad right button right (i.e. PS3: Circle, Xbox: B) </summary>
     RightFaceRight = 6,
     /// <summary> Gamepad right button down (i.e. PS3: Cross, Xbox: A) </summary>
     RightFaceDown = 7,
-    /// <summary> Gamepad right button left (i.e. PS3: Circle, Xbox: B) </summary>
+    /// <summary> Gamepad right button left (i.e. PS3: Square, Xbox: X) </summary>
     RightFaceLeft = 8,
     /// <summary> Gamepad top/back trigger left (first), it could be a trailing button </summary>
     LeftTrigger1 = 9,
     /// <summary> Gamepad top/back trigger left (second), it could be a trailing button </summary>
     LeftTrigger2 = 10,
-    /// <summary> Gamepad top/back trigger right (one), it could be a trailing button </summary>
+    /// <summary> Gamepad top/back trigger right (first), it could be a trailing button </summary>
     RightTrigger1 = 11,
     /// <summary> Gamepad top/back trigger right (second), it could be a trailing button </summary>
     RightTrigger2 = 12,

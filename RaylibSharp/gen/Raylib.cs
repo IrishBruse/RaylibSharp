@@ -6,14 +6,14 @@ using System.Numerics;
 
 public static unsafe partial class Raylib
 {
-    /// <summary> Check if KEY_ESCAPE pressed or Close icon pressed </summary>
-    [LibraryImport(LIB, EntryPoint = "WindowShouldClose")]
-    [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool WindowShouldClose();
-
     /// <summary> Close window and unload OpenGL context </summary>
     [LibraryImport(LIB, EntryPoint = "CloseWindow")]
     public static partial void CloseWindow();
+
+    /// <summary> Check if application should close (KEY_ESCAPE pressed or windows close icon clicked) </summary>
+    [LibraryImport(LIB, EntryPoint = "WindowShouldClose")]
+    [return: MarshalAs(UnmanagedType.I1)]
+    public static partial bool WindowShouldClose();
 
     /// <summary> Check if window has been initialized successfully </summary>
     [LibraryImport(LIB, EntryPoint = "IsWindowReady")]
@@ -25,22 +25,22 @@ public static unsafe partial class Raylib
     [return: MarshalAs(UnmanagedType.I1)]
     public static partial bool IsWindowFullscreen();
 
-    /// <summary> Check if window is currently hidden (only PLATFORM_DESKTOP) </summary>
+    /// <summary> Check if window is currently hidden </summary>
     [LibraryImport(LIB, EntryPoint = "IsWindowHidden")]
     [return: MarshalAs(UnmanagedType.I1)]
     public static partial bool IsWindowHidden();
 
-    /// <summary> Check if window is currently minimized (only PLATFORM_DESKTOP) </summary>
+    /// <summary> Check if window is currently minimized </summary>
     [LibraryImport(LIB, EntryPoint = "IsWindowMinimized")]
     [return: MarshalAs(UnmanagedType.I1)]
     public static partial bool IsWindowMinimized();
 
-    /// <summary> Check if window is currently maximized (only PLATFORM_DESKTOP) </summary>
+    /// <summary> Check if window is currently maximized </summary>
     [LibraryImport(LIB, EntryPoint = "IsWindowMaximized")]
     [return: MarshalAs(UnmanagedType.I1)]
     public static partial bool IsWindowMaximized();
 
-    /// <summary> Check if window is currently focused (only PLATFORM_DESKTOP) </summary>
+    /// <summary> Check if window is currently focused </summary>
     [LibraryImport(LIB, EntryPoint = "IsWindowFocused")]
     [return: MarshalAs(UnmanagedType.I1)]
     public static partial bool IsWindowFocused();
@@ -55,7 +55,7 @@ public static unsafe partial class Raylib
     [return: MarshalAs(UnmanagedType.I1)]
     public static partial bool IsWindowState(WindowFlag flag);
 
-    /// <summary> Set window configuration state using flags (only PLATFORM_DESKTOP) </summary>
+    /// <summary> Set window configuration state using flags </summary>
     [LibraryImport(LIB, EntryPoint = "SetWindowState")]
     public static partial void SetWindowState(WindowFlag flags);
 
@@ -63,39 +63,43 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "ClearWindowState")]
     public static partial void ClearWindowState(WindowFlag flags);
 
-    /// <summary> Toggle window state: fullscreen/windowed (only PLATFORM_DESKTOP) </summary>
+    /// <summary> Toggle window state: fullscreen/windowed, resizes monitor to match window resolution </summary>
     [LibraryImport(LIB, EntryPoint = "ToggleFullscreen")]
     public static partial void ToggleFullscreen();
 
-    /// <summary> Set window state: maximized, if resizable (only PLATFORM_DESKTOP) </summary>
+    /// <summary> Toggle window state: borderless windowed, resizes window to match monitor resolution </summary>
+    [LibraryImport(LIB, EntryPoint = "ToggleBorderlessWindowed")]
+    public static partial void ToggleBorderlessWindowed();
+
+    /// <summary> Set window state: maximized, if resizable </summary>
     [LibraryImport(LIB, EntryPoint = "MaximizeWindow")]
     public static partial void MaximizeWindow();
 
-    /// <summary> Set window state: minimized, if resizable (only PLATFORM_DESKTOP) </summary>
+    /// <summary> Set window state: minimized, if resizable </summary>
     [LibraryImport(LIB, EntryPoint = "MinimizeWindow")]
     public static partial void MinimizeWindow();
 
-    /// <summary> Set window state: not minimized/maximized (only PLATFORM_DESKTOP) </summary>
+    /// <summary> Set window state: not minimized/maximized </summary>
     [LibraryImport(LIB, EntryPoint = "RestoreWindow")]
     public static partial void RestoreWindow();
 
-    /// <summary> Set icon for window (single image, RGBA 32bit, only PLATFORM_DESKTOP) </summary>
+    /// <summary> Set icon for window (single image, RGBA 32bit) </summary>
     [LibraryImport(LIB, EntryPoint = "SetWindowIcon")]
     public static partial void SetWindowIcon(Image image);
 
-    /// <summary> Set icon for window (multiple images, RGBA 32bit, only PLATFORM_DESKTOP) </summary>
+    /// <summary> Set icon for window (multiple images, RGBA 32bit) </summary>
     [LibraryImport(LIB, EntryPoint = "SetWindowIcons")]
     public static partial void SetWindowIcons(IntPtr images, int count);
 
-    /// <summary> Set title for window (only PLATFORM_DESKTOP) </summary>
+    /// <summary> Set title for window </summary>
     [LibraryImport(LIB, EntryPoint = "SetWindowTitle")]
     public static partial void SetWindowTitle([MarshalAs(UnmanagedType.LPStr)] string title);
 
-    /// <summary> Set window position on screen (only PLATFORM_DESKTOP) </summary>
+    /// <summary> Set window position on screen </summary>
     [LibraryImport(LIB, EntryPoint = "SetWindowPosition")]
     public static partial void SetWindowPosition(int x, int y);
 
-    /// <summary> Set monitor for the current window (fullscreen mode) </summary>
+    /// <summary> Set monitor for the current window </summary>
     [LibraryImport(LIB, EntryPoint = "SetWindowMonitor")]
     public static partial void SetWindowMonitor(int monitor);
 
@@ -103,15 +107,19 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "SetWindowMinSize")]
     public static partial void SetWindowMinSize(int width, int height);
 
+    /// <summary> Set window maximum dimensions (for FLAG_WINDOW_RESIZABLE) </summary>
+    [LibraryImport(LIB, EntryPoint = "SetWindowMaxSize")]
+    public static partial void SetWindowMaxSize(int width, int height);
+
     /// <summary> Set window dimensions </summary>
     [LibraryImport(LIB, EntryPoint = "SetWindowSize")]
     public static partial void SetWindowSize(int width, int height);
 
-    /// <summary> Set window opacity [0.0f..1.0f] (only PLATFORM_DESKTOP) </summary>
+    /// <summary> Set window opacity [0.0f..1.0f] </summary>
     [LibraryImport(LIB, EntryPoint = "SetWindowOpacity")]
     public static partial void SetWindowOpacity(float opacity);
 
-    /// <summary> Set window focused (only PLATFORM_DESKTOP) </summary>
+    /// <summary> Set window focused </summary>
     [LibraryImport(LIB, EntryPoint = "SetWindowFocused")]
     public static partial void SetWindowFocused();
 
@@ -139,7 +147,7 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "GetMonitorCount")]
     public static partial int GetMonitorCount();
 
-    /// <summary> Get current connected monitor </summary>
+    /// <summary> Get current monitor where window is placed </summary>
     [LibraryImport(LIB, EntryPoint = "GetCurrentMonitor")]
     public static partial int GetCurrentMonitor();
 
@@ -175,7 +183,7 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "GetWindowScaleDPI")]
     public static partial Vector2 GetWindowScaleDPI();
 
-    /// <summary> Get the human-readable, UTF-8 encoded name of the primary monitor </summary>
+    /// <summary> Get the human-readable, UTF-8 encoded name of the specified monitor </summary>
     [LibraryImport(LIB, EntryPoint = "GetMonitorName")]
     [return: MarshalAs(UnmanagedType.LPStr)]
     public static partial string GetMonitorName(int monitor);
@@ -189,6 +197,10 @@ public static unsafe partial class Raylib
     [return: MarshalAs(UnmanagedType.LPStr)]
     public static partial string GetClipboardText();
 
+    /// <summary> Get clipboard image content </summary>
+    [LibraryImport(LIB, EntryPoint = "GetClipboardImage")]
+    public static partial Image GetClipboardImage();
+
     /// <summary> Enable waiting for events on EndDrawing(), no automatic event polling </summary>
     [LibraryImport(LIB, EntryPoint = "EnableEventWaiting")]
     public static partial void EnableEventWaiting();
@@ -196,18 +208,6 @@ public static unsafe partial class Raylib
     /// <summary> Disable waiting for events on EndDrawing(), automatic events polling </summary>
     [LibraryImport(LIB, EntryPoint = "DisableEventWaiting")]
     public static partial void DisableEventWaiting();
-
-    /// <summary> Swap back buffer with front buffer (screen drawing) </summary>
-    [LibraryImport(LIB, EntryPoint = "SwapScreenBuffer")]
-    public static partial void SwapScreenBuffer();
-
-    /// <summary> Register all input events </summary>
-    [LibraryImport(LIB, EntryPoint = "PollInputEvents")]
-    public static partial void PollInputEvents();
-
-    /// <summary> Wait for some time (halt program execution) </summary>
-    [LibraryImport(LIB, EntryPoint = "WaitTime")]
-    public static partial void WaitTime(double seconds);
 
     /// <summary> Shows cursor </summary>
     [LibraryImport(LIB, EntryPoint = "ShowCursor")]
@@ -319,10 +319,10 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "LoadShaderFromMemory")]
     public static partial Shader LoadShaderFromMemory([MarshalAs(UnmanagedType.LPStr)] string? fragmentShaderCode, [MarshalAs(UnmanagedType.LPStr)] string? vertexShaderCode);
 
-    /// <summary> Check if a shader is ready </summary>
-    [LibraryImport(LIB, EntryPoint = "IsShaderReady")]
+    /// <summary> Check if a shader is valid (loaded on GPU) </summary>
+    [LibraryImport(LIB, EntryPoint = "IsShaderValid")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool IsShaderReady(Shader shader);
+    public static partial bool IsShaderValid(Shader shader);
 
     /// <summary> Get shader uniform location </summary>
     [LibraryImport(LIB, EntryPoint = "GetShaderLocation")]
@@ -352,25 +352,17 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "UnloadShader")]
     public static partial void UnloadShader(Shader shader);
 
-    /// <summary> Get a ray trace from mouse position </summary>
-    [LibraryImport(LIB, EntryPoint = "GetMouseRay")]
-    public static partial Ray GetMouseRay(Vector2 mousePosition, Camera3D camera);
+    /// <summary> Get a ray trace from screen position (i.e mouse) </summary>
+    [LibraryImport(LIB, EntryPoint = "GetScreenToWorldRay")]
+    public static partial Ray GetScreenToWorldRay(Vector2 position, Camera3D camera);
 
-    /// <summary> Get camera transform matrix (view matrix) </summary>
-    [LibraryImport(LIB, EntryPoint = "GetCameraMatrix")]
-    public static partial Matrix4x4 GetCameraMatrix(Camera3D camera);
-
-    /// <summary> Get camera 2d transform matrix </summary>
-    [LibraryImport(LIB, EntryPoint = "GetCameraMatrix2D")]
-    public static partial Matrix4x4 GetCameraMatrix2D(Camera2D camera);
+    /// <summary> Get a ray trace from screen position (i.e mouse) in a viewport </summary>
+    [LibraryImport(LIB, EntryPoint = "GetScreenToWorldRayEx")]
+    public static partial Ray GetScreenToWorldRay(Vector2 position, Camera3D camera, int width, int height);
 
     /// <summary> Get the screen space position for a 3d world space position </summary>
     [LibraryImport(LIB, EntryPoint = "GetWorldToScreen")]
     public static partial Vector2 GetWorldToScreen(Vector3 position, Camera3D camera);
-
-    /// <summary> Get the world space position for a 2d camera screen space position </summary>
-    [LibraryImport(LIB, EntryPoint = "GetScreenToWorld2D")]
-    public static partial Vector2 GetScreenToWorld2D(Vector2 position, Camera2D camera);
 
     /// <summary> Get size position for a 3d world space position </summary>
     [LibraryImport(LIB, EntryPoint = "GetWorldToScreenEx")]
@@ -380,13 +372,21 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "GetWorldToScreen2D")]
     public static partial Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera);
 
+    /// <summary> Get the world space position for a 2d camera screen space position </summary>
+    [LibraryImport(LIB, EntryPoint = "GetScreenToWorld2D")]
+    public static partial Vector2 GetScreenToWorld2D(Vector2 position, Camera2D camera);
+
+    /// <summary> Get camera transform matrix (view matrix) </summary>
+    [LibraryImport(LIB, EntryPoint = "GetCameraMatrix")]
+    public static partial Matrix4x4 GetCameraMatrix(Camera3D camera);
+
+    /// <summary> Get camera 2d transform matrix </summary>
+    [LibraryImport(LIB, EntryPoint = "GetCameraMatrix2D")]
+    public static partial Matrix4x4 GetCameraMatrix2D(Camera2D camera);
+
     /// <summary> Set target FPS (maximum) </summary>
     [LibraryImport(LIB, EntryPoint = "SetTargetFPS")]
     public static partial void SetTargetFPS(int fps);
-
-    /// <summary> Get current FPS </summary>
-    [LibraryImport(LIB, EntryPoint = "GetFPS")]
-    public static partial int GetFPS();
 
     /// <summary> Get time in seconds for last frame drawn (delta time) </summary>
     [LibraryImport(LIB, EntryPoint = "GetFrameTime")]
@@ -396,6 +396,30 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "GetTime")]
     public static partial double GetTime();
 
+    /// <summary> Get current FPS </summary>
+    [LibraryImport(LIB, EntryPoint = "GetFPS")]
+    public static partial int GetFPS();
+
+    /// <summary> Swap back buffer with front buffer (screen drawing) </summary>
+    [LibraryImport(LIB, EntryPoint = "SwapScreenBuffer")]
+    public static partial void SwapScreenBuffer();
+
+    /// <summary> Register all input events </summary>
+    [LibraryImport(LIB, EntryPoint = "PollInputEvents")]
+    public static partial void PollInputEvents();
+
+    /// <summary> Wait for some time (halt program execution) </summary>
+    [LibraryImport(LIB, EntryPoint = "WaitTime")]
+    public static partial void WaitTime(double seconds);
+
+    /// <summary> Load random values sequence, no values repeated </summary>
+    [LibraryImport(LIB, EntryPoint = "LoadRandomSequence")]
+    public static partial IntPtr LoadRandomSequence(uint count, int min, int max);
+
+    /// <summary> Unload random values sequence </summary>
+    [LibraryImport(LIB, EntryPoint = "UnloadRandomSequence")]
+    public static partial void UnloadRandomSequence(IntPtr sequence);
+
     /// <summary> Takes a screenshot of current screen (filename extension defines format) </summary>
     [LibraryImport(LIB, EntryPoint = "TakeScreenshot")]
     public static partial void TakeScreenshot([MarshalAs(UnmanagedType.LPStr)] string fileName);
@@ -403,6 +427,10 @@ public static unsafe partial class Raylib
     /// <summary> Setup init configuration flags (view FLAGS) </summary>
     [LibraryImport(LIB, EntryPoint = "SetConfigFlags")]
     public static partial void SetConfigFlags(WindowFlag flags);
+
+    /// <summary> Open URL with default system browser (if available) </summary>
+    [LibraryImport(LIB, EntryPoint = "OpenURL")]
+    public static partial void OpenURL([MarshalAs(UnmanagedType.LPStr)] string url);
 
     /// <summary> Set the current threshold (minimum) log level </summary>
     [LibraryImport(LIB, EntryPoint = "SetTraceLogLevel")]
@@ -420,10 +448,6 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "MemFree")]
     public static partial void MemFree(IntPtr ptr);
 
-    /// <summary> Open URL with default system browser (if available) </summary>
-    [LibraryImport(LIB, EntryPoint = "OpenURL")]
-    public static partial void OpenURL([MarshalAs(UnmanagedType.LPStr)] string url);
-
     /// <summary> Set custom file binary data loader </summary>
     [LibraryImport(LIB, EntryPoint = "SetLoadFileDataCallback")]
     public static partial void SetLoadFileDataCallback(LoadFileDataCallback callback);
@@ -440,6 +464,10 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "SetSaveFileTextCallback")]
     public static partial void SetSaveFileTextCallback(SaveFileTextCallback callback);
 
+    /// <summary> Create directories (including full path requested), returns 0 on success </summary>
+    [LibraryImport(LIB, EntryPoint = "MakeDirectory")]
+    public static partial int MakeDirectory([MarshalAs(UnmanagedType.LPStr)] string dirPath);
+
     /// <summary> Change working directory, return true on success </summary>
     [LibraryImport(LIB, EntryPoint = "ChangeDirectory")]
     [return: MarshalAs(UnmanagedType.I1)]
@@ -449,6 +477,11 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "IsPathFile")]
     [return: MarshalAs(UnmanagedType.I1)]
     public static partial bool IsPathFile([MarshalAs(UnmanagedType.LPStr)] string path);
+
+    /// <summary> Check if fileName is valid for the platform/OS </summary>
+    [LibraryImport(LIB, EntryPoint = "IsFileNameValid")]
+    [return: MarshalAs(UnmanagedType.I1)]
+    public static partial bool IsFileNameValid([MarshalAs(UnmanagedType.LPStr)] string fileName);
 
     /// <summary> Check if a file has been dropped into window </summary>
     [LibraryImport(LIB, EntryPoint = "IsFileDropped")]
@@ -467,10 +500,60 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "GetFileModTime")]
     public static partial long GetFileModTime([MarshalAs(UnmanagedType.LPStr)] string fileName);
 
+    /// <summary> Compute CRC32 hash code </summary>
+    [LibraryImport(LIB, EntryPoint = "ComputeCRC32")]
+    public static partial uint ComputeCRC32(byte* data, int dataSize);
+
+    /// <summary> Compute MD5 hash code, returns static int[4] (16 bytes) </summary>
+    [LibraryImport(LIB, EntryPoint = "ComputeMD5")]
+    public static partial uint* ComputeMD5(byte* data, int dataSize);
+
+    /// <summary> Compute SHA1 hash code, returns static int[5] (20 bytes) </summary>
+    [LibraryImport(LIB, EntryPoint = "ComputeSHA1")]
+    public static partial uint* ComputeSHA1(byte* data, int dataSize);
+
+    /// <summary> Load automation events list from file, NULL for empty list, capacity = MAX_AUTOMATION_EVENTS </summary>
+    [LibraryImport(LIB, EntryPoint = "LoadAutomationEventList")]
+    public static partial AutomationEventList LoadAutomationEventList([MarshalAs(UnmanagedType.LPStr)] string fileName);
+
+    /// <summary> Unload automation events list from file </summary>
+    [LibraryImport(LIB, EntryPoint = "UnloadAutomationEventList")]
+    public static partial void UnloadAutomationEventList(AutomationEventList list);
+
+    /// <summary> Export automation events list as text file </summary>
+    [LibraryImport(LIB, EntryPoint = "ExportAutomationEventList")]
+    [return: MarshalAs(UnmanagedType.I1)]
+    public static partial bool ExportAutomationEventList(AutomationEventList list, [MarshalAs(UnmanagedType.LPStr)] string fileName);
+
+    /// <summary> Set automation event list to record to </summary>
+    [LibraryImport(LIB, EntryPoint = "SetAutomationEventList")]
+    public static partial void SetAutomationEventList(IntPtr list);
+
+    /// <summary> Set automation event internal base frame to start recording </summary>
+    [LibraryImport(LIB, EntryPoint = "SetAutomationEventBaseFrame")]
+    public static partial void SetAutomationEventBaseFrame(int frame);
+
+    /// <summary> Start recording automation events (AutomationEventList must be set) </summary>
+    [LibraryImport(LIB, EntryPoint = "StartAutomationEventRecording")]
+    public static partial void StartAutomationEventRecording();
+
+    /// <summary> Stop recording automation events </summary>
+    [LibraryImport(LIB, EntryPoint = "StopAutomationEventRecording")]
+    public static partial void StopAutomationEventRecording();
+
+    /// <summary> Play a recorded automation event </summary>
+    [LibraryImport(LIB, EntryPoint = "PlayAutomationEvent")]
+    public static partial void PlayAutomationEvent(AutomationEvent @event);
+
     /// <summary> Check if a key has been pressed once </summary>
     [LibraryImport(LIB, EntryPoint = "IsKeyPressed")]
     [return: MarshalAs(UnmanagedType.I1)]
     public static partial bool IsKeyPressed(Key key);
+
+    /// <summary> Check if a key has been pressed again </summary>
+    [LibraryImport(LIB, EntryPoint = "IsKeyPressedRepeat")]
+    [return: MarshalAs(UnmanagedType.I1)]
+    public static partial bool IsKeyPressedRepeat(int key);
 
     /// <summary> Check if a key is being pressed </summary>
     [LibraryImport(LIB, EntryPoint = "IsKeyDown")]
@@ -487,10 +570,6 @@ public static unsafe partial class Raylib
     [return: MarshalAs(UnmanagedType.I1)]
     public static partial bool IsKeyUp(Key key);
 
-    /// <summary> Set a custom key to exit program (default is ESC) </summary>
-    [LibraryImport(LIB, EntryPoint = "SetExitKey")]
-    public static partial void SetExitKey(Key key);
-
     /// <summary> Get key pressed (keycode), call it multiple times for keys queued, returns 0 when the queue is empty </summary>
     [LibraryImport(LIB, EntryPoint = "GetKeyPressed")]
     public static partial int GetKeyPressed();
@@ -498,6 +577,10 @@ public static unsafe partial class Raylib
     /// <summary> Get char pressed (unicode), call it multiple times for chars queued, returns 0 when the queue is empty </summary>
     [LibraryImport(LIB, EntryPoint = "GetCharPressed")]
     public static partial int GetCharPressed();
+
+    /// <summary> Set a custom key to exit program (default is ESC) </summary>
+    [LibraryImport(LIB, EntryPoint = "SetExitKey")]
+    public static partial void SetExitKey(Key key);
 
     /// <summary> Check if a gamepad is available </summary>
     [LibraryImport(LIB, EntryPoint = "IsGamepadAvailable")]
@@ -544,6 +627,10 @@ public static unsafe partial class Raylib
     /// <summary> Set internal gamepad mappings (SDL_GameControllerDB) </summary>
     [LibraryImport(LIB, EntryPoint = "SetGamepadMappings")]
     public static partial int SetGamepadMappings([MarshalAs(UnmanagedType.LPStr)] string mappings);
+
+    /// <summary> Set gamepad vibration for both motors (duration in seconds) </summary>
+    [LibraryImport(LIB, EntryPoint = "SetGamepadVibration")]
+    public static partial void SetGamepadVibration(int gamepad, float leftMotor, float rightMotor, float duration);
 
     /// <summary> Check if a mouse button has been pressed once </summary>
     [LibraryImport(LIB, EntryPoint = "IsMouseButtonPressed")]
@@ -628,13 +715,13 @@ public static unsafe partial class Raylib
     /// <summary> Check if a gesture have been detected </summary>
     [LibraryImport(LIB, EntryPoint = "IsGestureDetected")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool IsGestureDetected(int gesture);
+    public static partial bool IsGestureDetected(uint gesture);
 
     /// <summary> Get latest detected gesture </summary>
     [LibraryImport(LIB, EntryPoint = "GetGestureDetected")]
     public static partial Gesture GetGestureDetected();
 
-    /// <summary> Get gesture hold time in milliseconds </summary>
+    /// <summary> Get gesture hold time in seconds </summary>
     [LibraryImport(LIB, EntryPoint = "GetGestureHoldDuration")]
     public static partial float GetGestureHoldDuration();
 
@@ -666,11 +753,19 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "SetShapesTexture")]
     public static partial void SetShapesTexture(Texture texture, Rectangle source);
 
-    /// <summary> Draw a pixel </summary>
+    /// <summary> Get texture that is used for shapes drawing </summary>
+    [LibraryImport(LIB, EntryPoint = "GetShapesTexture")]
+    public static partial Texture GetShapesTexture();
+
+    /// <summary> Get texture source rectangle that is used for shapes drawing </summary>
+    [LibraryImport(LIB, EntryPoint = "GetShapesTextureRectangle")]
+    public static partial Rectangle GetShapesTextureRectangle();
+
+    /// <summary> Draw a pixel using geometry [Can be slow, use with care] </summary>
     [LibraryImport(LIB, EntryPoint = "DrawPixel")]
     public static partial void DrawPixel(int posX, int posY, Color color);
 
-    /// <summary> Draw a pixel (Vector version) </summary>
+    /// <summary> Draw a pixel using geometry (Vector version) [Can be slow, use with care] </summary>
     [LibraryImport(LIB, EntryPoint = "DrawPixelV")]
     public static partial void DrawPixel(Vector2 position, Color color);
 
@@ -678,29 +773,21 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "DrawLine")]
     public static partial void DrawLine(int startPosX, int startPosY, int endPosX, int endPosY, Color color);
 
-    /// <summary> Draw a line (Vector version) </summary>
+    /// <summary> Draw a line (using gl lines) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawLineV")]
     public static partial void DrawLine(Vector2 startPos, Vector2 endPos, Color color);
 
-    /// <summary> Draw a line defining thickness </summary>
+    /// <summary> Draw a line (using triangles/quads) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawLineEx")]
     public static partial void DrawLine(Vector2 startPos, Vector2 endPos, float thick, Color color);
 
-    /// <summary> Draw a line using cubic-bezier curves in-out </summary>
-    [LibraryImport(LIB, EntryPoint = "DrawLineBezier")]
-    public static partial void DrawLineBezier(Vector2 startPos, Vector2 endPos, float thick, Color color);
-
-    /// <summary> Draw line using quadratic bezier curves with a control point </summary>
-    [LibraryImport(LIB, EntryPoint = "DrawLineBezierQuad")]
-    public static partial void DrawLineBezierQuad(Vector2 startPos, Vector2 endPos, Vector2 controlPos, float thick, Color color);
-
-    /// <summary> Draw line using cubic bezier curves with 2 control points </summary>
-    [LibraryImport(LIB, EntryPoint = "DrawLineBezierCubic")]
-    public static partial void DrawLineBezierCubic(Vector2 startPos, Vector2 endPos, Vector2 startControlPos, Vector2 endControlPos, float thick, Color color);
-
-    /// <summary> Draw lines sequence </summary>
+    /// <summary> Draw lines sequence (using gl lines) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawLineStrip")]
     public static partial void DrawLineStrip(IntPtr points, int pointCount, Color color);
+
+    /// <summary> Draw line segment cubic-bezier in-out interpolation </summary>
+    [LibraryImport(LIB, EntryPoint = "DrawLineBezier")]
+    public static partial void DrawLineBezier(Vector2 startPos, Vector2 endPos, float thick, Color color);
 
     /// <summary> Draw a color-filled circle </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCircle")]
@@ -716,7 +803,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Draw a gradient-filled circle </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCircleGradient")]
-    public static partial void DrawCircleGradient(int centerX, int centerY, float radius, Color color1, Color color2);
+    public static partial void DrawCircleGradient(int centerX, int centerY, float radius, Color inner, Color outer);
 
     /// <summary> Draw a color-filled circle (Vector version) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCircleV")]
@@ -725,6 +812,10 @@ public static unsafe partial class Raylib
     /// <summary> Draw circle outline </summary>
     [LibraryImport(LIB, EntryPoint = "DrawCircleLines")]
     public static partial void DrawCircleLines(int centerX, int centerY, float radius, Color color);
+
+    /// <summary> Draw circle outline (Vector version) </summary>
+    [LibraryImport(LIB, EntryPoint = "DrawCircleLinesV")]
+    public static partial void DrawCircleLines(Vector2 center, float radius, Color color);
 
     /// <summary> Draw ellipse </summary>
     [LibraryImport(LIB, EntryPoint = "DrawEllipse")]
@@ -760,15 +851,15 @@ public static unsafe partial class Raylib
 
     /// <summary> Draw a vertical-gradient-filled rectangle </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRectangleGradientV")]
-    public static partial void DrawRectangleGradient(int posX, int posY, int width, int height, Color color1, Color color2);
+    public static partial void DrawRectangleGradient(int posX, int posY, int width, int height, Color top, Color bottom);
 
     /// <summary> Draw a horizontal-gradient-filled rectangle </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRectangleGradientH")]
-    public static partial void DrawRectangleGradientH(int posX, int posY, int width, int height, Color color1, Color color2);
+    public static partial void DrawRectangleGradientH(int posX, int posY, int width, int height, Color left, Color right);
 
     /// <summary> Draw a gradient-filled rectangle with custom vertex colors </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRectangleGradientEx")]
-    public static partial void DrawRectangleGradient(Rectangle rec, Color col1, Color col2, Color col3, Color col4);
+    public static partial void DrawRectangleGradient(Rectangle rec, Color topLeft, Color bottomLeft, Color topRight, Color bottomRight);
 
     /// <summary> Draw rectangle outline </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRectangleLines")]
@@ -782,8 +873,12 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "DrawRectangleRounded")]
     public static partial void DrawRectangleRounded(Rectangle rec, float roundness, int segments, Color color);
 
-    /// <summary> Draw rectangle with rounded edges outline </summary>
+    /// <summary> Draw rectangle lines with rounded edges </summary>
     [LibraryImport(LIB, EntryPoint = "DrawRectangleRoundedLines")]
+    public static partial void DrawRectangleRoundedLines(Rectangle rec, float roundness, int segments, Color color);
+
+    /// <summary> Draw rectangle with rounded edges outline </summary>
+    [LibraryImport(LIB, EntryPoint = "DrawRectangleRoundedLinesEx")]
     public static partial void DrawRectangleRoundedLines(Rectangle rec, float roundness, int segments, float lineThick, Color color);
 
     /// <summary> Draw a color-filled triangle (vertex in counter-clockwise order!) </summary>
@@ -814,6 +909,66 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "DrawPolyLinesEx")]
     public static partial void DrawPolyLines(Vector2 center, int sides, float radius, float rotation, float lineThick, Color color);
 
+    /// <summary> Draw spline: Linear, minimum 2 points </summary>
+    [LibraryImport(LIB, EntryPoint = "DrawSplineLinear")]
+    public static partial void DrawSplineLinear(IntPtr points, int pointCount, float thick, Color color);
+
+    /// <summary> Draw spline: B-Spline, minimum 4 points </summary>
+    [LibraryImport(LIB, EntryPoint = "DrawSplineBasis")]
+    public static partial void DrawSplineBasis(IntPtr points, int pointCount, float thick, Color color);
+
+    /// <summary> Draw spline: Catmull-Rom, minimum 4 points </summary>
+    [LibraryImport(LIB, EntryPoint = "DrawSplineCatmullRom")]
+    public static partial void DrawSplineCatmullRom(IntPtr points, int pointCount, float thick, Color color);
+
+    /// <summary> Draw spline: Quadratic Bezier, minimum 3 points (1 control point): [p1, c2, p3, c4...] </summary>
+    [LibraryImport(LIB, EntryPoint = "DrawSplineBezierQuadratic")]
+    public static partial void DrawSplineBezierQuadratic(IntPtr points, int pointCount, float thick, Color color);
+
+    /// <summary> Draw spline: Cubic Bezier, minimum 4 points (2 control points): [p1, c2, c3, p4, c5, c6...] </summary>
+    [LibraryImport(LIB, EntryPoint = "DrawSplineBezierCubic")]
+    public static partial void DrawSplineBezierCubic(IntPtr points, int pointCount, float thick, Color color);
+
+    /// <summary> Draw spline segment: Linear, 2 points </summary>
+    [LibraryImport(LIB, EntryPoint = "DrawSplineSegmentLinear")]
+    public static partial void DrawSplineSegmentLinear(Vector2 p1, Vector2 p2, float thick, Color color);
+
+    /// <summary> Draw spline segment: B-Spline, 4 points </summary>
+    [LibraryImport(LIB, EntryPoint = "DrawSplineSegmentBasis")]
+    public static partial void DrawSplineSegmentBasis(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, float thick, Color color);
+
+    /// <summary> Draw spline segment: Catmull-Rom, 4 points </summary>
+    [LibraryImport(LIB, EntryPoint = "DrawSplineSegmentCatmullRom")]
+    public static partial void DrawSplineSegmentCatmullRom(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, float thick, Color color);
+
+    /// <summary> Draw spline segment: Quadratic Bezier, 2 points, 1 control point </summary>
+    [LibraryImport(LIB, EntryPoint = "DrawSplineSegmentBezierQuadratic")]
+    public static partial void DrawSplineSegmentBezierQuadratic(Vector2 p1, Vector2 c2, Vector2 p3, float thick, Color color);
+
+    /// <summary> Draw spline segment: Cubic Bezier, 2 points, 2 control points </summary>
+    [LibraryImport(LIB, EntryPoint = "DrawSplineSegmentBezierCubic")]
+    public static partial void DrawSplineSegmentBezierCubic(Vector2 p1, Vector2 c2, Vector2 c3, Vector2 p4, float thick, Color color);
+
+    /// <summary> Get (evaluate) spline point: Linear </summary>
+    [LibraryImport(LIB, EntryPoint = "GetSplinePointLinear")]
+    public static partial Vector2 GetSplinePointLinear(Vector2 startPos, Vector2 endPos, float t);
+
+    /// <summary> Get (evaluate) spline point: B-Spline </summary>
+    [LibraryImport(LIB, EntryPoint = "GetSplinePointBasis")]
+    public static partial Vector2 GetSplinePointBasis(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, float t);
+
+    /// <summary> Get (evaluate) spline point: Catmull-Rom </summary>
+    [LibraryImport(LIB, EntryPoint = "GetSplinePointCatmullRom")]
+    public static partial Vector2 GetSplinePointCatmullRom(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, float t);
+
+    /// <summary> Get (evaluate) spline point: Quadratic Bezier </summary>
+    [LibraryImport(LIB, EntryPoint = "GetSplinePointBezierQuad")]
+    public static partial Vector2 GetSplinePointBezierQuad(Vector2 p1, Vector2 c2, Vector2 p3, float t);
+
+    /// <summary> Get (evaluate) spline point: Cubic Bezier </summary>
+    [LibraryImport(LIB, EntryPoint = "GetSplinePointBezierCubic")]
+    public static partial Vector2 GetSplinePointBezierCubic(Vector2 p1, Vector2 c2, Vector2 c3, Vector2 p4, float t);
+
     /// <summary> Check collision between two rectangles </summary>
     [LibraryImport(LIB, EntryPoint = "CheckCollisionRecs")]
     [return: MarshalAs(UnmanagedType.I1)]
@@ -828,6 +983,11 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "CheckCollisionCircleRec")]
     [return: MarshalAs(UnmanagedType.I1)]
     public static partial bool CheckCollisionCircle(Vector2 center, float radius, Rectangle rec);
+
+    /// <summary> Check if circle collides with a line created betweeen two points [p1] and [p2] </summary>
+    [LibraryImport(LIB, EntryPoint = "CheckCollisionCircleLine")]
+    [return: MarshalAs(UnmanagedType.I1)]
+    public static partial bool CheckCollisionCircleLine(Vector2 center, float radius, Vector2 p1, Vector2 p2);
 
     /// <summary> Check if point is inside rectangle </summary>
     [LibraryImport(LIB, EntryPoint = "CheckCollisionPointRec")]
@@ -844,6 +1004,11 @@ public static unsafe partial class Raylib
     [return: MarshalAs(UnmanagedType.I1)]
     public static partial bool CheckCollisionPointTriangle(Vector2 point, Vector2 p1, Vector2 p2, Vector2 p3);
 
+    /// <summary> Check if point belongs to line created between two points [p1] and [p2] with defined margin in pixels [threshold] </summary>
+    [LibraryImport(LIB, EntryPoint = "CheckCollisionPointLine")]
+    [return: MarshalAs(UnmanagedType.I1)]
+    public static partial bool CheckCollisionPointLine(Vector2 point, Vector2 p1, Vector2 p2, int threshold);
+
     /// <summary> Check if point is within a polygon described by array of vertices </summary>
     [LibraryImport(LIB, EntryPoint = "CheckCollisionPointPoly")]
     [return: MarshalAs(UnmanagedType.I1)]
@@ -853,11 +1018,6 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "CheckCollisionLines")]
     [return: MarshalAs(UnmanagedType.I1)]
     public static partial bool CheckCollisionLines(Vector2 startPos1, Vector2 endPos1, Vector2 startPos2, Vector2 endPos2, IntPtr collisionPoint);
-
-    /// <summary> Check if point belongs to line created between two points [p1] and [p2] with defined margin in pixels [threshold] </summary>
-    [LibraryImport(LIB, EntryPoint = "CheckCollisionPointLine")]
-    [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool CheckCollisionPointLine(Vector2 point, Vector2 p1, Vector2 p2, int threshold);
 
     /// <summary> Get collision rectangle for two rectangles collision </summary>
     [LibraryImport(LIB, EntryPoint = "GetCollisionRec")]
@@ -875,6 +1035,10 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "LoadImageAnim")]
     public static partial Image LoadImageAnim([MarshalAs(UnmanagedType.LPStr)] string fileName, ref int frames);
 
+    /// <summary> Load image sequence from memory buffer </summary>
+    [LibraryImport(LIB, EntryPoint = "LoadImageAnimFromMemory")]
+    public static partial Image LoadImageAnimFromMemory([MarshalAs(UnmanagedType.LPStr)] string fileType, byte[] fileData, int dataSize, IntPtr frames);
+
     /// <summary> Load image from memory buffer, fileType refers to extension: i.e. '.png' </summary>
     [LibraryImport(LIB, EntryPoint = "LoadImageFromMemory")]
     public static partial Image LoadImageFromMemory([MarshalAs(UnmanagedType.LPStr)] string fileType, [MarshalAs(UnmanagedType.LPArray)] byte[] fileData, int dataSize);
@@ -887,10 +1051,10 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "LoadImageFromScreen")]
     public static partial Image LoadImageFromScreen();
 
-    /// <summary> Check if an image is ready </summary>
-    [LibraryImport(LIB, EntryPoint = "IsImageReady")]
+    /// <summary> Check if an image is valid (data and parameters) </summary>
+    [LibraryImport(LIB, EntryPoint = "IsImageValid")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool IsImageReady(Image image);
+    public static partial bool IsImageValid(Image image);
 
     /// <summary> Unload image from CPU memory (RAM) </summary>
     [LibraryImport(LIB, EntryPoint = "UnloadImage")]
@@ -949,6 +1113,10 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "ImageFromImage")]
     public static partial Image ImageFromImage(Image image, Rectangle rec);
 
+    /// <summary> Create an image from a selected channel of another image (GRAYSCALE) </summary>
+    [LibraryImport(LIB, EntryPoint = "ImageFromChannel")]
+    public static partial Image ImageFromChannel(Image image, int selectedChannel);
+
     /// <summary> Create an image from text (default font) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageText")]
     public static partial Image ImageText([MarshalAs(UnmanagedType.LPStr)] string text, int fontSize, Color color);
@@ -988,6 +1156,10 @@ public static unsafe partial class Raylib
     /// <summary> Apply Gaussian blur using a box blur approximation </summary>
     [LibraryImport(LIB, EntryPoint = "ImageBlurGaussian")]
     public static partial void ImageBlurGaussian(ref Image image, int blurSize);
+
+    /// <summary> Apply custom square convolution kernel to image </summary>
+    [LibraryImport(LIB, EntryPoint = "ImageKernelConvolution")]
+    public static partial void ImageKernelConvolution(IntPtr image, IntPtr kernel, int kernelSize);
 
     /// <summary> Resize image (Bicubic scaling algorithm) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageResize")]
@@ -1089,6 +1261,10 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "ImageDrawLineV")]
     public static partial void ImageDrawLine(IntPtr dst, Vector2 start, Vector2 end, Color color);
 
+    /// <summary> Draw a line defining thickness within an image </summary>
+    [LibraryImport(LIB, EntryPoint = "ImageDrawLineEx")]
+    public static partial void ImageDrawLine(IntPtr dst, Vector2 start, Vector2 end, int thick, Color color);
+
     /// <summary> Draw a filled circle within an image </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDrawCircle")]
     public static partial void ImageDrawCircle(IntPtr dst, int centerX, int centerY, int radius, Color color);
@@ -1121,6 +1297,26 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "ImageDrawRectangleLines")]
     public static partial void ImageDrawRectangleLines(IntPtr dst, Rectangle rec, int thick, Color color);
 
+    /// <summary> Draw triangle within an image </summary>
+    [LibraryImport(LIB, EntryPoint = "ImageDrawTriangle")]
+    public static partial void ImageDrawTriangle(IntPtr dst, Vector2 v1, Vector2 v2, Vector2 v3, Color color);
+
+    /// <summary> Draw triangle with interpolated colors within an image </summary>
+    [LibraryImport(LIB, EntryPoint = "ImageDrawTriangleEx")]
+    public static partial void ImageDrawTriangle(IntPtr dst, Vector2 v1, Vector2 v2, Vector2 v3, Color c1, Color c2, Color c3);
+
+    /// <summary> Draw triangle outline within an image </summary>
+    [LibraryImport(LIB, EntryPoint = "ImageDrawTriangleLines")]
+    public static partial void ImageDrawTriangleLines(IntPtr dst, Vector2 v1, Vector2 v2, Vector2 v3, Color color);
+
+    /// <summary> Draw a triangle fan defined by points within an image (first vertex is the center) </summary>
+    [LibraryImport(LIB, EntryPoint = "ImageDrawTriangleFan")]
+    public static partial void ImageDrawTriangleFan(IntPtr dst, IntPtr points, int pointCount, Color color);
+
+    /// <summary> Draw a triangle strip defined by points within an image </summary>
+    [LibraryImport(LIB, EntryPoint = "ImageDrawTriangleStrip")]
+    public static partial void ImageDrawTriangleStrip(IntPtr dst, IntPtr points, int pointCount, Color color);
+
     /// <summary> Draw a source image within a destination image (tint applied to source) </summary>
     [LibraryImport(LIB, EntryPoint = "ImageDraw")]
     public static partial void ImageDraw(ref Image dst, Image src, Rectangle srcRec, Rectangle dstRec, Color tint);
@@ -1149,19 +1345,19 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "LoadRenderTexture")]
     public static partial RenderTexture LoadRenderTexture(int width, int height);
 
-    /// <summary> Check if a texture is ready </summary>
-    [LibraryImport(LIB, EntryPoint = "IsTextureReady")]
+    /// <summary> Check if a texture is valid (loaded in GPU) </summary>
+    [LibraryImport(LIB, EntryPoint = "IsTextureValid")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool IsTextureReady(Texture texture);
+    public static partial bool IsTextureValid(Texture texture);
 
     /// <summary> Unload texture from GPU memory (VRAM) </summary>
     [LibraryImport(LIB, EntryPoint = "UnloadTexture")]
     public static partial void UnloadTexture(Texture texture);
 
-    /// <summary> Check if a render texture is ready </summary>
-    [LibraryImport(LIB, EntryPoint = "IsRenderTextureReady")]
+    /// <summary> Check if a render texture is valid (loaded in GPU) </summary>
+    [LibraryImport(LIB, EntryPoint = "IsRenderTextureValid")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool IsRenderTextureReady(RenderTexture target);
+    public static partial bool IsRenderTextureValid(RenderTexture target);
 
     /// <summary> Unload render texture from GPU memory (VRAM) </summary>
     [LibraryImport(LIB, EntryPoint = "UnloadRenderTexture")]
@@ -1211,11 +1407,16 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "DrawTextureNPatch")]
     public static partial void DrawTextureNPatch(Texture texture, NPatchInfo nPatchInfo, Rectangle dest, Vector2 origin, float rotation, Color tint);
 
+    /// <summary> Check if two colors are equal </summary>
+    [LibraryImport(LIB, EntryPoint = "ColorIsEqual")]
+    [return: MarshalAs(UnmanagedType.I1)]
+    public static partial bool ColorIsEqual(Color col1, Color col2);
+
     /// <summary> Get color with alpha applied, alpha goes from 0.0f to 1.0f </summary>
     [LibraryImport(LIB, EntryPoint = "Fade")]
     public static partial Color Fade(Color color, float alpha);
 
-    /// <summary> Get hexadecimal value for a Color </summary>
+    /// <summary> Get hexadecimal value for a Color (0xRRGGBBAA) </summary>
     [LibraryImport(LIB, EntryPoint = "ColorToInt")]
     public static partial int ColorToInt(Color color);
 
@@ -1255,6 +1456,10 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "ColorAlphaBlend")]
     public static partial Color ColorAlphaBlend(Color dst, Color src, Color tint);
 
+    /// <summary> Get color lerp interpolation between two colors, factor [0.0f..1.0f] </summary>
+    [LibraryImport(LIB, EntryPoint = "ColorLerp")]
+    public static partial Color ColorLerp(Color color1, Color color2, float factor);
+
     /// <summary> Get Color structure from hexadecimal value </summary>
     [LibraryImport(LIB, EntryPoint = "GetColor")]
     public static partial Color GetColor(uint hexValue);
@@ -1279,9 +1484,9 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "LoadFont")]
     public static partial Font LoadFont([MarshalAs(UnmanagedType.LPStr)] string fileName);
 
-    /// <summary> Load font from file with extended parameters, use NULL for fontChars and 0 for glyphCount to load the default character set </summary>
+    /// <summary> Load font from file with extended parameters, use NULL for codepoints and 0 for codepointCount to load the default character set, font size is provided in pixels height </summary>
     [LibraryImport(LIB, EntryPoint = "LoadFontEx")]
-    public static partial Font LoadFont([MarshalAs(UnmanagedType.LPStr)] string fileName, int fontSize, IntPtr fontChars, int glyphCount);
+    public static partial Font LoadFont([MarshalAs(UnmanagedType.LPStr)] string fileName, int fontSize, IntPtr codepoints, int codepointCount);
 
     /// <summary> Load font from Image (XNA style) </summary>
     [LibraryImport(LIB, EntryPoint = "LoadFontFromImage")]
@@ -1289,24 +1494,24 @@ public static unsafe partial class Raylib
 
     /// <summary> Load font from memory buffer, fileType refers to extension: i.e. '.ttf' </summary>
     [LibraryImport(LIB, EntryPoint = "LoadFontFromMemory")]
-    public static partial Font LoadFontFromMemory([MarshalAs(UnmanagedType.LPStr)] string fileType, [MarshalAs(UnmanagedType.LPArray)] byte[] fileData, int dataSize, int fontSize, IntPtr fontChars, int glyphCount);
+    public static partial Font LoadFontFromMemory([MarshalAs(UnmanagedType.LPStr)] string fileType, [MarshalAs(UnmanagedType.LPArray)] byte[] fileData, int dataSize, int fontSize, IntPtr codepoints, int codepointCount);
 
-    /// <summary> Check if a font is ready </summary>
-    [LibraryImport(LIB, EntryPoint = "IsFontReady")]
+    /// <summary> Check if a font is valid (font data loaded, WARNING: GPU texture not checked) </summary>
+    [LibraryImport(LIB, EntryPoint = "IsFontValid")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool IsFontReady(Font font);
+    public static partial bool IsFontValid(Font font);
 
     /// <summary> Load font data for further use </summary>
     [LibraryImport(LIB, EntryPoint = "LoadFontData")]
-    public static partial IntPtr LoadFontData(byte[] fileData, int dataSize, int fontSize, IntPtr fontChars, int glyphCount, int type);
+    public static partial IntPtr LoadFontData(byte[] fileData, int dataSize, int fontSize, IntPtr codepoints, int codepointCount, int type);
 
     /// <summary> Generate image font atlas using chars info </summary>
     [LibraryImport(LIB, EntryPoint = "GenImageFontAtlas")]
-    public static partial Image GenImageFontAtlas(IntPtr chars, IntPtr recs, int glyphCount, int fontSize, int padding, int packMethod);
+    public static partial Image GenImageFontAtlas(IntPtr glyphs, IntPtr glyphRecs, int glyphCount, int fontSize, int padding, int packMethod);
 
     /// <summary> Unload font chars info data (RAM) </summary>
     [LibraryImport(LIB, EntryPoint = "UnloadFontData")]
-    public static partial void UnloadFontData(IntPtr chars, int glyphCount);
+    public static partial void UnloadFontData(IntPtr glyphs, int glyphCount);
 
     /// <summary> Unload font from GPU memory (VRAM) </summary>
     [LibraryImport(LIB, EntryPoint = "UnloadFont")]
@@ -1339,7 +1544,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Draw multiple character (codepoint) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawTextCodepoints")]
-    public static partial void DrawTextCodepoints(Font font, IntPtr codepoints, int count, Vector2 position, float fontSize, float spacing, Color tint);
+    public static partial void DrawTextCodepoints(Font font, IntPtr codepoints, int codepointCount, Vector2 position, float fontSize, float spacing, Color tint);
 
     /// <summary> Set vertical line spacing when drawing with line-breaks </summary>
     [LibraryImport(LIB, EntryPoint = "SetTextLineSpacing")]
@@ -1417,7 +1622,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Replace text string (WARNING: memory must be freed!) </summary>
     [LibraryImport(LIB, EntryPoint = "TextReplace")]
-    public static partial IntPtr TextReplace(IntPtr text, [MarshalAs(UnmanagedType.LPStr)] string replace, [MarshalAs(UnmanagedType.LPStr)] string by);
+    public static partial IntPtr TextReplace([MarshalAs(UnmanagedType.LPStr)] string text, [MarshalAs(UnmanagedType.LPStr)] string replace, [MarshalAs(UnmanagedType.LPStr)] string by);
 
     /// <summary> Insert text in a position (WARNING: memory must be freed!) </summary>
     [LibraryImport(LIB, EntryPoint = "TextInsert")]
@@ -1450,9 +1655,23 @@ public static unsafe partial class Raylib
     [return: MarshalAs(UnmanagedType.LPStr)]
     public static partial string TextToPascal([MarshalAs(UnmanagedType.LPStr)] string text);
 
+    /// <summary> Get Snake case notation version of provided string </summary>
+    [LibraryImport(LIB, EntryPoint = "TextToSnake")]
+    [return: MarshalAs(UnmanagedType.LPStr)]
+    public static partial string TextToSnake([MarshalAs(UnmanagedType.LPStr)] string text);
+
+    /// <summary> Get Camel case notation version of provided string </summary>
+    [LibraryImport(LIB, EntryPoint = "TextToCamel")]
+    [return: MarshalAs(UnmanagedType.LPStr)]
+    public static partial string TextToCamel([MarshalAs(UnmanagedType.LPStr)] string text);
+
     /// <summary> Get integer value from text (negative values not supported) </summary>
     [LibraryImport(LIB, EntryPoint = "TextToInteger")]
     public static partial int TextToInteger([MarshalAs(UnmanagedType.LPStr)] string text);
+
+    /// <summary> Get float value from text (negative values not supported) </summary>
+    [LibraryImport(LIB, EntryPoint = "TextToFloat")]
+    public static partial float TextToFloat([MarshalAs(UnmanagedType.LPStr)] string text);
 
     /// <summary> Draw a line in 3D world space </summary>
     [LibraryImport(LIB, EntryPoint = "DrawLine3D")]
@@ -1546,10 +1765,10 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "LoadModelFromMesh")]
     public static partial Model LoadModelFromMesh(Mesh mesh);
 
-    /// <summary> Check if a model is ready </summary>
-    [LibraryImport(LIB, EntryPoint = "IsModelReady")]
+    /// <summary> Check if a model is valid (loaded in GPU, VAO/VBOs) </summary>
+    [LibraryImport(LIB, EntryPoint = "IsModelValid")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool IsModelReady(Model model);
+    public static partial bool IsModelValid(Model model);
 
     /// <summary> Unload model (including meshes) from memory (RAM and/or VRAM) </summary>
     [LibraryImport(LIB, EntryPoint = "UnloadModel")]
@@ -1575,13 +1794,21 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "DrawModelWiresEx")]
     public static partial void DrawModelWires(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, Color tint);
 
+    /// <summary> Draw a model as points </summary>
+    [LibraryImport(LIB, EntryPoint = "DrawModelPoints")]
+    public static partial void DrawModelPoints(Model model, Vector3 position, float scale, Color tint);
+
+    /// <summary> Draw a model as points with extended parameters </summary>
+    [LibraryImport(LIB, EntryPoint = "DrawModelPointsEx")]
+    public static partial void DrawModelPoints(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, Color tint);
+
     /// <summary> Draw bounding box (wires) </summary>
     [LibraryImport(LIB, EntryPoint = "DrawBoundingBox")]
     public static partial void DrawBoundingBox(BoundingBox box, Color color);
 
     /// <summary> Draw a billboard texture </summary>
     [LibraryImport(LIB, EntryPoint = "DrawBillboard")]
-    public static partial void DrawBillboard(Camera3D camera, Texture texture, Vector3 position, float size, Color tint);
+    public static partial void DrawBillboard(Camera3D camera, Texture texture, Vector3 position, float scale, Color tint);
 
     /// <summary> Draw a billboard texture defined by source </summary>
     [LibraryImport(LIB, EntryPoint = "DrawBillboardRec")]
@@ -1611,11 +1838,6 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "DrawMeshInstanced")]
     public static partial void DrawMeshInstanced(Mesh mesh, Material material, Matrix4x4[] transforms, int instances);
 
-    /// <summary> Export mesh data to file, returns true on success </summary>
-    [LibraryImport(LIB, EntryPoint = "ExportMesh")]
-    [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool ExportMesh(Mesh mesh, [MarshalAs(UnmanagedType.LPStr)] string fileName);
-
     /// <summary> Compute mesh bounding box limits </summary>
     [LibraryImport(LIB, EntryPoint = "GetMeshBoundingBox")]
     public static partial BoundingBox GetMeshBoundingBox(Mesh mesh);
@@ -1623,6 +1845,16 @@ public static unsafe partial class Raylib
     /// <summary> Compute mesh tangents </summary>
     [LibraryImport(LIB, EntryPoint = "GenMeshTangents")]
     public static partial void GenMeshTangents(IntPtr mesh);
+
+    /// <summary> Export mesh data to file, returns true on success </summary>
+    [LibraryImport(LIB, EntryPoint = "ExportMesh")]
+    [return: MarshalAs(UnmanagedType.I1)]
+    public static partial bool ExportMesh(Mesh mesh, [MarshalAs(UnmanagedType.LPStr)] string fileName);
+
+    /// <summary> Export mesh as code file (.h) defining multiple arrays of vertex attributes </summary>
+    [LibraryImport(LIB, EntryPoint = "ExportMeshAsCode")]
+    [return: MarshalAs(UnmanagedType.I1)]
+    public static partial bool ExportMeshAsCode(Mesh mesh, [MarshalAs(UnmanagedType.LPStr)] string fileName);
 
     /// <summary> Generate polygonal mesh </summary>
     [LibraryImport(LIB, EntryPoint = "GenMeshPoly")]
@@ -1676,10 +1908,10 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "LoadMaterialDefault")]
     public static partial Material LoadMaterialDefault();
 
-    /// <summary> Check if a material is ready </summary>
-    [LibraryImport(LIB, EntryPoint = "IsMaterialReady")]
+    /// <summary> Check if a material is valid (shader assigned, map textures loaded in GPU) </summary>
+    [LibraryImport(LIB, EntryPoint = "IsMaterialValid")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool IsMaterialReady(Material material);
+    public static partial bool IsMaterialValid(Material material);
 
     /// <summary> Unload material from GPU memory (VRAM) </summary>
     [LibraryImport(LIB, EntryPoint = "UnloadMaterial")]
@@ -1698,9 +1930,13 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "LoadModelAnimations")]
     public static partial ModelAnimation[] LoadModelAnimations([MarshalAs(UnmanagedType.LPStr)] string fileName, ref uint animCount);
 
-    /// <summary> Update model animation pose </summary>
+    /// <summary> Update model animation pose (CPU) </summary>
     [LibraryImport(LIB, EntryPoint = "UpdateModelAnimation")]
     public static partial void UpdateModelAnimation(Model model, ModelAnimation anim, int frame);
+
+    /// <summary> Update model animation mesh bone matrices (GPU skinning) </summary>
+    [LibraryImport(LIB, EntryPoint = "UpdateModelAnimationBones")]
+    public static partial void UpdateModelAnimationBones(Model model, ModelAnimation anim, int frame);
 
     /// <summary> Unload animation data </summary>
     [LibraryImport(LIB, EntryPoint = "UnloadModelAnimation")]
@@ -1708,7 +1944,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Unload animation array data </summary>
     [LibraryImport(LIB, EntryPoint = "UnloadModelAnimations")]
-    public static partial void UnloadModelAnimations(IntPtr animations, uint count);
+    public static partial void UnloadModelAnimations(IntPtr animations, int animCount);
 
     /// <summary> Check model animation skeleton match </summary>
     [LibraryImport(LIB, EntryPoint = "IsModelAnimationValid")]
@@ -1767,6 +2003,10 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "SetMasterVolume")]
     public static partial void SetMasterVolume(float volume);
 
+    /// <summary> Get master volume (listener) </summary>
+    [LibraryImport(LIB, EntryPoint = "GetMasterVolume")]
+    public static partial float GetMasterVolume();
+
     /// <summary> Load wave data from file </summary>
     [LibraryImport(LIB, EntryPoint = "LoadWave")]
     public static partial Wave LoadWave([MarshalAs(UnmanagedType.LPStr)] string fileName);
@@ -1775,10 +2015,10 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "LoadWaveFromMemory")]
     public static partial Wave LoadWaveFromMemory([MarshalAs(UnmanagedType.LPStr)] string fileType, byte[] fileData, int dataSize);
 
-    /// <summary> Checks if wave data is ready </summary>
-    [LibraryImport(LIB, EntryPoint = "IsWaveReady")]
+    /// <summary> Checks if wave data is valid (data loaded and parameters) </summary>
+    [LibraryImport(LIB, EntryPoint = "IsWaveValid")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool IsWaveReady(Wave wave);
+    public static partial bool IsWaveValid(Wave wave);
 
     /// <summary> Load sound from file </summary>
     [LibraryImport(LIB, EntryPoint = "LoadSound")]
@@ -1788,10 +2028,14 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "LoadSoundFromWave")]
     public static partial Sound LoadSoundFromWave(Wave wave);
 
-    /// <summary> Checks if a sound is ready </summary>
-    [LibraryImport(LIB, EntryPoint = "IsSoundReady")]
+    /// <summary> Create a new sound that shares the same sample data as the source sound, does not own the sound data </summary>
+    [LibraryImport(LIB, EntryPoint = "LoadSoundAlias")]
+    public static partial Sound LoadSoundAlias(Sound source);
+
+    /// <summary> Checks if a sound is valid (data loaded and buffers initialized) </summary>
+    [LibraryImport(LIB, EntryPoint = "IsSoundValid")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool IsSoundReady(Sound sound);
+    public static partial bool IsSoundValid(Sound sound);
 
     /// <summary> Update sound buffer with new data </summary>
     [LibraryImport(LIB, EntryPoint = "UpdateSound")]
@@ -1804,6 +2048,10 @@ public static unsafe partial class Raylib
     /// <summary> Unload sound </summary>
     [LibraryImport(LIB, EntryPoint = "UnloadSound")]
     public static partial void UnloadSound(Sound sound);
+
+    /// <summary> Unload a sound alias (does not deallocate sample data) </summary>
+    [LibraryImport(LIB, EntryPoint = "UnloadSoundAlias")]
+    public static partial void UnloadSoundAlias(Sound alias);
 
     /// <summary> Export wave data to file, returns true on success </summary>
     [LibraryImport(LIB, EntryPoint = "ExportWave")]
@@ -1852,9 +2100,9 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "WaveCopy")]
     public static partial Wave WaveCopy(Wave wave);
 
-    /// <summary> Crop a wave to defined samples range </summary>
+    /// <summary> Crop a wave to defined frames range </summary>
     [LibraryImport(LIB, EntryPoint = "WaveCrop")]
-    public static partial void WaveCrop(IntPtr wave, int initSample, int finalSample);
+    public static partial void WaveCrop(IntPtr wave, int initFrame, int finalFrame);
 
     /// <summary> Convert wave data to desired format </summary>
     [LibraryImport(LIB, EntryPoint = "WaveFormat")]
@@ -1876,10 +2124,10 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "LoadMusicStreamFromMemory")]
     public static partial Music LoadMusicStreamFromMemory([MarshalAs(UnmanagedType.LPStr)] string fileType, byte[] data, int dataSize);
 
-    /// <summary> Checks if a music stream is ready </summary>
-    [LibraryImport(LIB, EntryPoint = "IsMusicReady")]
+    /// <summary> Checks if a music stream is valid (context and buffers initialized) </summary>
+    [LibraryImport(LIB, EntryPoint = "IsMusicValid")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool IsMusicReady(Music music);
+    public static partial bool IsMusicValid(Music music);
 
     /// <summary> Unload music stream </summary>
     [LibraryImport(LIB, EntryPoint = "UnloadMusicStream")]
@@ -1938,10 +2186,10 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "LoadAudioStream")]
     public static partial AudioStream LoadAudioStream(uint sampleRate, uint sampleSize, uint channels);
 
-    /// <summary> Checks if an audio stream is ready </summary>
-    [LibraryImport(LIB, EntryPoint = "IsAudioStreamReady")]
+    /// <summary> Checks if an audio stream is valid (buffers initialized) </summary>
+    [LibraryImport(LIB, EntryPoint = "IsAudioStreamValid")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool IsAudioStreamReady(AudioStream stream);
+    public static partial bool IsAudioStreamValid(AudioStream stream);
 
     /// <summary> Unload audio stream and free memory </summary>
     [LibraryImport(LIB, EntryPoint = "UnloadAudioStream")]
@@ -1997,7 +2245,7 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "SetAudioStreamCallback")]
     public static partial void SetAudioStreamCallback(AudioStream stream, AudioCallback callback);
 
-    /// <summary> Attach audio stream processor to stream </summary>
+    /// <summary> Attach audio stream processor to stream, receives the samples as 'float' </summary>
     [LibraryImport(LIB, EntryPoint = "AttachAudioStreamProcessor")]
     public static partial void AttachAudioStreamProcessor(AudioStream stream, AudioCallback processor);
 
@@ -2005,7 +2253,7 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "DetachAudioStreamProcessor")]
     public static partial void DetachAudioStreamProcessor(AudioStream stream, AudioCallback processor);
 
-    /// <summary> Attach audio stream processor to the entire audio pipeline </summary>
+    /// <summary> Attach audio stream processor to the entire audio pipeline, receives the samples as 'float' </summary>
     [LibraryImport(LIB, EntryPoint = "AttachAudioMixedProcessor")]
     public static partial void AttachAudioMixedProcessor(AudioCallback processor);
 

@@ -5,15 +5,15 @@ namespace RaylibSharp;
 /// <summary> Camera system modes </summary>
 public enum CameraMode
 {
-    /// <summary> Custom camera </summary>
+    /// <summary> Camera custom, controlled by user (UpdateCamera() does nothing) </summary>
     Custom = 0,
-    /// <summary> Free camera </summary>
+    /// <summary> Camera free mode </summary>
     Free = 1,
-    /// <summary> Orbital camera </summary>
+    /// <summary> Camera orbital, around target, zoom supported </summary>
     Orbital = 2,
-    /// <summary> First person camera </summary>
+    /// <summary> Camera first person </summary>
     FirstPerson = 3,
-    /// <summary> Third person camera </summary>
+    /// <summary> Camera third person </summary>
     ThirdPerson = 4,
 }
 

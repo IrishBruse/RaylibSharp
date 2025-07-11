@@ -114,13 +114,16 @@ public class FunctionProcessor
         }
 
         string type = Utility.ConvertTypeFunction(p.Type);
+        string name = p.Name;
+
+        name = name == "event" ? "@event" : name;
 
         return type switch
         {
-            "bool" => $"[{Utility.BoolMarshal}] {type} {p.Name}",
-            "string" => $"[{Utility.StringMarshal}] {type} {p.Name}",
-            "Matrix4x4" => $"[MarshalUsing(typeof(Matrix4x4Marshaller))] {type} {p.Name}",
-            _ => $"{type} {p.Name}"
+            "bool" => $"[{Utility.BoolMarshal}] {type} {name}",
+            "string" => $"[{Utility.StringMarshal}] {type} {name}",
+            "Matrix4x4" => $"[MarshalUsing(typeof(Matrix4x4Marshaller))] {type} {name}",
+            _ => $"{type} {name}"
         };
     }
 }

@@ -220,7 +220,7 @@ public enum Key
     /// <summary> Key: Android back button </summary>
     Back = 4,
     /// <summary> Key: Android menu button </summary>
-    Menu = 82,
+    Menu = 5,
     /// <summary> Key: Android volume up button </summary>
     VolumeUp = 24,
     /// <summary> Key: Android volume down button </summary>

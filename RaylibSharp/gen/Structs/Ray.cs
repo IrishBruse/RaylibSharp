@@ -11,7 +11,7 @@ public unsafe partial struct Ray
 {
     /// <summary> Ray position (origin) </summary>
     public Vector3 Position;
-    /// <summary> Ray direction </summary>
+    /// <summary> Ray direction (normalized) </summary>
     public Vector3 Direction;
 }
 
@@ -21,7 +21,7 @@ unsafe struct UnmanagedRay
 {
     /// <summary> Ray position (origin) </summary>
     public Vector3 Position;
-    /// <summary> Ray direction </summary>
+    /// <summary> Ray direction (normalized) </summary>
     public Vector3 Direction;
 }
 

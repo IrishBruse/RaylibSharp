@@ -3,3 +3,4 @@
 
 RaylibSharpGenerator/examples/**/*
 Examples.Wasm/raylib.a
+raylib/
