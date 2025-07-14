@@ -1,146 +1,160 @@
-using System.Threading;
+/*******************************************************************************************
+*
+*   raylib [core] example - loading thread
+*
+*   NOTE: This example requires linking with pthreads library on MinGW,
+*   it can be accomplished passing -static parameter to compiler
+*
+*   Example originally created with raylib 2.5, last time updated with raylib 3.0
+*
+*   Example licensed under an unmodified zlib/libpng license, which is an OSI-certified,
+*
+*   Copyright (c) 2014-2024 Ramon Santamaria (@raysan5)
+*
+********************************************************************************************/
+
+using System.Numerics;
+using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
+
+using Camera = RaylibSharp.Camera3D;
+using RenderTexture2D = RaylibSharp.RenderTexture;
 
 using static RaylibSharp.Raylib;
+using System.Threading.Tasks;
+using System.Threading;
 
-public class CoreLoadingThread : ExampleHelper
+public class LoadingThreadExample
 {
-    enum State
+    // C# equivalent of C11 atomics using Interlocked for thread-safe operations
+    private static int _dataLoaded = 0; // 0 for false, 1 for true
+    private static int _dataProgress = 0;
+
+    // Enum for game states
+    private enum GameState
     {
         Waiting,
         Loading,
         Finished
     }
 
-    static int done;
-    static int progress;
-    static Thread? thread;
-
-    public static int Example()
+    //------------------------------------------------------------------------------------
+    // Program main entry point
+    //------------------------------------------------------------------------------------
+    public static void Main()
     {
         // Initialization
+        //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        State state = State.Waiting;
+        InitWindow(screenWidth, screenHeight, "raylib [core] example - loading thread (C#)");
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - loading thread");
-
+        GameState state = GameState.Waiting;
         int framesCounter = 0;
 
-        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
+        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        //--------------------------------------------------------------------------------------
 
         // Main game loop
-        while (!WindowShouldClose())    // Detect window close button or ESC key
+        while (!WindowShouldClose())
         {
             // Update
+            //----------------------------------------------------------------------------------
             switch (state)
             {
-                case State.Waiting:
+                case GameState.Waiting:
                 {
                     if (IsKeyPressed(Key.Enter))
                     {
-                        try
-                        {
-                            thread = new(LoadDataThread);
-                            thread.Start();
-                            TraceLog(TraceLogLevel.Info, "Loading thread initialized successfully");
-                        }
-                        catch (System.Exception)
-                        {
-                            TraceLog(TraceLogLevel.Error, "Error creating loading thread");
-                        }
-
-                        state = State.Loading;
+                        // Start the loading task in a new thread
+                        Task.Run(() => LoadDataThread());
+                        TraceLog(TraceLogLevel.Info, "Loading thread initialized successfully");
+                        state = GameState.Loading;
                     }
-                }
-                break;
-                case State.Loading:
+                } break;
+                case GameState.Loading:
                 {
                     framesCounter++;
-                    if (done == 1)
+                    // Check if dataLoaded is true
+                    if (Interlocked.CompareExchange(ref _dataLoaded, 0, 1) == 1) // Atomically checks if _dataLoaded is 1 and if so sets it to 0
                     {
                         framesCounter = 0;
-                        try
-                        {
-                            thread?.Join();
-                            TraceLog(TraceLogLevel.Info, "Loading thread terminated successfully");
-                        }
-                        catch (System.Exception)
-                        {
-                            TraceLog(TraceLogLevel.Error, "Error joining loading thread");
-                        }
-
-                        state = State.Finished;
+                        TraceLog(TraceLogLevel.Info, "Loading thread terminated successfully");
+                        state = GameState.Finished;
                     }
-                }
-                break;
-                case State.Finished:
+                } break;
+                case GameState.Finished:
                 {
                     if (IsKeyPressed(Key.Enter))
                     {
                         // Reset everything to launch again
-                        progress = 0;
-                        done = 0;
-                        state = State.Waiting;
+                        Interlocked.Exchange(ref _dataLoaded, 0); // Atomically sets _dataLoaded to 0
+                        Interlocked.Exchange(ref _dataProgress, 0); // Atomically sets _dataProgress to 0
+                        state = GameState.Waiting;
                     }
-                }
-                break;
-                default: break;
+                } break;
             }
+            //----------------------------------------------------------------------------------
 
             // Draw
+            //----------------------------------------------------------------------------------
             BeginDrawing();
-            {
 
                 ClearBackground(RayWhite);
 
                 switch (state)
                 {
-                    case State.Waiting: DrawText("PRESS ENTER to START LOADING DATA", 150, 170, 20, DarkGray); break;
-                    case State.Loading:
+                    case GameState.Waiting: DrawText("PRESS ENTER to START LOADING DATA", 150, 170, 20, DarkGray); break;
+                    case GameState.Loading:
                     {
-                        DrawRectangle(150, 200, progress * 5, 60, SkyBlue);
-                        if (framesCounter / 15 % 2 == 0)
+                        DrawRectangle(150, 200, Interlocked.CompareExchange(ref _dataProgress, 0, 0), 60, SkyBlue);
+                        if ((framesCounter / 15) % 2 == 0)
                         {
                             DrawText("LOADING DATA...", 240, 210, 40, DarkBlue);
                         }
-                    }
-                    break;
-                    case State.Finished:
+                    } break;
+                    case GameState.Finished:
                     {
                         DrawRectangle(150, 200, 500, 60, Lime);
                         DrawText("DATA LOADED!", 250, 210, 40, Green);
-
-                    }
-                    break;
+                    } break;
                     default: break;
                 }
 
                 DrawRectangleLines(150, 200, 500, 60, DarkGray);
 
-            }
             EndDrawing();
+            //----------------------------------------------------------------------------------
         }
 
         // De-Initialization
-        CloseWindow();
-
-        return 0;
+        //--------------------------------------------------------------------------------------
+        CloseWindow();        // Close window and OpenGL context
+        //--------------------------------------------------------------------------------------
     }
 
     // Loading data thread function definition
-    static void LoadDataThread()
+    private static void LoadDataThread()
     {
-        // We simulate data loading with a time counter for 5 seconds
-        for (int i = 0; i < 5000; i++)
+        long timeCounter = 0; // Time counted in ms
+        long prevTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(); // Previous time in milliseconds
+
+        // We simulate data loading for 5 seconds
+        while (timeCounter < 5000)
         {
-            Thread.Sleep(1);
-            Interlocked.Exchange(ref progress, i / 50);
+            long currentTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            timeCounter = currentTime - prevTime;
+
+            // We accumulate time over a global variable to be used in
+            // main thread as a progress bar
+            Interlocked.Exchange(ref _dataProgress, (int)(timeCounter / 10)); // Atomically sets _dataProgress
+            Thread.Sleep(1); // Simulate some work and yield CPU
         }
 
-        Interlocked.Exchange(ref done, 1);
+        // When data has finished loading, we set global variable
+        Interlocked.Exchange(ref _dataLoaded, 1); // Atomically sets _dataLoaded to 1
     }
-
 }

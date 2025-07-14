@@ -17,6 +17,9 @@ using System;
 using RaylibSharp;
 using RaylibSharp.GL;
 
+using Camera = RaylibSharp.Camera3D;
+using RenderTexture2D = RaylibSharp.RenderTexture;
+
 using static RaylibSharp.Raylib;
 
 public partial class Core2dCamera : ExampleHelper
@@ -106,9 +109,9 @@ public partial class Core2dCamera : ExampleHelper
 
                     DrawRectangle(-6000, 320, 13000, 8000, DarkGray);
 
-                    for (int i = 0; i < MAX_BUILDINGS; i++) DrawRectangle(buildings[i], buildColors[i]);
+                    for (int i = 0; i < MAX_BUILDINGS; i++) DrawRectangleRec(buildings[i], buildColors[i]);
 
-                    DrawRectangle(player, Red);
+                    DrawRectangleRec(player, Red);
 
                     DrawLine((int)camera.Target.X, -screenHeight*10, (int)camera.Target.X, screenHeight*10, Green);
                     DrawLine(-screenWidth*10, (int)camera.Target.Y, screenWidth*10, (int)camera.Target.Y, Green);
