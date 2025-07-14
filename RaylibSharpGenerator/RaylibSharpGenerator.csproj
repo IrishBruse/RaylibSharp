@@ -5,7 +5,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <NoWarn>CA1311</NoWarn>
+        <NoWarn>all</NoWarn>
         <IsPackable>false</IsPackable>
         <RootNamespace>RaylibSharp.Generator</RootNamespace>
     </PropertyGroup>

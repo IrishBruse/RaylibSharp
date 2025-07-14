@@ -1,5 +1,7 @@
 namespace RaylibSharp.Generator;
 
+using System;
+
 class Lines(string[] Lines)
 {
     int index = 0;
@@ -31,6 +33,16 @@ class Lines(string[] Lines)
     public bool HasNext()
     {
         return index < Lines.Length;
+    }
+
+    public bool Until(string v)
+    {
+        if (CurrentLine.Trim() == v)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     public string? CurrentLine

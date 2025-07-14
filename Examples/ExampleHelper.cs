@@ -1,3 +1,4 @@
+using System;
 using System.Numerics;
 
 using RaylibSharp;
@@ -70,5 +71,94 @@ public class ExampleHelper
         result.X = 1.0f - (result.Z + result.Y);
 
         return result;
+    }
+
+    public static Vector2 Vector2Scale(Vector2 v, float scale)
+    {
+        return v * scale;
+    }
+
+    public static Vector2 Vector2Add(Vector2 v1, Vector2 v2)
+    {
+        return v1 + v2;
+    }
+
+    public static Vector2 Vector2Subtract(Vector2 v1, Vector2 v2)
+    {
+        return v1 - v2;
+    }
+
+    public static float Vector2Length(Vector2 v)
+    {
+        return MathF.Sqrt((v.X * v.X) + (v.Y * v.Y));
+    }
+
+    public static float fabsf(float x)
+    {
+        return MathF.Abs(x);
+    }
+
+    public static float fminf(float x, float y)
+    {
+        return MathF.Min(x, y);
+    }
+    public static float fmaxf(float x, float y)
+    {
+        return MathF.Max(x, y);
+    }
+
+    public static float sinf(float x)
+    {
+        return MathF.Sin(x);
+    }
+
+    public static float cosf(float x)
+    {
+        return MathF.Cos(x);
+    }
+
+    public static float truncf(float x)
+    {
+        return MathF.Truncate(x);
+    }
+
+    public static float MIN(float x, float y)
+    {
+        return MathF.Min(x, y);
+    }
+
+    public static float MAX(float x, float y)
+    {
+        return MathF.Max(x, y);
+    }
+
+    public static float Clamp(float value, float min, float max)
+    {
+        if (value < min) return min;
+        if (value > max) return max;
+        return value;
+    }
+
+    public static Vector2 Vector2Clamp(Vector2 value, Vector2 min, Vector2 max)
+    {
+        return new Vector2(
+            Math.Clamp(value.X, ((Vector2)min).X, ((Vector2)max).X),
+            Math.Clamp(value.Y, ((Vector2)min).Y, ((Vector2)max).Y)
+        );
+    }
+
+    public static void DrawRectangleRec(Rectangle rec, Color color)
+    {
+        Raylib.DrawRectangle(rec, color);
+    }
+
+    public static void DrawCircleV(Vector2 center, float radius, Color color)
+    {
+        Raylib.DrawCircle(center, radius, color);
+    }
+
+    public static void DrawTextEx(Font font, string text, Vector2 position, float fontSize, float spacing, Color tint)
+    {
+        Raylib.DrawText(font, text, position, fontSize, spacing, tint);
     }
 }

@@ -1,3 +1,16 @@
+/*******************************************************************************************
+*
+*   raylib [core] example - 2D Camera system
+*
+*   Example originally created with raylib 1.5, last time updated with raylib 3.0
+*
+*   Example licensed under an unmodified zlib/libpng license, which is an OSI-certified,
+*   BSD-like license that allows static linking with closed source software
+*
+*   Copyright (c) 2016-2024 Ramon Santamaria (@raysan5)
+*
+********************************************************************************************/
+
 using System.Numerics;
 using System;
 
@@ -6,23 +19,25 @@ using RaylibSharp.GL;
 
 using static RaylibSharp.Raylib;
 
-public partial class Core2dCamera : ExampleHelper 
+public partial class Core2dCamera : ExampleHelper
 {
+    const int MAX_BUILDINGS = 100;
 
-private const int MAX_BUILDINGS = 100;
-
+    //------------------------------------------------------------------------------------
     // Program main entry point
+    //------------------------------------------------------------------------------------
     public static int Example()
     {
         // Initialization
+        //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - 2d camera");
+        InitWindow(screenWidth, screenHeight, "raylib [core] example - 2d camera");
 
-        Rectangle player = new( 400, 280, 40, 40 );
-        Rectangle [] buildings = new Rectangle [MAX_BUILDINGS];
-        Color [] buildColors = new Color [MAX_BUILDINGS];
+        Rectangle player = new(400, 280, 40, 40);
+        Rectangle[] buildings = new Rectangle[MAX_BUILDINGS];
+        Color[] buildColors = new Color[MAX_BUILDINGS];
 
         int spacing = 0;
 
@@ -35,7 +50,7 @@ private const int MAX_BUILDINGS = 100;
 
             spacing += (int)buildings[i].Width;
 
-            buildColors[i] = Color.FromArgb(255, GetRandomValue(200, 240), GetRandomValue(200, 240), GetRandomValue(200, 250));
+            buildColors[i] = new(GetRandomValue(200, 240), GetRandomValue(200, 240), GetRandomValue(200, 250), 255);
         }
 
         Camera2D camera = new();
@@ -45,19 +60,21 @@ private const int MAX_BUILDINGS = 100;
         camera.Zoom = 1.0f;
 
         SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+        //--------------------------------------------------------------------------------------
 
         // Main game loop
         while (!WindowShouldClose())        // Detect window close button or ESC key
         {
             // Update
+            //----------------------------------------------------------------------------------
             // Player movement
             if (IsKeyDown(Key.Right)) player.X += 2;
             else if (IsKeyDown(Key.Left)) player.X -= 2;
 
-            // Camera3D target follows player
+            // Camera target follows player
             camera.Target = new( player.X + 20, player.Y + 20 );
 
-            // Camera3D rotation controls
+            // Camera rotation controls
             if (IsKeyDown(Key.A)) camera.Rotation--;
             else if (IsKeyDown(Key.S)) camera.Rotation++;
 
@@ -65,25 +82,27 @@ private const int MAX_BUILDINGS = 100;
             if (camera.Rotation > 40) camera.Rotation = 40;
             else if (camera.Rotation < -40) camera.Rotation = -40;
 
-            // Camera3D zoom controls
+            // Camera zoom controls
             camera.Zoom += ((float)GetMouseWheelMove()*0.05f);
 
             if (camera.Zoom > 3.0f) camera.Zoom = 3.0f;
             else if (camera.Zoom < 0.1f) camera.Zoom = 0.1f;
 
-            // Camera3D reset (zoom and rotation)
+            // Camera reset (zoom and rotation)
             if (IsKeyPressed(Key.R))
             {
                 camera.Zoom = 1.0f;
                 camera.Rotation = 0.0f;
             }
+            //----------------------------------------------------------------------------------
 
             // Draw
-            BeginDrawing();{
+            //----------------------------------------------------------------------------------
+            BeginDrawing();
 
                 ClearBackground(RayWhite);
 
-                BeginMode2D(camera);{
+                BeginMode2D(camera);
 
                     DrawRectangle(-6000, 320, 13000, 8000, DarkGray);
 
@@ -94,7 +113,7 @@ private const int MAX_BUILDINGS = 100;
                     DrawLine((int)camera.Target.X, -screenHeight*10, (int)camera.Target.X, screenHeight*10, Green);
                     DrawLine(-screenWidth*10, (int)camera.Target.Y, screenWidth*10, (int)camera.Target.Y, Green);
 
-                }EndMode2D();
+                EndMode2D();
 
                 DrawText("SCREEN AREA", 640, 10, 20, Red);
 
@@ -112,12 +131,16 @@ private const int MAX_BUILDINGS = 100;
                 DrawText("- A / S to Rotate", 40, 80, 10, DarkGray);
                 DrawText("- R to reset Zoom and Rotation", 40, 100, 10, DarkGray);
 
-            }EndDrawing();
+            EndDrawing();
+            //----------------------------------------------------------------------------------
         }
 
         // De-Initialization
+        //--------------------------------------------------------------------------------------
         CloseWindow();        // Close window and OpenGL context
+        //--------------------------------------------------------------------------------------
 
         return 0;
     }
 }
+

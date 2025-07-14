@@ -38,6 +38,44 @@ public class Utility
         "Magenta",
     ];
 
+    public static readonly string[] Flags = [
+        "FLAG_VSYNC_HINT",
+        "FLAG_FULLSCREEN_MODE",
+        "FLAG_WINDOW_RESIZABLE",
+        "FLAG_WINDOW_UNDECORATED",
+        "FLAG_WINDOW_TRANSPARENT",
+        "FLAG_WINDOW_HIDDEN",
+        "FLAG_WINDOW_MINIMIZED",
+        "FLAG_WINDOW_MAXIMIZED",
+        "FLAG_WINDOW_UNFOCUSED",
+        "FLAG_WINDOW_TOPMOST",
+        "FLAG_WINDOW_HIGHDPI",
+        "FLAG_WINDOW_ALWAYS_RUN",
+        "FLAG_MSAA_4X_HINT",
+    ];
+
+    public static readonly string[] TextureFilter = [
+        "TEXTURE_FILTER_POINT",
+        "TEXTURE_FILTER_BILINEAR",
+        "TEXTURE_FILTER_TRILINEAR",
+        "TEXTURE_FILTER_ANISOTROPIC_4X",
+        "TEXTURE_FILTER_ANISOTROPIC_8X",
+        "TEXTURE_FILTER_ANISOTROPIC_16X",
+    ];
+
+    public static readonly string[] Gestures = [
+        "None",
+        "Tap",
+        "Doubletap",
+        "Hold",
+        "Drag",
+        "SwipeRight",
+        "SwipeLeft",
+        "SwipeUp",
+        "SwipeDown",
+        "PinchIn",
+        "PinchOut",
+    ];
     public static readonly string[] Keys = [
         "Null",
         "Apostrophe",

@@ -711,7 +711,7 @@ public static unsafe partial class Raylib
     /// <summary> Check if a gesture have been detected </summary>
     [LibraryImport(LIB, EntryPoint = "IsGestureDetected")]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static partial bool IsGestureDetected(uint gesture);
+    public static partial bool IsGestureDetected(Gesture gesture);
 
     /// <summary> Get latest detected gesture </summary>
     [LibraryImport(LIB, EntryPoint = "GetGestureDetected")]

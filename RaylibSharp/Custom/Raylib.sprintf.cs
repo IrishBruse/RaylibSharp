@@ -3,7 +3,8 @@ namespace RaylibSharp;
 using System.Text;
 
 public unsafe partial class Raylib
-{    /// <summary> Text formatting with variables (sprintf() style) </summary>
+{
+    /// <summary> Text formatting with variables (sprintf() style) </summary>
     [Obsolete("Please use C# string interpolation instead of this function", false)]
     public static string TextFormat(string format, params object[] args)
     {

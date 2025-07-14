@@ -24,21 +24,24 @@ public partial class ExampleProcessor
             string[] lines = File.ReadAllLines(cFile);
             Lines exampleLines = new(lines);
 
+            if (exampleName == "CoreBasicWindowWeb")
+            {
+                continue;
+            }
+
             if (exampleName.StartsWith("Core"))
             {
-                GenerateExample(exampleLines, $"../Examples/Core/{exampleName}.cs");
+                GenerateExample(exampleLines, exampleName, $"../Examples/Core/{exampleName}.cs");
                 continue;
             }
         }
     }
 
-    static void GenerateExample(Lines lines, string outputFile)
+    static void GenerateExample(Lines lines, string exampleName, string outputFile)
     {
         Log($"Example {outputFile}", ConsoleColor.Green);
 
         _ = Directory.CreateDirectory(Path.GetDirectoryName(outputFile)!);
-
-        string exampleName = Path.GetFileNameWithoutExtension(outputFile);
 
         List<string> output = new();
 
@@ -47,6 +50,10 @@ public partial class ExampleProcessor
         while (lines.HasNext())
         {
             string? line = lines.NextLine();
+            if (line == null)
+            {
+                break;
+            }
             line = line.TrimEnd();
 
             output.Add(line);
@@ -64,6 +71,9 @@ public partial class ExampleProcessor
         output.Add("");
         output.Add("using RaylibSharp;");
         output.Add("using RaylibSharp.GL;");
+        output.Add("");
+        output.Add("using Camera = RaylibSharp.Camera3D;");
+        output.Add("using RenderTexture2D = RaylibSharp.RenderTexture;");
         output.Add("");
         output.Add("using static RaylibSharp.Raylib;");
         output.Add("");
@@ -83,6 +93,32 @@ public partial class ExampleProcessor
                 lines.SkipEmpty();
                 continue;
             }
+            else if (source.TrimStart().StartsWith("typedef struct"))
+            {
+                string[] test = source.Split([" ", "{"], StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+                string structName = test[2];
+                output.Add($"{tab}struct {structName} {{");
+
+                while (lines.Until("} " + structName + ";"))
+                {
+                    string? structLine = lines.NextLine().Trim();
+                    if (structLine == null || structLine.Trim() == "}")
+                    {
+                        output.Add($"{tab}}} {structName};");
+                        break;
+                    }
+
+                    string[] parts = structLine.Split(" ", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+                    string type = parts[0];
+                    string name = parts[1];
+
+                    output.Add($"{tab}{tab}public {type} {char.ToUpper(name[0]) + name[1..]}");
+                }
+                lines.NextLine();
+                output.Add(tab + "}");
+
+                continue;
+            }
             else if (source.TrimStart().StartsWith("#define"))
             {
                 string[] parts = source.Split(" ", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
@@ -92,7 +128,12 @@ public partial class ExampleProcessor
 
                 string type = value.Contains('.') ? "float" : "int";
 
-                output.Add(tab + $"{type} {name} = {value};");
+                if (source.Contains("MAX(a") || source.Contains("MIN(a"))
+                {
+                    continue;
+                }
+
+                output.Add(tab + $"const {type} {name} = {value};");
                 continue;
             }
             else if (source.Contains("int main("))
@@ -102,132 +143,210 @@ public partial class ExampleProcessor
             }
             else
             {
-                string converted = ProcessLine(source);
-                output.Add(tab + converted);
+                string converted = tab + ProcessLine(source, exampleName);
+                output.Add(converted.TrimEnd());
             }
-
         }
 
         output.Add("}");
+        output.Add("");
+
+        if (exampleName == "Core2dCameraPlatformer")
+        {
+            MoveLineRangeBy(output, 239, 241, -2, true); // UpdateCameraCenterSmoothFollow
+            MoveLineRangeBy(output, 256, 258, -2, true); // UpdateCameraEvenOutOnLanding
+            MoveLineRangeBy(output, 298, 299, -2, true); // UpdateCameraPlayerBoundsPush
+        }
 
         File.WriteAllLines(outputFile, output);
     }
 
-    static string? ProcessLine(string? l)
+    static void MoveLineRangeBy(List<string> lines, int start, int end, int count, bool dedent = false)
     {
-        // return l;
+        start--;
+        end--;
+        if (start < 0 || end >= lines.Count || start >= end)
+        {
+            return; // Invalid range
+        }
 
+        List<string> range = lines.GetRange(start, end - start + 1);
+        if (dedent)
+        {
+            for (int i = 0; i <= range.Count - 1; i++)
+            {
+                if (range[i].Length > 4)
+                {
+                    range[i] = range[i][4..]; // Remove 4 spaces
+                }
+            }
+        }
+        lines.RemoveRange(start, end - start + 1);
+        lines.InsertRange(start + count, range);
+    }
+
+
+    static string? ProcessLine(string l, string exampleName)
+    {
         StringBuilder line = new(l);
 
-        line.Replace(RectangleReplace(), "new($1)");
-        line.Replace(ColorReplace(), "new($1, $2, $3, $4)");
-        line.Replace(StructAssignment(), "= new($1)");
+        Globals(line);
 
-        line.Replace("typedef struct", "struct");
+        switch (exampleName)
+        {
+            case "Core2dCamera":
+            break;
+            case "Core2dCameraMouseZoom":
+            break;
+            case "Core2dCameraPlatformer":
+            {
+                if (line.Contains("void") && l.EndsWith(';'))
+                {
+                    return "// " + line;
+                }
 
-        line.Replace("ModelAnimation *", "ModelAnimation[]");
+                line.ReplaceAll("char *", "string ");
 
-        // Change Alias
-        line.ReplaceAll("MATERIAL_MAP_DIFFUSE", "MATERIAL_MAP_ALBEDO");
-        line.ReplaceAll("Camera3D", "Camera");
-        line.ReplaceAll("Texture2D", "Texture");
-        line.ReplaceAll("RenderTexture2D", "RenderTexture");
+                line.ReplaceAll(" *", " ");
 
-        line.ReplaceAll("atan2f(", "MathF.Atan2(");
-        line.ReplaceAll("cosf(", "MathF.Cos(");
-        line.ReplaceAll("sinf(", "MathF.Sin(");
-        line.ReplaceAll("ceilf(", "MathF.Ceiling(");
+                line.Replace("int eveningOut", "bool eveningOut");
+                line.Replace("eveningOut = 0;", "eveningOut = false;");
+                line.Replace("eveningOut = 1;", "eveningOut = true;");
 
-        line.ReplaceAll("->", ".");
+                line.Replace(".speed", ".Speed");
+                line.Replace(".rect", ".Rect");
+                line.Replace(".canJump", ".CanJump");
+                line.Replace(".blocking", ".Blocking");
+            }
+            break;
+            case "Core2dCameraSplitScreen":
+            break;
+            case "Core3dCameraFirstPerson":
+            break;
+            case "Core3dCameraFree":
+            break;
+            case "Core3dCameraMode":
+            break;
+            case "Core3dCameraSplitScreen":
+            break;
+            case "Core3dPicking":
+            break;
+            case "CoreAutomationEvents":
+            break;
+            case "CoreBasicScreenManager":
+            {
+                string convertedEnum = """
+                const int LOGO = 0;
+                    const int TITLE = 1;
+                    const int GAMEPLAY = 2;
+                    const int ENDING = 3;
+                """;
+                line.Replace("typedef enum GameScreen new(LOGO = 0, TITLE, GAMEPLAY, ENDING) GameScreen;", convertedEnum);
+                line.Replace("GameScreen", "int");
+            }
+            break;
+            case "CoreBasicWindow":
+            break;
+            case "CoreCustomFrameControl":
+            break;
+            case "CoreCustomLogging":
+            break;
+            case "CoreDropFiles":
+            break;
+            case "CoreInputGamepad":
+            break;
+            case "CoreInputGamepadInfo":
+            break;
+            case "CoreInputGestures":
+            break;
+            case "CoreInputGesturesWeb":
+            break;
+            case "CoreInputKeys":
+            break;
+            case "CoreInputMouse":
+            break;
+            case "CoreInputMouseWheel":
+            break;
+            case "CoreInputMultitouch":
+            break;
+            case "CoreInputVirtualControls":
+            break;
+            case "CoreLoadingThread":
+            break;
+            case "CoreRandomSequence":
+            break;
+            case "CoreRandomValues":
+            break;
+            case "CoreScissorTest":
+            break;
+            case "CoreSmoothPixelperfect":
+            break;
+            case "CoreSplitScreen":
+            break;
+            case "CoreStorageValues":
+            break;
+            case "CoreVrSimulator":
+            break;
+            case "CoreWindowFlags":
+            break;
+            case "CoreWindowLetterbox":
+            if (line.Contains("const int MAX(a, = b);") || line.Contains("const int MIN(a, = b);"))
+            {
+                line.Length = 0;
+            }
+            break;
+            case "CoreWindowShouldClose":
+            break;
+            case "CoreWorldScreen":
+            line.Replace("&camera", "ref camera");
+            line.Replace(Vector3Replace(), "new Vector3($1, $2, $3)");
+            break;
+            default:
+            break;
+        }
 
-        line.Replace(IsMouseConstEnumReplace(), m => $"{m.Groups[1]}(MouseButton.{Utility.ToPascalCase(m.Groups[2].Value)})");
-        line.Replace(ArrayReplace(), "$1[] $2 = new $1$3");
-        line.Replace(VoidFunctionMatch(), "static $0");
-        line.Replace(Vector2Replace(), "new($1)");
-        line.Replace(Vector2AssignReplace(), "new($1,$2)");
-        line.Replace(Vector3Replace(), "new($1)");
-        line.Replace(Vector3AssignReplace(), "new($1,$2,$3)");
-        line.Replace(FalseBooleanAssignment(), "$1 false;");
-        line.Replace(ExampleName(), "RaylibSharp - $1 - ");
-        line.Replace(RLGLReplace(), "RLGL.$1");
-        line.Replace(CAndRef(), "$1ref $2");
-        line.Replace(RLConstantsReplace(), m => $"RLGL.Rl{Utility.ToPascalCase(m.Groups[1].Value)}");
+        // Pascal Case
+        UpperCaseVariables(line);
 
-        line.Replace(MyRegex(), "string $1");
-        line.Replace(BoolFalse(), "bool $1 = false;");
-        line.Replace(BoolTrue(), "bool $1 = true;");
+        return line.ToString();
+    }
 
-
+    static void Globals(StringBuilder line)
+    {
         foreach (string color in Utility.Colors)
         {
-            line.ReplaceAll(color.ToUpper(), color);
+            line.Replace(color.ToUpperInvariant(), color);
+        }
+
+        foreach (string gesture in Utility.Gestures)
+        {
+            line.Replace("GESTURE_" + gesture.ToUpperInvariant(), "Gesture." + gesture);
         }
 
         foreach (string key in Utility.Keys)
         {
-            line.ReplaceAll("KEY_" + key.ToUpper(), "Key." + key);
+            line.Replace("KEY_" + key.ToUpperInvariant(), "Key." + key);
         }
 
         foreach (string val in Utility.MaterialMapIndex)
         {
-            line.ReplaceAll("MATERIAL_MAP_" + val.ToUpper(), "MaterialMapIndex." + val);
+            line.ReplaceAll("MATERIAL_MAP_" + val.ToUpperInvariant(), "MaterialMapIndex." + val);
         }
 
-        line.ReplaceAll("Camera ", "Camera3D ");
-        line.ReplaceAll("camera.target", "camera.Target");
-        line.ReplaceAll("camera.offset", "camera.Offset");
-        line.ReplaceAll("camera.rotation", "camera.Rotation");
-        line.ReplaceAll("camera.zoom", "camera.Zoom");
-        line.ReplaceAll("camera.zoom", "camera.Zoom");
-        line.ReplaceAll("camera.position", "camera.Position");
-        line.ReplaceAll("camera.up", "camera.Up");
-        line.ReplaceAll("camera.fovy", "camera.Fovy");
-        line.ReplaceAll("camera.projection", "camera.Projection");
+        foreach (string val in Utility.MaterialMapIndex)
+        {
+            line.ReplaceAll("MATERIAL_MAP_" + val.ToUpperInvariant(), "MaterialMapIndex." + val);
+        }
 
-        line.ReplaceAll("model.boneCount", "model.BoneCount");
-        line.ReplaceAll(".frameCount", ".FrameCount");
-        line.ReplaceAll(".translation", ".Translation");
-        line.ReplaceAll(".framePoses", ".FramePoses");
-        line.ReplaceAll(".texture", ".Texture");
+        foreach (string val in Utility.TextureFilter)
+        {
+            line.ReplaceAll(val, string.Concat("TextureFilter.", Utility.ToPascalCase(val.Substring(15))));
+        }
 
-        line.Replace(".id", ".Id");
-        line.Replace(".r", ".R");
-        line.Replace(".g", ".G");
-        line.Replace(".b", ".B");
-        line.Replace(".a", ".A");
-
-        line.ReplaceAll("[MaterialMapIndex", "[(int)MaterialMapIndex");
-
-        line.ReplaceAll(".hit", ".Hit");
-
-        line.ReplaceAll(".x", ".X");
-        line.ReplaceAll(".y", ".Y");
-        line.ReplaceAll(".z", ".Z");
-        line.ReplaceAll(".height", ".Height");
-        line.ReplaceAll(".width", ".Width");
-
-        line.Replace("V(", "(");
-        line.Replace("Ex(", "(");
-        line.Replace("Pro(", "(");
-        line.Replace("Rec(", "(");
-
-        line.Replace("%2", "%2 == 0");
-
-        line.Replace("{ 0 }", "new()");
-        line.Replace("{ 0.0f }", "new(0,0)");
-
-        // Vector functions
-        line.ReplaceAll("Vector2Distance", "Vector2.Distance");
-        line.ReplaceAll("Vector3Distance", "Vector3.Distance");
-
-        // Types
-        line.ReplaceAll("void *", "System.IntPtr ");
-        line.ReplaceAll("unsigned int ", "uint ");
-        line.ReplaceAll("const char *", "string ");
-        line.ReplaceAll("Color *", "Color[] ");
-        line.ReplaceAll("Matrix ", "Matrix4x4 ");
-
-        line.ReplaceAll("Vector3Zero()", "Vector3.Zero");
+        foreach (string val in Utility.Flags)
+        {
+            line.ReplaceAll(val, "WindowFlag." + Utility.ToPascalCase(val.Replace("FLAG_", "").Replace("WINDOW_", "")));
+        }
 
         // CameraProjection
         line.Replace("CAMERA_PERSPECTIVE", "CameraProjection.Perspective");
@@ -240,9 +359,32 @@ public partial class ExampleProcessor
         line.Replace("CAMERA_FIRST_PERSON", "CameraMode.FirstPerson");
         line.Replace("CAMERA_THIRD_PERSON", "CameraMode.ThirdPerson");
 
-        line.Replace("FLAG_MSAA_4X_HINT", "WindowFlag.Msaa4xHint");
+        line.Replace(RLGLReplace(), "RLGL.$1");
 
-        line.Replace("NULL", "null");
+        line.Replace(IsMouseConstEnumReplace(), m => $"{m.Groups[1]}(MouseButton.{Utility.ToPascalCase(m.Groups[2].Value)})");
+
+        line.ReplaceAll("->", ".");
+
+        line.ReplaceAll("unsigned int ", "uint ");
+
+        line.Replace(Vector2Replace(), "new($1)");
+        line.Replace(ColorReplace(), "new($1, $2, $3, $4)");
+        line.Replace(StructAssignment(), "= new($1)");
+        line.Replace(RectangleReplace(), "new($1, $2, $3, $4)");
+        line.Replace(ArrayReplace(), "$1[] $2 = new $1$3");
+        line.Replace(Vector2AssignReplace(), "new($1,$2);");
+
+        line.Replace("{ 0 }", "new()");
+    }
+
+    static void UpperCaseVariables(StringBuilder line)
+    {
+        line.Replace(".x", ".X");
+        line.Replace(".y", ".Y");
+        line.Replace(".z", ".Z");
+
+        line.Replace(".height", ".Height");
+        line.Replace(".width", ".Width");
 
         line.Replace(".materials", ".Materials");
         line.Replace(".maps", ".Maps");
@@ -251,49 +393,38 @@ public partial class ExampleProcessor
         line.Replace(".paths", ".Paths");
         line.Replace(".name", ".Name");
         line.Replace(".parent", ".Parent");
-        line.Replace("&camera", "ref camera");
 
-        line.Replace(".loc[", ".Loc[");
-        line.Replace(".locs[", ".Locs[");
-        line.Replace(".transform", ".Transform");
-        line.Replace(".shader", ".Shader");
+        line.Replace(".id", ".Id");
+        line.Replace(".r", ".R");
+        line.Replace(".g", ".G");
+        line.Replace(".b", ".B");
+        line.Replace(".a", ".A");
 
-        line.Replace("BeginDrawing();", "BeginDrawing();{");
-        line.Replace("EndDrawing();", "}EndDrawing();");
+        line.Replace(".target", ".Target");
+        line.Replace(".offset", ".Offset");
+        line.Replace(".rotation", ".Rotation");
+        line.Replace(".zoom", ".Zoom");
+        line.Replace(".zoom", ".Zoom");
+        line.Replace(".position", ".Position");
+        line.Replace(".up", ".Up");
+        line.Replace(".fovy", ".Fovy");
+        line.Replace(".projection", ".Projection");
 
-        line.Replace("BeginShaderMode(shader);", "BeginShaderMode(shader);{");
-        line.Replace("EndShaderMode();", "}EndShaderMode();");
-
-        line.Replace("BeginMode2D(camera);", "BeginMode2D(camera);{");
-        line.Replace("EndMode2D();", "}EndMode2D();");
-
-        line.Replace("BeginTextureMode(target);", "BeginTextureMode(target);{");
-        line.Replace("EndTextureMode();", "}EndTextureMode();");
-
-        line.Replace("BeginMode3D(camera);", "BeginMode3D(camera);{");
-        line.Replace("EndMode3D();", "}EndMode3D();");
-
-        // Hardcoded edits
-        line.Replace("int [] colorState = new int [MAX_COLORS_COUNT];           // Color state: 0-DEFAULT, 1-MOUSE_HOVER", "bool [] colorState = new bool [MAX_COLORS_COUNT];           // Color state: 0-DEFAULT, 1-MOUSE_HOVER");
-        line.Replace("colorState[i] = 1;", "colorState[i] = true;");
-        line.Replace("colorState[i] = 0;", "colorState[i] = false;");
-        line.Replace("if (framesCounter/12)", "if (framesCounter/12==0)");
-
-        return line.ToString();
+        line.Replace(".texture", ".Texture");
     }
 
-    [GeneratedRegex(@"= {(.*?,.*?)}")] private static partial Regex StructAssignment(); // = { -12.0, 1.0 }
+    [GeneratedRegex(@"= {( \d+, \d+ )}")] private static partial Regex StructAssignment(); // = { -12.0, 1.0 }
     [GeneratedRegex(@"(IsMouse\w+)\(MOUSE_BUTTON_(.*?)\)")] private static partial Regex IsMouseConstEnumReplace(); // IsMouseButtonDown(MOUSE_BUTTON_RIGHT)
-    [GeneratedRegex(@"\(Vector3\)\{((.*?),(.*?),(.*?))\}")] private static partial Regex Vector3Replace(); // (Vector3){ , , }
+    [GeneratedRegex(@"\(Vector3\)\{\s*(.*?),\s*(.*?),\s*(.*?)\s*\}")] private static partial Regex Vector3Replace(); // (Vector3){ , , }
     [GeneratedRegex(@"\{ (.*?f), (.*?f), (.*?f) \}")] private static partial Regex Vector3AssignReplace(); // { 0.0f, 0.0f, 0.0f }
     [GeneratedRegex(@"\(Vector2\).?\{((.*?),(.*?))\}")] private static partial Regex Vector2Replace(); // (Vector2){ , }
-    [GeneratedRegex(@"\{ (.*?f), (.*?f) \}")] private static partial Regex Vector2AssignReplace(); // { , }
-    [GeneratedRegex(@"(int |float |const char \*|Color |Light |Rectangle )(\w+)(\[.*\]) = (\{ 0 \})?")] private static partial Regex ArrayReplace(); // int x[10];
+    [GeneratedRegex(@"\{ (.*?), (.*?) \};")] private static partial Regex Vector2AssignReplace(); // { , }
+    [GeneratedRegex(@"(\w+) (\w+)(\[.*\]) = (\{ 0 \})?")] private static partial Regex ArrayReplace(); // int x[10];
     [GeneratedRegex(@"void \w+\(")] private static partial Regex VoidFunctionMatch();
     [GeneratedRegex(@"(bool \w+ =) 0")] private static partial Regex FalseBooleanAssignment(); // bool varname = 0
     [GeneratedRegex(@"raylib \[(\w+)\] example - ")] private static partial Regex ExampleName(); // raylib [core] example => RaylibSharp - core -
 
-    [GeneratedRegex(@"\(Rectangle\)\{(.*?,.*?,.*?,.*?)\}")] private static partial Regex RectangleReplace(); // (Rectangle){ , , , }
+    [GeneratedRegex(@"\{ (.*?), (.*?), (.*?), (.*?) \}")] private static partial Regex RectangleReplace(); // (Rectangle){ , , , }
     [GeneratedRegex(@"\(Color\)\{ (.*), (.*), (.*), (255) \}")] private static partial Regex ColorReplace(); // (Color){ , , , }
     [GeneratedRegex(@"Vector2Add\((.*?), (.*?)\)")] private static partial Regex Vector2AddReplace(); // Vector2Add(delta, -1.0f / camera.Zoom);
     [GeneratedRegex(@"Vector2Scale\((.*?), (.*?)\)")] private static partial Regex Vector2ScaleReplace(); // Vector2Scale(delta, -1.0f / camera.Zoom);

@@ -17,6 +17,7 @@ public struct FunctionConfig
             {"GenTextureMipmaps", new() { { "texture", "ref Texture texture" } }},
             {"GetGamepadAxisMovement", new() { { "axis", "GamepadAxis axis" } }},
             {"GetGamepadButtonPressed", new() { { "_", "GamepadButton" } }},
+            {"IsGestureDetected", new() { { "gesture", "Gesture gesture" } }},
             {"GetGestureDetected", new() { { "_", "Gesture" } }},
             {"IsGamepadButtonDown", new() { { "button", "GamepadButton button" } }},
             {"IsGamepadButtonPressed", new() { { "button", "GamepadButton button" } }},
