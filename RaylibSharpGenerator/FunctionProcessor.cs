@@ -9,6 +9,8 @@ public class FunctionProcessor
 
     public static void Emit(RaylibApi api)
     {
+        Log("Emitting Functions", ConsoleColor.Blue);
+
         StringBuilder sb = new();
 
         sb.AppendLine($"namespace {api.Namespace};");
@@ -76,6 +78,8 @@ public class FunctionProcessor
 
             sb.AppendLine($"    public static partial {type} {f.Name}({parameters});");
 
+            Log($"{type} {f.Name}(...)");
+
             sb.AppendLine("");
         }
 
@@ -83,6 +87,8 @@ public class FunctionProcessor
         sb.AppendLine();
 
         File.WriteAllText(Path.Join("../RaylibSharp/gen/", api.ClassName + ".cs"), sb.ToString());
+
+        Console.WriteLine();
     }
 
     static string ConvertFunctionToUseOverloading(string name)

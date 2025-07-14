@@ -113,7 +113,6 @@ public struct FunctionConfig
             "TextToUpper",
             "TextIsEqual",
             // Unnecessary
-            "GetMouseWheelMove",
             "CompressData",
             "DecompressData",
             "EncodeDataBase64",
@@ -126,7 +125,10 @@ public struct FunctionConfig
             "LoadImageColors",
             "UnloadImageColors",
             "rlLoadRenderBatch",
-            "rlUnloadRenderBatch"
+            "rlUnloadRenderBatch",
+            // Skipped
+            "GetMouseWheelMoveV",
+            "GetMouseWheelMove"
         ],
     };
 }

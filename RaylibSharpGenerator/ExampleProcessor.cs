@@ -7,140 +7,105 @@ public partial class ExampleProcessor
 {
     public static void Emit()
     {
+        Log("Emitting Examples", ConsoleColor.Blue);
+
         IEnumerable<string> files = Directory.GetFiles("../raylib/examples/", "*.c", SearchOption.AllDirectories).ToList();
 
         foreach (string cFile in files)
         {
             string path = cFile.Replace("../raylib/examples/", "");
-            string pascalName = Utility.ToPascalCase(Path.GetFileNameWithoutExtension(path));
+            string exampleName = Utility.ToPascalCase(Path.GetFileNameWithoutExtension(path));
 
-            // GenerateExample(File.ReadAllLines(cFile),);
-            if (pascalName == "ShapesTopDownLights" || pascalName == "ExamplesTemplate" || pascalName.StartsWith("temp/"))
+            if (exampleName == "ShapesTopDownLights" || exampleName == "ExamplesTemplate" || exampleName.StartsWith("temp/"))
             {
                 continue;
             }
 
             string[] lines = File.ReadAllLines(cFile);
+            Lines exampleLines = new(lines);
 
-            if (pascalName.StartsWith("Core") && pascalName == "Core2dCamera")
+            if (exampleName.StartsWith("Core"))
             {
-                GenerateExample(lines, $"../Examples/Core/{pascalName}.cs");
+                GenerateExample(exampleLines, $"../Examples/Core/{exampleName}.cs");
                 continue;
             }
-            // else if (pascalName.StartsWith("Audio"))
-            // {
-            //     continue;
-            // }
-            // else if (pascalName.StartsWith("Shapes"))
-            // {
-            //     continue;
-            // }
-            // else if (pascalName.StartsWith("Models"))
-            // {
-            //     continue;
-            // }
-            // else if (pascalName.StartsWith("Shader"))
-            // {
-            //     continue;
-            // }
-            // else if (pascalName.StartsWith("Texture"))
-            // {
-            //     continue;
-            // }
-            // else if (pascalName.StartsWith("Text"))
-            // {
-            //     continue;
-            // }
-            // else
-            // {
-            //     continue;
-            // }
         }
-
-        // Process.Start("dotnet", "format ../Example/Example.csproj").WaitForExit();
     }
 
-    static void GenerateExample(string[] input, string outputFile)
+    static void GenerateExample(Lines lines, string outputFile)
     {
+        Log($"Example {outputFile}", ConsoleColor.Green);
+
         _ = Directory.CreateDirectory(Path.GetDirectoryName(outputFile)!);
 
         string exampleName = Path.GetFileNameWithoutExtension(outputFile);
 
-        string[] fileHeader = [
-            "using System.Numerics;",
-            "using System;",
-            "",
-            "using RaylibSharp;",
-            "using RaylibSharp.GL;",
-            "",
-            "using static RaylibSharp.Raylib;",
-            "",
-        ];
+        List<string> output = new();
 
-        List<string> output =
-        [
-            string.Join("\n", fileHeader),
-            "public partial class " + exampleName + " : ExampleHelper \n{",
-        ];
+        string tab = "    ";
 
-        bool headerRemoved = false;
-        bool lastLineEmpty = false;
-
-        foreach (string item in input)
+        while (lines.HasNext())
         {
-            string? line = "    " + item;
+            string? line = lines.NextLine();
             line = line.TrimEnd();
 
-            if (!headerRemoved)
+            output.Add(line);
+
+            if (line.EndsWith("***/"))
             {
-                headerRemoved = line.EndsWith("***/");
+                lines.NextLine();
+                output.Add("");
+                break;
+            }
+        }
+
+        output.Add("using System.Numerics;");
+        output.Add("using System;");
+        output.Add("");
+        output.Add("using RaylibSharp;");
+        output.Add("using RaylibSharp.GL;");
+        output.Add("");
+        output.Add("using static RaylibSharp.Raylib;");
+        output.Add("");
+        output.Add($"public partial class {exampleName} : ExampleHelper");
+        output.Add("{");
+
+        while (lines.HasNext())
+        {
+            string? source = lines.NextLine();
+            if (source == null)
+            {
+                Console.WriteLine("Line is null, skipping...");
+                break;
+            }
+            else if (source.TrimStart().StartsWith("#include"))
+            {
+                lines.SkipEmpty();
                 continue;
             }
-
-            if (line.TrimStart().StartsWith("//---") || line.TrimStart().StartsWith("#include"))
+            else if (source.TrimStart().StartsWith("#define"))
             {
+                string[] parts = source.Split(" ", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+
+                string name = parts[1];
+                string value = parts[2];
+
+                string type = value.Contains('.') ? "float" : "int";
+
+                output.Add(tab + $"{type} {name} = {value};");
                 continue;
             }
-
-            bool currentLineEmpty = string.IsNullOrEmpty(line);
-
-            if (lastLineEmpty && currentLineEmpty)
+            else if (source.Contains("int main("))
             {
+                output.Add(tab + $"public static int Example()");
                 continue;
             }
-
-            lastLineEmpty = currentLineEmpty;
-
-            if (line.TrimStart().StartsWith("#define"))
+            else
             {
-                string lineWithoutComment = line.Split("//", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)[0];
-                string[] parts = lineWithoutComment.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-
-                if (parts.Length == 2)
-                {
-                    line = null;
-                }
-                else
-                {
-                    line = new($"private const int {parts[1]} = {parts[2]};");
-                }
-            }
-            else if (line.TrimStart().StartsWith("#else") || line.TrimStart().StartsWith("#endif") || line.TrimStart().StartsWith("#if"))
-            {
-                line = "// " + line;
+                string converted = ProcessLine(source);
+                output.Add(tab + converted);
             }
 
-            line = ProcessLine(line);
-
-            if (line != null)
-            {
-                if (line.ToString().Contains("int main("))
-                {
-                    line = new($"    public static int Example()");
-                }
-
-                output.Add(line);
-            }
         }
 
         output.Add("}");
@@ -150,16 +115,17 @@ public partial class ExampleProcessor
 
     static string? ProcessLine(string? l)
     {
+        // return l;
+
         StringBuilder line = new(l);
 
         line.Replace(RectangleReplace(), "new($1)");
-        line.Replace(ColorReplace(), "Color.FromArgb($2, $1)");
-
+        line.Replace(ColorReplace(), "new($1, $2, $3, $4)");
         line.Replace(StructAssignment(), "= new($1)");
 
-        // line.ReplaceAll("&", "ref ");
+        line.Replace("typedef struct", "struct");
 
-        _ = line.Replace("ModelAnimation *", "ModelAnimation[]");
+        line.Replace("ModelAnimation *", "ModelAnimation[]");
 
         // Change Alias
         line.ReplaceAll("MATERIAL_MAP_DIFFUSE", "MATERIAL_MAP_ALBEDO");
@@ -191,8 +157,6 @@ public partial class ExampleProcessor
         line.Replace(BoolFalse(), "bool $1 = false;");
         line.Replace(BoolTrue(), "bool $1 = true;");
 
-        // char modelFileName[128] =
-        // bool drawMesh = 1;
 
         foreach (string color in Utility.Colors)
         {
@@ -330,7 +294,7 @@ public partial class ExampleProcessor
     [GeneratedRegex(@"raylib \[(\w+)\] example - ")] private static partial Regex ExampleName(); // raylib [core] example => RaylibSharp - core -
 
     [GeneratedRegex(@"\(Rectangle\)\{(.*?,.*?,.*?,.*?)\}")] private static partial Regex RectangleReplace(); // (Rectangle){ , , , }
-    [GeneratedRegex(@"\(Color\)\{ (.*), (255) \}")] private static partial Regex ColorReplace(); // (Color){ , , , }
+    [GeneratedRegex(@"\(Color\)\{ (.*), (.*), (.*), (255) \}")] private static partial Regex ColorReplace(); // (Color){ , , , }
     [GeneratedRegex(@"Vector2Add\((.*?), (.*?)\)")] private static partial Regex Vector2AddReplace(); // Vector2Add(delta, -1.0f / camera.Zoom);
     [GeneratedRegex(@"Vector2Scale\((.*?), (.*?)\)")] private static partial Regex Vector2ScaleReplace(); // Vector2Scale(delta, -1.0f / camera.Zoom);
     [GeneratedRegex(@"(IsKey\w+)\(KEY_(.*)\)")] private static partial Regex IsKeyConstEnumReplace(); // IsKeyDown(KEY_RIGHT)

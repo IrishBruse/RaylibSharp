@@ -87,6 +87,12 @@ public static unsafe partial class Raylib
         return (Random.Shared.NextSingle() * (max - min)) + min;
     }
 
+    /// <summary> Compatibility hack for previous raylib versions </summary>
+    public static Ray GetMouseRay(Vector2 position, Camera3D camera)
+    {
+        return GetScreenToWorldRay(position, camera);
+    }
+
     /// <summary> Converts degrees to radians </summary>
     public static float DEG2RAD => MathF.PI / 180.0f;
 
@@ -211,4 +217,13 @@ public static unsafe partial class Raylib
     {
         ClearBackground(new Color(r, g, b));
     }
+
+    /// <summary> Get mouse wheel movement for X or Y, whichever is larger </summary>
+    [LibraryImport(LIB, EntryPoint = "GetMouseWheelMove")]
+    public static partial float GetMouseWheelMove();
+
+    /// <summary> Get mouse wheel movement for both X and Y </summary>
+    [LibraryImport(LIB, EntryPoint = "GetMouseWheelMoveV")]
+    public static partial Vector2 GetMouseWheelMoveV();
+
 }

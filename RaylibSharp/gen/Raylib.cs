@@ -680,10 +680,6 @@ public static unsafe partial class Raylib
     [LibraryImport(LIB, EntryPoint = "SetMouseScale")]
     public static partial void SetMouseScale(float scaleX, float scaleY);
 
-    /// <summary> Get mouse wheel movement for both X and Y </summary>
-    [LibraryImport(LIB, EntryPoint = "GetMouseWheelMoveV")]
-    public static partial Vector2 GetMouseWheelMove();
-
     /// <summary> Set mouse cursor </summary>
     [LibraryImport(LIB, EntryPoint = "SetMouseCursor")]
     public static partial void SetMouseCursor(MouseCursor cursor);

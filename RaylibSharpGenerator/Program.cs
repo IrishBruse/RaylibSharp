@@ -2,28 +2,43 @@
 
 public class Program
 {
+    static bool raylib = false;
+    static bool rlgl = false;
+    static bool examples = true;
+
     static void Main()
     {
         RaylibApi api;
 
-        api = RaylibApi.Deserialize("api/raylib.json");
-        api.ClassName = "Raylib";
-        api.Namespace = "RaylibSharp";
+        if (raylib)
+        {
+            api = RaylibApi.Deserialize("api/raylib.json");
+            api.ClassName = "Raylib";
+            api.Namespace = "RaylibSharp";
+            Generate(api);
+        }
 
-        Generate(api);
+        Console.WriteLine();
 
-        api = RaylibApi.Deserialize("api/rlgl.json");
-        api.ClassName = "RLGL";
-        api.Namespace = "RaylibSharp.GL";
-        api.Directory = "GL";
+        if (rlgl)
+        {
+            api = RaylibApi.Deserialize("api/rlgl.json");
+            api.ClassName = "RLGL";
+            api.Namespace = "RaylibSharp.GL";
+            api.Directory = "GL";
+            Generate(api);
+        }
 
-        Generate(api);
-
-        ExampleProcessor.Emit();
+        if (examples)
+        {
+            ExampleProcessor.Emit();
+        }
     }
 
     static void Generate(RaylibApi api)
     {
+        Log($"Class {api.ClassName}", ConsoleColor.Green);
+
         EnumProcessor.Emit(api);
         DefineProcessor.Emit(api);
         StructProcessor.Emit(api);

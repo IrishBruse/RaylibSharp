@@ -24,6 +24,8 @@ public static class StructProcessor
 
     public static void Emit(RaylibApi api)
     {
+        Log("Emitting Structs", ConsoleColor.Blue);
+
         StringBuilder sb = new();
         foreach (Struct s in api.Structs)
         {
@@ -56,6 +58,7 @@ public static class StructProcessor
 
             if (config.GenManaged)
             {
+                Log(s.Name);
                 ManagedStruct(sb, s, config);
             }
 
@@ -68,6 +71,8 @@ public static class StructProcessor
 
             File.WriteAllText(Path.Join("../RaylibSharp/gen/Structs/", api.Directory, s.Name + ".cs"), sb.ToString());
         }
+
+        Console.WriteLine();
     }
 
     static void UnmanagedStruct(StringBuilder sb, Struct s, StructConfig config)
@@ -81,7 +86,7 @@ public static class StructProcessor
         {
             if (config.UnmanagedRemove.Contains(field.Name))
             {
-                Console.WriteLine("Removing unmanaged field: " + field.Name);
+                Log($"{field.Name} (Removed)", ConsoleColor.Red);
                 continue;
             }
 
@@ -138,6 +143,7 @@ public static class StructProcessor
                     type.Contains("Texture") ||
                     type.Contains("Image") ||
                     type.Contains("MaterialMap") ||
+                    type.Contains("Material") ||
                     type.Contains("Mesh") ||
                     type.Contains("void")
                 )
@@ -171,7 +177,7 @@ public static class StructProcessor
         {
             if (config.Remove.Contains(field.Name))
             {
-                Console.WriteLine("Removing field: " + field.Name);
+                Log($"{field.Name} (Removed)", ConsoleColor.Red);
                 continue;
             }
 
@@ -196,6 +202,11 @@ public static class StructProcessor
                     sb.AppendLine($"    /// <summary> {field.Description} </summary>");
                     sb.AppendLine($"    public uint {titleCaseName}{i};");
                 }
+            }
+            else if (field.Type == "int[4]")
+            {
+                sb.AppendLine($"    /// <summary> {field.Description} </summary>");
+                sb.AppendLine($"    public fixed int {titleCaseName}[4];");
             }
             else
             {
@@ -244,6 +255,7 @@ public static class StructProcessor
             "float[2]" => "Vector2",
             "float[3]" => "Vector3",
             "float[4]" => "Vector4",
+            "int[4]" => "fixed int",
             "Matrix[2]" => "fixed Matrix4x4",
             "char[32]" => "string",
 
@@ -294,6 +306,7 @@ public static class StructProcessor
         {
             "float[2]" => "fixed float",
             "float[4]" => "fixed float",
+            "int[4]" => "fixed int",
             "Matrix[2]" => "fixed Matrix4x4",
             "char[32]" => "fixed char",
 

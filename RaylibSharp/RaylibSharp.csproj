@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -19,9 +19,9 @@
         <Authors>Ethan Conneely</Authors>
         <Product>Raylib Sharp</Product>
         <PackageId>raylibcsharp</PackageId>
-        <Description>Dotnet 7 Aot compatible,wasm and safe binding for Raylib</Description>
+        <Description>Dotnet 8 Aot compatible,wasm and safe binding for Raylib</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageTags>Raylib,Wasm,Aot,Dotnet 7</PackageTags>
+        <PackageTags>Raylib,Wasm,Aot,Dotnet 8</PackageTags>
         <PackageIcon>Icon.png</PackageIcon>
         <RepositoryType>git</RepositoryType>
         <!-- <PackageProjectUrl>https://irishbruse.github.io/ldtk/</PackageProjectUrl> -->

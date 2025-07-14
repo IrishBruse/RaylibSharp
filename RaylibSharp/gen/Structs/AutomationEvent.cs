@@ -14,7 +14,7 @@ public unsafe partial struct AutomationEvent
     /// <summary> Event type (AutomationEventType) </summary>
     public uint Type;
     /// <summary> Event parameters (if required) </summary>
-    public int[4] Params;
+    public fixed int Params[4];
 }
 
 /// <summary> Automation event </summary>
@@ -26,7 +26,7 @@ unsafe struct UnmanagedAutomationEvent
     /// <summary> Event type (AutomationEventType) </summary>
     public uint Type;
     /// <summary> Event parameters (if required) </summary>
-    public int[4] Params[4];
+    public fixed int Params[4];
 }
 
 #pragma warning restore CA1711,IDE0005

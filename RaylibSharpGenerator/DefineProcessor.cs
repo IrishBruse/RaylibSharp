@@ -6,6 +6,8 @@ public static class DefineProcessor
 {
     public static void Emit(RaylibApi api)
     {
+        Log("Emitting Defines", ConsoleColor.Blue);
+
         StringBuilder sb = new();
 
         sb.AppendLine($"namespace {api.Namespace};");
@@ -53,12 +55,15 @@ public static class DefineProcessor
                 sb.AppendLine($"    /// <summary> {e.Description} </summary>");
             }
 
+            Log(pascalName);
+
             sb.AppendLine($"    public static readonly {type} {pascalName} = {value};");
         }
         sb.AppendLine("}");
         sb.AppendLine();
 
-
         File.WriteAllText(Path.Join("../RaylibSharp/gen/Defs/", api.Directory, "Defines.cs"), sb.ToString());
+
+        Console.WriteLine();
     }
 }

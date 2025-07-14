@@ -9,6 +9,8 @@ public static class EnumProcessor
 
     public static void Emit(RaylibApi api)
     {
+        Log("Emitting Enums", ConsoleColor.Blue);
+
         StringBuilder sb = new();
 
         foreach (EnumDef e in api.Enums)
@@ -20,6 +22,7 @@ public static class EnumProcessor
 
             if (!generated.Add(e.Name))
             {
+                Log($"{e.Name} (Skipped)", ConsoleColor.Gray);
                 continue;
             }
 
@@ -31,6 +34,8 @@ public static class EnumProcessor
             {
                 e.Name = "WindowFlag";
             }
+
+            Console.WriteLine(e.Name);
 
             sb.Clear();
             sb.AppendLine($"namespace {api.Namespace};");
@@ -105,5 +110,7 @@ public static class EnumProcessor
 
             File.WriteAllText(Path.Join("../RaylibSharp/gen/Enums/", api.Directory, e.Name + ".cs"), sb.ToString());
         }
+
+        Console.WriteLine();
     }
 }
