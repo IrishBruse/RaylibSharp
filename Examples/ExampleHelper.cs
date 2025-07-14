@@ -161,4 +161,19 @@ public class ExampleHelper
     {
         Raylib.DrawText(font, text, position, fontSize, spacing, tint);
     }
+
+    public static void DrawRectangleLinesEx(Rectangle scissorArea, int lineThick, Color black)
+    {
+        Raylib.DrawRectangleLines(scissorArea, lineThick, black);
+    }
+
+    public static bool IsKeyPressed(char c)
+    {
+        return Raylib.IsKeyPressed((Key)c);
+    }
+
+    public static bool IsKeyPressed(Key c)
+    {
+        return Raylib.IsKeyPressed(c);
+    }
 }

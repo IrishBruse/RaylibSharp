@@ -1,67 +1,94 @@
+/*******************************************************************************************
+*
+*   raylib [core] example - Input multitouch
+*
+*   Example originally created with raylib 2.1, last time updated with raylib 2.5
+*
+*   Example contributed by Berni (@Berni8k) and reviewed by Ramon Santamaria (@raysan5)
+*
+*   Example licensed under an unmodified zlib/libpng license, which is an OSI-certified,
+*   BSD-like license that allows static linking with closed source software
+*
+*   Copyright (c) 2019-2024 Berni (@Berni8k) and Ramon Santamaria (@raysan5)
+*
+********************************************************************************************/
+
 using System.Numerics;
+using System;
+
+using RaylibSharp;
+using RaylibSharp.GL;
+
+using Camera = RaylibSharp.Camera3D;
+using RenderTexture2D = RaylibSharp.RenderTexture;
 
 using static RaylibSharp.Raylib;
 
-public class CoreInputMultitouch : ExampleHelper
+public partial class CoreInputMultitouch : ExampleHelper
 {
-    static readonly int MAX_TOUCH_POINTS = 10;
+#include "raylib.h"
 
-    // Program main entry point
-    public static int Example()
+#define MAX_TOUCH_POINTS 10
+
+//------------------------------------------------------------------------------------
+// Program main entry point
+//------------------------------------------------------------------------------------
+int main(void)
+{
+    // Initialization
+    //--------------------------------------------------------------------------------------
+    const int screenWidth = 800;
+    const int screenHeight = 450;
+
+    InitWindow(screenWidth, screenHeight, "raylib [core] example - input multitouch");
+
+    Vector2 touchPositions[MAX_TOUCH_POINTS] = { 0 };
+
+    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+    //---------------------------------------------------------------------------------------
+
+    // Main game loop
+    while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        // Initialization
-        const int screenWidth = 800;
-        const int screenHeight = 450;
+        // Update
+        //----------------------------------------------------------------------------------
+        // Get the touch point count ( how many fingers are touching the screen )
+        int tCount = GetTouchPointCount();
+        // Clamp touch points available ( set the maximum touch points allowed )
+        if(tCount > MAX_TOUCH_POINTS) tCount = MAX_TOUCH_POINTS;
+        // Get touch points positions
+        for (int i = 0; i < tCount; ++i) touchPositions[i] = GetTouchPosition(i);
+        //----------------------------------------------------------------------------------
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - input multitouch");
+        // Draw
+        //----------------------------------------------------------------------------------
+        BeginDrawing();
 
-        Vector2[] touchPositions = new Vector2[MAX_TOUCH_POINTS];
-
-        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
-
-        // Main game loop
-        while (!WindowShouldClose())    // Detect window close button or ESC key
-        {
-            // Update
-            // Get the touch point count ( how many fingers are touching the screen )
-            int tCount = GetTouchPointCount();
-            // Clamp touch points available ( set the maximum touch points allowed )
-            if (tCount > MAX_TOUCH_POINTS)
-            {
-                tCount = MAX_TOUCH_POINTS;
-            }
-            // Get touch points positions
+            ClearBackground(RAYWHITE);
+            
             for (int i = 0; i < tCount; ++i)
             {
-                touchPositions[i] = GetTouchPosition(i);
-            }
-
-            // Draw
-            BeginDrawing();
-            {
-
-                ClearBackground(RayWhite);
-
-                for (int i = 0; i < tCount; ++i)
+                // Make sure point is not (0, 0) as this means there is no touch for it
+                if ((touchPositions[i].x > 0) && (touchPositions[i].y > 0))
                 {
-                    // Make sure point is not (0, 0) as this means there is no touch for it
-                    if ((touchPositions[i].X > 0) && (touchPositions[i].Y > 0))
-                    {
-                        // Draw circle and touch index number
-                        DrawCircle(touchPositions[i], 34, Orange);
-                        DrawText(i.ToString(), (int)touchPositions[i].X - 10, (int)touchPositions[i].Y - 70, 40, Black);
-                    }
+                    // Draw circle and touch index number
+                    DrawCircleV(touchPositions[i], 34, ORANGE);
+                    DrawText(TextFormat("%d", i), (int)touchPositions[i].x - 10, (int)touchPositions[i].y - 70, 40, BLACK);
                 }
-
-                DrawText("touch the screen at multiple locations to get multiple balls", 10, 10, 20, DarkGray);
-
             }
-            EndDrawing();
-        }
 
-        // De-Initialization
-        CloseWindow();
+            DrawText("touch the screen at multiple locations to get multiple balls", 10, 10, 20, DARKGRAY);
 
-        return 0;
+        EndDrawing();
+        //----------------------------------------------------------------------------------
     }
+
+    // De-Initialization
+    //--------------------------------------------------------------------------------------
+    CloseWindow();        // Close window and OpenGL context
+    //--------------------------------------------------------------------------------------
+
+    return 0;
 }
+}
+

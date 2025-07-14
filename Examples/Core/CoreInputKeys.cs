@@ -1,63 +1,79 @@
+/*******************************************************************************************
+*
+*   raylib [core] example - Keyboard input
+*
+*   Example originally created with raylib 1.0, last time updated with raylib 1.0
+*
+*   Example licensed under an unmodified zlib/libpng license, which is an OSI-certified,
+*   BSD-like license that allows static linking with closed source software
+*
+*   Copyright (c) 2014-2024 Ramon Santamaria (@raysan5)
+*
+********************************************************************************************/
+
 using System.Numerics;
+using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
+
+using Camera = RaylibSharp.Camera3D;
+using RenderTexture2D = RaylibSharp.RenderTexture;
 
 using static RaylibSharp.Raylib;
 
-public class CoreInputKeys : ExampleHelper
+public partial class CoreInputKeys : ExampleHelper
 {
-    // Program main entry point
-    public static int Example()
+#include "raylib.h"
+
+//------------------------------------------------------------------------------------
+// Program main entry point
+//------------------------------------------------------------------------------------
+int main(void)
+{
+    // Initialization
+    //--------------------------------------------------------------------------------------
+    const int screenWidth = 800;
+    const int screenHeight = 450;
+
+    InitWindow(screenWidth, screenHeight, "raylib [core] example - keyboard input");
+
+    Vector2 ballPosition = { (float)screenWidth/2, (float)screenHeight/2 };
+
+    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+    //--------------------------------------------------------------------------------------
+
+    // Main game loop
+    while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        // Initialization
-        const int screenWidth = 800;
-        const int screenHeight = 450;
+        // Update
+        //----------------------------------------------------------------------------------
+        if (IsKeyDown(KEY_RIGHT)) ballPosition.x += 2.0f;
+        if (IsKeyDown(KEY_LEFT)) ballPosition.x -= 2.0f;
+        if (IsKeyDown(KEY_UP)) ballPosition.y -= 2.0f;
+        if (IsKeyDown(KEY_DOWN)) ballPosition.y += 2.0f;
+        //----------------------------------------------------------------------------------
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - keyboard input");
+        // Draw
+        //----------------------------------------------------------------------------------
+        BeginDrawing();
 
-        Vector2 ballPosition = new((float)screenWidth / 2, (float)screenHeight / 2);
+            ClearBackground(RAYWHITE);
 
-        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
+            DrawText("move the ball with arrow keys", 10, 10, 20, DARKGRAY);
 
-        // Main game loop
-        while (!WindowShouldClose())    // Detect window close button or ESC key
-        {
-            // Update
-            if (IsKeyDown(Key.Right))
-            {
-                ballPosition.X += 2.0f;
-            }
+            DrawCircleV(ballPosition, 50, MAROON);
 
-            if (IsKeyDown(Key.Left))
-            {
-                ballPosition.X -= 2.0f;
-            }
-
-            if (IsKeyDown(Key.Up))
-            {
-                ballPosition.Y -= 2.0f;
-            }
-
-            if (IsKeyDown(Key.Down))
-            {
-                ballPosition.Y += 2.0f;
-            }
-
-            // Draw
-            BeginDrawing();
-            {
-                ClearBackground(RayWhite);
-
-                DrawText("move the ball with arrow keys", 10, 10, 20, DarkGray);
-
-                DrawCircle(ballPosition, 50, Maroon);
-            }
-            EndDrawing();
-        }
-
-        // De-Initialization
-        CloseWindow();
-
-        return 0;
+        EndDrawing();
+        //----------------------------------------------------------------------------------
     }
+
+    // De-Initialization
+    //--------------------------------------------------------------------------------------
+    CloseWindow();        // Close window and OpenGL context
+    //--------------------------------------------------------------------------------------
+
+    return 0;
 }
+}
+

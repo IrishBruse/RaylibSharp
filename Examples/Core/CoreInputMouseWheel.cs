@@ -1,46 +1,78 @@
+/*******************************************************************************************
+*
+*   raylib [core] examples - Mouse wheel input
+*
+*   Example originally created with raylib 1.1, last time updated with raylib 1.3
+*
+*   Example licensed under an unmodified zlib/libpng license, which is an OSI-certified,
+*   BSD-like license that allows static linking with closed source software
+*
+*   Copyright (c) 2014-2024 Ramon Santamaria (@raysan5)
+*
+********************************************************************************************/
+
+using System.Numerics;
+using System;
+
+using RaylibSharp;
+using RaylibSharp.GL;
+
+using Camera = RaylibSharp.Camera3D;
+using RenderTexture2D = RaylibSharp.RenderTexture;
+
 using static RaylibSharp.Raylib;
 
-public class CoreInputMouseWheel : ExampleHelper
+public partial class CoreInputMouseWheel : ExampleHelper
 {
+#include "raylib.h"
 
-    // Program main entry point
-    public static int Example()
+//------------------------------------------------------------------------------------
+// Program main entry point
+//------------------------------------------------------------------------------------
+int main(void)
+{
+    // Initialization
+    //--------------------------------------------------------------------------------------
+    const int screenWidth = 800;
+    const int screenHeight = 450;
+
+    InitWindow(screenWidth, screenHeight, "raylib [core] example - input mouse wheel");
+
+    int boxPositionY = screenHeight/2 - 40;
+    int scrollSpeed = 4;            // Scrolling speed in pixels
+
+    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+    //--------------------------------------------------------------------------------------
+
+    // Main game loop
+    while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        // Initialization
-        const int screenWidth = 800;
-        const int screenHeight = 450;
+        // Update
+        //----------------------------------------------------------------------------------
+        boxPositionY -= (int)(GetMouseWheelMove()*scrollSpeed);
+        //----------------------------------------------------------------------------------
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - input mouse wheel");
+        // Draw
+        //----------------------------------------------------------------------------------
+        BeginDrawing();
 
-        int boxPositionY = (screenHeight / 2) - 40;
-        int scrollSpeed = 4; // Scrolling speed in pixels
+            ClearBackground(RAYWHITE);
 
-        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
+            DrawRectangle(screenWidth/2 - 40, boxPositionY, 80, 80, MAROON);
 
-        // Main game loop
-        while (!WindowShouldClose())    // Detect window close button or ESC key
-        {
-            // Update
-            boxPositionY -= (int)GetMouseWheelMove().Y * scrollSpeed;
+            DrawText("Use mouse wheel to move the cube up and down!", 10, 10, 20, GRAY);
+            DrawText(TextFormat("Box position Y: %03i", boxPositionY), 10, 40, 20, LIGHTGRAY);
 
-            // Draw
-            BeginDrawing();
-            {
-
-                ClearBackground(RayWhite);
-
-                DrawRectangle((screenWidth / 2) - 40, boxPositionY, 80, 80, Maroon);
-
-                DrawText("Use mouse wheel to move the cube up and down!", 10, 10, 20, Gray);
-                DrawText("Box position Y: " + boxPositionY, 10, 40, 20, LightGray);
-
-            }
-            EndDrawing();
-        }
-
-        // De-Initialization
-        CloseWindow();
-
-        return 0;
+        EndDrawing();
+        //----------------------------------------------------------------------------------
     }
+
+    // De-Initialization
+    //--------------------------------------------------------------------------------------
+    CloseWindow();        // Close window and OpenGL context
+    //--------------------------------------------------------------------------------------
+
+    return 0;
 }
+}
+

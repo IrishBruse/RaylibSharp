@@ -1,68 +1,91 @@
+/*******************************************************************************************
+*
+*   raylib [core] example - Scissor test
+*
+*   Example originally created with raylib 2.5, last time updated with raylib 3.0
+*
+*   Example contributed by Chris Dill (@MysteriousSpace) and reviewed by Ramon Santamaria (@raysan5)
+*
+*   Example licensed under an unmodified zlib/libpng license, which is an OSI-certified,
+*   BSD-like license that allows static linking with closed source software
+*
+*   Copyright (c) 2019-2024 Chris Dill (@MysteriousSpace)
+*
+********************************************************************************************/
+
+using System.Numerics;
+using System;
 
 using RaylibSharp;
+using RaylibSharp.GL;
+
+using Camera = RaylibSharp.Camera3D;
+using RenderTexture2D = RaylibSharp.RenderTexture;
 
 using static RaylibSharp.Raylib;
 
-public class CoreScissorTest : ExampleHelper
+public partial class CoreScissorTest : ExampleHelper
 {
-    // Program main entry point
-    public static int Example()
+#include "raylib.h"
+
+//------------------------------------------------------------------------------------
+// Program main entry point
+//------------------------------------------------------------------------------------
+int main(void)
+{
+    // Initialization
+    //--------------------------------------------------------------------------------------
+    const int screenWidth = 800;
+    const int screenHeight = 450;
+
+    InitWindow(screenWidth, screenHeight, "raylib [core] example - scissor test");
+
+    Rectangle scissorArea = { 0, 0, 300, 300 };
+    bool scissorMode = true;
+
+    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+    //--------------------------------------------------------------------------------------
+
+    // Main game loop
+    while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        // Initialization
-        const int screenWidth = 800;
-        const int screenHeight = 450;
+        // Update
+        //----------------------------------------------------------------------------------
+        if (IsKeyPressed(KEY_S)) scissorMode = !scissorMode;
 
-        InitWindow(screenWidth, screenHeight, "RaylibSharp - core - scissor test");
+        // Centre the scissor area around the mouse position
+        scissorArea.x = GetMouseX() - scissorArea.width/2;
+        scissorArea.y = GetMouseY() - scissorArea.height/2;
+        //----------------------------------------------------------------------------------
 
-        Rectangle scissorArea = new(0, 0, 300, 300);
-        bool scissorMode = true;
+        // Draw
+        //----------------------------------------------------------------------------------
+        BeginDrawing();
 
-        SetTargetFPS(60); // Set our game to run at 60 frames-per-second
+            ClearBackground(RAYWHITE);
 
-        // Main game loop
-        while (!WindowShouldClose())    // Detect window close button or ESC key
-        {
-            // Update
-            if (IsKeyPressed(Key.S))
-            {
-                scissorMode = !scissorMode;
-            }
+            if (scissorMode) BeginScissorMode((int)scissorArea.x, (int)scissorArea.y, (int)scissorArea.width, (int)scissorArea.height);
 
-            // Centre the scissor area around the mouse position
-            scissorArea.X = GetMouseX() - (scissorArea.Width / 2);
-            scissorArea.Y = GetMouseY() - (scissorArea.Height / 2);
+            // Draw full screen rectangle and some text
+            // NOTE: Only part defined by scissor area will be rendered
+            DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), RED);
+            DrawText("Move the mouse around to reveal this text!", 190, 200, 20, LIGHTGRAY);
 
-            // Draw
-            BeginDrawing();
-            {
+            if (scissorMode) EndScissorMode();
 
-                ClearBackground(RayWhite);
+            DrawRectangleLinesEx(scissorArea, 1, BLACK);
+            DrawText("Press S to toggle scissor test", 10, 10, 20, BLACK);
 
-                if (scissorMode)
-                {
-                    BeginScissorMode((int)scissorArea.X, (int)scissorArea.Y, (int)scissorArea.Width, (int)scissorArea.Height);
-                }
-
-                // Draw full screen rectangle and some text
-                // NOTE: Only part defined by scissor area will be rendered
-                DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Red);
-                DrawText("Move the mouse around to reveal this text!", 190, 200, 20, LightGray);
-
-                if (scissorMode)
-                {
-                    EndScissorMode();
-                }
-
-                DrawRectangleLines(scissorArea, 1, Black);
-                DrawText("Press S to toggle scissor test", 10, 10, 20, Black);
-
-            }
-            EndDrawing();
-        }
-
-        // De-Initialization
-        CloseWindow();
-
-        return 0;
+        EndDrawing();
+        //----------------------------------------------------------------------------------
     }
+
+    // De-Initialization
+    //--------------------------------------------------------------------------------------
+    CloseWindow();        // Close window and OpenGL context
+    //--------------------------------------------------------------------------------------
+
+    return 0;
 }
+}
+
