@@ -27,35 +27,35 @@ using static RaylibSharp.Raylib;
 public partial class CoreInputGesturesWeb : ExampleHelper
 {
     #include "raylib.h"
-    
+
     #include "math.h"       // Required for the protractor angle graphic drawing
-    
+
     #if defined(PLATFORM_WEB)
         #include <emscripten/emscripten.h> // Required for the Web/HTML5
     #endif
-    
+
     //--------------------------------------------------------------------------------------
     // Global definitions and declarations
     //--------------------------------------------------------------------------------------
-    
+
     // Common variables definitions
     //--------------------------------------------------------------------------------------
     int screenWidth = 800;                  // Update depending on web canvas
     const int screenHeight = 450;
     Vector2 messagePosition = { 160, 7 };
-    
+
     // Last gesture variables definitions
     //--------------------------------------------------------------------------------------
     int lastGesture = 0;
     Vector2 lastGesturePosition = { 165, 130 };
-    
+
     // Gesture log variables definitions and functions declarations
     //--------------------------------------------------------------------------------------
     #define GESTURE_LOG_SIZE 20
     char gestureLog[GESTURE_LOG_SIZE][12] = { "" }; // The gesture log uses an array (as an inverted circular queue) to store the performed gestures
     int gestureLogIndex = GESTURE_LOG_SIZE;         // The index for the inverted circular queue (moving from last to first direction, then looping around)
     int previousGesture = 0;
-    
+
     char const *GetGestureName(int i)
     {
        switch (i)  {
@@ -73,7 +73,7 @@ public partial class CoreInputGesturesWeb : ExampleHelper
           default:  return "Unknown";     break;
        }
     }
-    
+
     Color GetGestureColor(int i)
     {
        switch (i)  {
@@ -91,14 +91,14 @@ public partial class CoreInputGesturesWeb : ExampleHelper
           default:  return BLACK;   break;
        }
     }
-    
+
     int logMode = 1; // Log mode values: 0 shows repeated events; 1 hides repeated events; 2 shows repeated events but hide hold events; 3 hides repeated events and hide hold events
-    
+
     Color gestureColor = { 0, 0, 0, 255 };
     Rectangle logButton1 = { 53, 7, 48, 26 };
     Rectangle logButton2 = { 108, 7, 36, 26 };
     Vector2 gestureLogPosition = { 10, 10 };
-    
+
     // Protractor variables definitions
     //--------------------------------------------------------------------------------------
     float angleLength = 90.0f;
@@ -106,7 +106,7 @@ public partial class CoreInputGesturesWeb : ExampleHelper
     Vector2 finalVector = { 0.0f, 0.0f };
     char currentAngleStr[7] = "";
     Vector2 protractorPosition = { 266.0f, 315.0f };
-    
+
     // Update
     //--------------------------------------------------------------------------------------
     void Update(void)
@@ -118,11 +118,11 @@ public partial class CoreInputGesturesWeb : ExampleHelper
         const float currentDragDegrees = GetGestureDragAngle();
         const float currentPitchDegrees = GetGesturePinchAngle();
         const int touchCount = GetTouchPointCount();
-    
+
         // Handle last gesture
         //--------------------------------------------------------------------------------------
         if ((currentGesture != 0) && (currentGesture != 4) && (currentGesture != previousGesture)) lastGesture = currentGesture; // Filter the meaningful gestures (1, 2, 8 to 512) for the display
-    
+
         // Handle gesture log
         //--------------------------------------------------------------------------------------
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
@@ -148,7 +148,7 @@ public partial class CoreInputGesturesWeb : ExampleHelper
                 }
             }
         }
-    
+
         int fillLog = 0; // Gate variable to be used to allow or not the gesture log to be filled
         if (currentGesture !=0)
         {
@@ -169,18 +169,18 @@ public partial class CoreInputGesturesWeb : ExampleHelper
                 fillLog = 1;
             }
         }
-    
+
         if (fillLog) // If one of the conditions from logMode was met, fill the gesture log
         {
             previousGesture = currentGesture;
             gestureColor = GetGestureColor(currentGesture);
             if (gestureLogIndex <= 0) gestureLogIndex = GESTURE_LOG_SIZE;
             gestureLogIndex--;
-    
+
             // Copy the gesture respective name to the gesture log array
             TextCopy(gestureLog[gestureLogIndex], GetGestureName(currentGesture));
         }
-    
+
         // Handle protractor
         //--------------------------------------------------------------------------------------
         if (currentGesture > 255) // aka Pinch In and Pinch Out
@@ -195,14 +195,14 @@ public partial class CoreInputGesturesWeb : ExampleHelper
         {
             currentAngleDegrees = 0.0f;
         }
-    
+
         float currentAngleRadians = ((currentAngleDegrees +90.0f)*PI/180); // Convert the current angle to Radians
         finalVector = (Vector2){ (angleLength*sinf(currentAngleRadians)) + protractorPosition.x, (angleLength*cosf(currentAngleRadians)) + protractorPosition.y }; // Calculate the final vector for display
-    
+
         // Handle touch and mouse pointer points
         //--------------------------------------------------------------------------------------
         #define MAX_TOUCH_COUNT     32
-    
+
         Vector2 touchPosition[MAX_TOUCH_COUNT] = { 0 };
         Vector2 mousePosition = {0, 0};
         if (currentGesture != GESTURE_NONE)
@@ -213,20 +213,20 @@ public partial class CoreInputGesturesWeb : ExampleHelper
             }
             else mousePosition = GetMousePosition();
         }
-    
+
         // Draw
         //--------------------------------------------------------------------------------------
         BeginDrawing();
-    
+
             ClearBackground(RAYWHITE);
-    
+
             // Draw common
             //--------------------------------------------------------------------------------------
             DrawText("*", messagePosition.x + 5, messagePosition.y + 5, 10, BLACK);
             DrawText("Example optimized for Web/HTML5\non Smartphones with Touch Screen.", messagePosition.x + 15, messagePosition.y + 5, 10, BLACK);
             DrawText("*", messagePosition.x + 5, messagePosition.y + 35, 10, BLACK);
             DrawText("While running on Desktop Web Browsers,\ninspect and turn on Touch Emulation.", messagePosition.x + 15,  messagePosition.y + 35, 10, BLACK);
-    
+
             // Draw last gesture
             //--------------------------------------------------------------------------------------
             DrawText("Last gesture", lastGesturePosition.x + 33, lastGesturePosition.y - 47, 20, BLACK);
@@ -244,11 +244,11 @@ public partial class CoreInputGesturesWeb : ExampleHelper
             DrawTriangle((Vector2){ lastGesturePosition.x + 125, lastGesturePosition.y + 33 }, (Vector2){ lastGesturePosition.x + 125, lastGesturePosition.y + 53 }, (Vector2){ lastGesturePosition.x + 140, lastGesturePosition.y + 43 }, lastGesture == GESTURE_PINCH_IN? VIOLET : LIGHTGRAY);
             DrawTriangle((Vector2){ lastGesturePosition.x + 144, lastGesturePosition.y + 43 }, (Vector2){ lastGesturePosition.x + 159, lastGesturePosition.y + 53 }, (Vector2){ lastGesturePosition.x + 159, lastGesturePosition.y + 33 }, lastGesture == GESTURE_PINCH_IN? VIOLET : LIGHTGRAY);
             for (i = 0; i < 4; i++) DrawCircle(lastGesturePosition.x + 180, lastGesturePosition.y + 7 + i*15, 5, touchCount <= i? LIGHTGRAY : gestureColor);
-    
+
             // Draw gesture log
             //--------------------------------------------------------------------------------------
             DrawText("Log", gestureLogPosition.x, gestureLogPosition.y, 20, BLACK);
-    
+
             // Loop in both directions to print the gesture log array in the inverted order (and looping around if the index started somewhere in the middle)
             for (i = 0, ii = gestureLogIndex; i < GESTURE_LOG_SIZE; i++, ii = (ii + 1) % GESTURE_LOG_SIZE) DrawText(gestureLog[ii], gestureLogPosition.x, gestureLogPosition.y + 410 - i*20, 20, (i == 0 ? gestureColor : LIGHTGRAY));
             Color logButton1Color, logButton2Color;
@@ -265,7 +265,7 @@ public partial class CoreInputGesturesWeb : ExampleHelper
             DrawRectangleRec(logButton2, logButton2Color);
             DrawText("Hide", logButton1.x + 62, logButton1.y + 3, 10, WHITE);
             DrawText("Hold", logButton1.x + 62, logButton1.y + 13, 10, WHITE);
-    
+
             // Draw protractor
             //--------------------------------------------------------------------------------------
             DrawText("Angle", protractorPosition.x + 55, protractorPosition.y + 76, 10, BLACK);
@@ -287,7 +287,7 @@ public partial class CoreInputGesturesWeb : ExampleHelper
             DrawText("270", protractorPosition.x - 18, protractorPosition.y + 92, 20, BLACK);
             DrawText("330", protractorPosition.x + 72, protractorPosition.y + 50, 20, BLACK);
             if (currentAngleDegrees != 0.0f) DrawLineEx(protractorPosition, finalVector, 3.0f, gestureColor);
-    
+
             // Draw touch and mouse pointer points
             //--------------------------------------------------------------------------------------
             if (currentGesture != GESTURE_NONE)
@@ -299,7 +299,7 @@ public partial class CoreInputGesturesWeb : ExampleHelper
                         DrawCircleV(touchPosition[i], 50.0f, Fade(gestureColor, 0.5f));
                         DrawCircleV(touchPosition[i], 5.0f, gestureColor);
                     }
-    
+
                     if (touchCount == 2) DrawLineEx(touchPosition[0], touchPosition[1], ((currentGesture == 512)? 8 : 12), gestureColor);
                 }
                 else
@@ -308,12 +308,12 @@ public partial class CoreInputGesturesWeb : ExampleHelper
                     DrawCircleV(mousePosition, 5.0f, gestureColor);
                 }
             }
-    
+
         EndDrawing();
         //--------------------------------------------------------------------------------------
-    
+
     }
-    
+
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
@@ -323,7 +323,7 @@ public partial class CoreInputGesturesWeb : ExampleHelper
         //--------------------------------------------------------------------------------------
         InitWindow(screenWidth, screenHeight, "raylib [core] example - input gestures web");
         //--------------------------------------------------------------------------------------
-    
+
         // Main game loop
         //--------------------------------------------------------------------------------------
         #if defined(PLATFORM_WEB)
@@ -333,12 +333,12 @@ public partial class CoreInputGesturesWeb : ExampleHelper
             while (!WindowShouldClose()) Update(); // Detect window close button or ESC key
         #endif
         //--------------------------------------------------------------------------------------
-    
+
         // De-Initialization
         //--------------------------------------------------------------------------------------
         CloseWindow(); // Close window and OpenGL context
         //--------------------------------------------------------------------------------------
-    
+
         return 0;
     }
 }

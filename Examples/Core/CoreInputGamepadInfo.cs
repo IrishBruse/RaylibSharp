@@ -28,7 +28,7 @@ using static RaylibSharp.Raylib;
 public partial class CoreInputGamepadInfo : ExampleHelper
 {
     #include "raylib.h"
-    
+
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
@@ -38,14 +38,14 @@ public partial class CoreInputGamepadInfo : ExampleHelper
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
-    
+
         SetConfigFlags(FLAG_MSAA_4X_HINT);  // Set MSAA 4X hint before windows creation
-    
+
         InitWindow(screenWidth, screenHeight, "raylib [core] example - gamepad information");
-    
+
         SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
         //--------------------------------------------------------------------------------------
-    
+
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
@@ -53,13 +53,13 @@ public partial class CoreInputGamepadInfo : ExampleHelper
             //----------------------------------------------------------------------------------
             // TODO: Update your variables here
             //----------------------------------------------------------------------------------
-    
+
             // Draw
             //----------------------------------------------------------------------------------
             BeginDrawing();
-    
+
                 ClearBackground(RAYWHITE);
-    
+
                 for (int i = 0, y = 5; i < 4; i++)     // MAX_GAMEPADS = 4
                 {
                     if (IsGamepadAvailable(i))
@@ -68,13 +68,13 @@ public partial class CoreInputGamepadInfo : ExampleHelper
                         y += 11;
                         DrawText(TextFormat("\tAxis count:   %d", GetGamepadAxisCount(i)), 10, y, 10, BLACK);
                         y += 11;
-    
+
                         for (int axis = 0; axis < GetGamepadAxisCount(i); axis++)
                         {
                             DrawText(TextFormat("\tAxis %d = %f", axis, GetGamepadAxisMovement(i, axis)), 10, y, 10, BLACK);
                             y += 11;
                         }
-    
+
                         for (int button = 0; button < 32; button++)
                         {
                             DrawText(TextFormat("\tButton %d = %d", button, IsGamepadButtonDown(i, button)), 10, y, 10, BLACK);
@@ -82,13 +82,13 @@ public partial class CoreInputGamepadInfo : ExampleHelper
                         }
                     }
                 }
-    
+
                 DrawFPS(GetScreenWidth() - 100, 100);
-    
+
             EndDrawing();
             //----------------------------------------------------------------------------------
         }
-    
+
         // De-Initialization
         //--------------------------------------------------------------------------------------
         CloseWindow();        // Close window and OpenGL context

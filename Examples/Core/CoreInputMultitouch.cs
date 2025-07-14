@@ -27,9 +27,9 @@ using static RaylibSharp.Raylib;
 public partial class CoreInputMultitouch : ExampleHelper
 {
     #include "raylib.h"
-    
+
     #define MAX_TOUCH_POINTS 10
-    
+
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
@@ -39,14 +39,14 @@ public partial class CoreInputMultitouch : ExampleHelper
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
-    
+
         InitWindow(screenWidth, screenHeight, "raylib [core] example - input multitouch");
-    
+
         Vector2 touchPositions[MAX_TOUCH_POINTS] = { 0 };
-    
+
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
         //---------------------------------------------------------------------------------------
-    
+
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
@@ -59,13 +59,13 @@ public partial class CoreInputMultitouch : ExampleHelper
             // Get touch points positions
             for (int i = 0; i < tCount; ++i) touchPositions[i] = GetTouchPosition(i);
             //----------------------------------------------------------------------------------
-    
+
             // Draw
             //----------------------------------------------------------------------------------
             BeginDrawing();
-    
+
                 ClearBackground(RAYWHITE);
-                
+
                 for (int i = 0; i < tCount; ++i)
                 {
                     // Make sure point is not (0, 0) as this means there is no touch for it
@@ -76,18 +76,18 @@ public partial class CoreInputMultitouch : ExampleHelper
                         DrawText(TextFormat("%d", i), (int)touchPositions[i].x - 10, (int)touchPositions[i].y - 70, 40, BLACK);
                     }
                 }
-    
+
                 DrawText("touch the screen at multiple locations to get multiple balls", 10, 10, 20, DARKGRAY);
-    
+
             EndDrawing();
             //----------------------------------------------------------------------------------
         }
-    
+
         // De-Initialization
         //--------------------------------------------------------------------------------------
         CloseWindow();        // Close window and OpenGL context
         //--------------------------------------------------------------------------------------
-    
+
         return 0;
     }
 }

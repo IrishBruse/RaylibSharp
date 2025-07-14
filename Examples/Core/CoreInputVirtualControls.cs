@@ -39,16 +39,16 @@ public partial class CoreInputVirtualControls : ExampleHelper
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
-    
+
         InitWindow(screenWidth, screenHeight, "raylib [core] example - input virtual controls");
-    
+
         const float dpadX = 90;
         const float dpadY = 300;
         const float dpadRad = 25.0f;//radius of each pad
         Color dpadColor = BLUE;
-        int dpadKeydown = -1;//-1 if not down, else 0,1,2,3 
-    
-        
+        int dpadKeydown = -1;//-1 if not down, else 0,1,2,3
+
+
         const float dpadCollider[4][2]= // collider array with x,y position
         {
             {dpadX,dpadY-dpadRad*1.5f},//up
@@ -57,17 +57,17 @@ public partial class CoreInputVirtualControls : ExampleHelper
             {dpadX,dpadY+dpadRad*1.5f}//down
         };
         const char dpadLabel[4]="XYBA";//label of Dpad
-    
+
         float playerX=100;
         float playerY=100;
-    
+
         SetTargetFPS(60);
         //--------------------------------------------------------------------------------------
-    
+
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
-        // Update 
+        // Update
         //--------------------------------------------------------------------------
             dpadKeydown = -1; //reset
             int inputX = 0;
@@ -103,7 +103,7 @@ public partial class CoreInputVirtualControls : ExampleHelper
                 default:;
             };
         //--------------------------------------------------------------------------
-        // Draw 
+        // Draw
         //--------------------------------------------------------------------------
            BeginDrawing();
                 ClearBackground(RAYWHITE);
@@ -119,20 +119,20 @@ public partial class CoreInputVirtualControls : ExampleHelper
                                  (int)dpadCollider[i][1]-8,20,BLACK);
                     }
                 }
-    
+
                 DrawRectangleRec((Rectangle) { playerX - 4, playerY - 4, 75, 28 }, RED);
                 DrawText("Player", (int)playerX, (int)playerY, 20, WHITE);
             EndDrawing();
         //--------------------------------------------------------------------------
         }
-    
+
         // De-Initialization
         //--------------------------------------------------------------------------------------
         CloseWindow();        // Close window and OpenGL context
         //--------------------------------------------------------------------------------------
-    
+
         return 0;
     }
-    
+
 }
 
