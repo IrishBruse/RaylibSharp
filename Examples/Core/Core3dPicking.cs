@@ -67,8 +67,8 @@ public partial class Core3dPicking : ExampleHelper
 
                     // Check collision between ray and box
                     collision = GetRayCollisionBox(ray,
-                                (BoundingBox){new(cubePosition.X - cubeSize.X/2, cubePosition.Y - cubeSize.Y/2, cubePosition.Z - cubeSize.Z/2),
-                                              new(cubePosition.X + cubeSize.X/2, cubePosition.Y + cubeSize.Y/2, cubePosition.Z + cubeSize.Z/2)});
+                                new(new( cubePosition.X - cubeSize.X/2, cubePosition.Y - cubeSize.Y/2, cubePosition.Z - cubeSize.Z/2),
+                                              new(cubePosition.X + cubeSize.X/2, cubePosition.Y + cubeSize.Y/2, cubePosition.Z + cubeSize.Z/2)));
                 }
                 else collision.Hit = false;
             }

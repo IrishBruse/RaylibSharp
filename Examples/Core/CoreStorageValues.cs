@@ -11,24 +11,12 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreStorageValues : ExampleHelper
 {
-    #include "raylib.h"
-
-    #include <stdlib.h>         // Required for: calloc(), free()
-
-    #define STORAGE_DATA_FILE   "storage.data"   // Storage file
+    const float STORAGE_DATA_FILE = "storage.data";
 
     // NOTE: Storage positions must start with 0, directly related to file memory layout
     typedef enum {
@@ -37,20 +25,20 @@ public partial class CoreStorageValues : ExampleHelper
     } StorageData;
 
     // Persistent storage functions
-    static bool SaveStorageValue(unsigned int position, int value);
-    static int LoadStorageValue(unsigned int position);
+    static bool SaveStorageValue(uint position, int value);
+    static int LoadStorageValue(uint position);
 
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - storage save/load values");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - storage save/load values");
 
         int score = 0;
         int hiscore = 0;
@@ -64,18 +52,18 @@ public partial class CoreStorageValues : ExampleHelper
         {
             // Update
             //----------------------------------------------------------------------------------
-            if (IsKeyPressed(KEY_R))
+            if (IsKeyPressed(Key.R))
             {
                 score = GetRandomValue(1000, 2000);
                 hiscore = GetRandomValue(2000, 4000);
             }
 
-            if (IsKeyPressed(KEY_ENTER))
+            if (IsKeyPressed(Key.Enter))
             {
                 SaveStorageValue(STORAGE_POSITION_SCORE, score);
                 SaveStorageValue(STORAGE_POSITION_HISCORE, hiscore);
             }
-            else if (IsKeyPressed(KEY_SPACE))
+            else if (IsKeyPressed(Key.Space))
             {
                 // NOTE: If requested position could not be found, value 0 is returned
                 score = LoadStorageValue(STORAGE_POSITION_SCORE);
@@ -114,11 +102,11 @@ public partial class CoreStorageValues : ExampleHelper
 
     // Save integer value to storage file (to defined position)
     // NOTE: Storage positions is directly related to file memory layout (4 bytes each integer)
-    bool SaveStorageValue(unsigned int position, int value)
+    bool SaveStorageValue(uint position, int value)
     {
         bool success = false;
         int dataSize = 0;
-        unsigned int newDataSize = 0;
+        uint newDataSize = 0;
         unsigned char *fileData = LoadFileData(STORAGE_DATA_FILE, &dataSize);
         unsigned char *newFileData = NULL;
 
@@ -160,11 +148,11 @@ public partial class CoreStorageValues : ExampleHelper
             success = SaveFileData(STORAGE_DATA_FILE, newFileData, newDataSize);
             RL_FREE(newFileData);
 
-            TraceLog(LOG_INFO, "FILEIO: [%s] Saved storage value: %i", STORAGE_DATA_FILE, value);
+            TraceLog(TraceLogLevel.Info, "FILEIO: [%s] Saved storage value: %i", STORAGE_DATA_FILE, value);
         }
         else
         {
-            TraceLog(LOG_INFO, "FILEIO: [%s] File created successfully", STORAGE_DATA_FILE);
+            TraceLog(TraceLogLevel.Info, "FILEIO: [%s] File created successfully", STORAGE_DATA_FILE);
 
             dataSize = (position + 1)*sizeof(int);
             fileData = (unsigned char *)RL_MALLOC(dataSize);
@@ -174,7 +162,7 @@ public partial class CoreStorageValues : ExampleHelper
             success = SaveFileData(STORAGE_DATA_FILE, fileData, dataSize);
             UnloadFileData(fileData);
 
-            TraceLog(LOG_INFO, "FILEIO: [%s] Saved storage value: %i", STORAGE_DATA_FILE, value);
+            TraceLog(TraceLogLevel.Info, "FILEIO: [%s] Saved storage value: %i", STORAGE_DATA_FILE, value);
         }
 
         return success;
@@ -182,7 +170,7 @@ public partial class CoreStorageValues : ExampleHelper
 
     // Load integer value from storage file (from defined position)
     // NOTE: If requested position could not be found, value 0 is returned
-    int LoadStorageValue(unsigned int position)
+    int LoadStorageValue(uint position)
     {
         int value = 0;
         int dataSize = 0;
@@ -199,7 +187,7 @@ public partial class CoreStorageValues : ExampleHelper
 
             UnloadFileData(fileData);
 
-            TraceLog(LOG_INFO, "FILEIO: [%s] Loaded storage value: %i", STORAGE_DATA_FILE, value);
+            TraceLog(TraceLogLevel.Info, "FILEIO: [%s] Loaded storage value: %i", STORAGE_DATA_FILE, value);
         }
 
         return value;

@@ -94,9 +94,9 @@ public partial class CoreVrSimulator : ExampleHelper
 
         // Define the camera to look into our 3d world
         Camera camera = new();
-        camera.Position = (Vector3)new(5.0f, 2.0f, 5.0f);    // Camera position
-        camera.Target = (Vector3)new(0.0f, 2.0f, 0.0f);      // Camera looking at point
-        camera.Up = (Vector3)new(0.0f, 1.0f, 0.0f);          // Camera up vector
+        camera.Position = new(5.0f, 2.0f, 5.0f);    // Camera position
+        camera.Target = new(0.0f, 2.0f, 0.0f);      // Camera looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera up vector
         camera.Fovy = 60.0f;                                // Camera field-of-view Y
         camera.Projection = CameraProjection.Perspective;             // Camera projection type
 

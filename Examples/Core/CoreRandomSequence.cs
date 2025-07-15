@@ -13,25 +13,12 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreRandomSequence : ExampleHelper
 {
-    #include "raylib.h"
-    #include "raymath.h"
-
-    #include <stdlib.h> // Required for: malloc() and free()
-
-    typedef struct ColorRect{
+    struct ColorRect{
       Color c;
       Rectangle r;
     } ColorRect;
@@ -44,13 +31,13 @@ public partial class CoreRandomSequence : ExampleHelper
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void) {
+    public static int Example()
       // Initialization
       //--------------------------------------------------------------------------------------
       const int screenWidth = 800;
       const int screenHeight = 450;
 
-      InitWindow(screenWidth, screenHeight, "raylib [core] example - Generates a random sequence");
+      InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - Generates a random sequence");
 
       int rectCount = 20;
       float rectSize = (float)screenWidth/rectCount;
@@ -65,12 +52,12 @@ public partial class CoreRandomSequence : ExampleHelper
         // Update
         //----------------------------------------------------------------------------------
 
-        if(IsKeyPressed(KEY_SPACE))
+        if(IsKeyPressed(Key.Space))
         {
           ShuffleColorRectSequence(rectangles, rectCount);
         }
 
-        if(IsKeyPressed(KEY_UP))
+        if(IsKeyPressed(Key.Up))
         {
           rectCount++;
           rectSize = (float)screenWidth/rectCount;
@@ -78,7 +65,7 @@ public partial class CoreRandomSequence : ExampleHelper
           rectangles = GenerateRandomColorRectSequence((float)rectCount, rectSize, (float)screenWidth, 0.75f * screenHeight);
         }
 
-        if(IsKeyPressed(KEY_DOWN))
+        if(IsKeyPressed(Key.Down))
         {
           if(rectCount >= 4){
             rectCount--;
@@ -125,7 +112,7 @@ public partial class CoreRandomSequence : ExampleHelper
 
     static Color GenerateRandomColor()
     {
-      return CLITERAL(Color){
+      return CLITERAL{
         GetRandomValue(0, 255),
         GetRandomValue(0, 255),
         GetRandomValue(0, 255),
@@ -143,7 +130,7 @@ public partial class CoreRandomSequence : ExampleHelper
       for(int x=0;x<rectCount;x++){
         int rectHeight = (int)Remap((float)seq[x], 0, rectCount-1, 0, screenHeight);
         rectangles[x].c = GenerateRandomColor();
-        rectangles[x].r = CLITERAL(Rectangle){
+        rectangles[x].r = CLITERAL{
           startX + x * rectWidth, screenHeight - rectHeight, rectWidth, (float)rectHeight
         };
       }
@@ -160,12 +147,12 @@ public partial class CoreRandomSequence : ExampleHelper
 
         // swap only the color and height
         ColorRect tmp = *r1;
-        r1->c = r2->c;
-        r1->r.height = r2->r.height;
-        r1->r.y = r2->r.y;
-        r2->c = tmp.c;
-        r2->r.height = tmp.r.height;
-        r2->r.y = tmp.r.y;
+        r1.c = r2.c;
+        r1.r.Height = r2.r.Height;
+        r1.r.Y = r2.r.Y;
+        r2.c = tmp.c;
+        r2.r.Height = tmp.r.Height;
+        r2.r.Y = tmp.r.Y;
 
       }
       UnloadRandomSequence(seq);

@@ -109,32 +109,40 @@ public partial class ExampleProcessor
                 lines.SkipEmpty();
                 continue;
             }
-            else if (source.TrimStart().StartsWith("typedef struct"))
-            {
-                string[] test = source.Split([" ", "{"], StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-                string structName = test[2];
-                output.Add($"{tab}struct {structName} {{");
+            // else if (source.TrimStart().StartsWith("typedef struct"))
+            // {
+            //     string[] test = source.Split([" ", "{"], StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+            //     string structName = test[2];
 
-                while (lines.Until("} " + structName + ";"))
-                {
-                    string? structLine = lines.NextLine().Trim();
-                    if (structLine == null || structLine.Trim() == "}")
-                    {
-                        output.Add($"{tab}}} {structName};");
-                        break;
-                    }
+            //     if (exampleName == "CoreAutomationEvents")
+            //     {
+            //         output.Add($"{tab}struct {structName}() {{");
+            //     }
+            //     else
+            //     {
+            //         output.Add($"{tab}struct {structName} {{");
+            //     }
 
-                    string[] parts = structLine.Split(" ", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-                    string type = parts[0];
-                    string name = parts[1];
+            //     while (lines.Until("} " + structName + ";"))
+            //     {
+            //         string? structLine = lines.NextLine().Trim();
+            //         if (structLine == null || structLine.Trim() == "}")
+            //         {
+            //             output.Add($"{tab}}} {structName};");
+            //             break;
+            //         }
 
-                    output.Add($"{tab}{tab}public {type} {char.ToUpper(name[0]) + name[1..]}");
-                }
-                lines.NextLine();
-                output.Add(tab + "}");
+            //         string[] parts = structLine.Split(" ", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+            //         string type = parts[0];
+            //         string name = parts[1];
 
-                continue;
-            }
+            //         output.Add($"{tab}{tab}public {type} {char.ToUpper(name[0]) + name[1..]}");
+            //     }
+            //     lines.NextLine();
+            //     output.Add(tab + "}");
+
+            //     continue;
+            // }
             else if (source.TrimStart().StartsWith("#define"))
             {
                 string[] parts = source.Split(" ", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
@@ -251,8 +259,24 @@ public partial class ExampleProcessor
             break;
             case "Core3dPicking":
             line.Replace("&camera", "ref camera");
+            line.Replace("new({", "new(new(");
+            line.Replace(")});", ")));");
             break;
             case "CoreAutomationEvents":
+            line.Replace("), 0", "), false");
+            line.Replace("), 1", "), true");
+            line.Replace("} Player;", "}");
+            line.Replace("} EnvElement;", "}");
+
+            line.Replace("Vector2 position;", "public Vector2 Position = position;");
+            line.Replace("float speed;", "public float Speed = speed;");
+            line.Replace("bool canJump;", "public bool CanJump = canJump;");
+            line.Replace("Rectangle rect;", "public Rectangle Rect = rect;");
+            line.Replace("int blocking;", "public int Blocking = blocking;");
+            line.Replace("Color color;", "public Color Color = color;");
+
+            line.Replace("struct Player", "struct Player(Vector2 position, float speed, bool canJump)");
+            line.Replace("struct EnvElement", "struct EnvElement(Rectangle rect, int blocking, Color color)");
             break;
             case "CoreBasicScreenManager":
             {
@@ -430,9 +454,13 @@ public partial class ExampleProcessor
         line.Replace("CAMERA_FIRST_PERSON", "CameraMode.FirstPerson");
         line.Replace("CAMERA_THIRD_PERSON", "CameraMode.ThirdPerson");
 
+        line.Replace("LOG_INFO", "TraceLogLevel.Info");
+
         line.Replace(RLGLReplace(), "RLGL.$1");
 
         line.Replace(IsMouseConstEnumReplace(), m => $"{m.Groups[1]}(MouseButton.{Utility.ToPascalCase(m.Groups[2].Value)})");
+
+        line.Replace("typedef struct", "struct");
 
         line.ReplaceAll("->", ".");
 
@@ -441,16 +469,22 @@ public partial class ExampleProcessor
         line.Replace("(Color)", "");
         line.Replace("(Vector2)", "");
         line.Replace("(Vector3)", "");
-
-        // line.Replace(ColorReplace(), "new($1, $2, $3, $4)");
-        // line.Replace(RectangleReplace(), "new($1, $2, $3, $4)");
-
-        line.Replace(Object3Params(), "new($1, $2, $3)");
-        line.Replace(Object2Params(), "new($1, $2)");
+        line.Replace("(Rectangle)", "");
+        line.Replace("(BoundingBox)", "");
 
         line.Replace(ArrayReplace(), "$1[] $2 = new $1$3");
 
         line.Replace("{ 0 }", "new()");
+
+        for (int i = 0; i < 3; i++)
+        {
+            line.Replace(Test(), "new($1)");
+        }
+        // line.Replace(Object4Params(), "new($1, $2, $3, $4)");
+        // line.Replace(Object3Params(), "new($1, $2, $3)");
+        // line.Replace(Object2Params(), "new($1, $2)");
+
+
     }
 
     static void UpperCaseVariables(StringBuilder line)
@@ -490,25 +524,30 @@ public partial class ExampleProcessor
         line.Replace(".hit", ".Hit");
         line.Replace(".speed", ".Speed");
         line.Replace(".canJump", ".CanJump");
+        line.Replace(".rect", ".Rect");
+        line.Replace(".color", ".Color");
     }
 
     [GeneratedRegex(@"(IsMouse\w+)\(MOUSE_BUTTON_(.*?)\)")] private static partial Regex IsMouseConstEnumReplace(); // IsMouseButtonDown(MOUSE_BUTTON_RIGHT)
 
-    // [GeneratedRegex(@"\{\s*(.*?),\s*(.*?),\s*(.*?)\s*\}")] private static partial Regex Vector3Replace(); // (Vector3){ , , }
-    // [GeneratedRegex(@"\{ (.*?f), (.*?f), (.*?f) \}")] private static partial Regex Vector3AssignReplace(); // { 0.0f, 0.0f, 0.0f }
-    // [GeneratedRegex(@"\s*?\{\s+(.*?),\s+(.*?)\s+\}")] private static partial Regex Vector2Replace(); // (Vector2){ $1, $2 }
     // { $1, $2 }
-    [GeneratedRegex(@"\{\s+(.*?),\s+(.*?)\s+\}")]
+    [GeneratedRegex(@"\{\s*(.+?)\s*,\s*(.+?)\s*\}")]
     private static partial Regex Object2Params();
 
+    // { $1, $2 }
+    [GeneratedRegex(@"\{\s*(.+?)\s*\}")]
+    private static partial Regex Test();
+
     // { $1, $2, $3 }
-    [GeneratedRegex(@"\{\s*([^\s,{}]+)\s*,\s*([^\s,{}]+)\s*,\s*([^\s,{}]+)\s*\}")]
+    [GeneratedRegex(@"\{\s*(.+?)\s*,\s*(.+?)\s*,\s*(.+?)\s*\}")]
     private static partial Regex Object3Params();
+
+    // { $1, $2, $3, $4 }
+    [GeneratedRegex(@"\{\s*([^\s,{}\]]+)\s*,\s*([^\s,{}\]]+)\s*,\s*([^\s,{}\]]+)\s*,\s*([^\s,{}\]]+)\s*\}")]
+    private static partial Regex Object4Params();
 
     [GeneratedRegex(@"(\w+) (\w+)(\[.*\]) = (\{ 0 \})?")] private static partial Regex ArrayReplace(); // int x[10];
 
-    [GeneratedRegex(@"\{ (.*?), (.*?), (.*?), (.*?) \}")] private static partial Regex RectangleReplace(); // (Rectangle){ , , , }
-    [GeneratedRegex(@"\(Color\)\{ (.*), (.*), (.*), (255) \}")] private static partial Regex ColorReplace(); // (Color){ , , , }
     [GeneratedRegex(@"rl([A-Z])")] private static partial Regex RLGLReplace(); // rlBegin
 }
 

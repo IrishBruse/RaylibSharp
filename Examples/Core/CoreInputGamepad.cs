@@ -17,39 +17,29 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreInputGamepad : ExampleHelper
 {
-    #include "raylib.h"
-
     // NOTE: Gamepad name ID depends on drivers and OS
-    #define XBOX_ALIAS_1 "xbox"
-    #define XBOX_ALIAS_2 "x-box"
-    #define PS_ALIAS     "playstation"
+    const int XBOX_ALIAS_1 = "xbox";
+    const int XBOX_ALIAS_2 = "x-box";
+    const int PS_ALIAS = "playstation";
 
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        SetConfigFlags(FLAG_MSAA_4X_HINT);  // Set MSAA 4X hint before windows creation
+        SetConfigFlags(WindowFlag.Msaa4xHint);  // Set MSAA 4X hint before windows creation
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - gamepad input");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - gamepad input");
 
         Texture2D texPs3Pad = LoadTexture("resources/ps3.png");
         Texture2D texXboxPad = LoadTexture("resources/xbox.png");
@@ -81,8 +71,8 @@ public partial class CoreInputGamepad : ExampleHelper
 
                 ClearBackground(RAYWHITE);
 
-                if (IsKeyPressed(KEY_LEFT) && gamepad > 0) gamepad--;
-                if (IsKeyPressed(KEY_RIGHT)) gamepad++;
+                if (IsKeyPressed(Key.Left) && gamepad > 0) gamepad--;
+                if (IsKeyPressed(Key.Right)) gamepad++;
 
                 if (IsGamepadAvailable(gamepad))
                 {
@@ -165,7 +155,7 @@ public partial class CoreInputGamepad : ExampleHelper
 
                         // Draw buttons: basic
                         if (IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_MIDDLE_LEFT)) DrawRectangle(328, 170, 32, 13, RED);
-                        if (IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_MIDDLE_RIGHT)) DrawTriangle((Vector2){ 436, 168 }, (Vector2){ 436, 185 }, (Vector2){ 464, 177 }, RED);
+                        if (IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_MIDDLE_RIGHT)) DrawTriangle(new(436, 168), new(436, 185), new(464, 177), RED);
                         if (IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_RIGHT_FACE_UP)) DrawCircle(557, 144, 13, LIME);
                         if (IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT)) DrawCircle(586, 173, 13, RED);
                         if (IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_RIGHT_FACE_DOWN)) DrawCircle(557, 203, 13, VIOLET);
@@ -209,7 +199,7 @@ public partial class CoreInputGamepad : ExampleHelper
                     {
 
                         // Draw background: generic
-                        DrawRectangleRounded((Rectangle){ 175, 110, 460, 220}, 0.3f, 16, DARKGRAY);
+                        DrawRectangleRounded(new(175, 110, 460, 220), 0.3f, 16, DARKGRAY);
 
                         // Draw buttons: basic
                         DrawCircle(365, 170, 12, RAYWHITE);
@@ -238,10 +228,10 @@ public partial class CoreInputGamepad : ExampleHelper
                         if (IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_LEFT_FACE_RIGHT)) DrawRectangle(217 + 54, 176, 30, 25, RED);
 
                         // Draw buttons: left-right back
-                        DrawRectangleRounded((Rectangle){ 215, 98, 100, 10}, 0.5f, 16, DARKGRAY);
-                        DrawRectangleRounded((Rectangle){ 495, 98, 100, 10}, 0.5f, 16, DARKGRAY);
-                        if (IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_LEFT_TRIGGER_1)) DrawRectangleRounded((Rectangle){ 215, 98, 100, 10}, 0.5f, 16, RED);
-                        if (IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_RIGHT_TRIGGER_1)) DrawRectangleRounded((Rectangle){ 495, 98, 100, 10}, 0.5f, 16, RED);
+                        DrawRectangleRounded(new(215, 98, 100, 10), 0.5f, 16, DARKGRAY);
+                        DrawRectangleRounded(new(495, 98, 100, 10), 0.5f, 16, DARKGRAY);
+                        if (IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_LEFT_TRIGGER_1)) DrawRectangleRounded(new(215, 98, 100, 10), 0.5f, 16, RED);
+                        if (IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_RIGHT_TRIGGER_1)) DrawRectangleRounded(new(495, 98, 100, 10), 0.5f, 16, RED);
 
                         // Draw axis: left joystick
                         Color leftGamepadColor = BLACK;

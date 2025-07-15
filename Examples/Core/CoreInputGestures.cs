@@ -11,43 +11,33 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreInputGestures : ExampleHelper
 {
-    #include "raylib.h"
-
-    #define MAX_GESTURE_STRINGS   20
+    const int MAX_GESTURE_STRINGS = 20;
 
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - input gestures");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - input gestures");
 
-        Vector2 touchPosition = { 0, 0 };
-        Rectangle touchArea = { 220, 10, screenWidth - 230.0f, screenHeight - 20.0f };
+        Vector2 touchPosition = new(0, 0);
+        Rectangle touchArea = new(220, 10, screenWidth - 230.0f, screenHeight - 20.0f);
 
         int gesturesCount = 0;
         char gestureStrings[MAX_GESTURE_STRINGS][32];
 
-        int currentGesture = GESTURE_NONE;
-        int lastGesture = GESTURE_NONE;
+        int currentGesture = Gesture.None;
+        int lastGesture = Gesture.None;
 
         //SetGesturesEnabled(0b0000000000001001);   // Enable only some gestures to be detected
 
@@ -63,17 +53,17 @@ public partial class CoreInputGestures : ExampleHelper
             currentGesture = GetGestureDetected();
             touchPosition = GetTouchPosition(0);
 
-            if (CheckCollisionPointRec(touchPosition, touchArea) && (currentGesture != GESTURE_NONE))
+            if (CheckCollisionPointRec(touchPosition, touchArea) && (currentGesture != Gesture.None))
             {
                 if (currentGesture != lastGesture)
                 {
                     // Store gesture string
                     switch (currentGesture)
                     {
-                        case GESTURE_TAP: TextCopy(gestureStrings[gesturesCount], "GESTURE TAP"); break;
-                        case GESTURE_DOUBLETAP: TextCopy(gestureStrings[gesturesCount], "GESTURE DOUBLETAP"); break;
-                        case GESTURE_HOLD: TextCopy(gestureStrings[gesturesCount], "GESTURE HOLD"); break;
-                        case GESTURE_DRAG: TextCopy(gestureStrings[gesturesCount], "GESTURE DRAG"); break;
+                        case Gesture.Tap: TextCopy(gestureStrings[gesturesCount], "GESTURE TAP"); break;
+                        case Gesture.Doubletap: TextCopy(gestureStrings[gesturesCount], "GESTURE DOUBLETAP"); break;
+                        case Gesture.Hold: TextCopy(gestureStrings[gesturesCount], "GESTURE HOLD"); break;
+                        case Gesture.Drag: TextCopy(gestureStrings[gesturesCount], "GESTURE DRAG"); break;
                         case GESTURE_SWIPE_RIGHT: TextCopy(gestureStrings[gesturesCount], "GESTURE SWIPE RIGHT"); break;
                         case GESTURE_SWIPE_LEFT: TextCopy(gestureStrings[gesturesCount], "GESTURE SWIPE LEFT"); break;
                         case GESTURE_SWIPE_UP: TextCopy(gestureStrings[gesturesCount], "GESTURE SWIPE UP"); break;
@@ -119,7 +109,7 @@ public partial class CoreInputGestures : ExampleHelper
                 DrawRectangleLines(10, 29, 200, screenHeight - 50, GRAY);
                 DrawText("DETECTED GESTURES", 50, 15, 10, GRAY);
 
-                if (currentGesture != GESTURE_NONE) DrawCircleV(touchPosition, 30, MAROON);
+                if (currentGesture != Gesture.None) DrawCircleV(touchPosition, 30, MAROON);
 
             EndDrawing();
             //----------------------------------------------------------------------------------

@@ -13,74 +13,63 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreAutomationEvents : ExampleHelper
 {
-    #include "raylib.h"
-    #include "raymath.h"
+    const int GRAVITY = 400;
+    const float PLAYER_JUMP_SPD = 350.0f;
+    const float PLAYER_HOR_SPD = 200.0f;
 
-    #define GRAVITY 400
-    #define PLAYER_JUMP_SPD 350.0f
-    #define PLAYER_HOR_SPD 200.0f
+    const int MAX_ENVIRONMENT_ELEMENTS = 5;
 
-    #define MAX_ENVIRONMENT_ELEMENTS    5
+    struct Player(Vector2 position, float speed, bool canJump) {
+        public Vector2 Position = position;
+        public float Speed = speed;
+        public bool CanJump = canJump;
+    }
 
-    typedef struct Player {
-        Vector2 position;
-        float speed;
-        bool canJump;
-    } Player;
-
-    typedef struct EnvElement {
-        Rectangle rect;
-        int blocking;
-        Color color;
-    } EnvElement;
+    struct EnvElement(Rectangle rect, int blocking, Color color) {
+        public Rectangle Rect = rect;
+        public int Blocking = blocking;
+        public Color Color = color;
+    }
 
 
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - automation events");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - automation events");
 
         // Define player
-        Player player = { 0 };
-        player.position = (Vector2){ 400, 280 };
-        player.speed = 0;
-        player.canJump = false;
+        Player player = new();
+        player.Position = new(400, 280);
+        player.Speed = 0;
+        player.CanJump = false;
 
         // Define environment elements (platforms)
-        EnvElement envElements[MAX_ENVIRONMENT_ELEMENTS] = {
-            {{ 0, 0, 1000, 400 }, 0, LIGHTGRAY },
-            {{ 0, 400, 1000, 200 }, 1, GRAY },
-            {{ 300, 200, 400, 10 }, 1, GRAY },
-            {{ 250, 300, 100, 10 }, 1, GRAY },
-            {{ 650, 300, 100, 10 }, 1, GRAY }
+        EnvElement[] envElements = new EnvElement[MAX_ENVIRONMENT_ELEMENTS]{
+            new(new(0, 0, 1000, 400), false, LIGHTGRAY),
+            new(new(0, 400, 1000, 200), true, GRAY),
+            new(new(300, 200, 400, 10), true, GRAY),
+            new(new(250, 300, 100, 10), true, GRAY),
+            new(new(650, 300, 100, 10), true, GRAY)
         };
 
         // Define camera
-        Camera2D camera = { 0 };
-        camera.target = player.position;
-        camera.offset = (Vector2){ screenWidth/2.0f, screenHeight/2.0f };
-        camera.rotation = 0.0f;
-        camera.zoom = 1.0f;
+        Camera2D camera = new();
+        camera.Target = player.Position;
+        camera.Offset = new(screenWidth/2.0f, screenHeight/2.0f);
+        camera.Rotation = 0.0f;
+        camera.Zoom = 1.0f;
 
         // Automation events
         AutomationEventList aelist = LoadAutomationEventList(0);  // Initialize list of automation events to record new events
@@ -88,9 +77,9 @@ public partial class CoreAutomationEvents : ExampleHelper
         bool eventRecording = false;
         bool eventPlaying = false;
 
-        unsigned int frameCounter = 0;
-        unsigned int playFrameCounter = 0;
-        unsigned int currentPlayFrame = 0;
+        uint frameCounter = 0;
+        uint playFrameCounter = 0;
+        uint currentPlayFrame = 0;
 
         SetTargetFPS(60);
         //--------------------------------------------------------------------------------------
@@ -109,10 +98,10 @@ public partial class CoreAutomationEvents : ExampleHelper
                 FilePathList droppedFiles = LoadDroppedFiles();
 
                 // Supports loading .rgs style files (text or binary) and .png style palette images
-                if (IsFileExtension(droppedFiles.paths[0], ".txt;.rae"))
+                if (IsFileExtension(droppedFiles.Paths[0], ".txt;.rae"))
                 {
                     UnloadAutomationEventList(aelist);
-                    aelist = LoadAutomationEventList(droppedFiles.paths[0]);
+                    aelist = LoadAutomationEventList(droppedFiles.Paths[0]);
 
                     eventRecording = false;
 
@@ -121,14 +110,14 @@ public partial class CoreAutomationEvents : ExampleHelper
                     playFrameCounter = 0;
                     currentPlayFrame = 0;
 
-                    player.position = (Vector2){ 400, 280 };
-                    player.speed = 0;
-                    player.canJump = false;
+                    player.Position = new(400, 280);
+                    player.Speed = 0;
+                    player.CanJump = false;
 
-                    camera.target = player.position;
-                    camera.offset = (Vector2){ screenWidth/2.0f, screenHeight/2.0f };
-                    camera.rotation = 0.0f;
-                    camera.zoom = 1.0f;
+                    camera.Target = player.Position;
+                    camera.Offset = new(screenWidth/2.0f, screenHeight/2.0f);
+                    camera.Rotation = 0.0f;
+                    camera.Zoom = 1.0f;
                 }
 
                 UnloadDroppedFiles(droppedFiles);   // Unload filepaths from memory
@@ -137,50 +126,50 @@ public partial class CoreAutomationEvents : ExampleHelper
 
             // Update player
             //----------------------------------------------------------------------------------
-            if (IsKeyDown(KEY_LEFT)) player.position.x -= PLAYER_HOR_SPD*deltaTime;
-            if (IsKeyDown(KEY_RIGHT)) player.position.x += PLAYER_HOR_SPD*deltaTime;
-            if (IsKeyDown(KEY_SPACE) && player.canJump)
+            if (IsKeyDown(Key.Left)) player.Position.X -= PLAYER_HOR_SPD*deltaTime;
+            if (IsKeyDown(Key.Right)) player.Position.X += PLAYER_HOR_SPD*deltaTime;
+            if (IsKeyDown(Key.Space) && player.CanJump)
             {
-                player.speed = -PLAYER_JUMP_SPD;
-                player.canJump = false;
+                player.Speed = -PLAYER_JUMP_SPD;
+                player.CanJump = false;
             }
 
             int hitObstacle = 0;
             for (int i = 0; i < MAX_ENVIRONMENT_ELEMENTS; i++)
             {
                 EnvElement *element = &envElements[i];
-                Vector2 *p = &(player.position);
-                if (element->blocking &&
-                    element->rect.x <= p->x &&
-                    element->rect.x + element->rect.width >= p->x &&
-                    element->rect.y >= p->y &&
-                    element->rect.y <= p->y + player.speed*deltaTime)
+                Vector2 *p = &(player.Position);
+                if (element.blocking &&
+                    element.Rect.X <= p.X &&
+                    element.Rect.X + element.Rect.Width >= p.X &&
+                    element.Rect.Y >= p.Y &&
+                    element.Rect.Y <= p.Y + player.Speed*deltaTime)
                 {
                     hitObstacle = 1;
-                    player.speed = 0.0f;
-                    p->y = element->rect.y;
+                    player.Speed = 0.0f;
+                    p.Y = element.Rect.Y;
                 }
             }
 
             if (!hitObstacle)
             {
-                player.position.y += player.speed*deltaTime;
-                player.speed += GRAVITY*deltaTime;
-                player.canJump = false;
+                player.Position.Y += player.Speed*deltaTime;
+                player.Speed += GRAVITY*deltaTime;
+                player.CanJump = false;
             }
-            else player.canJump = true;
+            else player.CanJump = true;
 
-            if (IsKeyPressed(KEY_R))
+            if (IsKeyPressed(Key.R))
             {
                 // Reset game state
-                player.position = (Vector2){ 400, 280 };
-                player.speed = 0;
-                player.canJump = false;
+                player.Position = new(400, 280);
+                player.Speed = 0;
+                player.CanJump = false;
 
-                camera.target = player.position;
-                camera.offset = (Vector2){ screenWidth/2.0f, screenHeight/2.0f };
-                camera.rotation = 0.0f;
-                camera.zoom = 1.0f;
+                camera.Target = player.Position;
+                camera.Offset = new(screenWidth/2.0f, screenHeight/2.0f);
+                camera.Rotation = 0.0f;
+                camera.Zoom = 1.0f;
             }
             //----------------------------------------------------------------------------------
 
@@ -196,13 +185,13 @@ public partial class CoreAutomationEvents : ExampleHelper
                     PlayAutomationEvent(aelist.events[currentPlayFrame]);
                     currentPlayFrame++;
 
-                    if (currentPlayFrame == aelist.count)
+                    if (currentPlayFrame == aelist.Count)
                     {
                         eventPlaying = false;
                         currentPlayFrame = 0;
                         playFrameCounter = 0;
 
-                        TraceLog(LOG_INFO, "FINISH PLAYING!");
+                        TraceLog(TraceLogLevel.Info, "FINISH PLAYING!");
                         break;
                     }
                 }
@@ -213,35 +202,35 @@ public partial class CoreAutomationEvents : ExampleHelper
 
             // Update camera
             //----------------------------------------------------------------------------------
-            camera.target = player.position;
-            camera.offset = (Vector2){ screenWidth/2.0f, screenHeight/2.0f };
+            camera.Target = player.Position;
+            camera.Offset = new(screenWidth/2.0f, screenHeight/2.0f);
             float minX = 1000, minY = 1000, maxX = -1000, maxY = -1000;
 
             // WARNING: On event replay, mouse-wheel internal value is set
-            camera.zoom += ((float)GetMouseWheelMove()*0.05f);
-            if (camera.zoom > 3.0f) camera.zoom = 3.0f;
-            else if (camera.zoom < 0.25f) camera.zoom = 0.25f;
+            camera.Zoom += ((float)GetMouseWheelMove()*0.05f);
+            if (camera.Zoom > 3.0f) camera.Zoom = 3.0f;
+            else if (camera.Zoom < 0.25f) camera.Zoom = 0.25f;
 
             for (int i = 0; i < MAX_ENVIRONMENT_ELEMENTS; i++)
             {
                 EnvElement *element = &envElements[i];
-                minX = fminf(element->rect.x, minX);
-                maxX = fmaxf(element->rect.x + element->rect.width, maxX);
-                minY = fminf(element->rect.y, minY);
-                maxY = fmaxf(element->rect.y + element->rect.height, maxY);
+                minX = fminf(element.Rect.X, minX);
+                maxX = fmaxf(element.Rect.X + element.Rect.Width, maxX);
+                minY = fminf(element.Rect.Y, minY);
+                maxY = fmaxf(element.Rect.Y + element.Rect.Height, maxY);
             }
 
-            Vector2 max = GetWorldToScreen2D((Vector2){ maxX, maxY }, camera);
-            Vector2 min = GetWorldToScreen2D((Vector2){ minX, minY }, camera);
+            Vector2 max = GetWorldToScreen2D(new(maxX, maxY), camera);
+            Vector2 min = GetWorldToScreen2D(new(minX, minY), camera);
 
-            if (max.x < screenWidth) camera.offset.x = screenWidth - (max.x - screenWidth/2);
-            if (max.y < screenHeight) camera.offset.y = screenHeight - (max.y - screenHeight/2);
-            if (min.x > 0) camera.offset.x = screenWidth/2 - min.x;
-            if (min.y > 0) camera.offset.y = screenHeight/2 - min.y;
+            if (max.X < screenWidth) camera.Offset.X = screenWidth - (max.X - screenWidth/2);
+            if (max.Y < screenHeight) camera.Offset.Y = screenHeight - (max.Y - screenHeight/2);
+            if (min.X > 0) camera.Offset.X = screenWidth/2 - min.X;
+            if (min.Y > 0) camera.Offset.Y = screenHeight/2 - min.Y;
             //----------------------------------------------------------------------------------
 
             // Events management
-            if (IsKeyPressed(KEY_S))    // Toggle events recording
+            if (IsKeyPressed(Key.S))    // Toggle events recording
             {
                 if (!eventPlaying)
                 {
@@ -252,7 +241,7 @@ public partial class CoreAutomationEvents : ExampleHelper
 
                         ExportAutomationEventList(aelist, "automation.rae");
 
-                        TraceLog(LOG_INFO, "RECORDED FRAMES: %i", aelist.count);
+                        TraceLog(TraceLogLevel.Info, "RECORDED FRAMES: %i", aelist.Count);
                     }
                     else
                     {
@@ -262,23 +251,23 @@ public partial class CoreAutomationEvents : ExampleHelper
                     }
                 }
             }
-            else if (IsKeyPressed(KEY_A)) // Toggle events playing (WARNING: Starts next frame)
+            else if (IsKeyPressed(Key.A)) // Toggle events playing (WARNING: Starts next frame)
             {
-                if (!eventRecording && (aelist.count > 0))
+                if (!eventRecording && (aelist.Count > 0))
                 {
                     // Reset scene state to play
                     eventPlaying = true;
                     playFrameCounter = 0;
                     currentPlayFrame = 0;
 
-                    player.position = (Vector2){ 400, 280 };
-                    player.speed = 0;
-                    player.canJump = false;
+                    player.Position = new(400, 280);
+                    player.Speed = 0;
+                    player.CanJump = false;
 
-                    camera.target = player.position;
-                    camera.offset = (Vector2){ screenWidth/2.0f, screenHeight/2.0f };
-                    camera.rotation = 0.0f;
-                    camera.zoom = 1.0f;
+                    camera.Target = player.Position;
+                    camera.Offset = new(screenWidth/2.0f, screenHeight/2.0f);
+                    camera.Rotation = 0.0f;
+                    camera.Zoom = 1.0f;
                 }
             }
 
@@ -297,11 +286,11 @@ public partial class CoreAutomationEvents : ExampleHelper
                     // Draw environment elements
                     for (int i = 0; i < MAX_ENVIRONMENT_ELEMENTS; i++)
                     {
-                        DrawRectangleRec(envElements[i].rect, envElements[i].color);
+                        DrawRectangleRec(envElements[i].Rect, envElements[i].Color);
                     }
 
                     // Draw player rectangle
-                    DrawRectangleRec((Rectangle){ player.position.x - 20, player.position.y - 40, 40, 40 }, RED);
+                    DrawRectangleRec(new(player.Position.X - 20, player.Position.Y - 40, 40, 40), RED);
 
                 EndMode2D();
 
@@ -324,13 +313,13 @@ public partial class CoreAutomationEvents : ExampleHelper
                     DrawRectangleLines(10, 160, 290, 30, Fade(MAROON, 0.8f));
                     DrawCircle(30, 175, 10, MAROON);
 
-                    if (((frameCounter/15)%2) == 1) DrawText(TextFormat("RECORDING EVENTS... [%i]", aelist.count), 50, 170, 10, MAROON);
+                    if (((frameCounter/15)%2) == 1) DrawText(TextFormat("RECORDING EVENTS... [%i]", aelist.Count), 50, 170, 10, MAROON);
                 }
                 else if (eventPlaying)
                 {
                     DrawRectangle(10, 160, 290, 30, Fade(LIME, 0.3f));
                     DrawRectangleLines(10, 160, 290, 30, Fade(DARKGREEN, 0.8f));
-                    DrawTriangle((Vector2){ 20, 155 + 10 }, (Vector2){ 20, 155 + 30 }, (Vector2){ 40, 155 + 20 }, DARKGREEN);
+                    DrawTriangle(new(20, 155 + 10), new(20, 155 + 30), new(40, 155 + 20), DARKGREEN);
 
                     if (((frameCounter/15)%2) == 1) DrawText(TextFormat("PLAYING RECORDED EVENTS... [%i]", currentPlayFrame), 50, 170, 10, DARKGREEN);
                 }

@@ -147,7 +147,7 @@ public partial class CoreWindowFlags : ExampleHelper
             else ClearBackground(RAYWHITE);
 
             DrawCircleV(ballPosition, ballRadius, MAROON);
-            DrawRectangleLinesEx((Rectangle) new(0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()), 4, RAYWHITE);
+            DrawRectangleLinesEx( new(0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()), 4, RAYWHITE);
 
             DrawCircleV(GetMousePosition(), 10, DARKBLUE);
 

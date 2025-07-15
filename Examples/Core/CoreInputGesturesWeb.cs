@@ -13,25 +13,12 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreInputGesturesWeb : ExampleHelper
 {
-    #include "raylib.h"
-
-    #include "math.h"       // Required for the protractor angle graphic drawing
-
     #if defined(PLATFORM_WEB)
-        #include <emscripten/emscripten.h> // Required for the Web/HTML5
     #endif
 
     //--------------------------------------------------------------------------------------
@@ -42,17 +29,17 @@ public partial class CoreInputGesturesWeb : ExampleHelper
     //--------------------------------------------------------------------------------------
     int screenWidth = 800;                  // Update depending on web canvas
     const int screenHeight = 450;
-    Vector2 messagePosition = { 160, 7 };
+    Vector2 messagePosition = new(160, 7);
 
     // Last gesture variables definitions
     //--------------------------------------------------------------------------------------
     int lastGesture = 0;
-    Vector2 lastGesturePosition = { 165, 130 };
+    Vector2 lastGesturePosition = new(165, 130);
 
     // Gesture log variables definitions and functions declarations
     //--------------------------------------------------------------------------------------
-    #define GESTURE_LOG_SIZE 20
-    char gestureLog[GESTURE_LOG_SIZE][12] = { "" }; // The gesture log uses an array (as an inverted circular queue) to store the performed gestures
+    const int GESTURE_LOG_SIZE = 20;
+    char[] gestureLog = new char[GESTURE_LOG_SIZE][12]new(""); // The gesture log uses an array (as an inverted circular queue) to store the performed gestures
     int gestureLogIndex = GESTURE_LOG_SIZE;         // The index for the inverted circular queue (moving from last to first direction, then looping around)
     int previousGesture = 0;
 
@@ -94,18 +81,18 @@ public partial class CoreInputGesturesWeb : ExampleHelper
 
     int logMode = 1; // Log mode values: 0 shows repeated events; 1 hides repeated events; 2 shows repeated events but hide hold events; 3 hides repeated events and hide hold events
 
-    Color gestureColor = { 0, 0, 0, 255 };
-    Rectangle logButton1 = { 53, 7, 48, 26 };
-    Rectangle logButton2 = { 108, 7, 36, 26 };
-    Vector2 gestureLogPosition = { 10, 10 };
+    Color gestureColor = new(0, 0, 0, 255);
+    Rectangle logButton1 = new(53, 7, 48, 26);
+    Rectangle logButton2 = new(108, 7, 36, 26);
+    Vector2 gestureLogPosition = new(10, 10);
 
     // Protractor variables definitions
     //--------------------------------------------------------------------------------------
     float angleLength = 90.0f;
     float currentAngleDegrees = 0.0f;
-    Vector2 finalVector = { 0.0f, 0.0f };
-    char currentAngleStr[7] = "";
-    Vector2 protractorPosition = { 266.0f, 315.0f };
+    Vector2 finalVector = new(0.0f, 0.0f);
+    char[] currentAngleStr = new char[7]"";
+    Vector2 protractorPosition = new(266.0f, 315.0f);
 
     // Update
     //--------------------------------------------------------------------------------------
@@ -125,7 +112,7 @@ public partial class CoreInputGesturesWeb : ExampleHelper
 
         // Handle gesture log
         //--------------------------------------------------------------------------------------
-        if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+        if (IsMouseButtonReleased(MouseButton.Left))
         {
             if (CheckCollisionPointRec(GetMousePosition(), logButton1))
             {
@@ -197,15 +184,15 @@ public partial class CoreInputGesturesWeb : ExampleHelper
         }
 
         float currentAngleRadians = ((currentAngleDegrees +90.0f)*PI/180); // Convert the current angle to Radians
-        finalVector = (Vector2){ (angleLength*sinf(currentAngleRadians)) + protractorPosition.x, (angleLength*cosf(currentAngleRadians)) + protractorPosition.y }; // Calculate the final vector for display
+        finalVector = new((angleLength*sinf(currentAngleRadians)) + protractorPosition.X, (angleLength*cosf(currentAngleRadians)) + protractorPosition.Y); // Calculate the final vector for display
 
         // Handle touch and mouse pointer points
         //--------------------------------------------------------------------------------------
-        #define MAX_TOUCH_COUNT     32
+    const int MAX_TOUCH_COUNT = 32;
 
-        Vector2 touchPosition[MAX_TOUCH_COUNT] = { 0 };
-        Vector2 mousePosition = {0, 0};
-        if (currentGesture != GESTURE_NONE)
+        Vector2[] touchPosition = new Vector2[MAX_TOUCH_COUNT];
+        Vector2 mousePosition = new(0, 0);
+        if (currentGesture != Gesture.None)
         {
             if (touchCount != 0)
             {
@@ -222,35 +209,35 @@ public partial class CoreInputGesturesWeb : ExampleHelper
 
             // Draw common
             //--------------------------------------------------------------------------------------
-            DrawText("*", messagePosition.x + 5, messagePosition.y + 5, 10, BLACK);
-            DrawText("Example optimized for Web/HTML5\non Smartphones with Touch Screen.", messagePosition.x + 15, messagePosition.y + 5, 10, BLACK);
-            DrawText("*", messagePosition.x + 5, messagePosition.y + 35, 10, BLACK);
-            DrawText("While running on Desktop Web Browsers,\ninspect and turn on Touch Emulation.", messagePosition.x + 15,  messagePosition.y + 35, 10, BLACK);
+            DrawText("*", messagePosition.X + 5, messagePosition.Y + 5, 10, BLACK);
+            DrawText("Example optimized for Web/HTML5\non Smartphones with Touch Screen.", messagePosition.X + 15, messagePosition.Y + 5, 10, BLACK);
+            DrawText("*", messagePosition.X + 5, messagePosition.Y + 35, 10, BLACK);
+            DrawText("While running on Desktop Web Browsers,\ninspect and turn on Touch Emulation.", messagePosition.X + 15,  messagePosition.Y + 35, 10, BLACK);
 
             // Draw last gesture
             //--------------------------------------------------------------------------------------
-            DrawText("Last gesture", lastGesturePosition.x + 33, lastGesturePosition.y - 47, 20, BLACK);
-            DrawText("Swipe         Tap       Pinch  Touch", lastGesturePosition.x + 17, lastGesturePosition.y - 18, 10, BLACK);
-            DrawRectangle(lastGesturePosition.x + 20, lastGesturePosition.y, 20, 20, lastGesture == GESTURE_SWIPE_UP ? RED : LIGHTGRAY);
-            DrawRectangle(lastGesturePosition.x, lastGesturePosition.y + 20, 20, 20, lastGesture == GESTURE_SWIPE_LEFT ? RED : LIGHTGRAY);
-            DrawRectangle(lastGesturePosition.x + 40, lastGesturePosition.y + 20, 20, 20, lastGesture == GESTURE_SWIPE_RIGHT ? RED : LIGHTGRAY);
-            DrawRectangle(lastGesturePosition.x + 20, lastGesturePosition.y + 40, 20, 20, lastGesture == GESTURE_SWIPE_DOWN ? RED : LIGHTGRAY);
-            DrawCircle(lastGesturePosition.x + 80, lastGesturePosition.y + 16, 10, lastGesture == GESTURE_TAP ? BLUE : LIGHTGRAY);
-            DrawRing( (Vector2){lastGesturePosition.x + 103, lastGesturePosition.y + 16}, 6.0f, 11.0f, 0.0f, 360.0f, 0, lastGesture == GESTURE_DRAG ? LIME : LIGHTGRAY);
-            DrawCircle(lastGesturePosition.x + 80, lastGesturePosition.y + 43, 10, lastGesture == GESTURE_DOUBLETAP ? SKYBLUE : LIGHTGRAY);
-            DrawCircle(lastGesturePosition.x + 103, lastGesturePosition.y + 43, 10, lastGesture == GESTURE_DOUBLETAP ? SKYBLUE : LIGHTGRAY);
-            DrawTriangle((Vector2){ lastGesturePosition.x + 122, lastGesturePosition.y + 16 }, (Vector2){ lastGesturePosition.x + 137, lastGesturePosition.y + 26 }, (Vector2){ lastGesturePosition.x + 137, lastGesturePosition.y + 6 }, lastGesture == GESTURE_PINCH_OUT? ORANGE : LIGHTGRAY);
-            DrawTriangle((Vector2){ lastGesturePosition.x + 147, lastGesturePosition.y + 6 }, (Vector2){ lastGesturePosition.x + 147, lastGesturePosition.y + 26 }, (Vector2){ lastGesturePosition.x + 162, lastGesturePosition.y + 16 }, lastGesture == GESTURE_PINCH_OUT? ORANGE : LIGHTGRAY);
-            DrawTriangle((Vector2){ lastGesturePosition.x + 125, lastGesturePosition.y + 33 }, (Vector2){ lastGesturePosition.x + 125, lastGesturePosition.y + 53 }, (Vector2){ lastGesturePosition.x + 140, lastGesturePosition.y + 43 }, lastGesture == GESTURE_PINCH_IN? VIOLET : LIGHTGRAY);
-            DrawTriangle((Vector2){ lastGesturePosition.x + 144, lastGesturePosition.y + 43 }, (Vector2){ lastGesturePosition.x + 159, lastGesturePosition.y + 53 }, (Vector2){ lastGesturePosition.x + 159, lastGesturePosition.y + 33 }, lastGesture == GESTURE_PINCH_IN? VIOLET : LIGHTGRAY);
-            for (i = 0; i < 4; i++) DrawCircle(lastGesturePosition.x + 180, lastGesturePosition.y + 7 + i*15, 5, touchCount <= i? LIGHTGRAY : gestureColor);
+            DrawText("Last gesture", lastGesturePosition.X + 33, lastGesturePosition.Y - 47, 20, BLACK);
+            DrawText("Swipe         Tap       Pinch  Touch", lastGesturePosition.X + 17, lastGesturePosition.Y - 18, 10, BLACK);
+            DrawRectangle(lastGesturePosition.X + 20, lastGesturePosition.Y, 20, 20, lastGesture == GESTURE_SWIPE_UP ? RED : LIGHTGRAY);
+            DrawRectangle(lastGesturePosition.X, lastGesturePosition.Y + 20, 20, 20, lastGesture == GESTURE_SWIPE_LEFT ? RED : LIGHTGRAY);
+            DrawRectangle(lastGesturePosition.X + 40, lastGesturePosition.Y + 20, 20, 20, lastGesture == GESTURE_SWIPE_RIGHT ? RED : LIGHTGRAY);
+            DrawRectangle(lastGesturePosition.X + 20, lastGesturePosition.Y + 40, 20, 20, lastGesture == GESTURE_SWIPE_DOWN ? RED : LIGHTGRAY);
+            DrawCircle(lastGesturePosition.X + 80, lastGesturePosition.Y + 16, 10, lastGesture == Gesture.Tap ? BLUE : LIGHTGRAY);
+            DrawRing( new(lastGesturePosition.X + 103, lastGesturePosition.Y + 16), 6.0f, 11.0f, 0.0f, 360.0f, 0, lastGesture == Gesture.Drag ? LIME : LIGHTGRAY);
+            DrawCircle(lastGesturePosition.X + 80, lastGesturePosition.Y + 43, 10, lastGesture == Gesture.Doubletap ? SKYBLUE : LIGHTGRAY);
+            DrawCircle(lastGesturePosition.X + 103, lastGesturePosition.Y + 43, 10, lastGesture == Gesture.Doubletap ? SKYBLUE : LIGHTGRAY);
+            DrawTriangle(new(lastGesturePosition.X + 122, lastGesturePosition.Y + 16), new(lastGesturePosition.X + 137, lastGesturePosition.Y + 26), new(lastGesturePosition.X + 137, lastGesturePosition.Y + 6), lastGesture == GESTURE_PINCH_OUT? ORANGE : LIGHTGRAY);
+            DrawTriangle(new(lastGesturePosition.X + 147, lastGesturePosition.Y + 6), new(lastGesturePosition.X + 147, lastGesturePosition.Y + 26), new(lastGesturePosition.X + 162, lastGesturePosition.Y + 16), lastGesture == GESTURE_PINCH_OUT? ORANGE : LIGHTGRAY);
+            DrawTriangle(new(lastGesturePosition.X + 125, lastGesturePosition.Y + 33), new(lastGesturePosition.X + 125, lastGesturePosition.Y + 53), new(lastGesturePosition.X + 140, lastGesturePosition.Y + 43), lastGesture == GESTURE_PINCH_IN? VIOLET : LIGHTGRAY);
+            DrawTriangle(new(lastGesturePosition.X + 144, lastGesturePosition.Y + 43), new(lastGesturePosition.X + 159, lastGesturePosition.Y + 53), new(lastGesturePosition.X + 159, lastGesturePosition.Y + 33), lastGesture == GESTURE_PINCH_IN? VIOLET : LIGHTGRAY);
+            for (i = 0; i < 4; i++) DrawCircle(lastGesturePosition.X + 180, lastGesturePosition.Y + 7 + i*15, 5, touchCount <= i? LIGHTGRAY : gestureColor);
 
             // Draw gesture log
             //--------------------------------------------------------------------------------------
-            DrawText("Log", gestureLogPosition.x, gestureLogPosition.y, 20, BLACK);
+            DrawText("Log", gestureLogPosition.X, gestureLogPosition.Y, 20, BLACK);
 
             // Loop in both directions to print the gesture log array in the inverted order (and looping around if the index started somewhere in the middle)
-            for (i = 0, ii = gestureLogIndex; i < GESTURE_LOG_SIZE; i++, ii = (ii + 1) % GESTURE_LOG_SIZE) DrawText(gestureLog[ii], gestureLogPosition.x, gestureLogPosition.y + 410 - i*20, 20, (i == 0 ? gestureColor : LIGHTGRAY));
+            for (i = 0, ii = gestureLogIndex; i < GESTURE_LOG_SIZE; i++, ii = (ii + 1) % GESTURE_LOG_SIZE) DrawText(gestureLog[ii], gestureLogPosition.X, gestureLogPosition.Y + 410 - i*20, 20, (i == 0 ? gestureColor : LIGHTGRAY));
             Color logButton1Color, logButton2Color;
             switch (logMode)
             {
@@ -260,37 +247,37 @@ public partial class CoreInputGesturesWeb : ExampleHelper
                 default: logButton1Color=GRAY;   logButton2Color=GRAY;   break;
             }
             DrawRectangleRec(logButton1, logButton1Color);
-            DrawText("Hide", logButton1.x + 7, logButton1.y + 3, 10, WHITE);
-            DrawText("Repeat", logButton1.x + 7, logButton1.y + 13, 10, WHITE);
+            DrawText("Hide", logButton1.X + 7, logButton1.Y + 3, 10, WHITE);
+            DrawText("Repeat", logButton1.X + 7, logButton1.Y + 13, 10, WHITE);
             DrawRectangleRec(logButton2, logButton2Color);
-            DrawText("Hide", logButton1.x + 62, logButton1.y + 3, 10, WHITE);
-            DrawText("Hold", logButton1.x + 62, logButton1.y + 13, 10, WHITE);
+            DrawText("Hide", logButton1.X + 62, logButton1.Y + 3, 10, WHITE);
+            DrawText("Hold", logButton1.X + 62, logButton1.Y + 13, 10, WHITE);
 
             // Draw protractor
             //--------------------------------------------------------------------------------------
-            DrawText("Angle", protractorPosition.x + 55, protractorPosition.y + 76, 10, BLACK);
+            DrawText("Angle", protractorPosition.X + 55, protractorPosition.Y + 76, 10, BLACK);
             const char *angleString = TextFormat("%f", currentAngleDegrees);
             const int angleStringDot = TextFindIndex(angleString, ".");
             const char *angleStringTrim = TextSubtext(angleString, 0, angleStringDot + 3);
-            DrawText( angleStringTrim, protractorPosition.x + 55, protractorPosition.y + 92, 20, gestureColor);
-            DrawCircle(protractorPosition.x, protractorPosition.y, 80.0f, WHITE);
-            DrawLineEx((Vector2){ protractorPosition.x - 90, protractorPosition.y }, (Vector2){ protractorPosition.x + 90, protractorPosition.y }, 3.0f, LIGHTGRAY);
-            DrawLineEx((Vector2){ protractorPosition.x, protractorPosition.y - 90 }, (Vector2){ protractorPosition.x, protractorPosition.y + 90 }, 3.0f, LIGHTGRAY);
-            DrawLineEx((Vector2){ protractorPosition.x - 80, protractorPosition.y - 45 }, (Vector2){ protractorPosition.x + 80, protractorPosition.y + 45 }, 3.0f, GREEN);
-            DrawLineEx((Vector2){ protractorPosition.x - 80, protractorPosition.y + 45 }, (Vector2){ protractorPosition.x + 80, protractorPosition.y - 45 }, 3.0f, GREEN);
-            DrawText("0", protractorPosition.x + 96, protractorPosition.y - 9, 20, BLACK);
-            DrawText("30", protractorPosition.x + 74, protractorPosition.y - 68, 20, BLACK);
-            DrawText("90", protractorPosition.x - 11, protractorPosition.y - 110, 20, BLACK);
-            DrawText("150", protractorPosition.x - 100, protractorPosition.y - 68, 20, BLACK);
-            DrawText("180", protractorPosition.x - 124, protractorPosition.y - 9, 20, BLACK);
-            DrawText("210", protractorPosition.x - 100, protractorPosition.y + 50, 20, BLACK);
-            DrawText("270", protractorPosition.x - 18, protractorPosition.y + 92, 20, BLACK);
-            DrawText("330", protractorPosition.x + 72, protractorPosition.y + 50, 20, BLACK);
+            DrawText( angleStringTrim, protractorPosition.X + 55, protractorPosition.Y + 92, 20, gestureColor);
+            DrawCircle(protractorPosition.X, protractorPosition.Y, 80.0f, WHITE);
+            DrawLineEx(new(protractorPosition.X - 90, protractorPosition.Y), new(protractorPosition.X + 90, protractorPosition.Y), 3.0f, LIGHTGRAY);
+            DrawLineEx(new(protractorPosition.X, protractorPosition.Y - 90), new(protractorPosition.X, protractorPosition.Y + 90), 3.0f, LIGHTGRAY);
+            DrawLineEx(new(protractorPosition.X - 80, protractorPosition.Y - 45), new(protractorPosition.X + 80, protractorPosition.Y + 45), 3.0f, GREEN);
+            DrawLineEx(new(protractorPosition.X - 80, protractorPosition.Y + 45), new(protractorPosition.X + 80, protractorPosition.Y - 45), 3.0f, GREEN);
+            DrawText("0", protractorPosition.X + 96, protractorPosition.Y - 9, 20, BLACK);
+            DrawText("30", protractorPosition.X + 74, protractorPosition.Y - 68, 20, BLACK);
+            DrawText("90", protractorPosition.X - 11, protractorPosition.Y - 110, 20, BLACK);
+            DrawText("150", protractorPosition.X - 100, protractorPosition.Y - 68, 20, BLACK);
+            DrawText("180", protractorPosition.X - 124, protractorPosition.Y - 9, 20, BLACK);
+            DrawText("210", protractorPosition.X - 100, protractorPosition.Y + 50, 20, BLACK);
+            DrawText("270", protractorPosition.X - 18, protractorPosition.Y + 92, 20, BLACK);
+            DrawText("330", protractorPosition.X + 72, protractorPosition.Y + 50, 20, BLACK);
             if (currentAngleDegrees != 0.0f) DrawLineEx(protractorPosition, finalVector, 3.0f, gestureColor);
 
             // Draw touch and mouse pointer points
             //--------------------------------------------------------------------------------------
-            if (currentGesture != GESTURE_NONE)
+            if (currentGesture != Gesture.None)
             {
                 if ( touchCount != 0 )
                 {
@@ -317,11 +304,11 @@ public partial class CoreInputGesturesWeb : ExampleHelper
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - input gestures web");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - input gestures web");
         //--------------------------------------------------------------------------------------
 
         // Main game loop

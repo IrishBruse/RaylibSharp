@@ -13,40 +13,28 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreDropFiles : ExampleHelper
 {
-    #include "raylib.h"
-
-    #include <stdlib.h>         // Required for: calloc(), free()
-
-    #define MAX_FILEPATH_RECORDED   4096
-    #define MAX_FILEPATH_SIZE       2048
+    const int MAX_FILEPATH_RECORDED = 4096;
+    const int MAX_FILEPATH_SIZE = 2048;
 
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - drop files");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - drop files");
 
         int filePathCounter = 0;
-        char *filePaths[MAX_FILEPATH_RECORDED] = { 0 }; // We will register a maximum of filepaths
+        char *filePaths[MAX_FILEPATH_RECORDED] = new(); // We will register a maximum of filepaths
 
         // Allocate space for the required file paths
         for (int i = 0; i < MAX_FILEPATH_RECORDED; i++)
@@ -66,11 +54,11 @@ public partial class CoreDropFiles : ExampleHelper
             {
                 FilePathList droppedFiles = LoadDroppedFiles();
 
-                for (int i = 0, offset = filePathCounter; i < (int)droppedFiles.count; i++)
+                for (int i = 0, offset = filePathCounter; i < (int)droppedFiles.Count; i++)
                 {
                     if (filePathCounter < (MAX_FILEPATH_RECORDED - 1))
                     {
-                        TextCopy(filePaths[offset + i], droppedFiles.paths[i]);
+                        TextCopy(filePaths[offset + i], droppedFiles.Paths[i]);
                         filePathCounter++;
                     }
                 }

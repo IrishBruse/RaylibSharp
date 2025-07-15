@@ -88,8 +88,8 @@ public partial class CoreWindowLetterbox : ExampleHelper
                 ClearBackground(BLACK);     // Clear screen background
 
                 // Draw render texture to screen, properly scaled
-                DrawTexturePro(target.Texture, (Rectangle)new(0.0f, 0.0f, (float)target.Texture.Width, (float)-target.Texture.Height),
-                               (Rectangle){ (GetScreenWidth() - ((float)gameScreenWidth*scale))*0.5f, (GetScreenHeight() - ((float)gameScreenHeight*scale))*0.5f,
+                DrawTexturePro(target.Texture, new(0.0f, 0.0f, (float)target.Texture.Width, (float)-target.Texture.Height),
+                               { (GetScreenWidth() - ((float)gameScreenWidth*scale))*0.5f, (GetScreenHeight() - ((float)gameScreenHeight*scale))*0.5f,
                                (float)gameScreenWidth*scale, (float)gameScreenHeight*scale }, new(0, 0), 0.0f, WHITE);
             EndDrawing();
             //--------------------------------------------------------------------------------------

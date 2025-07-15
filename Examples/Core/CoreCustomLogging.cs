@@ -13,28 +13,15 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreCustomLogging : ExampleHelper
 {
-    #include "raylib.h"
-
-    #include <stdio.h>                  // Required for: fopen(), fclose(), fputc(), fwrite(), printf(), fprintf(), funopen()
-    #include <time.h>                   // Required for: time_t, tm, time(), localtime(), strftime()
-
     // Custom logging function
     void CustomLog(int msgType, const char *text, va_list args)
     {
-        char timeStr[64] = { 0 };
+        char[] timeStr = new char[64];
         time_t now = time(NULL);
         struct tm *tm_info = localtime(&now);
 
@@ -43,7 +30,7 @@ public partial class CoreCustomLogging : ExampleHelper
 
         switch (msgType)
         {
-            case LOG_INFO: printf("[INFO] : "); break;
+            case TraceLogLevel.Info: printf("[INFO] : "); break;
             case LOG_ERROR: printf("[ERROR]: "); break;
             case LOG_WARNING: printf("[WARN] : "); break;
             case LOG_DEBUG: printf("[DEBUG]: "); break;
@@ -57,7 +44,7 @@ public partial class CoreCustomLogging : ExampleHelper
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
@@ -67,7 +54,7 @@ public partial class CoreCustomLogging : ExampleHelper
         // Set custom logger
         SetTraceLogCallback(CustomLog);
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - custom logging");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - custom logging");
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
         //--------------------------------------------------------------------------------------

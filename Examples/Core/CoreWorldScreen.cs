@@ -30,9 +30,9 @@ public partial class CoreWorldScreen : ExampleHelper
 
         // Define the camera to look into our 3d world
         Camera camera = new();
-        camera.Position = (Vector3)new(10.0f, 10.0f, 10.0f); // Camera position
-        camera.Target = (Vector3)new(0.0f, 0.0f, 0.0f);      // Camera looking at point
-        camera.Up = (Vector3)new(0.0f, 1.0f, 0.0f);          // Camera up vector (rotation towards target)
+        camera.Position = new(10.0f, 10.0f, 10.0f); // Camera position
+        camera.Target = new(0.0f, 0.0f, 0.0f);      // Camera looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera up vector (rotation towards target)
         camera.Fovy = 45.0f;                                // Camera field-of-view Y
         camera.Projection = CameraProjection.Perspective;             // Camera projection type
 
@@ -52,7 +52,7 @@ public partial class CoreWorldScreen : ExampleHelper
             UpdateCamera(ref camera, CameraMode.ThirdPerson);
 
             // Calculate cube screen space position (with a little offset to be in top)
-            cubeScreenPosition = GetWorldToScreen(new Vector3(cubePosition.X, cubePosition.Y + 2.5f, cubePosition.Z), camera);
+            cubeScreenPosition = GetWorldToScreen(new(cubePosition.X, cubePosition.Y + 2.5f, cubePosition.Z), camera);
             //----------------------------------------------------------------------------------
 
             // Draw

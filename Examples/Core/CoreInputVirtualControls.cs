@@ -15,32 +15,22 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreInputVirtualControls : ExampleHelper
 {
-    #include "raylib.h"
-    #include <math.h>
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - input virtual controls");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - input virtual controls");
 
         const float dpadX = 90;
         const float dpadY = 300;
@@ -51,10 +41,10 @@ public partial class CoreInputVirtualControls : ExampleHelper
 
         const float dpadCollider[4][2]= // collider array with x,y position
         {
-            {dpadX,dpadY-dpadRad*1.5f},//up
-            {dpadX-dpadRad*1.5f,dpadY},//left
-            {dpadX+dpadRad*1.5f,dpadY},//right
-            {dpadX,dpadY+dpadRad*1.5f}//down
+            new(dpadX,dpadY-dpadRad*1.5f),//up
+            new(dpadX-dpadRad*1.5f,dpadY),//left
+            new(dpadX+dpadRad*1.5f,dpadY),//right
+            new(dpadX,dpadY+dpadRad*1.5f)//down
         };
         const char dpadLabel[4]="XYBA";//label of Dpad
 
@@ -110,7 +100,7 @@ public partial class CoreInputVirtualControls : ExampleHelper
                 for(int i=0;i<4;i++)
                 {
                     //draw all pad
-                    DrawCircleV((Vector2) { dpadCollider[i][0], dpadCollider[i][1] }, dpadRad, dpadColor);
+                    DrawCircleV( new(dpadCollider[i][0], dpadCollider[i][1]), dpadRad, dpadColor);
                     if(i!=dpadKeydown)
                     {
                         //draw label
@@ -120,7 +110,7 @@ public partial class CoreInputVirtualControls : ExampleHelper
                     }
                 }
 
-                DrawRectangleRec((Rectangle) { playerX - 4, playerY - 4, 75, 28 }, RED);
+                DrawRectangleRec( new(playerX - 4, playerY - 4, 75, 28), RED);
                 DrawText("Player", (int)playerX, (int)playerY, 20, WHITE);
             EndDrawing();
         //--------------------------------------------------------------------------
