@@ -122,6 +122,11 @@ public partial class TexturesTexturedCurve : ExampleHelper
         DrawCircle(curveEndPositionTangent, 5, DarkGreen);
     }
 
+    private static void DrawLineBezierCubic(Vector2 curveStartPosition, Vector2 curveEndPosition, Vector2 curveStartPositionTangent, Vector2 curveEndPositionTangent, int v, Color blue)
+    {
+        throw new NotImplementedException();
+    }
+
     static void UpdateCurve()
     {
         // If the mouse is not down, we are not editing the curve so clear the selection

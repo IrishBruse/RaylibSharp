@@ -42,7 +42,7 @@ public partial class ShadersTextureOutline : ExampleHelper
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             // Update
-            outlineSize += GetMouseWheelMove().Y;
+            outlineSize += GetMouseWheelMove();
             if (outlineSize < 1.0f)
             {
                 outlineSize = 1.0f;

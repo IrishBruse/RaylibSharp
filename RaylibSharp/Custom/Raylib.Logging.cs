@@ -7,7 +7,7 @@ using System.Text;
 public static unsafe partial class Raylib
 {
     /// <summary> Show trace log messages (LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR...) </summary>
-    public static void TraceLog(TraceLogLevel level, string value)
+    public static void TraceLog(TraceLogLevel level, string value, params object[] args)
     {
         traceLogCallback.Invoke(level, value);
     }

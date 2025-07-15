@@ -109,40 +109,6 @@ public partial class ExampleProcessor
                 lines.SkipEmpty();
                 continue;
             }
-            // else if (source.TrimStart().StartsWith("typedef struct"))
-            // {
-            //     string[] test = source.Split([" ", "{"], StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-            //     string structName = test[2];
-
-            //     if (exampleName == "CoreAutomationEvents")
-            //     {
-            //         output.Add($"{tab}struct {structName}() {{");
-            //     }
-            //     else
-            //     {
-            //         output.Add($"{tab}struct {structName} {{");
-            //     }
-
-            //     while (lines.Until("} " + structName + ";"))
-            //     {
-            //         string? structLine = lines.NextLine().Trim();
-            //         if (structLine == null || structLine.Trim() == "}")
-            //         {
-            //             output.Add($"{tab}}} {structName};");
-            //             break;
-            //         }
-
-            //         string[] parts = structLine.Split(" ", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-            //         string type = parts[0];
-            //         string name = parts[1];
-
-            //         output.Add($"{tab}{tab}public {type} {char.ToUpper(name[0]) + name[1..]}");
-            //     }
-            //     lines.NextLine();
-            //     output.Add(tab + "}");
-
-            //     continue;
-            // }
             else if (source.TrimStart().StartsWith("#define"))
             {
                 string[] parts = source.Split(" ", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
@@ -150,7 +116,19 @@ public partial class ExampleProcessor
                 string name = parts[1];
                 string value = parts[2];
 
-                string type = value.Contains('.') ? "float" : "int";
+                string type;
+                if (value.Contains('.'))
+                {
+                    type = "float";
+                }
+                else if (value.Contains('"'))
+                {
+                    type = "string";
+                }
+                else
+                {
+                    type = "int";
+                }
 
                 if (source.Contains("MAX(a") || source.Contains("MIN(a"))
                 {
@@ -162,7 +140,8 @@ public partial class ExampleProcessor
             }
             else if (source.Contains("int main("))
             {
-                if (exampleName == "CoreInputGamepadInfo")
+                if (exampleName == "CoreInputGamepadInfo" ||
+                    exampleName == "CoreInputGestures")
                 {
                     output.Add(tab + $"public static void Example()");
                 }
@@ -216,6 +195,9 @@ public partial class ExampleProcessor
 
         Globals(line);
 
+        // Pascal Case
+        UpperCaseVariables(line);
+
         switch (exampleName)
         {
             case "Core2dCamera":
@@ -265,18 +247,24 @@ public partial class ExampleProcessor
             case "CoreAutomationEvents":
             line.Replace("), 0", "), false");
             line.Replace("), 1", "), true");
-            line.Replace("} Player;", "}");
-            line.Replace("} EnvElement;", "}");
 
+            line.Replace("struct Player", "struct Player(Vector2 position, float speed, bool canJump)");
             line.Replace("Vector2 position;", "public Vector2 Position = position;");
             line.Replace("float speed;", "public float Speed = speed;");
             line.Replace("bool canJump;", "public bool CanJump = canJump;");
-            line.Replace("Rectangle rect;", "public Rectangle Rect = rect;");
-            line.Replace("int blocking;", "public int Blocking = blocking;");
-            line.Replace("Color color;", "public Color Color = color;");
+            line.Replace("} Player;", "}");
 
-            line.Replace("struct Player", "struct Player(Vector2 position, float speed, bool canJump)");
-            line.Replace("struct EnvElement", "struct EnvElement(Rectangle rect, int blocking, Color color)");
+            line.Replace("struct EnvElement", "struct EnvElement(Rectangle rect, bool blocking, Color color)");
+            line.Replace("Rectangle rect;", "public Rectangle Rect = rect;");
+            line.Replace("int blocking;", "public bool Blocking = blocking;");
+            line.Replace("Color color;", "public Color Color = color;");
+            line.Replace("} EnvElement;", "}");
+
+            line.Replace("EnvElement *element = &envElements[i];", "EnvElement element = envElements[i];");
+            line.Replace("Vector2 *p = &(player.Position);", "ref Vector2 p = ref player.Position;");
+            line.Replace("int hitObstacle = 0;", "bool hitObstacle = false;");
+            line.Replace("hitObstacle = 1;", "hitObstacle = true;");
+
             break;
             case "CoreBasicScreenManager":
             {
@@ -299,12 +287,17 @@ public partial class ExampleProcessor
             case "CoreDropFiles":
             break;
             case "CoreInputGamepad":
+            line.Replace("GetGamepadAxisMovement(0, i)", "GetGamepadAxisMovement(0, (GamepadAxis)i)");
             break;
             case "CoreInputGamepadInfo":
             line.Replace("GetGamepadAxisMovement(i, ", "GetGamepadAxisMovement(i, (GamepadAxis)");
             line.Replace("IsGamepadButtonDown(i, ", "IsGamepadButtonDown(i, (GamepadButton)");
             break;
             case "CoreInputGestures":
+            line.Replace("public static int Example()", "public static void Example()");
+            line.Replace("int currentGesture", "Gesture currentGesture");
+            line.Replace("int lastGesture", "Gesture lastGesture");
+            line.Replace("char gestureStrings[MAX_GESTURE_STRINGS][32];", "string[] gestureStrings = new string[MAX_GESTURE_STRINGS];");
             break;
             case "CoreInputGesturesWeb":
             break;
@@ -393,6 +386,9 @@ public partial class ExampleProcessor
             {
                 line.Length = 0;
             }
+            line.Replace("{ (GetScreenWidth(", "new((GetScreenWidth(");
+            line.Replace("scale }, ", "scale), ");
+
             break;
             case "CoreWindowShouldClose":
             break;
@@ -402,9 +398,6 @@ public partial class ExampleProcessor
             default:
             break;
         }
-
-        // Pascal Case
-        UpperCaseVariables(line);
 
         return line.ToString();
     }
@@ -425,22 +418,32 @@ public partial class ExampleProcessor
 
         foreach (string val in Utility.MaterialMapIndex)
         {
-            line.ReplaceAll("MATERIAL_MAP_" + val.ToUpperInvariant(), "MaterialMapIndex." + val);
+            line.Replace("MATERIAL_MAP_" + val.ToUpperInvariant(), "MaterialMapIndex." + val);
         }
 
         foreach (string val in Utility.MaterialMapIndex)
         {
-            line.ReplaceAll("MATERIAL_MAP_" + val.ToUpperInvariant(), "MaterialMapIndex." + val);
+            line.Replace("MATERIAL_MAP_" + val.ToUpperInvariant(), "MaterialMapIndex." + val);
         }
 
         foreach (string val in Utility.TextureFilter)
         {
-            line.ReplaceAll(val, string.Concat("TextureFilter.", Utility.ToPascalCase(val.Substring(15))));
+            line.Replace(val, string.Concat("TextureFilter.", Utility.ToPascalCase(val.Substring(15))));
         }
 
         foreach (string val in Utility.Flags)
         {
-            line.ReplaceAll(val, "WindowFlag." + Utility.ToPascalCase(val.Replace("FLAG_", "").Replace("WINDOW_", "")));
+            line.Replace(val, "WindowFlag." + Utility.ToPascalCase(val.Replace("FLAG_", "").Replace("WINDOW_", "")));
+        }
+
+        foreach (string val in Utility.GamepadAxis)
+        {
+            line.Replace(val, "GamepadAxis." + Utility.ToPascalCase(val.Replace("GAMEPAD_AXIS_", "")));
+        }
+
+        foreach (string val in Utility.GamepadButtons)
+        {
+            line.Replace(val, "GamepadButton." + Utility.ToPascalCase(val.Replace("GAMEPAD_BUTTON_", "")));
         }
 
         // CameraProjection
@@ -480,11 +483,6 @@ public partial class ExampleProcessor
         {
             line.Replace(Test(), "new($1)");
         }
-        // line.Replace(Object4Params(), "new($1, $2, $3, $4)");
-        // line.Replace(Object3Params(), "new($1, $2, $3)");
-        // line.Replace(Object2Params(), "new($1, $2)");
-
-
     }
 
     static void UpperCaseVariables(StringBuilder line)
@@ -505,10 +503,6 @@ public partial class ExampleProcessor
         line.Replace(".parent", ".Parent");
 
         line.Replace(".id", ".Id");
-        // line.Replace(".r", ".R");
-        // line.Replace(".g", ".G");
-        // line.Replace(".b", ".B");
-        // line.Replace(".a", ".A");
 
         line.Replace(".target", ".Target");
         line.Replace(".offset", ".Offset");
@@ -525,6 +519,9 @@ public partial class ExampleProcessor
         line.Replace(".speed", ".Speed");
         line.Replace(".canJump", ".CanJump");
         line.Replace(".rect", ".Rect");
+        line.Replace(".blocking", ".Blocking");
+        line.Replace(".events", ".Events");
+        line.Replace(".frame", ".Frame");
         line.Replace(".color", ".Color");
     }
 

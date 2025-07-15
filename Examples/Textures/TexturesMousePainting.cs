@@ -102,7 +102,7 @@ public partial class TexturesMousePainting : ExampleHelper
             }
 
             // Change brush size
-            brushSize += GetMouseWheelMove().Y * 5;
+            brushSize += GetMouseWheelMove() * 5;
             if (brushSize < 2)
             {
                 brushSize = 2;

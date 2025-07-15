@@ -89,8 +89,8 @@ public partial class CoreWindowLetterbox : ExampleHelper
 
                 // Draw render texture to screen, properly scaled
                 DrawTexturePro(target.Texture, new(0.0f, 0.0f, (float)target.Texture.Width, (float)-target.Texture.Height),
-                               { (GetScreenWidth() - ((float)gameScreenWidth*scale))*0.5f, (GetScreenHeight() - ((float)gameScreenHeight*scale))*0.5f,
-                               (float)gameScreenWidth*scale, (float)gameScreenHeight*scale }, new(0, 0), 0.0f, WHITE);
+                               new((GetScreenWidth() - ((float)gameScreenWidth*scale))*0.5f, (GetScreenHeight() - ((float)gameScreenHeight*scale))*0.5f,
+                               (float)gameScreenWidth*scale, (float)gameScreenHeight*scale), new(0, 0), 0.0f, WHITE);
             EndDrawing();
             //--------------------------------------------------------------------------------------
         }

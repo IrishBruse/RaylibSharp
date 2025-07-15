@@ -30,9 +30,9 @@ public partial class CoreAutomationEvents : ExampleHelper
         public bool CanJump = canJump;
     }
 
-    struct EnvElement(Rectangle rect, int blocking, Color color) {
+    struct EnvElement(Rectangle rect, bool blocking, Color color) {
         public Rectangle Rect = rect;
-        public int Blocking = blocking;
+        public bool Blocking = blocking;
         public Color Color = color;
     }
 
@@ -134,18 +134,18 @@ public partial class CoreAutomationEvents : ExampleHelper
                 player.CanJump = false;
             }
 
-            int hitObstacle = 0;
+            bool hitObstacle = false;
             for (int i = 0; i < MAX_ENVIRONMENT_ELEMENTS; i++)
             {
-                EnvElement *element = &envElements[i];
-                Vector2 *p = &(player.Position);
-                if (element.blocking &&
+                EnvElement element = envElements[i];
+                ref Vector2 p = ref player.Position;
+                if (element.Blocking &&
                     element.Rect.X <= p.X &&
                     element.Rect.X + element.Rect.Width >= p.X &&
                     element.Rect.Y >= p.Y &&
                     element.Rect.Y <= p.Y + player.Speed*deltaTime)
                 {
-                    hitObstacle = 1;
+                    hitObstacle = true;
                     player.Speed = 0.0f;
                     p.Y = element.Rect.Y;
                 }
@@ -180,9 +180,9 @@ public partial class CoreAutomationEvents : ExampleHelper
             if (eventPlaying)
             {
                 // NOTE: Multiple events could be executed in a single frame
-                while (playFrameCounter == aelist.events[currentPlayFrame].frame)
+                while (playFrameCounter == aelist.Events[currentPlayFrame].Frame)
                 {
-                    PlayAutomationEvent(aelist.events[currentPlayFrame]);
+                    PlayAutomationEvent(aelist.Events[currentPlayFrame]);
                     currentPlayFrame++;
 
                     if (currentPlayFrame == aelist.Count)
@@ -213,7 +213,7 @@ public partial class CoreAutomationEvents : ExampleHelper
 
             for (int i = 0; i < MAX_ENVIRONMENT_ELEMENTS; i++)
             {
-                EnvElement *element = &envElements[i];
+                EnvElement element = envElements[i];
                 minX = fminf(element.Rect.X, minX);
                 maxX = fmaxf(element.Rect.X + element.Rect.Width, maxX);
                 minY = fminf(element.Rect.Y, minY);

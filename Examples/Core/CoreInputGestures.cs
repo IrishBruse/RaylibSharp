@@ -21,7 +21,7 @@ public partial class CoreInputGestures : ExampleHelper
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    public static int Example()
+    public static void Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
@@ -34,10 +34,10 @@ public partial class CoreInputGestures : ExampleHelper
         Rectangle touchArea = new(220, 10, screenWidth - 230.0f, screenHeight - 20.0f);
 
         int gesturesCount = 0;
-        char gestureStrings[MAX_GESTURE_STRINGS][32];
+        string[] gestureStrings = new string[MAX_GESTURE_STRINGS];
 
-        int currentGesture = Gesture.None;
-        int lastGesture = Gesture.None;
+        Gesture currentGesture = Gesture.None;
+        Gesture lastGesture = Gesture.None;
 
         //SetGesturesEnabled(0b0000000000001001);   // Enable only some gestures to be detected
 

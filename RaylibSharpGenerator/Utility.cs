@@ -38,6 +38,36 @@ public class Utility
         "Magenta",
     ];
 
+    public static readonly string[] GamepadAxis = [
+        "GAMEPAD_AXIS_LEFT_X",
+        "GAMEPAD_AXIS_LEFT_Y",
+        "GAMEPAD_AXIS_RIGHT_X",
+        "GAMEPAD_AXIS_RIGHT_Y",
+        "GAMEPAD_AXIS_LEFT_TRIGGER",
+        "GAMEPAD_AXIS_RIGHT_TRIGGER",
+    ];
+
+    public static readonly string[] GamepadButtons = [
+        "GAMEPAD_BUTTON_UNKNOWN",
+        "GAMEPAD_BUTTON_LEFT_FACE_UP",
+        "GAMEPAD_BUTTON_LEFT_FACE_RIGHT",
+        "GAMEPAD_BUTTON_LEFT_FACE_DOWN",
+        "GAMEPAD_BUTTON_LEFT_FACE_LEFT",
+        "GAMEPAD_BUTTON_RIGHT_FACE_UP",
+        "GAMEPAD_BUTTON_RIGHT_FACE_RIGHT",
+        "GAMEPAD_BUTTON_RIGHT_FACE_DOWN",
+        "GAMEPAD_BUTTON_RIGHT_FACE_LEFT",
+        "GAMEPAD_BUTTON_LEFT_TRIGGER_1",
+        "GAMEPAD_BUTTON_LEFT_TRIGGER_2",
+        "GAMEPAD_BUTTON_RIGHT_TRIGGER_1",
+        "GAMEPAD_BUTTON_RIGHT_TRIGGER_2",
+        "GAMEPAD_BUTTON_MIDDLE_LEFT",
+        "GAMEPAD_BUTTON_MIDDLE_RIGHT",
+        "GAMEPAD_BUTTON_MIDDLE",
+        "GAMEPAD_BUTTON_LEFT_THUMB",
+        "GAMEPAD_BUTTON_RIGHT_THUMB",
+    ];
+
     public static readonly string[] Flags = [
         "FLAG_VSYNC_HINT",
         "FLAG_FULLSCREEN_MODE",
@@ -264,7 +294,7 @@ public class Utility
     public static string ToPascalCase(string name)
     {
         string[] words = name.Split("_");
-        words = words.Select(w => w[..1].ToUpper(CultureInfo.CurrentCulture) + w[1..].ToLower(CultureInfo.CurrentCulture)).ToArray();
+        words = words.Select(w => char.ToUpperInvariant(w[0]) + w[1..].ToLowerInvariant()).ToArray();
         return string.Join("", words);
     }
 }
