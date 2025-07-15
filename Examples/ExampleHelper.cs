@@ -10,6 +10,34 @@ using RaylibSharp;
 /// </summary>
 public class ExampleHelper
 {
+    public static readonly Color RAYWHITE = Color.RayWhite;
+    public static readonly Color LIGHTGRAY = Color.LightGray;
+    public static readonly Color DARKGRAY = Color.DarkGray;
+    public static readonly Color GRAY = Color.Gray;
+    public static readonly Color YELLOW = Color.Yellow;
+    public static readonly Color GOLD = Color.Gold;
+    public static readonly Color ORANGE = Color.Orange;
+    public static readonly Color PINK = Color.Pink;
+    public static readonly Color RED = Color.Red;
+    public static readonly Color MAROON = Color.Maroon;
+    public static readonly Color DARKGREEN = Color.DarkGreen;
+    public static readonly Color GREEN = Color.Green;
+    public static readonly Color LIME = Color.Lime;
+    public static readonly Color SKYBLUE = Color.SkyBlue;
+    public static readonly Color DARKBLUE = Color.DarkBlue;
+    public static readonly Color BLUE = Color.Blue;
+    public static readonly Color DARKPURPLE = Color.DarkPurple;
+    public static readonly Color PURPLE = Color.Purple;
+    public static readonly Color VIOLET = Color.Violet;
+    public static readonly Color BEIGE = Color.Beige;
+    public static readonly Color DARKBROWN = Color.DarkBrown;
+    public static readonly Color BROWN = Color.Brown;
+    public static readonly Color WHITE = Color.White;
+    public static readonly Color BLACK = Color.Black;
+    public static readonly Color BLANK = Color.Blank;
+    public static readonly Color MAGENTA = Color.Magenta;
+
+
     public static void InitWindow(int width, int height, string title)
     {
         Raylib.SetWindowTitle(title);
@@ -175,5 +203,15 @@ public class ExampleHelper
     public static bool IsKeyPressed(Key c)
     {
         return Raylib.IsKeyPressed(c);
+    }
+
+    public static void DrawTexturePro(Texture texture, Rectangle source, Rectangle dest, Vector2 origin, float rotation, Color color)
+    {
+        Raylib.DrawTexture(texture, source, dest, origin, rotation, color);
+    }
+
+    public static void DrawRectanglePro(Rectangle rec, Vector2 origin, float rotation, Color color)
+    {
+        Raylib.DrawRectangle(rec, origin, rotation, color);
     }
 }

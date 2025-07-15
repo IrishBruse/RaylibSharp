@@ -52,9 +52,9 @@ public static class ExamplePicker
 
                 Raylib.DrawText(text, pad, (int)scroll + 6, 20, Raylib.Black);
 
-                if (Raylib.GetMouseWheelMove().Y != 0)
+                if (Raylib.GetMouseWheelMove() != 0)
                 {
-                    scrollTarget += Raylib.GetMouseWheelMove().Y * 140;
+                    scrollTarget += Raylib.GetMouseWheelMove() * 140;
                 }
 
                 if (scroll - scrollTarget >= 1 || scroll - scrollTarget <= -1)

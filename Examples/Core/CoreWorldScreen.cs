@@ -11,43 +11,33 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreWorldScreen : ExampleHelper
 {
-    #include "raylib.h"
-
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - core world screen");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - core world screen");
 
         // Define the camera to look into our 3d world
-        Camera camera = { 0 };
-        camera.position = (Vector3){ 10.0f, 10.0f, 10.0f }; // Camera position
-        camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };      // Camera looking at point
-        camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
-        camera.fovy = 45.0f;                                // Camera field-of-view Y
-        camera.projection = CAMERA_PERSPECTIVE;             // Camera projection type
+        Camera camera = new();
+        camera.Position = (Vector3)new(10.0f, 10.0f, 10.0f); // Camera position
+        camera.Target = (Vector3)new(0.0f, 0.0f, 0.0f);      // Camera looking at point
+        camera.Up = (Vector3)new(0.0f, 1.0f, 0.0f);          // Camera up vector (rotation towards target)
+        camera.Fovy = 45.0f;                                // Camera field-of-view Y
+        camera.Projection = CameraProjection.Perspective;             // Camera projection type
 
-        Vector3 cubePosition = { 0.0f, 0.0f, 0.0f };
-        Vector2 cubeScreenPosition = { 0.0f, 0.0f };
+        Vector3 cubePosition = new(0.0f, 0.0f, 0.0f);
+        Vector2 cubeScreenPosition = new(0.0f, 0.0f);
 
         DisableCursor();                    // Limit cursor to relative movement inside the window
 
@@ -59,10 +49,10 @@ public partial class CoreWorldScreen : ExampleHelper
         {
             // Update
             //----------------------------------------------------------------------------------
-            UpdateCamera(&camera, CAMERA_THIRD_PERSON);
+            UpdateCamera(ref camera, CameraMode.ThirdPerson);
 
             // Calculate cube screen space position (with a little offset to be in top)
-            cubeScreenPosition = GetWorldToScreen((Vector3){cubePosition.x, cubePosition.y + 2.5f, cubePosition.z}, camera);
+            cubeScreenPosition = GetWorldToScreen(new Vector3(cubePosition.X, cubePosition.Y + 2.5f, cubePosition.Z), camera);
             //----------------------------------------------------------------------------------
 
             // Draw
@@ -80,9 +70,9 @@ public partial class CoreWorldScreen : ExampleHelper
 
                 EndMode3D();
 
-                DrawText("Enemy: 100 / 100", (int)cubeScreenPosition.x - MeasureText("Enemy: 100/100", 20)/2, (int)cubeScreenPosition.y, 20, BLACK);
+                DrawText("Enemy: 100 / 100", (int)cubeScreenPosition.X - MeasureText("Enemy: 100/100", 20)/2, (int)cubeScreenPosition.Y, 20, BLACK);
 
-                DrawText(TextFormat("Cube position in screen space coordinates: [%i, %i]", (int)cubeScreenPosition.x, (int)cubeScreenPosition.y), 10, 10, 20, LIME);
+                DrawText(TextFormat("Cube position in screen space coordinates: [%i, %i]", (int)cubeScreenPosition.X, (int)cubeScreenPosition.Y), 10, 10, 20, LIME);
                 DrawText("Text 2d should be always on top of the cube", 10, 40, 20, GRAY);
 
             EndDrawing();

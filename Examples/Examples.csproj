@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <IsPackable>false</IsPackable>
+        <Defines>PLATFORM_DESKTOP</Defines>
     </PropertyGroup>
 
     <ItemGroup>

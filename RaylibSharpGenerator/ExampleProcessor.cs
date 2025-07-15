@@ -24,7 +24,7 @@ public partial class ExampleProcessor
             string[] lines = File.ReadAllLines(cFile);
             Lines exampleLines = new(lines);
 
-            if (exampleName == "CoreBasicWindowWeb")
+            if (exampleName == "CoreBasicWindowWeb" || exampleName == "CoreLoadingThread")
             {
                 continue;
             }
@@ -32,7 +32,6 @@ public partial class ExampleProcessor
             if (exampleName.StartsWith("Core"))
             {
                 GenerateExample(exampleLines, exampleName, $"../Examples/Core/{exampleName}.cs");
-                continue;
             }
         }
     }
@@ -66,16 +65,33 @@ public partial class ExampleProcessor
             }
         }
 
-        output.Add("using System.Numerics;");
-        output.Add("using System;");
-        output.Add("");
-        output.Add("using RaylibSharp;");
-        output.Add("using RaylibSharp.GL;");
-        output.Add("");
-        output.Add("using Camera = RaylibSharp.Camera3D;");
-        output.Add("using RenderTexture2D = RaylibSharp.RenderTexture;");
-        output.Add("");
-        output.Add("using static RaylibSharp.Raylib;");
+        while (lines.HasNext())
+        {
+            string? line = lines.NextLine();
+            if (line == null)
+            {
+                break;
+            }
+
+            if (line.StartsWith("#include"))
+            {
+                if (line.Contains("raylib.h"))
+                {
+                    output.Add("using static RaylibSharp.Raylib;");
+                    output.Add("using RaylibSharp;");
+                }
+                if (line.Contains("rlgl.h"))
+                {
+                    output.Add("using RaylibSharp.GL;");
+                }
+            }
+            else if (!line.StartsWith("#include") && line != "")
+            {
+                lines.Undo();
+                break;
+            }
+        }
+
         output.Add("");
         output.Add($"public partial class {exampleName} : ExampleHelper");
         output.Add("{");
@@ -153,9 +169,9 @@ public partial class ExampleProcessor
 
         if (exampleName == "Core2dCameraPlatformer")
         {
-            MoveLineRangeBy(output, 239, 241, -2, true); // UpdateCameraCenterSmoothFollow
-            MoveLineRangeBy(output, 256, 258, -2, true); // UpdateCameraEvenOutOnLanding
-            MoveLineRangeBy(output, 298, 299, -2, true); // UpdateCameraPlayerBoundsPush
+            // MoveLineRangeBy(output, 239, 241, -2, true); // UpdateCameraCenterSmoothFollow
+            // MoveLineRangeBy(output, 256, 258, -2, true); // UpdateCameraEvenOutOnLanding
+            // MoveLineRangeBy(output, 298, 299, -2, true); // UpdateCameraPlayerBoundsPush
         }
 
         File.WriteAllLines(outputFile, output);
@@ -224,6 +240,10 @@ public partial class ExampleProcessor
             case "Core3dCameraFirstPerson":
             break;
             case "Core3dCameraFree":
+            {
+                line.Replace("&camera", "ref camera");
+                line.Replace("int cameraMode", "CameraMode cameraMode");
+            }
             break;
             case "Core3dCameraMode":
             break;
@@ -272,6 +292,14 @@ public partial class ExampleProcessor
             case "CoreInputVirtualControls":
             break;
             case "CoreLoadingThread":
+            {
+                string convertedEnum = """
+                const int STATE_WAITING = 0;
+                        const int STATE_LOADING = 1;
+                        const int STATE_FINISHED = 2;
+                """;
+                line.Replace("enum { STATE_WAITING, STATE_LOADING, STATE_FINISHED } state = STATE_WAITING;", convertedEnum);
+            }
             break;
             case "CoreRandomSequence":
             break;
@@ -286,6 +314,50 @@ public partial class ExampleProcessor
             case "CoreStorageValues":
             break;
             case "CoreVrSimulator":
+            line.Replace("&camera", "ref camera");
+
+            line.Replace("config.leftLensCenter", "config.LeftLensCenter");
+            line.Replace("config.rightLensCenter", "config.RightLensCenter");
+            line.Replace("config.leftScreenCenter", "config.LeftScreenCenter");
+            line.Replace("config.rightScreenCenter", "config.RightScreenCenter");
+            line.Replace("config.scale", "config.Scale");
+            line.Replace("config.scaleIn", "config.ScaleIn");
+
+            line.Replace(".hResolution", ".HResolution");
+            line.Replace(".vResolution", ".VResolution");
+            line.Replace(".hScreenSize", ".HScreenSize");
+            line.Replace(".vScreenSize", ".VScreenSize");
+            line.Replace(".eyeToScreenDistance", ".EyeToScreenDistance");
+            line.Replace(".lensSeparationDistance", ".LensSeparationDistance");
+            line.Replace(".interpupillaryDistance", ".InterpupillaryDistance");
+            line.Replace(".lensDistortionValues", ".LensDistortionValues");
+            line.Replace(".lensDistortionValues", ".LensDistortionValues");
+            line.Replace(".lensDistortionValues", ".LensDistortionValues");
+            line.Replace(".lensDistortionValues", ".LensDistortionValues");
+            line.Replace(".chromaAbCorrection", ".ChromaAbCorrection");
+            line.Replace(".chromaAbCorrection", ".ChromaAbCorrection");
+            line.Replace(".chromaAbCorrection", ".ChromaAbCorrection");
+            line.Replace(".chromaAbCorrection", ".ChromaAbCorrection");
+
+            line.Replace(" .", " ");
+            line.Replace("VrDeviceInfo device = {", "VrDeviceInfo device = new () {");
+
+            line.Replace("};", "");
+            line.Replace("IPD (distance between pupils) in meters", "IPD (distance between pupils) in meters\n        };");
+
+            line.Replace("SHADER_UNIFORM_VEC2", "ShaderUniformDataType.ShaderUniformVec2");
+            line.Replace("SHADER_UNIFORM_VEC4", "ShaderUniformDataType.ShaderUniformVec4");
+
+            line.Replace("     LensDistortionValues", " device.LensDistortionValues");
+            line.Replace("     ChromaAbCorrection", " device.ChromaAbCorrection");
+            line.Replace("defined(PLATFORM_DESKTOP)", "PLATFORM_DESKTOP");
+
+            if (line.Contains("parameter"))
+            {
+                line.Replace(",", ";");
+            }
+
+            line.Replace("LoadShader(0", "LoadShader(null");
             break;
             case "CoreWindowFlags":
             break;
@@ -313,10 +385,7 @@ public partial class ExampleProcessor
 
     static void Globals(StringBuilder line)
     {
-        foreach (string color in Utility.Colors)
-        {
-            line.Replace(color.ToUpperInvariant(), color);
-        }
+        line.Replace("\"raylib [", "\"RaylibSharp [");
 
         foreach (string gesture in Utility.Gestures)
         {
@@ -367,12 +436,12 @@ public partial class ExampleProcessor
 
         line.ReplaceAll("unsigned int ", "uint ");
 
-        line.Replace(Vector2Replace(), "new($1)");
+        line.Replace(Vector2Replace(), "new($1, $2)");
         line.Replace(ColorReplace(), "new($1, $2, $3, $4)");
         line.Replace(StructAssignment(), "= new($1)");
         line.Replace(RectangleReplace(), "new($1, $2, $3, $4)");
         line.Replace(ArrayReplace(), "$1[] $2 = new $1$3");
-        line.Replace(Vector2AssignReplace(), "new($1,$2);");
+        line.Replace(Vector2AssignReplace(), "new($1, $2);");
 
         line.Replace("{ 0 }", "new()");
     }
@@ -395,10 +464,10 @@ public partial class ExampleProcessor
         line.Replace(".parent", ".Parent");
 
         line.Replace(".id", ".Id");
-        line.Replace(".r", ".R");
-        line.Replace(".g", ".G");
-        line.Replace(".b", ".B");
-        line.Replace(".a", ".A");
+        // line.Replace(".r", ".R");
+        // line.Replace(".g", ".G");
+        // line.Replace(".b", ".B");
+        // line.Replace(".a", ".A");
 
         line.Replace(".target", ".Target");
         line.Replace(".offset", ".Offset");
@@ -411,14 +480,17 @@ public partial class ExampleProcessor
         line.Replace(".projection", ".Projection");
 
         line.Replace(".texture", ".Texture");
+        line.Replace(".hit", ".Hit");
+        line.Replace(".speed", ".Speed");
+        line.Replace(".canJump", ".CanJump");
     }
 
     [GeneratedRegex(@"= {( \d+, \d+ )}")] private static partial Regex StructAssignment(); // = { -12.0, 1.0 }
     [GeneratedRegex(@"(IsMouse\w+)\(MOUSE_BUTTON_(.*?)\)")] private static partial Regex IsMouseConstEnumReplace(); // IsMouseButtonDown(MOUSE_BUTTON_RIGHT)
     [GeneratedRegex(@"\(Vector3\)\{\s*(.*?),\s*(.*?),\s*(.*?)\s*\}")] private static partial Regex Vector3Replace(); // (Vector3){ , , }
     [GeneratedRegex(@"\{ (.*?f), (.*?f), (.*?f) \}")] private static partial Regex Vector3AssignReplace(); // { 0.0f, 0.0f, 0.0f }
-    [GeneratedRegex(@"\(Vector2\).?\{((.*?),(.*?))\}")] private static partial Regex Vector2Replace(); // (Vector2){ , }
-    [GeneratedRegex(@"\{ (.*?), (.*?) \};")] private static partial Regex Vector2AssignReplace(); // { , }
+    [GeneratedRegex(@"\(Vector2\)\s*?\{\s+(.*?),\s+(.*?)\s+\}")] private static partial Regex Vector2Replace(); // (Vector2){ $1, $2 }
+    [GeneratedRegex(@"\{\s+(.*?),\s+(.*?)\s+\};")] private static partial Regex Vector2AssignReplace(); // { $1, $2 }
     [GeneratedRegex(@"(\w+) (\w+)(\[.*\]) = (\{ 0 \})?")] private static partial Regex ArrayReplace(); // int x[10];
     [GeneratedRegex(@"void \w+\(")] private static partial Regex VoidFunctionMatch();
     [GeneratedRegex(@"(bool \w+ =) 0")] private static partial Regex FalseBooleanAssignment(); // bool varname = 0
@@ -429,7 +501,7 @@ public partial class ExampleProcessor
     [GeneratedRegex(@"Vector2Add\((.*?), (.*?)\)")] private static partial Regex Vector2AddReplace(); // Vector2Add(delta, -1.0f / camera.Zoom);
     [GeneratedRegex(@"Vector2Scale\((.*?), (.*?)\)")] private static partial Regex Vector2ScaleReplace(); // Vector2Scale(delta, -1.0f / camera.Zoom);
     [GeneratedRegex(@"(IsKey\w+)\(KEY_(.*)\)")] private static partial Regex IsKeyConstEnumReplace(); // IsKeyDown(KEY_RIGHT)
-    [GeneratedRegex(@" rl(\w+)")] private static partial Regex RLGLReplace(); // rlBegin
+    [GeneratedRegex(@"rl([A-Z])")] private static partial Regex RLGLReplace(); // rlBegin
     [GeneratedRegex(@"RL_(\w+)")] private static partial Regex RLConstantsReplace(); // RL_QUAD
     [GeneratedRegex(@"([^&])&([^&])")] private static partial Regex CAndRef(); // &camera
     [GeneratedRegex("char (\\w+?)\\[\\d+\\]")] private static partial Regex MyRegex();

@@ -11,42 +11,32 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class Core3dCameraMode : ExampleHelper
 {
-    #include "raylib.h"
-
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - 3d camera mode");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - 3d camera mode");
 
         // Define the camera to look into our 3d world
-        Camera3D camera = { 0 };
-        camera.position = (Vector3){ 0.0f, 10.0f, 10.0f };  // Camera position
-        camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };      // Camera looking at point
-        camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
-        camera.fovy = 45.0f;                                // Camera field-of-view Y
-        camera.projection = CAMERA_PERSPECTIVE;             // Camera mode type
+        Camera3D camera = new();
+        camera.Position = (Vector3)new(0.0f, 10.0f, 10.0f);  // Camera position
+        camera.Target = (Vector3)new(0.0f, 0.0f, 0.0f);      // Camera looking at point
+        camera.Up = (Vector3)new(0.0f, 1.0f, 0.0f);          // Camera up vector (rotation towards target)
+        camera.Fovy = 45.0f;                                // Camera field-of-view Y
+        camera.Projection = CameraProjection.Perspective;             // Camera mode type
 
-        Vector3 cubePosition = { 0.0f, 0.0f, 0.0f };
+        Vector3 cubePosition = new(0.0f, 0.0f, 0.0f);
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
         //--------------------------------------------------------------------------------------

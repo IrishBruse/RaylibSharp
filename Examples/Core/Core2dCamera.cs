@@ -11,58 +11,48 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class Core2dCamera : ExampleHelper
 {
-    #include "raylib.h"
-
-    #define MAX_BUILDINGS   100
+    const int MAX_BUILDINGS = 100;
 
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - 2d camera");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - 2d camera");
 
-        Rectangle player = { 400, 280, 40, 40 };
-        Rectangle buildings[MAX_BUILDINGS] = { 0 };
-        Color buildColors[MAX_BUILDINGS] = { 0 };
+        Rectangle player = new(400, 280, 40, 40);
+        Rectangle[] buildings = new Rectangle[MAX_BUILDINGS];
+        Color[] buildColors = new Color[MAX_BUILDINGS];
 
         int spacing = 0;
 
         for (int i = 0; i < MAX_BUILDINGS; i++)
         {
-            buildings[i].width = (float)GetRandomValue(50, 200);
-            buildings[i].height = (float)GetRandomValue(100, 800);
-            buildings[i].y = screenHeight - 130.0f - buildings[i].height;
-            buildings[i].x = -6000.0f + spacing;
+            buildings[i].Width = (float)GetRandomValue(50, 200);
+            buildings[i].Height = (float)GetRandomValue(100, 800);
+            buildings[i].Y = screenHeight - 130.0f - buildings[i].Height;
+            buildings[i].X = -6000.0f + spacing;
 
-            spacing += (int)buildings[i].width;
+            spacing += (int)buildings[i].Width;
 
-            buildColors[i] = (Color){ GetRandomValue(200, 240), GetRandomValue(200, 240), GetRandomValue(200, 250), 255 };
+            buildColors[i] = new(GetRandomValue(200, 240), GetRandomValue(200, 240), GetRandomValue(200, 250), 255);
         }
 
-        Camera2D camera = { 0 };
-        camera.target = (Vector2){ player.x + 20.0f, player.y + 20.0f };
-        camera.offset = (Vector2){ screenWidth/2.0f, screenHeight/2.0f };
-        camera.rotation = 0.0f;
-        camera.zoom = 1.0f;
+        Camera2D camera = new();
+        camera.Target = new(player.X + 20.0f, player.Y + 20.0f);
+        camera.Offset = new(screenWidth/2.0f, screenHeight/2.0f);
+        camera.Rotation = 0.0f;
+        camera.Zoom = 1.0f;
 
         SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
         //--------------------------------------------------------------------------------------
@@ -73,31 +63,31 @@ public partial class Core2dCamera : ExampleHelper
             // Update
             //----------------------------------------------------------------------------------
             // Player movement
-            if (IsKeyDown(KEY_RIGHT)) player.x += 2;
-            else if (IsKeyDown(KEY_LEFT)) player.x -= 2;
+            if (IsKeyDown(Key.Right)) player.X += 2;
+            else if (IsKeyDown(Key.Left)) player.X -= 2;
 
             // Camera target follows player
-            camera.target = (Vector2){ player.x + 20, player.y + 20 };
+            camera.Target = new(player.X + 20, player.Y + 20);
 
             // Camera rotation controls
-            if (IsKeyDown(KEY_A)) camera.rotation--;
-            else if (IsKeyDown(KEY_S)) camera.rotation++;
+            if (IsKeyDown(Key.A)) camera.Rotation--;
+            else if (IsKeyDown(Key.S)) camera.Rotation++;
 
             // Limit camera rotation to 80 degrees (-40 to 40)
-            if (camera.rotation > 40) camera.rotation = 40;
-            else if (camera.rotation < -40) camera.rotation = -40;
+            if (camera.Rotation > 40) camera.Rotation = 40;
+            else if (camera.Rotation < -40) camera.Rotation = -40;
 
             // Camera zoom controls
-            camera.zoom += ((float)GetMouseWheelMove()*0.05f);
+            camera.Zoom += ((float)GetMouseWheelMove()*0.05f);
 
-            if (camera.zoom > 3.0f) camera.zoom = 3.0f;
-            else if (camera.zoom < 0.1f) camera.zoom = 0.1f;
+            if (camera.Zoom > 3.0f) camera.Zoom = 3.0f;
+            else if (camera.Zoom < 0.1f) camera.Zoom = 0.1f;
 
             // Camera reset (zoom and rotation)
-            if (IsKeyPressed(KEY_R))
+            if (IsKeyPressed(Key.R))
             {
-                camera.zoom = 1.0f;
-                camera.rotation = 0.0f;
+                camera.Zoom = 1.0f;
+                camera.Rotation = 0.0f;
             }
             //----------------------------------------------------------------------------------
 
@@ -115,8 +105,8 @@ public partial class Core2dCamera : ExampleHelper
 
                     DrawRectangleRec(player, RED);
 
-                    DrawLine((int)camera.target.x, -screenHeight*10, (int)camera.target.x, screenHeight*10, GREEN);
-                    DrawLine(-screenWidth*10, (int)camera.target.y, screenWidth*10, (int)camera.target.y, GREEN);
+                    DrawLine((int)camera.Target.X, -screenHeight*10, (int)camera.Target.X, screenHeight*10, GREEN);
+                    DrawLine(-screenWidth*10, (int)camera.Target.Y, screenWidth*10, (int)camera.Target.Y, GREEN);
 
                 EndMode2D();
 

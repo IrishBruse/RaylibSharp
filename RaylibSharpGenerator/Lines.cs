@@ -1,7 +1,5 @@
 namespace RaylibSharp.Generator;
 
-using System;
-
 class Lines(string[] Lines)
 {
     int index = 0;
@@ -55,6 +53,14 @@ class Lines(string[] Lines)
             }
 
             return Lines[index];
+        }
+    }
+
+    public void Undo()
+    {
+        if (index > 0)
+        {
+            index--;
         }
     }
 }

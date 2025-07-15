@@ -11,34 +11,24 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreWindowShouldClose : ExampleHelper
 {
-    #include "raylib.h"
-
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main()
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - window should close");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - window should close");
 
-        SetExitKey(KEY_NULL);       // Disable KEY_ESCAPE to close window, X-button still works
+        SetExitKey(Key.Null);       // Disable Key.Escape to close window, X-button still works
 
         bool exitWindowRequested = false;   // Flag to request window to exit
         bool exitWindow = false;    // Flag to set window to exit
@@ -51,16 +41,16 @@ public partial class CoreWindowShouldClose : ExampleHelper
         {
             // Update
             //----------------------------------------------------------------------------------
-            // Detect if X-button or KEY_ESCAPE have been pressed to close window
-            if (WindowShouldClose() || IsKeyPressed(KEY_ESCAPE)) exitWindowRequested = true;
+            // Detect if X-button or Key.Escape have been pressed to close window
+            if (WindowShouldClose() || IsKeyPressed(Key.Escape)) exitWindowRequested = true;
 
             if (exitWindowRequested)
             {
                 // A request for close window has been issued, we can save data before closing
                 // or just show a message asking for confirmation
 
-                if (IsKeyPressed(KEY_Y)) exitWindow = true;
-                else if (IsKeyPressed(KEY_N)) exitWindowRequested = false;
+                if (IsKeyPressed(Key.Y)) exitWindow = true;
+                else if (IsKeyPressed(Key.N)) exitWindowRequested = false;
             }
             //----------------------------------------------------------------------------------
 
