@@ -16,55 +16,45 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class Core2dCameraSplitScreen : ExampleHelper
 {
-    #include "raylib.h"
-
-    #define PLAYER_SIZE 40
+    static readonly int PLAYER_SIZE = 40;
 
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 440;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - 2d camera split screen");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - 2d camera split screen");
 
-        Rectangle player1 = { 200, 200, PLAYER_SIZE, PLAYER_SIZE };
-        Rectangle player2 = { 250, 200, PLAYER_SIZE, PLAYER_SIZE };
+        Rectangle player1 = new(200, 200, PLAYER_SIZE, PLAYER_SIZE);
+        Rectangle player2 = new(250, 200, PLAYER_SIZE, PLAYER_SIZE);
 
-        Camera2D camera1 = { 0 };
-        camera1.target = (Vector2){ player1.x, player1.y };
-        camera1.offset = (Vector2){ 200.0f, 200.0f };
-        camera1.rotation = 0.0f;
-        camera1.zoom = 1.0f;
+        Camera2D camera1 = new();
+        camera1.Target = new(player1.X, player1.Y);
+        camera1.Offset = new(200.0f, 200.0f);
+        camera1.Rotation = 0.0f;
+        camera1.Zoom = 1.0f;
 
-        Camera2D camera2 = { 0 };
-        camera2.target = (Vector2){ player2.x, player2.y };
-        camera2.offset = (Vector2){ 200.0f, 200.0f };
-        camera2.rotation = 0.0f;
-        camera2.zoom = 1.0f;
+        Camera2D camera2 = new();
+        camera2.Target = new(player2.X, player2.Y);
+        camera2.Offset = new(200.0f, 200.0f);
+        camera2.Rotation = 0.0f;
+        camera2.Zoom = 1.0f;
 
         RenderTexture screenCamera1 = LoadRenderTexture(screenWidth/2, screenHeight);
         RenderTexture screenCamera2 = LoadRenderTexture(screenWidth/2, screenHeight);
 
         // Build a flipped rectangle the size of the split view to use for drawing later
-        Rectangle splitScreenRect = { 0.0f, 0.0f, (float)screenCamera1.texture.width, (float)-screenCamera1.texture.height };
+        Rectangle splitScreenRect = new(0.0f, 0.0f, (float)screenCamera1.Texture.Width, (float)-screenCamera1.Texture.Height);
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
         //--------------------------------------------------------------------------------------
@@ -74,18 +64,18 @@ public partial class Core2dCameraSplitScreen : ExampleHelper
         {
             // Update
             //----------------------------------------------------------------------------------
-            if (IsKeyDown(KEY_S)) player1.y += 3.0f;
-            else if (IsKeyDown(KEY_W)) player1.y -= 3.0f;
-            if (IsKeyDown(KEY_D)) player1.x += 3.0f;
-            else if (IsKeyDown(KEY_A)) player1.x -= 3.0f;
+            if (IsKeyDown(Key.S)) player1.Y += 3.0f;
+            else if (IsKeyDown(Key.W)) player1.Y -= 3.0f;
+            if (IsKeyDown(Key.D)) player1.X += 3.0f;
+            else if (IsKeyDown(Key.A)) player1.X -= 3.0f;
 
-            if (IsKeyDown(KEY_UP)) player2.y -= 3.0f;
-            else if (IsKeyDown(KEY_DOWN)) player2.y += 3.0f;
-            if (IsKeyDown(KEY_RIGHT)) player2.x += 3.0f;
-            else if (IsKeyDown(KEY_LEFT)) player2.x -= 3.0f;
+            if (IsKeyDown(Key.Up)) player2.Y -= 3.0f;
+            else if (IsKeyDown(Key.Down)) player2.Y += 3.0f;
+            if (IsKeyDown(Key.Right)) player2.X += 3.0f;
+            else if (IsKeyDown(Key.Left)) player2.X -= 3.0f;
 
-            camera1.target = (Vector2){ player1.x, player1.y };
-            camera2.target = (Vector2){ player2.x, player2.y };
+            camera1.Target = new(player1.X, player1.Y);
+            camera2.Target = new(player2.X, player2.Y);
             //----------------------------------------------------------------------------------
 
             // Draw
@@ -98,12 +88,12 @@ public partial class Core2dCameraSplitScreen : ExampleHelper
                     // Draw full scene with first camera
                     for (int i = 0; i < screenWidth/PLAYER_SIZE + 1; i++)
                     {
-                        DrawLineV((Vector2){(float)PLAYER_SIZE*i, 0}, (Vector2){ (float)PLAYER_SIZE*i, (float)screenHeight}, LIGHTGRAY);
+                        DrawLine(new((float)PLAYER_SIZE*i, 0), new( (float)PLAYER_SIZE*i, (float)screenHeight), LIGHTGRAY);
                     }
 
                     for (int i = 0; i < screenHeight/PLAYER_SIZE + 1; i++)
                     {
-                        DrawLineV((Vector2){0, (float)PLAYER_SIZE*i}, (Vector2){ (float)screenWidth, (float)PLAYER_SIZE*i}, LIGHTGRAY);
+                        DrawLine(new(0, (float)PLAYER_SIZE*i), new( (float)screenWidth, (float)PLAYER_SIZE*i), LIGHTGRAY);
                     }
 
                     for (int i = 0; i < screenWidth/PLAYER_SIZE; i++)
@@ -114,8 +104,8 @@ public partial class Core2dCameraSplitScreen : ExampleHelper
                         }
                     }
 
-                    DrawRectangleRec(player1, RED);
-                    DrawRectangleRec(player2, BLUE);
+                    DrawRectangle(player1, RED);
+                    DrawRectangle(player2, BLUE);
                 EndMode2D();
 
                 DrawRectangle(0, 0, GetScreenWidth()/2, 30, Fade(RAYWHITE, 0.6f));
@@ -131,12 +121,12 @@ public partial class Core2dCameraSplitScreen : ExampleHelper
                     // Draw full scene with second camera
                     for (int i = 0; i < screenWidth/PLAYER_SIZE + 1; i++)
                     {
-                        DrawLineV((Vector2){ (float)PLAYER_SIZE*i, 0}, (Vector2){ (float)PLAYER_SIZE*i, (float)screenHeight}, LIGHTGRAY);
+                        DrawLine(new( (float)PLAYER_SIZE*i, 0), new( (float)PLAYER_SIZE*i, (float)screenHeight), LIGHTGRAY);
                     }
 
                     for (int i = 0; i < screenHeight/PLAYER_SIZE + 1; i++)
                     {
-                        DrawLineV((Vector2){0, (float)PLAYER_SIZE*i}, (Vector2){ (float)screenWidth, (float)PLAYER_SIZE*i}, LIGHTGRAY);
+                        DrawLine(new(0, (float)PLAYER_SIZE*i), new( (float)screenWidth, (float)PLAYER_SIZE*i), LIGHTGRAY);
                     }
 
                     for (int i = 0; i < screenWidth/PLAYER_SIZE; i++)
@@ -161,8 +151,8 @@ public partial class Core2dCameraSplitScreen : ExampleHelper
             BeginDrawing();
                 ClearBackground(BLACK);
 
-                DrawTextureRec(screenCamera1.texture, splitScreenRect, (Vector2){ 0, 0 }, WHITE);
-                DrawTextureRec(screenCamera2.texture, splitScreenRect, (Vector2){ screenWidth/2.0f, 0 }, WHITE);
+                DrawTexture(screenCamera1.Texture, splitScreenRect, new(0, 0), WHITE);
+                DrawTexture(screenCamera2.Texture, splitScreenRect, new(screenWidth/2.0f, 0), WHITE);
 
                 DrawRectangle(GetScreenWidth()/2 - 2, 0, 4, GetScreenHeight(), LIGHTGRAY);
             EndDrawing();

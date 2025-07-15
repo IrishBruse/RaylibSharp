@@ -13,55 +13,45 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class Core3dCameraSplitScreen : ExampleHelper
 {
-    #include "raylib.h"
-
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - 3d camera split screen");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - 3d camera split screen");
 
         // Setup player 1 camera and screen
-        Camera cameraPlayer1 = { 0 };
-        cameraPlayer1.fovy = 45.0f;
-        cameraPlayer1.up.y = 1.0f;
-        cameraPlayer1.target.y = 1.0f;
-        cameraPlayer1.position.z = -3.0f;
-        cameraPlayer1.position.y = 1.0f;
+        Camera cameraPlayer1 = new();
+        cameraPlayer1.Fovy = 45.0f;
+        cameraPlayer1.Up.Y = 1.0f;
+        cameraPlayer1.Target.Y = 1.0f;
+        cameraPlayer1.Position.Z = -3.0f;
+        cameraPlayer1.Position.Y = 1.0f;
 
         RenderTexture screenPlayer1 = LoadRenderTexture(screenWidth/2, screenHeight);
 
         // Setup player two camera and screen
-        Camera cameraPlayer2 = { 0 };
-        cameraPlayer2.fovy = 45.0f;
-        cameraPlayer2.up.y = 1.0f;
-        cameraPlayer2.target.y = 3.0f;
-        cameraPlayer2.position.x = -3.0f;
-        cameraPlayer2.position.y = 3.0f;
+        Camera cameraPlayer2 = new();
+        cameraPlayer2.Fovy = 45.0f;
+        cameraPlayer2.Up.Y = 1.0f;
+        cameraPlayer2.Target.Y = 3.0f;
+        cameraPlayer2.Position.X = -3.0f;
+        cameraPlayer2.Position.Y = 3.0f;
 
         RenderTexture screenPlayer2 = LoadRenderTexture(screenWidth / 2, screenHeight);
 
         // Build a flipped rectangle the size of the split view to use for drawing later
-        Rectangle splitScreenRect = { 0.0f, 0.0f, (float)screenPlayer1.texture.width, (float)-screenPlayer1.texture.height };
+        Rectangle splitScreenRect = new(0.0f, 0.0f, (float)screenPlayer1.Texture.Width, (float)-screenPlayer1.Texture.Height);
 
         // Grid data
         int count = 5;
@@ -80,27 +70,27 @@ public partial class Core3dCameraSplitScreen : ExampleHelper
             float offsetThisFrame = 10.0f*GetFrameTime();
 
             // Move Player1 forward and backwards (no turning)
-            if (IsKeyDown(KEY_W))
+            if (IsKeyDown(Key.W))
             {
-                cameraPlayer1.position.z += offsetThisFrame;
-                cameraPlayer1.target.z += offsetThisFrame;
+                cameraPlayer1.Position.Z += offsetThisFrame;
+                cameraPlayer1.Target.Z += offsetThisFrame;
             }
-            else if (IsKeyDown(KEY_S))
+            else if (IsKeyDown(Key.S))
             {
-                cameraPlayer1.position.z -= offsetThisFrame;
-                cameraPlayer1.target.z -= offsetThisFrame;
+                cameraPlayer1.Position.Z -= offsetThisFrame;
+                cameraPlayer1.Target.Z -= offsetThisFrame;
             }
 
             // Move Player2 forward and backwards (no turning)
-            if (IsKeyDown(KEY_UP))
+            if (IsKeyDown(Key.Up))
             {
-                cameraPlayer2.position.x += offsetThisFrame;
-                cameraPlayer2.target.x += offsetThisFrame;
+                cameraPlayer2.Position.X += offsetThisFrame;
+                cameraPlayer2.Target.X += offsetThisFrame;
             }
-            else if (IsKeyDown(KEY_DOWN))
+            else if (IsKeyDown(Key.Down))
             {
-                cameraPlayer2.position.x -= offsetThisFrame;
-                cameraPlayer2.target.x -= offsetThisFrame;
+                cameraPlayer2.Position.X -= offsetThisFrame;
+                cameraPlayer2.Target.X -= offsetThisFrame;
             }
             //----------------------------------------------------------------------------------
 
@@ -113,20 +103,20 @@ public partial class Core3dCameraSplitScreen : ExampleHelper
                 BeginMode3D(cameraPlayer1);
 
                     // Draw scene: grid of cube trees on a plane to make a "world"
-                    DrawPlane((Vector3){ 0, 0, 0 }, (Vector2){ 50, 50 }, BEIGE); // Simple world plane
+                    DrawPlane(new(0, 0, 0), new(50, 50), BEIGE); // Simple world plane
 
                     for (float x = -count*spacing; x <= count*spacing; x += spacing)
                     {
                         for (float z = -count*spacing; z <= count*spacing; z += spacing)
                         {
-                            DrawCube((Vector3) { x, 1.5f, z }, 1, 1, 1, LIME);
-                            DrawCube((Vector3) { x, 0.5f, z }, 0.25f, 1, 0.25f, BROWN);
+                            DrawCube( new(x, 1.5f, z), 1, 1, 1, LIME);
+                            DrawCube( new(x, 0.5f, z), 0.25f, 1, 0.25f, BROWN);
                         }
                     }
 
                     // Draw a cube at each player's position
-                    DrawCube(cameraPlayer1.position, 1, 1, 1, RED);
-                    DrawCube(cameraPlayer2.position, 1, 1, 1, BLUE);
+                    DrawCube(cameraPlayer1.Position, 1, 1, 1, RED);
+                    DrawCube(cameraPlayer2.Position, 1, 1, 1, BLUE);
 
                 EndMode3D();
 
@@ -142,20 +132,20 @@ public partial class Core3dCameraSplitScreen : ExampleHelper
                 BeginMode3D(cameraPlayer2);
 
                     // Draw scene: grid of cube trees on a plane to make a "world"
-                    DrawPlane((Vector3){ 0, 0, 0 }, (Vector2){ 50, 50 }, BEIGE); // Simple world plane
+                    DrawPlane(new(0, 0, 0), new(50, 50), BEIGE); // Simple world plane
 
                     for (float x = -count*spacing; x <= count*spacing; x += spacing)
                     {
                         for (float z = -count*spacing; z <= count*spacing; z += spacing)
                         {
-                            DrawCube((Vector3) { x, 1.5f, z }, 1, 1, 1, LIME);
-                            DrawCube((Vector3) { x, 0.5f, z }, 0.25f, 1, 0.25f, BROWN);
+                            DrawCube( new(x, 1.5f, z), 1, 1, 1, LIME);
+                            DrawCube( new(x, 0.5f, z), 0.25f, 1, 0.25f, BROWN);
                         }
                     }
 
                     // Draw a cube at each player's position
-                    DrawCube(cameraPlayer1.position, 1, 1, 1, RED);
-                    DrawCube(cameraPlayer2.position, 1, 1, 1, BLUE);
+                    DrawCube(cameraPlayer1.Position, 1, 1, 1, RED);
+                    DrawCube(cameraPlayer2.Position, 1, 1, 1, BLUE);
 
                 EndMode3D();
 
@@ -168,8 +158,8 @@ public partial class Core3dCameraSplitScreen : ExampleHelper
             BeginDrawing();
                 ClearBackground(BLACK);
 
-                DrawTextureRec(screenPlayer1.texture, splitScreenRect, (Vector2){ 0, 0 }, WHITE);
-                DrawTextureRec(screenPlayer2.texture, splitScreenRect, (Vector2){ screenWidth/2.0f, 0 }, WHITE);
+                DrawTextureRec(screenPlayer1.Texture, splitScreenRect, new(0, 0), WHITE);
+                DrawTextureRec(screenPlayer2.Texture, splitScreenRect, new(screenWidth/2.0f, 0), WHITE);
 
                 DrawRectangle(GetScreenWidth()/2 - 2, 0, 4, GetScreenHeight(), LIGHTGRAY);
             EndDrawing();

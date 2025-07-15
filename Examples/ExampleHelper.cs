@@ -214,4 +214,9 @@ public class ExampleHelper
     {
         Raylib.DrawRectangle(rec, origin, rotation, color);
     }
+
+    public static void DrawTextureRec(Texture texture, Rectangle source, Vector2 position, Color color)
+    {
+        Raylib.DrawTexture(texture, source, position, color);
+    }
 }

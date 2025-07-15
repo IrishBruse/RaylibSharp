@@ -11,46 +11,36 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class Core3dPicking : ExampleHelper
 {
-    #include "raylib.h"
-
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - 3d picking");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - 3d picking");
 
         // Define the camera to look into our 3d world
-        Camera camera = { 0 };
-        camera.position = (Vector3){ 10.0f, 10.0f, 10.0f }; // Camera position
-        camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };      // Camera looking at point
-        camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
-        camera.fovy = 45.0f;                                // Camera field-of-view Y
-        camera.projection = CAMERA_PERSPECTIVE;             // Camera projection type
+        Camera camera = new();
+        camera.Position = new(10.0f, 10.0f, 10.0f); // Camera position
+        camera.Target = new(0.0f, 0.0f, 0.0f);      // Camera looking at point
+        camera.Up = new(0.0f, 1.0f, 0.0f);          // Camera up vector (rotation towards target)
+        camera.Fovy = 45.0f;                                // Camera field-of-view Y
+        camera.Projection = CameraProjection.Perspective;             // Camera projection type
 
-        Vector3 cubePosition = { 0.0f, 1.0f, 0.0f };
-        Vector3 cubeSize = { 2.0f, 2.0f, 2.0f };
+        Vector3 cubePosition = new(0.0f, 1.0f, 0.0f);
+        Vector3 cubeSize = new(2.0f, 2.0f, 2.0f);
 
-        Ray ray = { 0 };                    // Picking line ray
-        RayCollision collision = { 0 };     // Ray collision hit info
+        Ray ray = new();                    // Picking line ray
+        RayCollision collision = new();     // Ray collision hit info
 
         SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
         //--------------------------------------------------------------------------------------
@@ -60,27 +50,27 @@ public partial class Core3dPicking : ExampleHelper
         {
             // Update
             //----------------------------------------------------------------------------------
-            if (IsCursorHidden()) UpdateCamera(&camera, CAMERA_FIRST_PERSON);
+            if (IsCursorHidden()) UpdateCamera(ref camera, CameraMode.FirstPerson);
 
             // Toggle camera controls
-            if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+            if (IsMouseButtonPressed(MouseButton.Right))
             {
                 if (IsCursorHidden()) EnableCursor();
                 else DisableCursor();
             }
 
-            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            if (IsMouseButtonPressed(MouseButton.Left))
             {
-                if (!collision.hit)
+                if (!collision.Hit)
                 {
                     ray = GetScreenToWorldRay(GetMousePosition(), camera);
 
                     // Check collision between ray and box
                     collision = GetRayCollisionBox(ray,
-                                (BoundingBox){(Vector3){ cubePosition.x - cubeSize.x/2, cubePosition.y - cubeSize.y/2, cubePosition.z - cubeSize.z/2 },
-                                              (Vector3){ cubePosition.x + cubeSize.x/2, cubePosition.y + cubeSize.y/2, cubePosition.z + cubeSize.z/2 }});
+                                (BoundingBox){new(cubePosition.X - cubeSize.X/2, cubePosition.Y - cubeSize.Y/2, cubePosition.Z - cubeSize.Z/2),
+                                              new(cubePosition.X + cubeSize.X/2, cubePosition.Y + cubeSize.Y/2, cubePosition.Z + cubeSize.Z/2)});
                 }
-                else collision.hit = false;
+                else collision.Hit = false;
             }
             //----------------------------------------------------------------------------------
 
@@ -92,17 +82,17 @@ public partial class Core3dPicking : ExampleHelper
 
                 BeginMode3D(camera);
 
-                    if (collision.hit)
+                    if (collision.Hit)
                     {
-                        DrawCube(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, RED);
-                        DrawCubeWires(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, MAROON);
+                        DrawCube(cubePosition, cubeSize.X, cubeSize.Y, cubeSize.Z, RED);
+                        DrawCubeWires(cubePosition, cubeSize.X, cubeSize.Y, cubeSize.Z, MAROON);
 
-                        DrawCubeWires(cubePosition, cubeSize.x + 0.2f, cubeSize.y + 0.2f, cubeSize.z + 0.2f, GREEN);
+                        DrawCubeWires(cubePosition, cubeSize.X + 0.2f, cubeSize.Y + 0.2f, cubeSize.Z + 0.2f, GREEN);
                     }
                     else
                     {
-                        DrawCube(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, GRAY);
-                        DrawCubeWires(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, DARKGRAY);
+                        DrawCube(cubePosition, cubeSize.X, cubeSize.Y, cubeSize.Z, GRAY);
+                        DrawCubeWires(cubePosition, cubeSize.X, cubeSize.Y, cubeSize.Z, DARKGRAY);
                     }
 
                     DrawRay(ray, MAROON);
@@ -112,7 +102,7 @@ public partial class Core3dPicking : ExampleHelper
 
                 DrawText("Try clicking on the box with your mouse!", 240, 10, 20, DARKGRAY);
 
-                if (collision.hit) DrawText("BOX SELECTED", (screenWidth - MeasureText("BOX SELECTED", 30)) / 2, (int)(screenHeight * 0.1f), 30, GREEN);
+                if (collision.Hit) DrawText("BOX SELECTED", (screenWidth - MeasureText("BOX SELECTED", 30)) / 2, (int)(screenHeight * 0.1f), 30, GREEN);
 
                 DrawText("Right click mouse to toggle camera controls", 10, 430, 10, GRAY);
 

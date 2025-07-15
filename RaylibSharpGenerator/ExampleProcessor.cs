@@ -24,10 +24,10 @@ public partial class ExampleProcessor
             string[] lines = File.ReadAllLines(cFile);
             Lines exampleLines = new(lines);
 
-            if (exampleName == "CoreBasicWindowWeb" || exampleName == "CoreLoadingThread")
-            {
-                continue;
-            }
+            if (exampleName == "CoreBasicWindowWeb") continue;
+            if (exampleName == "CoreLoadingThread") continue;
+            if (exampleName == "Core2dCameraPlatformer") continue;
+            if (exampleName == "Core2dCameraSplitScreen") continue;
 
             if (exampleName.StartsWith("Core"))
             {
@@ -174,13 +174,6 @@ public partial class ExampleProcessor
         output.Add("}");
         output.Add("");
 
-        if (exampleName == "Core2dCameraPlatformer")
-        {
-            // MoveLineRangeBy(output, 239, 241, -2, true); // UpdateCameraCenterSmoothFollow
-            // MoveLineRangeBy(output, 256, 258, -2, true); // UpdateCameraEvenOutOnLanding
-            // MoveLineRangeBy(output, 298, 299, -2, true); // UpdateCameraPlayerBoundsPush
-        }
-
         File.WriteAllLines(outputFile, output);
     }
 
@@ -245,18 +238,19 @@ public partial class ExampleProcessor
             case "Core2dCameraSplitScreen":
             break;
             case "Core3dCameraFirstPerson":
+            line.Replace("&camera", "ref camera");
+            line.Replace("int cameraMode", "CameraMode cameraMode");
             break;
             case "Core3dCameraFree":
-            {
-                line.Replace("&camera", "ref camera");
-                line.Replace("int cameraMode", "CameraMode cameraMode");
-            }
+            line.Replace("&camera", "ref camera");
+            line.Replace("int cameraMode", "CameraMode cameraMode");
             break;
             case "Core3dCameraMode":
             break;
             case "Core3dCameraSplitScreen":
             break;
             case "Core3dPicking":
+            line.Replace("&camera", "ref camera");
             break;
             case "CoreAutomationEvents":
             break;
@@ -380,7 +374,6 @@ public partial class ExampleProcessor
             break;
             case "CoreWorldScreen":
             line.Replace("&camera", "ref camera");
-            line.Replace(Vector3Replace(), "new Vector3($1, $2, $3)");
             break;
             default:
             break;
@@ -445,12 +438,17 @@ public partial class ExampleProcessor
 
         line.ReplaceAll("unsigned int ", "uint ");
 
-        line.Replace(Vector2Replace(), "new($1, $2)");
-        line.Replace(ColorReplace(), "new($1, $2, $3, $4)");
-        line.Replace(StructAssignment(), "= new($1)");
-        line.Replace(RectangleReplace(), "new($1, $2, $3, $4)");
+        line.Replace("(Color)", "");
+        line.Replace("(Vector2)", "");
+        line.Replace("(Vector3)", "");
+
+        // line.Replace(ColorReplace(), "new($1, $2, $3, $4)");
+        // line.Replace(RectangleReplace(), "new($1, $2, $3, $4)");
+
+        line.Replace(Object3Params(), "new($1, $2, $3)");
+        line.Replace(Object2Params(), "new($1, $2)");
+
         line.Replace(ArrayReplace(), "$1[] $2 = new $1$3");
-        line.Replace(Vector2AssignReplace(), "new($1, $2);");
 
         line.Replace("{ 0 }", "new()");
     }
@@ -494,28 +492,24 @@ public partial class ExampleProcessor
         line.Replace(".canJump", ".CanJump");
     }
 
-    [GeneratedRegex(@"= {( \d+, \d+ )}")] private static partial Regex StructAssignment(); // = { -12.0, 1.0 }
     [GeneratedRegex(@"(IsMouse\w+)\(MOUSE_BUTTON_(.*?)\)")] private static partial Regex IsMouseConstEnumReplace(); // IsMouseButtonDown(MOUSE_BUTTON_RIGHT)
-    [GeneratedRegex(@"\(Vector3\)\{\s*(.*?),\s*(.*?),\s*(.*?)\s*\}")] private static partial Regex Vector3Replace(); // (Vector3){ , , }
-    [GeneratedRegex(@"\{ (.*?f), (.*?f), (.*?f) \}")] private static partial Regex Vector3AssignReplace(); // { 0.0f, 0.0f, 0.0f }
-    [GeneratedRegex(@"\(Vector2\)\s*?\{\s+(.*?),\s+(.*?)\s+\}")] private static partial Regex Vector2Replace(); // (Vector2){ $1, $2 }
-    [GeneratedRegex(@"\{\s+(.*?),\s+(.*?)\s+\};")] private static partial Regex Vector2AssignReplace(); // { $1, $2 }
+
+    // [GeneratedRegex(@"\{\s*(.*?),\s*(.*?),\s*(.*?)\s*\}")] private static partial Regex Vector3Replace(); // (Vector3){ , , }
+    // [GeneratedRegex(@"\{ (.*?f), (.*?f), (.*?f) \}")] private static partial Regex Vector3AssignReplace(); // { 0.0f, 0.0f, 0.0f }
+    // [GeneratedRegex(@"\s*?\{\s+(.*?),\s+(.*?)\s+\}")] private static partial Regex Vector2Replace(); // (Vector2){ $1, $2 }
+    // { $1, $2 }
+    [GeneratedRegex(@"\{\s+(.*?),\s+(.*?)\s+\}")]
+    private static partial Regex Object2Params();
+
+    // { $1, $2, $3 }
+    [GeneratedRegex(@"\{\s*([^\s,{}]+)\s*,\s*([^\s,{}]+)\s*,\s*([^\s,{}]+)\s*\}")]
+    private static partial Regex Object3Params();
+
     [GeneratedRegex(@"(\w+) (\w+)(\[.*\]) = (\{ 0 \})?")] private static partial Regex ArrayReplace(); // int x[10];
-    [GeneratedRegex(@"void \w+\(")] private static partial Regex VoidFunctionMatch();
-    [GeneratedRegex(@"(bool \w+ =) 0")] private static partial Regex FalseBooleanAssignment(); // bool varname = 0
-    [GeneratedRegex(@"raylib \[(\w+)\] example - ")] private static partial Regex ExampleName(); // raylib [core] example => RaylibSharp - core -
 
     [GeneratedRegex(@"\{ (.*?), (.*?), (.*?), (.*?) \}")] private static partial Regex RectangleReplace(); // (Rectangle){ , , , }
     [GeneratedRegex(@"\(Color\)\{ (.*), (.*), (.*), (255) \}")] private static partial Regex ColorReplace(); // (Color){ , , , }
-    [GeneratedRegex(@"Vector2Add\((.*?), (.*?)\)")] private static partial Regex Vector2AddReplace(); // Vector2Add(delta, -1.0f / camera.Zoom);
-    [GeneratedRegex(@"Vector2Scale\((.*?), (.*?)\)")] private static partial Regex Vector2ScaleReplace(); // Vector2Scale(delta, -1.0f / camera.Zoom);
-    [GeneratedRegex(@"(IsKey\w+)\(KEY_(.*)\)")] private static partial Regex IsKeyConstEnumReplace(); // IsKeyDown(KEY_RIGHT)
     [GeneratedRegex(@"rl([A-Z])")] private static partial Regex RLGLReplace(); // rlBegin
-    [GeneratedRegex(@"RL_(\w+)")] private static partial Regex RLConstantsReplace(); // RL_QUAD
-    [GeneratedRegex(@"([^&])&([^&])")] private static partial Regex CAndRef(); // &camera
-    [GeneratedRegex("char (\\w+?)\\[\\d+\\]")] private static partial Regex MyRegex();
-    [GeneratedRegex("bool (\\w+?) = 0;")] private static partial Regex BoolFalse();
-    [GeneratedRegex("bool (\\w+?) = 1;")] private static partial Regex BoolTrue();
 }
 
 static class Extensions
