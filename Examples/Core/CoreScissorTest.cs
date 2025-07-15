@@ -13,34 +13,24 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreScissorTest : ExampleHelper
 {
-    #include "raylib.h"
-
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - scissor test");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - scissor test");
 
-        Rectangle scissorArea = { 0, 0, 300, 300 };
+        Rectangle scissorArea = new(0, 0, 300, 300);
         bool scissorMode = true;
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
@@ -51,11 +41,11 @@ public partial class CoreScissorTest : ExampleHelper
         {
             // Update
             //----------------------------------------------------------------------------------
-            if (IsKeyPressed(KEY_S)) scissorMode = !scissorMode;
+            if (IsKeyPressed(Key.S)) scissorMode = !scissorMode;
 
             // Centre the scissor area around the mouse position
-            scissorArea.x = GetMouseX() - scissorArea.width/2;
-            scissorArea.y = GetMouseY() - scissorArea.height/2;
+            scissorArea.X = GetMouseX() - scissorArea.Width/2;
+            scissorArea.Y = GetMouseY() - scissorArea.Height/2;
             //----------------------------------------------------------------------------------
 
             // Draw
@@ -64,7 +54,7 @@ public partial class CoreScissorTest : ExampleHelper
 
                 ClearBackground(RAYWHITE);
 
-                if (scissorMode) BeginScissorMode((int)scissorArea.x, (int)scissorArea.y, (int)scissorArea.width, (int)scissorArea.height);
+                if (scissorMode) BeginScissorMode((int)scissorArea.X, (int)scissorArea.Y, (int)scissorArea.Width, (int)scissorArea.Height);
 
                 // Draw full screen rectangle and some text
                 // NOTE: Only part defined by scissor area will be rendered

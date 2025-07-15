@@ -11,32 +11,22 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreInputMouseWheel : ExampleHelper
 {
-    #include "raylib.h"
-
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - input mouse wheel");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - input mouse wheel");
 
         int boxPositionY = screenHeight/2 - 40;
         int scrollSpeed = 4;            // Scrolling speed in pixels

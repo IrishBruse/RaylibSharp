@@ -14,34 +14,24 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreInputGamepadInfo : ExampleHelper
 {
-    #include "raylib.h"
-
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static void Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        SetConfigFlags(FLAG_MSAA_4X_HINT);  // Set MSAA 4X hint before windows creation
+        SetConfigFlags(WindowFlag.Msaa4xHint);  // Set MSAA 4X hint before windows creation
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - gamepad information");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - gamepad information");
 
         SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
         //--------------------------------------------------------------------------------------
@@ -71,13 +61,13 @@ public partial class CoreInputGamepadInfo : ExampleHelper
 
                         for (int axis = 0; axis < GetGamepadAxisCount(i); axis++)
                         {
-                            DrawText(TextFormat("\tAxis %d = %f", axis, GetGamepadAxisMovement(i, axis)), 10, y, 10, BLACK);
+                            DrawText(TextFormat("\tAxis %d = %f", axis, GetGamepadAxisMovement(i, (GamepadAxis)axis)), 10, y, 10, BLACK);
                             y += 11;
                         }
 
                         for (int button = 0; button < 32; button++)
                         {
-                            DrawText(TextFormat("\tButton %d = %d", button, IsGamepadButtonDown(i, button)), 10, y, 10, BLACK);
+                            DrawText(TextFormat("\tButton %d = %d", button, IsGamepadButtonDown(i, (GamepadButton)button)), 10, y, 10, BLACK);
                             y += 11;
                         }
                     }

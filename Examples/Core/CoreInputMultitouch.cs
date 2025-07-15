@@ -13,36 +13,26 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreInputMultitouch : ExampleHelper
 {
-    #include "raylib.h"
-
-    #define MAX_TOUCH_POINTS 10
+    const int MAX_TOUCH_POINTS = 10;
 
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - input multitouch");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - input multitouch");
 
-        Vector2 touchPositions[MAX_TOUCH_POINTS] = { 0 };
+        Vector2[] touchPositions = new Vector2[MAX_TOUCH_POINTS];
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
         //---------------------------------------------------------------------------------------
@@ -69,11 +59,11 @@ public partial class CoreInputMultitouch : ExampleHelper
                 for (int i = 0; i < tCount; ++i)
                 {
                     // Make sure point is not (0, 0) as this means there is no touch for it
-                    if ((touchPositions[i].x > 0) && (touchPositions[i].y > 0))
+                    if ((touchPositions[i].X > 0) && (touchPositions[i].Y > 0))
                     {
                         // Draw circle and touch index number
                         DrawCircleV(touchPositions[i], 34, ORANGE);
-                        DrawText(TextFormat("%d", i), (int)touchPositions[i].x - 10, (int)touchPositions[i].y - 70, 40, BLACK);
+                        DrawText(TextFormat("%d", i), (int)touchPositions[i].X - 10, (int)touchPositions[i].Y - 70, 40, BLACK);
                     }
                 }
 

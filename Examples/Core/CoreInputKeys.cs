@@ -11,34 +11,24 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreInputKeys : ExampleHelper
 {
-    #include "raylib.h"
-
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - keyboard input");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - keyboard input");
 
-        Vector2 ballPosition = { (float)screenWidth/2, (float)screenHeight/2 };
+        Vector2 ballPosition = new((float)screenWidth/2, (float)screenHeight/2);
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
         //--------------------------------------------------------------------------------------
@@ -48,10 +38,10 @@ public partial class CoreInputKeys : ExampleHelper
         {
             // Update
             //----------------------------------------------------------------------------------
-            if (IsKeyDown(KEY_RIGHT)) ballPosition.x += 2.0f;
-            if (IsKeyDown(KEY_LEFT)) ballPosition.x -= 2.0f;
-            if (IsKeyDown(KEY_UP)) ballPosition.y -= 2.0f;
-            if (IsKeyDown(KEY_DOWN)) ballPosition.y += 2.0f;
+            if (IsKeyDown(Key.Right)) ballPosition.X += 2.0f;
+            if (IsKeyDown(Key.Left)) ballPosition.X -= 2.0f;
+            if (IsKeyDown(Key.Up)) ballPosition.Y -= 2.0f;
+            if (IsKeyDown(Key.Down)) ballPosition.Y += 2.0f;
             //----------------------------------------------------------------------------------
 
             // Draw

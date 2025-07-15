@@ -14,27 +14,15 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreSmoothPixelperfect : ExampleHelper
 {
-    #include "raylib.h"
-
-    #include <math.h>       // Required for: sinf(), cosf()
-
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
@@ -46,25 +34,25 @@ public partial class CoreSmoothPixelperfect : ExampleHelper
 
         const float virtualRatio = (float)screenWidth/(float)virtualScreenWidth;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - smooth pixel-perfect camera");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - smooth pixel-perfect camera");
 
-        Camera2D worldSpaceCamera = { 0 };  // Game world camera
-        worldSpaceCamera.zoom = 1.0f;
+        Camera2D worldSpaceCamera = new();  // Game world camera
+        worldSpaceCamera.Zoom = 1.0f;
 
-        Camera2D screenSpaceCamera = { 0 }; // Smoothing camera
-        screenSpaceCamera.zoom = 1.0f;
+        Camera2D screenSpaceCamera = new(); // Smoothing camera
+        screenSpaceCamera.Zoom = 1.0f;
 
         RenderTexture2D target = LoadRenderTexture(virtualScreenWidth, virtualScreenHeight); // This is where we'll draw all our objects.
 
-        Rectangle rec01 = { 70.0f, 35.0f, 20.0f, 20.0f };
-        Rectangle rec02 = { 90.0f, 55.0f, 30.0f, 10.0f };
-        Rectangle rec03 = { 80.0f, 65.0f, 15.0f, 25.0f };
+        Rectangle rec01 = new(70.0f, 35.0f, 20.0f, 20.0f);
+        Rectangle rec02 = new(90.0f, 55.0f, 30.0f, 10.0f);
+        Rectangle rec03 = new(80.0f, 65.0f, 15.0f, 25.0f);
 
         // The target's height is flipped (in the source Rectangle), due to OpenGL reasons
-        Rectangle sourceRec = { 0.0f, 0.0f, (float)target.texture.width, -(float)target.texture.height };
-        Rectangle destRec = { -virtualRatio, -virtualRatio, screenWidth + (virtualRatio*2), screenHeight + (virtualRatio*2) };
+        Rectangle sourceRec = new(0.0f, 0.0f, (float)target.Texture.Width, -(float)target.Texture.Height);
+        Rectangle destRec = new(-virtualRatio, -virtualRatio, screenWidth + (virtualRatio*2), screenHeight + (virtualRatio*2));
 
-        Vector2 origin = { 0.0f, 0.0f };
+        Vector2 origin = new(0.0f, 0.0f);
 
         float rotation = 0.0f;
 
@@ -86,16 +74,16 @@ public partial class CoreSmoothPixelperfect : ExampleHelper
             cameraY = cosf((float)GetTime())*30.0f;
 
             // Set the camera's target to the values computed above
-            screenSpaceCamera.target = (Vector2){ cameraX, cameraY };
+            screenSpaceCamera.Target = new(cameraX, cameraY);
 
             // Round worldSpace coordinates, keep decimals into screenSpace coordinates
-            worldSpaceCamera.target.x = truncf(screenSpaceCamera.target.x);
-            screenSpaceCamera.target.x -= worldSpaceCamera.target.x;
-            screenSpaceCamera.target.x *= virtualRatio;
+            worldSpaceCamera.Target.X = truncf(screenSpaceCamera.Target.X);
+            screenSpaceCamera.Target.X -= worldSpaceCamera.Target.X;
+            screenSpaceCamera.Target.X *= virtualRatio;
 
-            worldSpaceCamera.target.y = truncf(screenSpaceCamera.target.y);
-            screenSpaceCamera.target.y -= worldSpaceCamera.target.y;
-            screenSpaceCamera.target.y *= virtualRatio;
+            worldSpaceCamera.Target.Y = truncf(screenSpaceCamera.Target.Y);
+            screenSpaceCamera.Target.Y -= worldSpaceCamera.Target.Y;
+            screenSpaceCamera.Target.Y *= virtualRatio;
             //----------------------------------------------------------------------------------
 
             // Draw
@@ -114,7 +102,7 @@ public partial class CoreSmoothPixelperfect : ExampleHelper
                 ClearBackground(RED);
 
                 BeginMode2D(screenSpaceCamera);
-                    DrawTexturePro(target.texture, sourceRec, destRec, origin, 0.0f, WHITE);
+                    DrawTexturePro(target.Texture, sourceRec, destRec, origin, 0.0f, WHITE);
                 EndMode2D();
 
                 DrawText(TextFormat("Screen resolution: %ix%i", screenWidth, screenHeight), 10, 10, 20, DARKBLUE);

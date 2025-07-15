@@ -11,38 +11,28 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreRandomValues : ExampleHelper
 {
-    #include "raylib.h"
-
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - generate random values");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - generate random values");
 
         // SetRandomSeed(0xaabbccff);   // Set a custom random seed if desired, by default: "time(NULL)"
 
         int randValue = GetRandomValue(-8, 5);   // Get a random integer number between -8 and 5 (both included)
 
-        unsigned int framesCounter = 0; // Variable used to count frames
+        uint framesCounter = 0; // Variable used to count frames
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
         //--------------------------------------------------------------------------------------

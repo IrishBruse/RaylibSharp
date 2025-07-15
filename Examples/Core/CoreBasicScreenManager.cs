@@ -13,39 +13,32 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreBasicScreenManager : ExampleHelper
 {
-    #include "raylib.h"
-
     //------------------------------------------------------------------------------------------
     // Types and Structures Definition
     //------------------------------------------------------------------------------------------
-    typedef enum GameScreen { LOGO = 0, TITLE, GAMEPLAY, ENDING } GameScreen;
+    const int LOGO = 0;
+    const int TITLE = 1;
+    const int GAMEPLAY = 2;
+    const int ENDING = 3;
 
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - basic screen manager");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - basic screen manager");
 
-        GameScreen currentScreen = LOGO;
+        int currentScreen = LOGO;
 
         // TODO: Initialize all required variables and load all required data here!
 
@@ -78,7 +71,7 @@ public partial class CoreBasicScreenManager : ExampleHelper
                     // TODO: Update TITLE screen variables here!
 
                     // Press enter to change to GAMEPLAY screen
-                    if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
+                    if (IsKeyPressed(Key.Enter) || IsGestureDetected(Gesture.Tap))
                     {
                         currentScreen = GAMEPLAY;
                     }
@@ -88,7 +81,7 @@ public partial class CoreBasicScreenManager : ExampleHelper
                     // TODO: Update GAMEPLAY screen variables here!
 
                     // Press enter to change to ENDING screen
-                    if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
+                    if (IsKeyPressed(Key.Enter) || IsGestureDetected(Gesture.Tap))
                     {
                         currentScreen = ENDING;
                     }
@@ -98,7 +91,7 @@ public partial class CoreBasicScreenManager : ExampleHelper
                     // TODO: Update ENDING screen variables here!
 
                     // Press enter to return to TITLE screen
-                    if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
+                    if (IsKeyPressed(Key.Enter) || IsGestureDetected(Gesture.Tap))
                     {
                         currentScreen = TITLE;
                     }

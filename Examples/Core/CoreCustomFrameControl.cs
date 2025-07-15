@@ -26,32 +26,22 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreCustomFrameControl : ExampleHelper
 {
-    #include "raylib.h"
-
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - custom frame control");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - custom frame control");
 
         // Custom timming variables
         double previousTime = GetTime();    // Previous time measure
@@ -74,10 +64,10 @@ public partial class CoreCustomFrameControl : ExampleHelper
             //----------------------------------------------------------------------------------
             PollInputEvents();              // Poll input events (SUPPORT_CUSTOM_FRAME_CONTROL)
 
-            if (IsKeyPressed(KEY_SPACE)) pause = !pause;
+            if (IsKeyPressed(Key.Space)) pause = !pause;
 
-            if (IsKeyPressed(KEY_UP)) targetFPS += 20;
-            else if (IsKeyPressed(KEY_DOWN)) targetFPS -= 20;
+            if (IsKeyPressed(Key.Up)) targetFPS += 20;
+            else if (IsKeyPressed(Key.Down)) targetFPS -= 20;
 
             if (targetFPS < 0) targetFPS = 0;
 

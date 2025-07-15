@@ -11,34 +11,24 @@
 *
 ********************************************************************************************/
 
-using System.Numerics;
-using System;
-
-using RaylibSharp;
-using RaylibSharp.GL;
-
-using Camera = RaylibSharp.Camera3D;
-using RenderTexture2D = RaylibSharp.RenderTexture;
-
 using static RaylibSharp.Raylib;
+using RaylibSharp;
 
 public partial class CoreInputMouse : ExampleHelper
 {
-    #include "raylib.h"
-
     //------------------------------------------------------------------------------------
     // Program main entry point
     //------------------------------------------------------------------------------------
-    int main(void)
+    public static int Example()
     {
         // Initialization
         //--------------------------------------------------------------------------------------
         const int screenWidth = 800;
         const int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "raylib [core] example - mouse input");
+        InitWindow(screenWidth, screenHeight, "RaylibSharp [core] example - mouse input");
 
-        Vector2 ballPosition = { -100.0f, -100.0f };
+        Vector2 ballPosition = new(-100.0f, -100.0f);
         Color ballColor = DARKBLUE;
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
@@ -51,13 +41,13 @@ public partial class CoreInputMouse : ExampleHelper
             //----------------------------------------------------------------------------------
             ballPosition = GetMousePosition();
 
-            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) ballColor = MAROON;
-            else if (IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE)) ballColor = LIME;
-            else if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) ballColor = DARKBLUE;
-            else if (IsMouseButtonPressed(MOUSE_BUTTON_SIDE)) ballColor = PURPLE;
-            else if (IsMouseButtonPressed(MOUSE_BUTTON_EXTRA)) ballColor = YELLOW;
-            else if (IsMouseButtonPressed(MOUSE_BUTTON_FORWARD)) ballColor = ORANGE;
-            else if (IsMouseButtonPressed(MOUSE_BUTTON_BACK)) ballColor = BEIGE;
+            if (IsMouseButtonPressed(MouseButton.Left)) ballColor = MAROON;
+            else if (IsMouseButtonPressed(MouseButton.Middle)) ballColor = LIME;
+            else if (IsMouseButtonPressed(MouseButton.Right)) ballColor = DARKBLUE;
+            else if (IsMouseButtonPressed(MouseButton.Side)) ballColor = PURPLE;
+            else if (IsMouseButtonPressed(MouseButton.Extra)) ballColor = YELLOW;
+            else if (IsMouseButtonPressed(MouseButton.Forward)) ballColor = ORANGE;
+            else if (IsMouseButtonPressed(MouseButton.Back)) ballColor = BEIGE;
             //----------------------------------------------------------------------------------
 
             // Draw

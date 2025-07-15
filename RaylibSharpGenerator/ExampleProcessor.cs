@@ -154,7 +154,14 @@ public partial class ExampleProcessor
             }
             else if (source.Contains("int main("))
             {
-                output.Add(tab + $"public static int Example()");
+                if (exampleName == "CoreInputGamepadInfo")
+                {
+                    output.Add(tab + $"public static void Example()");
+                }
+                else
+                {
+                    output.Add(tab + $"public static int Example()");
+                }
                 continue;
             }
             else
@@ -276,6 +283,8 @@ public partial class ExampleProcessor
             case "CoreInputGamepad":
             break;
             case "CoreInputGamepadInfo":
+            line.Replace("GetGamepadAxisMovement(i, ", "GetGamepadAxisMovement(i, (GamepadAxis)");
+            line.Replace("IsGamepadButtonDown(i, ", "IsGamepadButtonDown(i, (GamepadButton)");
             break;
             case "CoreInputGestures":
             break;
