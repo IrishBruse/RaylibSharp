@@ -1,6 +1,7 @@
 namespace RaylibSharp;
 
 using System.Text;
+using System.Text.RegularExpressions;
 
 public unsafe partial class Raylib
 {
@@ -86,114 +87,122 @@ public unsafe partial class Raylib
         return val.ToString(format).PadRight(decimals, c);
     }
 
-    /// <summary> Text formatting with variables (sprintf() style) </summary>
-    static string SprintF(sbyte* formatPtr, IntPtr argsPtr)
+    /// <summary> TODO: </summary>
+    public static string ConvertSprintfToCSharpFormat(string sprintfFormat, out List<ExpectedArgType> expectedArgTypes)
     {
-        string format = new(formatPtr);
+        expectedArgTypes = new List<ExpectedArgType>();
+        StringBuilder csharpFormat = new();
+        int argIndex = 0;
 
-        StringBuilder sb = new();
+        string patternWithPrecision = @"%((?:[0-9]+\$)?(?:[+-]?\d*)?(?:\.(?<precision>\d*))?)(?<type>[a-zA-Z%])";
 
-        for (int i = 0; i < format.Length; i++)
+        int lastIndex = 0;
+        foreach (Match match in Regex.Matches(sprintfFormat, patternWithPrecision))
         {
-            if (format[i] != '%')
+            // Append the text before the current sprintf placeholder
+            csharpFormat.Append(sprintfFormat.AsSpan(lastIndex, match.Index - lastIndex));
+
+            string specifierPart = match.Groups[1].Value; // E.g., ".2" or ""
+            string typeChar = match.Groups["type"].Value; // E.g., "d", "s", "f", "%"
+            string precision = match.Groups["precision"].Value; // E.g., "2" or ""
+
+            switch (typeChar)
             {
-                sb.Append(format[i]);
-                continue;
-            }
-
-            i++;
-
-            int zeros = 0;
-            int decimals = 0;
-            char c = '0';
-
-            if (format[i] == '0')
-            {
-                i++;
-
-                zeros = int.Parse(format[i++].ToString());
-                _ = format[i++];  // .
-                char d = format[i++];
-                if (d == '0')
+                case "%":
+                csharpFormat.Append('%'); // Literal %
+                break;
+                case "d":
+                case "i":
+                case "u": // C# int can often handle unsigned values implicitly or with casting
+                csharpFormat.Append($"{{{argIndex}}}"); // Default for integers
+                expectedArgTypes.Add(ExpectedArgType.Integer);
+                argIndex++;
+                break;
+                case "s":
+                csharpFormat.Append($"{{{argIndex}}}"); // Default for strings
+                expectedArgTypes.Add(ExpectedArgType.String);
+                argIndex++;
+                break;
+                case "f":
+                case "F":
+                if (!string.IsNullOrEmpty(precision))
                 {
-                    decimals = int.Parse(format[i++].ToString());
+                    csharpFormat.Append($"{{{argIndex}:F{precision}}}"); // Fixed-point with specified precision
                 }
                 else
                 {
-                    decimals = int.Parse(d.ToString());
+                    csharpFormat.Append($"{{{argIndex}}}"); // Default float
                 }
-            }
-            else if (char.IsNumber(format[i]))
-            {
-                c = ' ';
-            }
-
-            switch (char.ToLower(format[i]))
-            {
-                case 'i':
-                case 'd':
-                {
-                    int* iptr = (int*)argsPtr;
-                    sb.Append(*iptr);
-                    iptr += 2;
-                    argsPtr = (nint)iptr;
-                }
+                expectedArgTypes.Add(ExpectedArgType.FloatingPoint);
+                argIndex++;
                 break;
-
-                case 's':
-                {
-                    nint* ptr = (nint*)argsPtr; // Read the pointer to the string
-                    sbyte* sptr = (sbyte*)*ptr; // convert the pointer to sbyte pointer
-
-                    string str = "";
-
-                    while (*sptr != '\0')
-                    {
-                        str += (char)*sptr;
-                        sptr++;
-                    }
-
-                    sb.Append(str);
-
-                    argsPtr = (nint)((int*)argsPtr + 2);
-                }
+                case "e":
+                case "E":
+                csharpFormat.Append($"{{{argIndex}:E}}"); // Scientific
+                expectedArgTypes.Add(ExpectedArgType.FloatingPoint);
+                argIndex++;
                 break;
-
-                case 'f':
-                {
-                    double* ptr = (double*)argsPtr;
-                    sb.Append(FloatParser(*ptr, zeros, decimals, c));
-                    ptr++;
-                    argsPtr = (nint)ptr;
-                }
+                case "g":
+                case "G":
+                csharpFormat.Append($"{{{argIndex}:G}}"); // General
+                expectedArgTypes.Add(ExpectedArgType.FloatingPoint);
+                argIndex++;
                 break;
-
+                case "x":
+                csharpFormat.Append($"{{{argIndex}:x}}"); // Hex lowercase
+                expectedArgTypes.Add(ExpectedArgType.Integer);
+                argIndex++;
+                break;
+                case "X":
+                csharpFormat.Append($"{{{argIndex}:X}}"); // Hex uppercase
+                expectedArgTypes.Add(ExpectedArgType.Integer);
+                argIndex++;
+                break;
+                case "c":
+                csharpFormat.Append($"{{{argIndex}}}"); // Character
+                expectedArgTypes.Add(ExpectedArgType.Character);
+                argIndex++;
+                break;
+                case "p":
+                // Pointers are tricky. Often represented as long or IntPtr in C#
+                csharpFormat.Append($"{{{argIndex}}}");
+                expectedArgTypes.Add(ExpectedArgType.Pointer);
+                argIndex++;
+                break;
                 default:
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Error.WriteLine("Unhandled format: " + format[i]);
-                Console.ResetColor();
+                // For unsupported or unrecognized specifiers, append them as-is
+                // or throw an exception, depending on desired strictness.
+                csharpFormat.Append(match.Value);
+                expectedArgTypes.Add(ExpectedArgType.Unknown);
+                argIndex++; // Still increment, assuming it's an argument
                 break;
             }
-
+            lastIndex = match.Index + match.Length;
         }
 
-        return sb.ToString();
+        // Append any remaining text after the last placeholder
+        csharpFormat.Append(sprintfFormat.AsSpan(lastIndex));
+
+        return csharpFormat.ToString();
     }
+
 }
 
-[Flags]
-enum FormatFlags
+/// <summary>
+/// Specifies the expected argument type for format specifiers.
+/// </summary>
+public enum ExpectedArgType
 {
-    Zeropad,
-    Left,
-    Plus,
-    Space,
-    Hash,
-    Uppercase,
-    Char,
-    Short,
-    Long,
-    LongLong,
-    Precision,
-    AdaptExp,
+    /// <summary>  </summary>
+    Unknown,
+    /// <summary>  </summary>
+    Integer,
+    /// <summary>  </summary>
+    FloatingPoint,
+    /// <summary>  </summary>
+    String,
+    /// <summary>  </summary>
+    Character,
+    /// <summary>  </summary>
+    Pointer
 }

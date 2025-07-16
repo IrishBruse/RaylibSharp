@@ -371,7 +371,6 @@ public partial class ExampleProcessor
             line.Replace("     LensDistortionValues", " device.LensDistortionValues");
             line.Replace("     ChromaAbCorrection", " device.ChromaAbCorrection");
             line.Replace("defined(PLATFORM_DESKTOP)", "PLATFORM_DESKTOP");
-
             if (line.Contains("parameter"))
             {
                 line.Replace(",", ";");

@@ -30,6 +30,11 @@ static class SharedLibraryLoader
 
         string dllPath = $"{AppContext.BaseDirectory}/runtimes/{runtimeId}/native/{libName}";
 
+        if (runtimeId == "linux-x64")
+        {
+            dllPath += ".so";
+        }
+
         Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine($"INFO: Loaded native Raylib dll from {dllPath}");
         Console.ResetColor();
