@@ -28,7 +28,7 @@ public static class DefineProcessor
                 continue;
             }
 
-            string type = e.Type.ToLower();
+            string type = e.Type.ToLowerInvariant();
 
             if (type.Contains("string"))
             {

@@ -62,7 +62,7 @@ public static unsafe partial class Raylib
 
 }
 
-internal readonly partial struct Native
+readonly partial struct Native
 {
     internal const string Msvcrt = "msvcrt";
     internal const string Libc = "libc";

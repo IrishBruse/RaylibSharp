@@ -1,7 +1,5 @@
 namespace RaylibSharp.Generator;
 
-using System.Globalization;
-
 public class Utility
 {
     public static readonly string StringMarshal = "MarshalAs(UnmanagedType.LPStr)";

@@ -43,18 +43,7 @@ class Lines(string[] Lines)
         return true;
     }
 
-    public string? CurrentLine
-    {
-        get
-        {
-            if (index >= Lines.Length)
-            {
-                return null;
-            }
-
-            return Lines[index];
-        }
-    }
+    public string CurrentLine => Lines[index]!;
 
     public void Undo()
     {
