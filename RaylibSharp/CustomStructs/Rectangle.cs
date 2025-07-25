@@ -2,7 +2,6 @@ namespace RaylibSharp;
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.Numerics;
 
 #pragma warning disable CA1051
@@ -60,8 +59,16 @@ public struct Rectangle : IEquatable<Rectangle>
         Height = height;
     }
 
+    /// <summary> Rectangle Constructor </summary>
+    public Rectangle(Vector2 position, Vector2 size)
+    {
+        X = position.X;
+        Y = position.Y;
+        Width = size.X;
+        Height = size.Y;
+    }
+
     /// <summary> Contains Vector2 </summary>
-    [Pure]
     public readonly bool Contains(Vector2 pt)
     {
         return Contains(pt.X, pt.Y);

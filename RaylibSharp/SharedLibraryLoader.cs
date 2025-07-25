@@ -28,7 +28,7 @@ static class SharedLibraryLoader
 
         string runtimeId = RuntimeID();
 
-        string dllPath = $"{AppContext.BaseDirectory}/runtimes/{runtimeId}/native/{libName}";
+        string dllPath = Path.Join(AppContext.BaseDirectory, "runtimes", runtimeId, "native", libName);
 
         if (runtimeId == "linux-x64")
         {

@@ -25,7 +25,7 @@ public static unsafe partial class Raylib
         switch (msgType)
         {
             case TraceLogLevel.Info:
-            LogMessage("INFO: ", text, ConsoleColor.White);
+            LogMessage("INFO:  ", text, ConsoleColor.White);
             break;
 
             case TraceLogLevel.Error:
@@ -33,7 +33,7 @@ public static unsafe partial class Raylib
             break;
 
             case TraceLogLevel.Warning:
-            LogMessage("WARNING: ", text, ConsoleColor.Yellow);
+            LogMessage("WARN:  ", text, ConsoleColor.Yellow);
             break;
 
             case TraceLogLevel.Debug:
@@ -41,11 +41,11 @@ public static unsafe partial class Raylib
             break;
 
             case TraceLogLevel.Fatal:
-            LogMessage("Fatal: ", text, ConsoleColor.DarkRed);
+            LogMessage("FATAL: ", text, ConsoleColor.DarkRed);
             break;
 
             case TraceLogLevel.Trace:
-            LogMessage("Trace: ", text, ConsoleColor.Gray);
+            LogMessage("TRACE: ", text, ConsoleColor.Gray);
             break;
         }
     }
@@ -105,6 +105,7 @@ struct VaListLinuxX64
 /// </summary>
 public static unsafe class Logging
 {
+    /// <summary> Get message based on platform </summary>
     public static string GetLogMessage(IntPtr format, IntPtr args)
     {
         if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
@@ -127,10 +128,10 @@ public static unsafe class Logging
         nint buffer = Marshal.AllocHGlobal(byteLength);
         VsPrintf(buffer, format, args);
 
-        string result = Marshal.PtrToStringUTF8(buffer);
+        string? result = Marshal.PtrToStringUTF8(buffer);
         Marshal.FreeHGlobal(buffer);
 
-        return result;
+        return result!;
     }
 
     static string AppleLogCallback(IntPtr format, IntPtr args)
@@ -151,7 +152,7 @@ public static unsafe class Logging
         }
     }
 
-    static unsafe string? LinuxX64LogCallback(IntPtr format, IntPtr args)
+    static unsafe string LinuxX64LogCallback(IntPtr format, IntPtr args)
     {
         // The args pointer cannot be reused between two calls. We need to make a copy of the underlying structure.
         VaListLinuxX64 listStructure = *(VaListLinuxX64*)args;
@@ -173,7 +174,7 @@ public static unsafe class Logging
         Marshal.FreeHGlobal(listPointer);
         Marshal.FreeHGlobal(utf8Buffer);
 
-        return result;
+        return result!;
     }
 
     // https://github.com/dotnet/runtime/issues/51052

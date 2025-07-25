@@ -57,6 +57,8 @@ public class StructConfig
             "Model",
             new StructConfig() {
                 UnmanagedAttribute = true,
+                GenManaged = false,
+                GenUnmanaged = false,
                 Remove=[
                     "materialCount",
                     "meshCount",
