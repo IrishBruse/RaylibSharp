@@ -17,7 +17,7 @@ public unsafe partial struct Sound
 
 /// <summary> Sound </summary>
 [StructLayout(LayoutKind.Sequential)]
-unsafe struct UnmanagedSound
+public unsafe struct UnmanagedSound
 {
     /// <summary> Audio stream </summary>
     public UnmanagedAudioStream Stream;

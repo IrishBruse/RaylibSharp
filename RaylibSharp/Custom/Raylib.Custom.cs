@@ -138,21 +138,22 @@ public static unsafe partial class Raylib
 
     /// <summary> Set shader uniform value </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
-    public static partial void SetShaderValue(Shader shader, int locIndex, Vector2 value, ShaderUniformDataType uniformType = ShaderUniformDataType.ShaderUniformVec2);
+    public static partial void SetShaderValue(Shader shader, int locIndex, ref Vector2 value, ShaderUniformDataType uniformType = ShaderUniformDataType.ShaderUniformVec2);
 
     /// <summary> Set shader uniform value </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
-    public static partial void SetShaderValue(Shader shader, int locIndex, Vector3 value, ShaderUniformDataType uniformType = ShaderUniformDataType.ShaderUniformVec3);
+    public static partial void SetShaderValue(Shader shader, int locIndex, ref Vector3 value, ShaderUniformDataType uniformType = ShaderUniformDataType.ShaderUniformVec3);
 
     /// <summary> Set shader uniform value </summary>
     public static void SetShaderValue(Shader shader, int locIndex, Color value)
     {
-        SetShaderValue(shader, locIndex, new Vector4(value.R, value.G, value.B, value.A) / 255f, ShaderUniformDataType.ShaderUniformVec4);
+        Vector4 vec4 = new Vector4(value.R, value.G, value.B, value.A) / 255f;
+        SetShaderValue(shader, locIndex, ref vec4, ShaderUniformDataType.ShaderUniformVec4);
     }
 
     /// <summary> Set shader uniform value </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValue")]
-    public static partial void SetShaderValue(Shader shader, int locIndex, Vector4 value, ShaderUniformDataType uniformType = ShaderUniformDataType.ShaderUniformVec4);
+    public static partial void SetShaderValue(Shader shader, int locIndex, ref Vector4 value, ShaderUniformDataType uniformType = ShaderUniformDataType.ShaderUniformVec4);
 
     /// <summary> Set shader uniform value </summary>
     [LibraryImport(LIB, EntryPoint = "SetShaderValue")]

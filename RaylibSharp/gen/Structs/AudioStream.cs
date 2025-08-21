@@ -23,7 +23,7 @@ public unsafe partial struct AudioStream
 
 /// <summary> AudioStream, custom audio stream </summary>
 [StructLayout(LayoutKind.Sequential)]
-unsafe struct UnmanagedAudioStream
+public unsafe struct UnmanagedAudioStream
 {
     /// <summary> Pointer to internal data used by the audio system </summary>
     public IntPtr Buffer;

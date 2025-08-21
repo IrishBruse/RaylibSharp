@@ -23,7 +23,7 @@ public unsafe partial struct Music
 
 /// <summary> Music, audio stream, anything longer than ~10 seconds should be streamed </summary>
 [StructLayout(LayoutKind.Sequential)]
-unsafe struct UnmanagedMusic
+public unsafe struct UnmanagedMusic
 {
     /// <summary> Audio stream </summary>
     public UnmanagedAudioStream Stream;

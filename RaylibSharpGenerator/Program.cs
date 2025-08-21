@@ -2,8 +2,8 @@
 
 public class Program
 {
-    static bool raylib = false;
-    static bool rlgl = false;
+    static bool raylib = true;
+    static bool rlgl = true;
     static bool examples = true;
 
     static void Main()

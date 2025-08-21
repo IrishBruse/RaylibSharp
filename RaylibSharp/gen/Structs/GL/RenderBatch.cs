@@ -25,7 +25,7 @@ public unsafe partial struct RenderBatch
 
 /// <summary> rlRenderBatch type </summary>
 [StructLayout(LayoutKind.Sequential)]
-unsafe struct UnmanagedRenderBatch
+public unsafe struct UnmanagedRenderBatch
 {
     /// <summary> Number of vertex buffers (multi-buffering support) </summary>
     public int BufferCount;

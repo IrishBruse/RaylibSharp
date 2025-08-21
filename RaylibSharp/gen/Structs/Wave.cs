@@ -23,7 +23,7 @@ public unsafe partial struct Wave
 
 /// <summary> Wave, audio wave data </summary>
 [StructLayout(LayoutKind.Sequential)]
-unsafe struct UnmanagedWave
+public unsafe struct UnmanagedWave
 {
     /// <summary> Total number of frames (considering channels) </summary>
     public uint FrameCount;

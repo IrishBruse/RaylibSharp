@@ -36,13 +36,13 @@ public unsafe struct Model
     // --------------------------------------------
 
     /// <summary> Materials array </summary>
-    public readonly ReadOnlySpan<Material> Materials => new(materials, MaterialCount);
+    public readonly Span<Material> Materials => new(materials, MaterialCount);
 
     /// <summary> Bones information (skeleton) </summary>
-    public readonly ReadOnlySpan<UnmanagedBoneInfo> Bones => new(bones, BoneCount);
+    public readonly Span<UnmanagedBoneInfo> Bones => new(bones, BoneCount);
 
     /// <summary> Meshes array </summary>
-    public readonly ReadOnlySpan<Mesh> Meshes => new(meshes, MeshCount);
+    public readonly Span<Mesh> Meshes => new(meshes, MeshCount);
 }
 
 #pragma warning restore CA1711,IDE0005

@@ -33,7 +33,7 @@ public unsafe partial struct VertexBuffer
 
 /// <summary> Dynamic vertex buffers (position + texcoords + colors + indices arrays) </summary>
 [StructLayout(LayoutKind.Sequential)]
-unsafe struct UnmanagedVertexBuffer
+public unsafe struct UnmanagedVertexBuffer
 {
     /// <summary> Number of elements in the buffer (QUADS) </summary>
     public int ElementCount;

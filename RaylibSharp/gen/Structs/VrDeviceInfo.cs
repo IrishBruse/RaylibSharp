@@ -31,7 +31,7 @@ public unsafe partial struct VrDeviceInfo
 
 /// <summary> VrDeviceInfo, Head-Mounted-Display device parameters </summary>
 [StructLayout(LayoutKind.Sequential)]
-unsafe struct UnmanagedVrDeviceInfo
+public unsafe struct UnmanagedVrDeviceInfo
 {
     /// <summary> Horizontal resolution in pixels </summary>
     public int HResolution;

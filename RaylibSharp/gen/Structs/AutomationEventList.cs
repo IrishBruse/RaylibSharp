@@ -19,7 +19,7 @@ public unsafe partial struct AutomationEventList
 
 /// <summary> Automation event list </summary>
 [StructLayout(LayoutKind.Sequential)]
-unsafe struct UnmanagedAutomationEventList
+public unsafe struct UnmanagedAutomationEventList
 {
     /// <summary> Events max entries (MAX_AUTOMATION_EVENTS) </summary>
     public uint Capacity;

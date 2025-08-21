@@ -19,7 +19,7 @@ public unsafe partial struct AutomationEvent
 
 /// <summary> Automation event </summary>
 [StructLayout(LayoutKind.Sequential)]
-unsafe struct UnmanagedAutomationEvent
+public unsafe struct UnmanagedAutomationEvent
 {
     /// <summary> Event frame </summary>
     public uint Frame;

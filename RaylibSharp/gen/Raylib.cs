@@ -1915,7 +1915,7 @@ public static unsafe partial class Raylib
 
     /// <summary> Set texture for a material map type (MATERIAL_MAP_DIFFUSE, MATERIAL_MAP_SPECULAR...) </summary>
     [LibraryImport(LIB, EntryPoint = "SetMaterialTexture")]
-    public static partial void SetMaterialTexture(Material material, MaterialMapIndex mapType, Texture texture);
+    public static partial void SetMaterialTexture(ref Material material, MaterialMapIndex mapType, Texture texture);
 
     /// <summary> Set material for a mesh </summary>
     [LibraryImport(LIB, EntryPoint = "SetModelMeshMaterial")]
@@ -2258,3 +2258,4 @@ public static unsafe partial class Raylib
     public static partial void DetachAudioMixedProcessor(AudioCallback processor);
 
 }
+

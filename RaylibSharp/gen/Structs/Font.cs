@@ -26,7 +26,7 @@ public unsafe partial struct Font
 
 /// <summary> Font, font texture and GlyphInfo array data </summary>
 [StructLayout(LayoutKind.Sequential)]
-unsafe struct UnmanagedFont
+public unsafe struct UnmanagedFont
 {
     /// <summary> Base size (default chars height) </summary>
     public int BaseSize;

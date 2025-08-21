@@ -21,7 +21,7 @@ public unsafe partial struct RayCollision
 
 /// <summary> RayCollision, ray hit information </summary>
 [StructLayout(LayoutKind.Sequential)]
-unsafe struct UnmanagedRayCollision
+public unsafe struct UnmanagedRayCollision
 {
     /// <summary> Did the ray hit something? </summary>
     public bool Hit;

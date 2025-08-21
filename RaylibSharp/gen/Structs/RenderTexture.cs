@@ -19,7 +19,7 @@ public unsafe partial struct RenderTexture
 
 /// <summary> RenderTexture, fbo for texture rendering </summary>
 [StructLayout(LayoutKind.Sequential)]
-unsafe struct UnmanagedRenderTexture
+public unsafe struct UnmanagedRenderTexture
 {
     /// <summary> OpenGL framebuffer object id </summary>
     public uint Id;
