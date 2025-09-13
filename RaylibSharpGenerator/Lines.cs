@@ -1,8 +1,8 @@
 namespace RaylibSharp.Generator;
 
-class Lines(string[] Lines)
+internal sealed class Lines(string[] Lines)
 {
-    int index = 0;
+    private int index;
 
     public string? NextLine()
     {
@@ -22,7 +22,7 @@ class Lines(string[] Lines)
         {
             if (CurrentLine.Trim() == "")
             {
-                NextLine();
+                _ = NextLine();
             }
         }
         while (CurrentLine.Trim() == "");
@@ -43,7 +43,13 @@ class Lines(string[] Lines)
         return true;
     }
 
-    public string CurrentLine => Lines[index]!;
+    public string CurrentLine
+    {
+        get
+        {
+            return Lines[index]!;
+        }
+    }
 
     public void Undo()
     {

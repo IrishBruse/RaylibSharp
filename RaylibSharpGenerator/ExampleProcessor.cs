@@ -36,7 +36,7 @@ public partial class ExampleProcessor
         }
     }
 
-    static void GenerateExample(Lines lines, string exampleName, string outputFile)
+    private static void GenerateExample(Lines lines, string exampleName, string outputFile)
     {
         Log($"Example {outputFile}", ConsoleColor.Green);
 
@@ -59,7 +59,7 @@ public partial class ExampleProcessor
 
             if (line.EndsWith("***/"))
             {
-                lines.NextLine();
+                _ = lines.NextLine();
                 output.Add("");
                 break;
             }
@@ -121,13 +121,9 @@ public partial class ExampleProcessor
                 {
                     type = "float";
                 }
-                else if (value.Contains('"'))
-                {
-                    type = "string";
-                }
                 else
                 {
-                    type = "int";
+                    type = value.Contains('"') ? "string" : "int";
                 }
 
                 if (source.Contains("MAX(a") || source.Contains("MIN(a"))
@@ -140,8 +136,8 @@ public partial class ExampleProcessor
             }
             else if (source.Contains("int main("))
             {
-                if (exampleName == "CoreInputGamepadInfo" ||
-                    exampleName == "CoreInputGestures")
+                if (exampleName is "CoreInputGamepadInfo" or
+                    "CoreInputGestures")
                 {
                     output.Add(tab + $"public static void Example()");
                 }
@@ -164,7 +160,7 @@ public partial class ExampleProcessor
         File.WriteAllLines(outputFile, output);
     }
 
-    static void MoveLineRangeBy(List<string> lines, int start, int end, int count, bool dedent = false)
+    private static void MoveLineRangeBy(List<string> lines, int start, int end, int count, bool dedent = false)
     {
         start--;
         end--;
@@ -189,7 +185,7 @@ public partial class ExampleProcessor
     }
 
 
-    static string? ProcessLine(string l, string exampleName)
+    private static string? ProcessLine(string l, string exampleName)
     {
         StringBuilder line = new(l);
 
@@ -201,282 +197,282 @@ public partial class ExampleProcessor
         switch (exampleName)
         {
             case "Core2dCamera":
-            break;
+                break;
             case "Core2dCameraMouseZoom":
-            break;
+                break;
             case "Core2dCameraPlatformer":
-            {
-                if (line.Contains("void") && l.EndsWith(';'))
                 {
-                    return "// " + line;
+                    if (line.Contains("void") && l.EndsWith(';'))
+                    {
+                        return "// " + line;
+                    }
+
+                    line.ReplaceAll("char *", "string ");
+
+                    line.ReplaceAll(" *", " ");
+
+                    _ = line.Replace("int eveningOut", "bool eveningOut");
+                    _ = line.Replace("eveningOut = 0;", "eveningOut = false;");
+                    _ = line.Replace("eveningOut = 1;", "eveningOut = true;");
+
+                    _ = line.Replace(".speed", ".Speed");
+                    _ = line.Replace(".rect", ".Rect");
+                    _ = line.Replace(".canJump", ".CanJump");
+                    _ = line.Replace(".blocking", ".Blocking");
                 }
-
-                line.ReplaceAll("char *", "string ");
-
-                line.ReplaceAll(" *", " ");
-
-                line.Replace("int eveningOut", "bool eveningOut");
-                line.Replace("eveningOut = 0;", "eveningOut = false;");
-                line.Replace("eveningOut = 1;", "eveningOut = true;");
-
-                line.Replace(".speed", ".Speed");
-                line.Replace(".rect", ".Rect");
-                line.Replace(".canJump", ".CanJump");
-                line.Replace(".blocking", ".Blocking");
-            }
-            break;
+                break;
             case "Core2dCameraSplitScreen":
-            break;
+                break;
             case "Core3dCameraFirstPerson":
-            line.Replace("&camera", "ref camera");
-            line.Replace("int cameraMode", "CameraMode cameraMode");
-            break;
+                _ = line.Replace("&camera", "ref camera");
+                _ = line.Replace("int cameraMode", "CameraMode cameraMode");
+                break;
             case "Core3dCameraFree":
-            line.Replace("&camera", "ref camera");
-            line.Replace("int cameraMode", "CameraMode cameraMode");
-            break;
+                _ = line.Replace("&camera", "ref camera");
+                _ = line.Replace("int cameraMode", "CameraMode cameraMode");
+                break;
             case "Core3dCameraMode":
-            break;
+                break;
             case "Core3dCameraSplitScreen":
-            break;
+                break;
             case "Core3dPicking":
-            line.Replace("&camera", "ref camera");
-            line.Replace("new({", "new(new(");
-            line.Replace(")});", ")));");
-            break;
+                _ = line.Replace("&camera", "ref camera");
+                _ = line.Replace("new({", "new(new(");
+                _ = line.Replace(")});", ")));");
+                break;
             case "CoreAutomationEvents":
-            line.Replace("), 0", "), false");
-            line.Replace("), 1", "), true");
+                _ = line.Replace("), 0", "), false");
+                _ = line.Replace("), 1", "), true");
 
-            line.Replace("struct Player", "struct Player(Vector2 position, float speed, bool canJump)");
-            line.Replace("Vector2 position;", "public Vector2 Position = position;");
-            line.Replace("float speed;", "public float Speed = speed;");
-            line.Replace("bool canJump;", "public bool CanJump = canJump;");
-            line.Replace("} Player;", "}");
+                _ = line.Replace("struct Player", "struct Player(Vector2 position, float speed, bool canJump)");
+                _ = line.Replace("Vector2 position;", "public Vector2 Position = position;");
+                _ = line.Replace("float speed;", "public float Speed = speed;");
+                _ = line.Replace("bool canJump;", "public bool CanJump = canJump;");
+                _ = line.Replace("} Player;", "}");
 
-            line.Replace("struct EnvElement", "struct EnvElement(Rectangle rect, bool blocking, Color color)");
-            line.Replace("Rectangle rect;", "public Rectangle Rect = rect;");
-            line.Replace("int blocking;", "public bool Blocking = blocking;");
-            line.Replace("Color color;", "public Color Color = color;");
-            line.Replace("} EnvElement;", "}");
+                _ = line.Replace("struct EnvElement", "struct EnvElement(Rectangle rect, bool blocking, Color color)");
+                _ = line.Replace("Rectangle rect;", "public Rectangle Rect = rect;");
+                _ = line.Replace("int blocking;", "public bool Blocking = blocking;");
+                _ = line.Replace("Color color;", "public Color Color = color;");
+                _ = line.Replace("} EnvElement;", "}");
 
-            line.Replace("EnvElement *element = &envElements[i];", "EnvElement element = envElements[i];");
-            line.Replace("Vector2 *p = &(player.Position);", "ref Vector2 p = ref player.Position;");
-            line.Replace("int hitObstacle = 0;", "bool hitObstacle = false;");
-            line.Replace("hitObstacle = 1;", "hitObstacle = true;");
+                _ = line.Replace("EnvElement *element = &envElements[i];", "EnvElement element = envElements[i];");
+                _ = line.Replace("Vector2 *p = &(player.Position);", "ref Vector2 p = ref player.Position;");
+                _ = line.Replace("int hitObstacle = 0;", "bool hitObstacle = false;");
+                _ = line.Replace("hitObstacle = 1;", "hitObstacle = true;");
 
-            break;
+                break;
             case "CoreBasicScreenManager":
-            {
-                string convertedEnum = """
+                {
+                    string convertedEnum = """
                 const int LOGO = 0;
                     const int TITLE = 1;
                     const int GAMEPLAY = 2;
                     const int ENDING = 3;
                 """;
-                line.Replace("typedef enum GameScreen new(LOGO = 0, TITLE, GAMEPLAY, ENDING) GameScreen;", convertedEnum);
-                line.Replace("GameScreen", "int");
-            }
-            break;
+                    _ = line.Replace("typedef enum GameScreen new(LOGO = 0, TITLE, GAMEPLAY, ENDING) GameScreen;", convertedEnum);
+                    _ = line.Replace("GameScreen", "int");
+                }
+                break;
             case "CoreBasicWindow":
-            break;
+                break;
             case "CoreCustomFrameControl":
-            break;
+                break;
             case "CoreCustomLogging":
-            break;
+                break;
             case "CoreDropFiles":
-            break;
+                break;
             case "CoreInputGamepad":
-            line.Replace("GetGamepadAxisMovement(0, i)", "GetGamepadAxisMovement(0, (GamepadAxis)i)");
-            break;
+                _ = line.Replace("GetGamepadAxisMovement(0, i)", "GetGamepadAxisMovement(0, (GamepadAxis)i)");
+                break;
             case "CoreInputGamepadInfo":
-            line.Replace("GetGamepadAxisMovement(i, ", "GetGamepadAxisMovement(i, (GamepadAxis)");
-            line.Replace("IsGamepadButtonDown(i, ", "IsGamepadButtonDown(i, (GamepadButton)");
-            break;
+                _ = line.Replace("GetGamepadAxisMovement(i, ", "GetGamepadAxisMovement(i, (GamepadAxis)");
+                _ = line.Replace("IsGamepadButtonDown(i, ", "IsGamepadButtonDown(i, (GamepadButton)");
+                break;
             case "CoreInputGestures":
-            line.Replace("public static int Example()", "public static void Example()");
-            line.Replace("int currentGesture", "Gesture currentGesture");
-            line.Replace("int lastGesture", "Gesture lastGesture");
-            line.Replace("char gestureStrings[MAX_GESTURE_STRINGS][32];", "string[] gestureStrings = new string[MAX_GESTURE_STRINGS];");
-            break;
+                _ = line.Replace("public static int Example()", "public static void Example()");
+                _ = line.Replace("int currentGesture", "Gesture currentGesture");
+                _ = line.Replace("int lastGesture", "Gesture lastGesture");
+                _ = line.Replace("char gestureStrings[MAX_GESTURE_STRINGS][32];", "string[] gestureStrings = new string[MAX_GESTURE_STRINGS];");
+                break;
             case "CoreInputGesturesWeb":
-            break;
+                break;
             case "CoreInputKeys":
-            break;
+                break;
             case "CoreInputMouse":
-            break;
+                break;
             case "CoreInputMouseWheel":
-            break;
+                break;
             case "CoreInputMultitouch":
-            break;
+                break;
             case "CoreInputVirtualControls":
-            break;
+                break;
             case "CoreLoadingThread":
-            {
-                string convertedEnum = """
+                {
+                    string convertedEnum = """
                 const int STATE_WAITING = 0;
                         const int STATE_LOADING = 1;
                         const int STATE_FINISHED = 2;
                 """;
-                line.Replace("enum { STATE_WAITING, STATE_LOADING, STATE_FINISHED } state = STATE_WAITING;", convertedEnum);
-            }
-            break;
+                    _ = line.Replace("enum { STATE_WAITING, STATE_LOADING, STATE_FINISHED } state = STATE_WAITING;", convertedEnum);
+                }
+                break;
             case "CoreRandomSequence":
-            break;
+                break;
             case "CoreRandomValues":
-            break;
+                break;
             case "CoreScissorTest":
-            break;
+                break;
             case "CoreSmoothPixelperfect":
-            break;
+                break;
             case "CoreSplitScreen":
-            break;
+                break;
             case "CoreStorageValues":
-            break;
+                break;
             case "CoreVrSimulator":
-            line.Replace("&camera", "ref camera");
+                _ = line.Replace("&camera", "ref camera");
 
-            line.Replace("config.leftLensCenter", "config.LeftLensCenter");
-            line.Replace("config.rightLensCenter", "config.RightLensCenter");
-            line.Replace("config.leftScreenCenter", "config.LeftScreenCenter");
-            line.Replace("config.rightScreenCenter", "config.RightScreenCenter");
-            line.Replace("config.scale", "config.Scale");
-            line.Replace("config.scaleIn", "config.ScaleIn");
+                _ = line.Replace("config.leftLensCenter", "config.LeftLensCenter");
+                _ = line.Replace("config.rightLensCenter", "config.RightLensCenter");
+                _ = line.Replace("config.leftScreenCenter", "config.LeftScreenCenter");
+                _ = line.Replace("config.rightScreenCenter", "config.RightScreenCenter");
+                _ = line.Replace("config.scale", "config.Scale");
+                _ = line.Replace("config.scaleIn", "config.ScaleIn");
 
-            line.Replace(".hResolution", ".HResolution");
-            line.Replace(".vResolution", ".VResolution");
-            line.Replace(".hScreenSize", ".HScreenSize");
-            line.Replace(".vScreenSize", ".VScreenSize");
-            line.Replace(".eyeToScreenDistance", ".EyeToScreenDistance");
-            line.Replace(".lensSeparationDistance", ".LensSeparationDistance");
-            line.Replace(".interpupillaryDistance", ".InterpupillaryDistance");
-            line.Replace(".lensDistortionValues", ".LensDistortionValues");
-            line.Replace(".lensDistortionValues", ".LensDistortionValues");
-            line.Replace(".lensDistortionValues", ".LensDistortionValues");
-            line.Replace(".lensDistortionValues", ".LensDistortionValues");
-            line.Replace(".chromaAbCorrection", ".ChromaAbCorrection");
-            line.Replace(".chromaAbCorrection", ".ChromaAbCorrection");
-            line.Replace(".chromaAbCorrection", ".ChromaAbCorrection");
-            line.Replace(".chromaAbCorrection", ".ChromaAbCorrection");
+                _ = line.Replace(".hResolution", ".HResolution");
+                _ = line.Replace(".vResolution", ".VResolution");
+                _ = line.Replace(".hScreenSize", ".HScreenSize");
+                _ = line.Replace(".vScreenSize", ".VScreenSize");
+                _ = line.Replace(".eyeToScreenDistance", ".EyeToScreenDistance");
+                _ = line.Replace(".lensSeparationDistance", ".LensSeparationDistance");
+                _ = line.Replace(".interpupillaryDistance", ".InterpupillaryDistance");
+                _ = line.Replace(".lensDistortionValues", ".LensDistortionValues");
+                _ = line.Replace(".lensDistortionValues", ".LensDistortionValues");
+                _ = line.Replace(".lensDistortionValues", ".LensDistortionValues");
+                _ = line.Replace(".lensDistortionValues", ".LensDistortionValues");
+                _ = line.Replace(".chromaAbCorrection", ".ChromaAbCorrection");
+                _ = line.Replace(".chromaAbCorrection", ".ChromaAbCorrection");
+                _ = line.Replace(".chromaAbCorrection", ".ChromaAbCorrection");
+                _ = line.Replace(".chromaAbCorrection", ".ChromaAbCorrection");
 
-            line.Replace(" .", " ");
-            line.Replace("VrDeviceInfo device = {", "VrDeviceInfo device = new () {");
+                _ = line.Replace(" .", " ");
+                _ = line.Replace("VrDeviceInfo device = {", "VrDeviceInfo device = new () {");
 
-            line.Replace("};", "");
-            line.Replace("IPD (distance between pupils) in meters", "IPD (distance between pupils) in meters\n        };");
+                _ = line.Replace("};", "");
+                _ = line.Replace("IPD (distance between pupils) in meters", "IPD (distance between pupils) in meters\n        };");
 
-            line.Replace("SHADER_UNIFORM_VEC2", "ShaderUniformDataType.ShaderUniformVec2");
-            line.Replace("SHADER_UNIFORM_VEC4", "ShaderUniformDataType.ShaderUniformVec4");
+                _ = line.Replace("SHADER_UNIFORM_VEC2", "ShaderUniformDataType.ShaderUniformVec2");
+                _ = line.Replace("SHADER_UNIFORM_VEC4", "ShaderUniformDataType.ShaderUniformVec4");
 
-            line.Replace("     LensDistortionValues", " device.LensDistortionValues");
-            line.Replace("     ChromaAbCorrection", " device.ChromaAbCorrection");
-            line.Replace("defined(PLATFORM_DESKTOP)", "PLATFORM_DESKTOP");
-            if (line.Contains("parameter"))
-            {
-                line.Replace(",", ";");
-            }
+                _ = line.Replace("     LensDistortionValues", " device.LensDistortionValues");
+                _ = line.Replace("     ChromaAbCorrection", " device.ChromaAbCorrection");
+                _ = line.Replace("defined(PLATFORM_DESKTOP)", "PLATFORM_DESKTOP");
+                if (line.Contains("parameter"))
+                {
+                    _ = line.Replace(",", ";");
+                }
 
-            line.Replace("LoadShader(0", "LoadShader(null");
-            break;
+                _ = line.Replace("LoadShader(0", "LoadShader(null");
+                break;
             case "CoreWindowFlags":
-            break;
+                break;
             case "CoreWindowLetterbox":
-            if (line.Contains("const int MAX(a, = b);") || line.Contains("const int MIN(a, = b);"))
-            {
-                line.Length = 0;
-            }
-            line.Replace("{ (GetScreenWidth(", "new((GetScreenWidth(");
-            line.Replace("scale }, ", "scale), ");
+                if (line.Contains("const int MAX(a, = b);") || line.Contains("const int MIN(a, = b);"))
+                {
+                    line.Length = 0;
+                }
+                _ = line.Replace("{ (GetScreenWidth(", "new((GetScreenWidth(");
+                _ = line.Replace("scale }, ", "scale), ");
 
-            break;
+                break;
             case "CoreWindowShouldClose":
-            break;
+                break;
             case "CoreWorldScreen":
-            line.Replace("&camera", "ref camera");
-            break;
+                _ = line.Replace("&camera", "ref camera");
+                break;
             default:
-            break;
+                break;
         }
 
         return line.ToString();
     }
 
-    static void Globals(StringBuilder line)
+    private static void Globals(StringBuilder line)
     {
-        line.Replace("\"raylib [", "\"RaylibSharp [");
+        _ = line.Replace("\"raylib [", "\"RaylibSharp [");
 
         foreach (string gesture in Utility.Gestures)
         {
-            line.Replace("GESTURE_" + gesture.ToUpperInvariant(), "Gesture." + gesture);
+            _ = line.Replace("GESTURE_" + gesture.ToUpperInvariant(), "Gesture." + gesture);
         }
 
         foreach (string key in Utility.Keys)
         {
-            line.Replace("KEY_" + key.ToUpperInvariant(), "Key." + key);
+            _ = line.Replace("KEY_" + key.ToUpperInvariant(), "Key." + key);
         }
 
         foreach (string val in Utility.MaterialMapIndex)
         {
-            line.Replace("MATERIAL_MAP_" + val.ToUpperInvariant(), "MaterialMapIndex." + val);
+            _ = line.Replace("MATERIAL_MAP_" + val.ToUpperInvariant(), "MaterialMapIndex." + val);
         }
 
         foreach (string val in Utility.MaterialMapIndex)
         {
-            line.Replace("MATERIAL_MAP_" + val.ToUpperInvariant(), "MaterialMapIndex." + val);
+            _ = line.Replace("MATERIAL_MAP_" + val.ToUpperInvariant(), "MaterialMapIndex." + val);
         }
 
         foreach (string val in Utility.TextureFilter)
         {
-            line.Replace(val, string.Concat("TextureFilter.", Utility.ToPascalCase(val.Substring(15))));
+            _ = line.Replace(val, string.Concat("TextureFilter.", Utility.ToPascalCase(val[15..])));
         }
 
         foreach (string val in Utility.Flags)
         {
-            line.Replace(val, "WindowFlag." + Utility.ToPascalCase(val.Replace("FLAG_", "").Replace("WINDOW_", "")));
+            _ = line.Replace(val, "WindowFlag." + Utility.ToPascalCase(val.Replace("FLAG_", "").Replace("WINDOW_", "")));
         }
 
         foreach (string val in Utility.GamepadAxis)
         {
-            line.Replace(val, "GamepadAxis." + Utility.ToPascalCase(val.Replace("GAMEPAD_AXIS_", "")));
+            _ = line.Replace(val, "GamepadAxis." + Utility.ToPascalCase(val.Replace("GAMEPAD_AXIS_", "")));
         }
 
         foreach (string val in Utility.GamepadButtons)
         {
-            line.Replace(val, "GamepadButton." + Utility.ToPascalCase(val.Replace("GAMEPAD_BUTTON_", "")));
+            _ = line.Replace(val, "GamepadButton." + Utility.ToPascalCase(val.Replace("GAMEPAD_BUTTON_", "")));
         }
 
         // CameraProjection
-        line.Replace("CAMERA_PERSPECTIVE", "CameraProjection.Perspective");
-        line.Replace("CAMERA_ORTHOGRAPHIC", "CameraProjection.Orthographic");
+        _ = line.Replace("CAMERA_PERSPECTIVE", "CameraProjection.Perspective");
+        _ = line.Replace("CAMERA_ORTHOGRAPHIC", "CameraProjection.Orthographic");
 
         // CameraMode
-        line.Replace("CAMERA_CUSTOM", "CameraMode.Custom");
-        line.Replace("CAMERA_FREE", "CameraMode.Free");
-        line.Replace("CAMERA_ORBITAL", "CameraMode.Orbital");
-        line.Replace("CAMERA_FIRST_PERSON", "CameraMode.FirstPerson");
-        line.Replace("CAMERA_THIRD_PERSON", "CameraMode.ThirdPerson");
+        _ = line.Replace("CAMERA_CUSTOM", "CameraMode.Custom");
+        _ = line.Replace("CAMERA_FREE", "CameraMode.Free");
+        _ = line.Replace("CAMERA_ORBITAL", "CameraMode.Orbital");
+        _ = line.Replace("CAMERA_FIRST_PERSON", "CameraMode.FirstPerson");
+        _ = line.Replace("CAMERA_THIRD_PERSON", "CameraMode.ThirdPerson");
 
-        line.Replace("LOG_INFO", "TraceLogLevel.Info");
+        _ = line.Replace("LOG_INFO", "TraceLogLevel.Info");
 
         line.Replace(RLGLReplace(), "RLGL.$1");
 
         line.Replace(IsMouseConstEnumReplace(), m => $"{m.Groups[1]}(MouseButton.{Utility.ToPascalCase(m.Groups[2].Value)})");
 
-        line.Replace("typedef struct", "struct");
+        _ = line.Replace("typedef struct", "struct");
 
         line.ReplaceAll("->", ".");
 
         line.ReplaceAll("unsigned int ", "uint ");
 
-        line.Replace("(Color)", "");
-        line.Replace("(Vector2)", "");
-        line.Replace("(Vector3)", "");
-        line.Replace("(Rectangle)", "");
-        line.Replace("(BoundingBox)", "");
+        _ = line.Replace("(Color)", "");
+        _ = line.Replace("(Vector2)", "");
+        _ = line.Replace("(Vector3)", "");
+        _ = line.Replace("(Rectangle)", "");
+        _ = line.Replace("(BoundingBox)", "");
 
         line.Replace(ArrayReplace(), "$1[] $2 = new $1$3");
 
-        line.Replace("{ 0 }", "new()");
+        _ = line.Replace("{ 0 }", "new()");
 
         for (int i = 0; i < 3; i++)
         {
@@ -484,44 +480,44 @@ public partial class ExampleProcessor
         }
     }
 
-    static void UpperCaseVariables(StringBuilder line)
+    private static void UpperCaseVariables(StringBuilder line)
     {
-        line.Replace(".x", ".X");
-        line.Replace(".y", ".Y");
-        line.Replace(".z", ".Z");
+        _ = line.Replace(".x", ".X");
+        _ = line.Replace(".y", ".Y");
+        _ = line.Replace(".z", ".Z");
 
-        line.Replace(".height", ".Height");
-        line.Replace(".width", ".Width");
+        _ = line.Replace(".height", ".Height");
+        _ = line.Replace(".width", ".Width");
 
-        line.Replace(".materials", ".Materials");
-        line.Replace(".maps", ".Maps");
-        line.Replace(".meshes", ".Meshes");
-        line.Replace(".count", ".Count");
-        line.Replace(".paths", ".Paths");
-        line.Replace(".name", ".Name");
-        line.Replace(".parent", ".Parent");
+        _ = line.Replace(".materials", ".Materials");
+        _ = line.Replace(".maps", ".Maps");
+        _ = line.Replace(".meshes", ".Meshes");
+        _ = line.Replace(".count", ".Count");
+        _ = line.Replace(".paths", ".Paths");
+        _ = line.Replace(".name", ".Name");
+        _ = line.Replace(".parent", ".Parent");
 
-        line.Replace(".id", ".Id");
+        _ = line.Replace(".id", ".Id");
 
-        line.Replace(".target", ".Target");
-        line.Replace(".offset", ".Offset");
-        line.Replace(".rotation", ".Rotation");
-        line.Replace(".zoom", ".Zoom");
-        line.Replace(".zoom", ".Zoom");
-        line.Replace(".position", ".Position");
-        line.Replace(".up", ".Up");
-        line.Replace(".fovy", ".Fovy");
-        line.Replace(".projection", ".Projection");
+        _ = line.Replace(".target", ".Target");
+        _ = line.Replace(".offset", ".Offset");
+        _ = line.Replace(".rotation", ".Rotation");
+        _ = line.Replace(".zoom", ".Zoom");
+        _ = line.Replace(".zoom", ".Zoom");
+        _ = line.Replace(".position", ".Position");
+        _ = line.Replace(".up", ".Up");
+        _ = line.Replace(".fovy", ".Fovy");
+        _ = line.Replace(".projection", ".Projection");
 
-        line.Replace(".texture", ".Texture");
-        line.Replace(".hit", ".Hit");
-        line.Replace(".speed", ".Speed");
-        line.Replace(".canJump", ".CanJump");
-        line.Replace(".rect", ".Rect");
-        line.Replace(".blocking", ".Blocking");
-        line.Replace(".events", ".Events");
-        line.Replace(".frame", ".Frame");
-        line.Replace(".color", ".Color");
+        _ = line.Replace(".texture", ".Texture");
+        _ = line.Replace(".hit", ".Hit");
+        _ = line.Replace(".speed", ".Speed");
+        _ = line.Replace(".canJump", ".CanJump");
+        _ = line.Replace(".rect", ".Rect");
+        _ = line.Replace(".blocking", ".Blocking");
+        _ = line.Replace(".events", ".Events");
+        _ = line.Replace(".frame", ".Frame");
+        _ = line.Replace(".color", ".Color");
     }
 
     [GeneratedRegex(@"(IsMouse\w+)\(MOUSE_BUTTON_(.*?)\)")] private static partial Regex IsMouseConstEnumReplace(); // IsMouseButtonDown(MOUSE_BUTTON_RIGHT)
@@ -547,14 +543,14 @@ public partial class ExampleProcessor
     [GeneratedRegex(@"rl([A-Z])")] private static partial Regex RLGLReplace(); // rlBegin
 }
 
-static class Extensions
+internal static class Extensions
 {
     public static void ReplaceAll(this StringBuilder sb, string find, string replace)
     {
         string l = "";
         while (!sb.Equals(l))
         {
-            sb.Replace(find, replace);
+            _ = sb.Replace(find, replace);
             l = sb.ToString();
         }
     }
@@ -562,15 +558,15 @@ static class Extensions
     public static void Replace(this StringBuilder sb, Regex regex, MatchEvaluator matchEvaluator)
     {
         string output = regex.Replace(sb.ToString(), matchEvaluator);
-        sb.Clear();
-        sb.Insert(0, output);
+        _ = sb.Clear();
+        _ = sb.Insert(0, output);
     }
 
     public static void Replace(this StringBuilder sb, Regex regex, string replacement)
     {
         string output = regex.Replace(sb.ToString(), replacement);
-        sb.Clear();
-        sb.Insert(0, output);
+        _ = sb.Clear();
+        _ = sb.Insert(0, output);
     }
 
     public static bool Contains(this StringBuilder sb, string value)

@@ -6,24 +6,21 @@ using System.Runtime.InteropServices;
 
 #pragma warning disable CA2255
 
-static class SharedLibraryLoader
+internal static class SharedLibraryLoader
 {
-    static IntPtr? libHandle;
+    private static IntPtr? LibHandle;
 
     [ModuleInitializer]
     internal static void Init()
     {
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine("INFO: Locating native Raylib dll");
-        Console.ResetColor();
         NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), Resolve);
     }
 
-    static IntPtr Resolve(string libName, Assembly assembly, DllImportSearchPath? searchPath)
+    private static IntPtr Resolve(string libName, Assembly assembly, DllImportSearchPath? searchPath)
     {
-        if (libHandle.HasValue)
+        if (LibHandle.HasValue)
         {
-            return libHandle.Value;
+            return LibHandle.Value;
         }
 
         string runtimeId = RuntimeID();
@@ -35,67 +32,32 @@ static class SharedLibraryLoader
             dllPath += ".so";
         }
 
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine($"INFO: Loaded native Raylib dll from {dllPath}");
-        Console.ResetColor();
+        Raylib.TraceLog(TraceLogLevel.Info, $"Loaded native Raylib dll from {dllPath}");
 
         if (NativeLibrary.TryLoad(dllPath, out IntPtr handle))
         {
-            libHandle = handle;
+            LibHandle = handle;
             return handle;
         }
 
         if (NativeLibrary.TryLoad("./" + libName, out handle))
         {
-            libHandle = handle;
+            LibHandle = handle;
             return handle;
         }
 
         return IntPtr.Zero;
     }
 
-    static string RuntimeID()
+    private static string RuntimeID()
     {
-        string runtimeId;
-
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
-            {
-                runtimeId = "win-x64";
-            }
-            else
-            {
-                runtimeId = "win-x86";
-            }
-        }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-        {
-            if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
-            {
-                runtimeId = "linux-x64";
-            }
-            else
-            {
-                runtimeId = "linux-x86";
-            }
-        }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-        {
-            if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
-            {
-                runtimeId = "osx-x64";
-            }
-            else
-            {
-                runtimeId = "osx-x86";
-            }
-        }
-        else
-        {
-            runtimeId = "browser-wasm";
-        }
-
+        string runtimeId = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+            ? RuntimeInformation.ProcessArchitecture == Architecture.X64 ? "win-x64" : "win-x86"
+            : RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? RuntimeInformation.ProcessArchitecture == Architecture.X64 ? "linux-x64" : "linux-x86"
+                : RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+                ? RuntimeInformation.ProcessArchitecture == Architecture.X64 ? "osx-x64" : "osx-x86"
+                : "browser-wasm";
         return runtimeId;
     }
 }

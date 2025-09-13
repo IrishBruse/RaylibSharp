@@ -14,5 +14,11 @@ public unsafe struct Material
     public fixed float Params[4];
 
     /// <inheritdoc cref="maps"/>
-    public readonly Span<MaterialMap> Maps => new(maps, Raylib.MAX_MATERIAL_MAPS);
+    public readonly Span<MaterialMap> Maps
+    {
+        get
+        {
+            return new(maps, Raylib.MAX_MATERIAL_MAPS);
+        }
+    }
 }

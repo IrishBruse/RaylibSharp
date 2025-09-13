@@ -1,6 +1,6 @@
 namespace RaylibSharp;
 
-static class TransformMarshaller
+internal static class TransformMarshaller
 {
     public static UnmanagedTransform ConvertToUnmanaged(Transform managed)
     {

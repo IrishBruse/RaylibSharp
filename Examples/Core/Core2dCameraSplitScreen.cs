@@ -50,8 +50,8 @@ public partial class Core2dCameraSplitScreen : ExampleHelper
         camera2.Rotation = 0.0f;
         camera2.Zoom = 1.0f;
 
-        RenderTexture screenCamera1 = LoadRenderTexture(screenWidth/2, screenHeight);
-        RenderTexture screenCamera2 = LoadRenderTexture(screenWidth/2, screenHeight);
+        RenderTexture screenCamera1 = LoadRenderTexture(screenWidth / 2, screenHeight);
+        RenderTexture screenCamera2 = LoadRenderTexture(screenWidth / 2, screenHeight);
 
         // Build a flipped rectangle the size of the split view to use for drawing later
         Rectangle splitScreenRect = new(0.0f, 0.0f, (float)screenCamera1.Texture.Width, (float)-screenCamera1.Texture.Height);
@@ -81,80 +81,80 @@ public partial class Core2dCameraSplitScreen : ExampleHelper
             // Draw
             //----------------------------------------------------------------------------------
             BeginTextureMode(screenCamera1);
-                ClearBackground(RAYWHITE);
+            ClearBackground(RAYWHITE);
 
-                BeginMode2D(camera1);
+            BeginMode2D(camera1);
 
-                    // Draw full scene with first camera
-                    for (int i = 0; i < screenWidth/PLAYER_SIZE + 1; i++)
-                    {
-                        DrawLine(new((float)PLAYER_SIZE*i, 0), new( (float)PLAYER_SIZE*i, (float)screenHeight), LIGHTGRAY);
-                    }
+            // Draw full scene with first camera
+            for (int i = 0; i < screenWidth / PLAYER_SIZE + 1; i++)
+            {
+                DrawLine(new((float)PLAYER_SIZE * i, 0), new((float)PLAYER_SIZE * i, (float)screenHeight), LIGHTGRAY);
+            }
 
-                    for (int i = 0; i < screenHeight/PLAYER_SIZE + 1; i++)
-                    {
-                        DrawLine(new(0, (float)PLAYER_SIZE*i), new( (float)screenWidth, (float)PLAYER_SIZE*i), LIGHTGRAY);
-                    }
+            for (int i = 0; i < screenHeight / PLAYER_SIZE + 1; i++)
+            {
+                DrawLine(new(0, (float)PLAYER_SIZE * i), new((float)screenWidth, (float)PLAYER_SIZE * i), LIGHTGRAY);
+            }
 
-                    for (int i = 0; i < screenWidth/PLAYER_SIZE; i++)
-                    {
-                        for (int j = 0; j < screenHeight/PLAYER_SIZE; j++)
-                        {
-                            DrawText(TextFormat("[%i,%i]", i, j), 10 + PLAYER_SIZE*i, 15 + PLAYER_SIZE*j, 10, LIGHTGRAY);
-                        }
-                    }
+            for (int i = 0; i < screenWidth / PLAYER_SIZE; i++)
+            {
+                for (int j = 0; j < screenHeight / PLAYER_SIZE; j++)
+                {
+                    DrawText(TextFormat("[%i,%i]", i, j), 10 + PLAYER_SIZE * i, 15 + PLAYER_SIZE * j, 10, LIGHTGRAY);
+                }
+            }
 
-                    DrawRectangle(player1, RED);
-                    DrawRectangle(player2, BLUE);
-                EndMode2D();
+            DrawRectangle(player1, RED);
+            DrawRectangle(player2, BLUE);
+            EndMode2D();
 
-                DrawRectangle(0, 0, GetScreenWidth()/2, 30, Fade(RAYWHITE, 0.6f));
-                DrawText("PLAYER1: W/S/A/D to move", 10, 10, 10, MAROON);
+            DrawRectangle(0, 0, GetScreenWidth() / 2, 30, Fade(RAYWHITE, 0.6f));
+            DrawText("PLAYER1: W/S/A/D to move", 10, 10, 10, MAROON);
 
             EndTextureMode();
 
             BeginTextureMode(screenCamera2);
-                ClearBackground(RAYWHITE);
+            ClearBackground(RAYWHITE);
 
-                BeginMode2D(camera2);
+            BeginMode2D(camera2);
 
-                    // Draw full scene with second camera
-                    for (int i = 0; i < screenWidth/PLAYER_SIZE + 1; i++)
-                    {
-                        DrawLine(new( (float)PLAYER_SIZE*i, 0), new( (float)PLAYER_SIZE*i, (float)screenHeight), LIGHTGRAY);
-                    }
+            // Draw full scene with second camera
+            for (int i = 0; i < screenWidth / PLAYER_SIZE + 1; i++)
+            {
+                DrawLine(new((float)PLAYER_SIZE * i, 0), new((float)PLAYER_SIZE * i, (float)screenHeight), LIGHTGRAY);
+            }
 
-                    for (int i = 0; i < screenHeight/PLAYER_SIZE + 1; i++)
-                    {
-                        DrawLine(new(0, (float)PLAYER_SIZE*i), new( (float)screenWidth, (float)PLAYER_SIZE*i), LIGHTGRAY);
-                    }
+            for (int i = 0; i < screenHeight / PLAYER_SIZE + 1; i++)
+            {
+                DrawLine(new(0, (float)PLAYER_SIZE * i), new((float)screenWidth, (float)PLAYER_SIZE * i), LIGHTGRAY);
+            }
 
-                    for (int i = 0; i < screenWidth/PLAYER_SIZE; i++)
-                    {
-                        for (int j = 0; j < screenHeight/PLAYER_SIZE; j++)
-                        {
-                            DrawText(TextFormat("[%i,%i]", i, j), 10 + PLAYER_SIZE*i, 15 + PLAYER_SIZE*j, 10, LIGHTGRAY);
-                        }
-                    }
+            for (int i = 0; i < screenWidth / PLAYER_SIZE; i++)
+            {
+                for (int j = 0; j < screenHeight / PLAYER_SIZE; j++)
+                {
+                    DrawText(TextFormat("[%i,%i]", i, j), 10 + PLAYER_SIZE * i, 15 + PLAYER_SIZE * j, 10, LIGHTGRAY);
+                }
+            }
 
-                    DrawRectangleRec(player1, RED);
-                    DrawRectangleRec(player2, BLUE);
+            DrawRectangleRec(player1, RED);
+            DrawRectangleRec(player2, BLUE);
 
-                EndMode2D();
+            EndMode2D();
 
-                DrawRectangle(0, 0, GetScreenWidth()/2, 30, Fade(RAYWHITE, 0.6f));
-                DrawText("PLAYER2: UP/DOWN/LEFT/RIGHT to move", 10, 10, 10, DARKBLUE);
+            DrawRectangle(0, 0, GetScreenWidth() / 2, 30, Fade(RAYWHITE, 0.6f));
+            DrawText("PLAYER2: UP/DOWN/LEFT/RIGHT to move", 10, 10, 10, DARKBLUE);
 
             EndTextureMode();
 
             // Draw both views render textures to the screen side by side
             BeginDrawing();
-                ClearBackground(BLACK);
+            ClearBackground(BLACK);
 
-                DrawTexture(screenCamera1.Texture, splitScreenRect, new(0, 0), WHITE);
-                DrawTexture(screenCamera2.Texture, splitScreenRect, new(screenWidth/2.0f, 0), WHITE);
+            DrawTexture(screenCamera1.Texture, splitScreenRect, new(0, 0), WHITE);
+            DrawTexture(screenCamera2.Texture, splitScreenRect, new(screenWidth / 2.0f, 0), WHITE);
 
-                DrawRectangle(GetScreenWidth()/2 - 2, 0, 4, GetScreenHeight(), LIGHTGRAY);
+            DrawRectangle(GetScreenWidth() / 2 - 2, 0, 4, GetScreenHeight(), LIGHTGRAY);
             EndDrawing();
         }
 

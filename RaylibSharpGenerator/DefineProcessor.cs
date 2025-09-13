@@ -10,20 +10,20 @@ public static class DefineProcessor
 
         StringBuilder sb = new();
 
-        sb.AppendLine($"namespace {api.Namespace};");
-        sb.AppendLine();
-        sb.AppendLine($"public static unsafe partial class {api.ClassName}");
-        sb.AppendLine("{");
+        _ = sb.AppendLine($"namespace {api.Namespace};");
+        _ = sb.AppendLine();
+        _ = sb.AppendLine($"public static unsafe partial class {api.ClassName}");
+        _ = sb.AppendLine("{");
         foreach (Define e in api.Defines)
         {
-            if (e.Type == "GUARD" || e.Type == "MACRO" || e.Type == "UNKNOWN" || e.Type == "COLOR")
+            if (e.Type is "GUARD" or "MACRO" or "UNKNOWN" or "COLOR")
             {
                 continue;
             }
 
             string pascalName = Utility.ToPascalCase(e.Name);
 
-            if (pascalName == "Pi" || pascalName == "Deg2rad" || pascalName == "Rad2deg")
+            if (pascalName is "Pi" or "Deg2rad" or "Rad2deg")
             {
                 continue;
             }
@@ -46,21 +46,16 @@ public static class DefineProcessor
                 value = '"' + value + '"';
             }
 
-            if (string.IsNullOrEmpty(e.Description))
-            {
-                sb.AppendLine($"    /// <summary> {pascalName} </summary>");
-            }
-            else
-            {
-                sb.AppendLine($"    /// <summary> {e.Description} </summary>");
-            }
+            _ = string.IsNullOrEmpty(e.Description)
+                ? sb.AppendLine($"    /// <summary> {pascalName} </summary>")
+                : sb.AppendLine($"    /// <summary> {e.Description} </summary>");
 
             Log(pascalName);
 
-            sb.AppendLine($"    public static readonly {type} {pascalName} = {value};");
+            _ = sb.AppendLine($"    public static readonly {type} {pascalName} = {value};");
         }
-        sb.AppendLine("}");
-        sb.AppendLine();
+        _ = sb.AppendLine("}");
+        _ = sb.AppendLine();
 
         File.WriteAllText(Path.Join("../RaylibSharp/gen/Defs/", api.Directory, "Defines.cs"), sb.ToString());
 

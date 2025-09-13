@@ -266,7 +266,7 @@ public class Utility
         return ConvertTypeRemoveAlias(t);
     }
 
-    static string HandleFunctionTypeConversions(string type)
+    private static string HandleFunctionTypeConversions(string type)
     {
         if (type.EndsWith('*'))
         {

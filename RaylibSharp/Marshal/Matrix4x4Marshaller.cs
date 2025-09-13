@@ -5,9 +5,9 @@ using System.Runtime.InteropServices.Marshalling;
 
 [CustomMarshaller(typeof(Matrix4x4), MarshalMode.ManagedToUnmanagedIn, typeof(Matrix4x4Marshaller))]
 [CustomMarshaller(typeof(Matrix4x4), MarshalMode.ManagedToUnmanagedOut, typeof(Matrix4x4Marshaller))]
-static unsafe class Matrix4x4Marshaller
+internal static unsafe class Matrix4x4Marshaller
 {
-    static readonly Matrix4x4 HorizontalFlip = Matrix4x4.CreateScale(new Vector3(-1, -1, 1));
+    private static readonly Matrix4x4 HorizontalFlip = Matrix4x4.CreateScale(new Vector3(-1, -1, 1));
 
     public static Matrix4x4 ConvertToUnmanaged(Matrix4x4 managed)
     {

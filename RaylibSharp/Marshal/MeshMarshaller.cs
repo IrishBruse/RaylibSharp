@@ -1,6 +1,6 @@
 namespace RaylibSharp;
 
-static unsafe class MeshMarshaller
+internal static unsafe class MeshMarshaller
 {
     //     public static UnmanagedMesh ConvertToUnmanaged(Mesh managed)
     //     {

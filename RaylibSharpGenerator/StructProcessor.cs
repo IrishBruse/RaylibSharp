@@ -8,7 +8,7 @@ using System.Text;
 
 public static class StructProcessor
 {
-    static readonly string[] Ignore = [
+    private static readonly string[] Ignore = [
         "Vector4",
         "Vector3",
         "Vector2",
@@ -20,7 +20,7 @@ public static class StructProcessor
         "Material",
     ];
 
-    static HashSet<string> generated = [];
+    private static HashSet<string> generated = [];
 
     public static void Emit(RaylibApi api)
     {
@@ -75,7 +75,7 @@ public static class StructProcessor
         Console.WriteLine();
     }
 
-    static void UnmanagedStruct(StringBuilder sb, Struct s, StructConfig config)
+    private static void UnmanagedStruct(StringBuilder sb, Struct s, StructConfig config)
     {
         sb.AppendLine($"/// <summary> {s.Description} </summary>");
         sb.AppendLine($"[StructLayout(LayoutKind.Sequential)]");
@@ -161,7 +161,7 @@ public static class StructProcessor
         sb.AppendLine();
     }
 
-    static void ManagedStruct(StringBuilder sb, Struct s, StructConfig config)
+    private static void ManagedStruct(StringBuilder sb, Struct s, StructConfig config)
     {
         sb.AppendLine($"/// <summary> {s.Description} </summary>");
 
@@ -246,7 +246,7 @@ public static class StructProcessor
         sb.AppendLine();
     }
 
-    static string ConvertManagedTypeStruct(string t)
+    private static string ConvertManagedTypeStruct(string t)
     {
         t = t.Replace(" *", "*");
 

@@ -31,66 +31,66 @@ public partial class ShapesEasingsBoxAnim : ExampleHelper
             switch (state)
             {
                 case 0:     // Move box down to center of screen
-                framesCounter++;
+                    framesCounter++;
 
-                // NOTE: Remember that 3rd parameter of easing function refers to
-                // desired value variation, do not confuse it with expected final value!
-                rec.Y = EaseElasticOut(framesCounter, -100, (GetScreenHeight() / 2.0f) + 100, 120);
+                    // NOTE: Remember that 3rd parameter of easing function refers to
+                    // desired value variation, do not confuse it with expected final value!
+                    rec.Y = EaseElasticOut(framesCounter, -100, (GetScreenHeight() / 2.0f) + 100, 120);
 
-                if (framesCounter >= 120)
-                {
-                    framesCounter = 0;
-                    state = 1;
-                }
-                break;
+                    if (framesCounter >= 120)
+                    {
+                        framesCounter = 0;
+                        state = 1;
+                    }
+                    break;
 
                 case 1:     // Scale box to an horizontal bar
-                framesCounter++;
-                rec.Height = EaseBounceOut(framesCounter, 100, -90, 120);
-                rec.Width = EaseBounceOut(framesCounter, 100, GetScreenWidth(), 120);
+                    framesCounter++;
+                    rec.Height = EaseBounceOut(framesCounter, 100, -90, 120);
+                    rec.Width = EaseBounceOut(framesCounter, 100, GetScreenWidth(), 120);
 
-                if (framesCounter >= 120)
-                {
-                    framesCounter = 0;
-                    state = 2;
-                }
-                break;
+                    if (framesCounter >= 120)
+                    {
+                        framesCounter = 0;
+                        state = 2;
+                    }
+                    break;
 
                 case 2:     // Rotate horizontal bar rectangle
-                framesCounter++;
-                rotation = EaseQuadOut(framesCounter, 0.0f, 270.0f, 240);
+                    framesCounter++;
+                    rotation = EaseQuadOut(framesCounter, 0.0f, 270.0f, 240);
 
-                if (framesCounter >= 240)
-                {
-                    framesCounter = 0;
-                    state = 3;
-                }
-                break;
+                    if (framesCounter >= 240)
+                    {
+                        framesCounter = 0;
+                        state = 3;
+                    }
+                    break;
 
                 case 3:     // Increase bar size to fill all screen
-                framesCounter++;
-                rec.Height = EaseCircOut(framesCounter, 10, GetScreenWidth(), 120);
+                    framesCounter++;
+                    rec.Height = EaseCircOut(framesCounter, 10, GetScreenWidth(), 120);
 
-                if (framesCounter >= 120)
-                {
-                    framesCounter = 0;
-                    state = 4;
-                }
-                break;
+                    if (framesCounter >= 120)
+                    {
+                        framesCounter = 0;
+                        state = 4;
+                    }
+                    break;
 
                 case 4:     // Fade out animation
-                framesCounter++;
-                alpha = EaseSineOut(framesCounter, 1.0f, -1.0f, 160);
+                    framesCounter++;
+                    alpha = EaseSineOut(framesCounter, 1.0f, -1.0f, 160);
 
-                if (framesCounter >= 160)
-                {
-                    framesCounter = 0;
-                    state = 5;
-                }
-                break;
+                    if (framesCounter >= 160)
+                    {
+                        framesCounter = 0;
+                        state = 5;
+                    }
+                    break;
 
                 default:
-                break;
+                    break;
             }
 
             // Reset animation at any moment

@@ -5,7 +5,7 @@ using System.Text;
 
 public static class EnumProcessor
 {
-    static HashSet<string> generated = new();
+    private static HashSet<string> generated = new();
 
     public static void Emit(RaylibApi api)
     {
@@ -37,14 +37,14 @@ public static class EnumProcessor
 
             Console.WriteLine(e.Name);
 
-            sb.Clear();
-            sb.AppendLine($"namespace {api.Namespace};");
-            sb.AppendLine();
-            sb.AppendLine("#pragma warning disable CA1711");
-            sb.AppendLine();
-            sb.AppendLine($"/// <summary> {e.Description} </summary>");
-            sb.AppendLine($"public enum {e.Name}");
-            sb.AppendLine("{");
+            _ = sb.Clear();
+            _ = sb.AppendLine($"namespace {api.Namespace};");
+            _ = sb.AppendLine();
+            _ = sb.AppendLine("#pragma warning disable CA1711");
+            _ = sb.AppendLine();
+            _ = sb.AppendLine($"/// <summary> {e.Description} </summary>");
+            _ = sb.AppendLine($"public enum {e.Name}");
+            _ = sb.AppendLine("{");
 
             foreach (ValueElement value in e.Values)
             {
@@ -100,13 +100,13 @@ public static class EnumProcessor
                     valueName = valueName[6..];
                 }
 
-                sb.AppendLine($"    /// <summary> {value.Description} </summary>");
-                sb.AppendLine($"    {valueName} = {value.Value},");
+                _ = sb.AppendLine($"    /// <summary> {value.Description} </summary>");
+                _ = sb.AppendLine($"    {valueName} = {value.Value},");
             }
 
-            sb.AppendLine("}");
-            sb.AppendLine();
-            sb.AppendLine("#pragma warning restore CA1711");
+            _ = sb.AppendLine("}");
+            _ = sb.AppendLine();
+            _ = sb.AppendLine("#pragma warning restore CA1711");
 
             File.WriteAllText(Path.Join("../RaylibSharp/gen/Enums/", api.Directory, e.Name + ".cs"), sb.ToString());
         }

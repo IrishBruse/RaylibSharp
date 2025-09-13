@@ -2,8 +2,8 @@ namespace RaylibSharp;
 
 #pragma warning disable CA1711,IDE0005,CA1051
 
-using System.Runtime.InteropServices;
 using System.Numerics;
+using System.Runtime.InteropServices;
 
 /// <summary> Model, meshes, materials and animation data </summary>
 [StructLayout(LayoutKind.Sequential)]
@@ -36,13 +36,31 @@ public unsafe struct Model
     // --------------------------------------------
 
     /// <summary> Materials array </summary>
-    public readonly Span<Material> Materials => new(materials, MaterialCount);
+    public readonly Span<Material> Materials
+    {
+        get
+        {
+            return new(materials, MaterialCount);
+        }
+    }
 
     /// <summary> Bones information (skeleton) </summary>
-    public readonly Span<UnmanagedBoneInfo> Bones => new(bones, BoneCount);
+    public readonly Span<UnmanagedBoneInfo> Bones
+    {
+        get
+        {
+            return new(bones, BoneCount);
+        }
+    }
 
     /// <summary> Meshes array </summary>
-    public readonly Span<Mesh> Meshes => new(meshes, MeshCount);
+    public readonly Span<Mesh> Meshes
+    {
+        get
+        {
+            return new(meshes, MeshCount);
+        }
+    }
 }
 
 #pragma warning restore CA1711,IDE0005

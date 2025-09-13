@@ -2,7 +2,7 @@ namespace RaylibSharp;
 
 using System;
 
-static unsafe class BoneInfoMarshaller
+internal static unsafe class BoneInfoMarshaller
 {
     public static UnmanagedBoneInfo ConvertToUnmanaged(BoneInfo managed)
     {

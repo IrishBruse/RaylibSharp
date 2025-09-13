@@ -9,6 +9,12 @@ public unsafe partial struct Shader
     /// <summary> Shader locations array (RL_MAX_SHADER_LOCATIONS) </summary>
     public int* locs;
     /// <inheritdoc cref="locs"/>
-    public readonly Span<int> Locs => new(locs, Raylib.RL_MAX_SHADER_LOCATIONS);
+    public readonly Span<int> Locs
+    {
+        get
+        {
+            return new(locs, Raylib.RL_MAX_SHADER_LOCATIONS);
+        }
+    }
 }
 #pragma warning restore CA1711,IDE0005,CA1051,IDE1006,CA1708

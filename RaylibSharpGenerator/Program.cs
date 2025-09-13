@@ -2,11 +2,11 @@
 
 public class Program
 {
-    static bool raylib = true;
-    static bool rlgl = true;
-    static bool examples = true;
+    private static bool raylib = true;
+    private static bool rlgl = true;
+    private static bool examples = true;
 
-    static void Main()
+    private static void Main()
     {
         RaylibApi api;
 
@@ -35,7 +35,7 @@ public class Program
         }
     }
 
-    static void Generate(RaylibApi api)
+    private static void Generate(RaylibApi api)
     {
         Log($"Class {api.ClassName}", ConsoleColor.Green);
 

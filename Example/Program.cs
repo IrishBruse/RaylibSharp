@@ -4,8 +4,8 @@ using RaylibSharp;
 
 public static class Program
 {
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+    private const int screenWidth = 800;
+    private const int screenHeight = 450;
 
     public static void Main()
     {

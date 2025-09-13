@@ -66,36 +66,39 @@ public class LoadingThreadExample
             switch (state)
             {
                 case GameState.Waiting:
-                {
-                    if (IsKeyPressed(Key.Enter))
                     {
-                        // Start the loading task in a new thread
-                        Task.Run(() => LoadDataThread());
-                        TraceLog(TraceLogLevel.Info, "Loading thread initialized successfully");
-                        state = GameState.Loading;
+                        if (IsKeyPressed(Key.Enter))
+                        {
+                            // Start the loading task in a new thread
+                            Task.Run(() => LoadDataThread());
+                            TraceLog(TraceLogLevel.Info, "Loading thread initialized successfully");
+                            state = GameState.Loading;
+                        }
                     }
-                } break;
+                    break;
                 case GameState.Loading:
-                {
-                    framesCounter++;
-                    // Check if dataLoaded is true
-                    if (Interlocked.CompareExchange(ref _dataLoaded, 0, 1) == 1) // Atomically checks if _dataLoaded is 1 and if so sets it to 0
                     {
-                        framesCounter = 0;
-                        TraceLog(TraceLogLevel.Info, "Loading thread terminated successfully");
-                        state = GameState.Finished;
+                        framesCounter++;
+                        // Check if dataLoaded is true
+                        if (Interlocked.CompareExchange(ref _dataLoaded, 0, 1) == 1) // Atomically checks if _dataLoaded is 1 and if so sets it to 0
+                        {
+                            framesCounter = 0;
+                            TraceLog(TraceLogLevel.Info, "Loading thread terminated successfully");
+                            state = GameState.Finished;
+                        }
                     }
-                } break;
+                    break;
                 case GameState.Finished:
-                {
-                    if (IsKeyPressed(Key.Enter))
                     {
-                        // Reset everything to launch again
-                        Interlocked.Exchange(ref _dataLoaded, 0); // Atomically sets _dataLoaded to 0
-                        Interlocked.Exchange(ref _dataProgress, 0); // Atomically sets _dataProgress to 0
-                        state = GameState.Waiting;
+                        if (IsKeyPressed(Key.Enter))
+                        {
+                            // Reset everything to launch again
+                            Interlocked.Exchange(ref _dataLoaded, 0); // Atomically sets _dataLoaded to 0
+                            Interlocked.Exchange(ref _dataProgress, 0); // Atomically sets _dataProgress to 0
+                            state = GameState.Waiting;
+                        }
                     }
-                } break;
+                    break;
             }
             //----------------------------------------------------------------------------------
 
@@ -103,28 +106,30 @@ public class LoadingThreadExample
             //----------------------------------------------------------------------------------
             BeginDrawing();
 
-                ClearBackground(RayWhite);
+            ClearBackground(RayWhite);
 
-                switch (state)
-                {
-                    case GameState.Waiting: DrawText("PRESS ENTER to START LOADING DATA", 150, 170, 20, DarkGray); break;
-                    case GameState.Loading:
+            switch (state)
+            {
+                case GameState.Waiting: DrawText("PRESS ENTER to START LOADING DATA", 150, 170, 20, DarkGray); break;
+                case GameState.Loading:
                     {
                         DrawRectangle(150, 200, Interlocked.CompareExchange(ref _dataProgress, 0, 0), 60, SkyBlue);
                         if ((framesCounter / 15) % 2 == 0)
                         {
                             DrawText("LOADING DATA...", 240, 210, 40, DarkBlue);
                         }
-                    } break;
-                    case GameState.Finished:
+                    }
+                    break;
+                case GameState.Finished:
                     {
                         DrawRectangle(150, 200, 500, 60, Lime);
                         DrawText("DATA LOADED!", 250, 210, 40, Green);
-                    } break;
-                    default: break;
-                }
+                    }
+                    break;
+                default: break;
+            }
 
-                DrawRectangleLines(150, 200, 500, 60, DarkGray);
+            DrawRectangleLines(150, 200, 500, 60, DarkGray);
 
             EndDrawing();
             //----------------------------------------------------------------------------------

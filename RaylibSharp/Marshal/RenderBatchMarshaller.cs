@@ -6,7 +6,7 @@ using RaylibSharp.GL;
 
 [CustomMarshaller(typeof(RenderBatch), MarshalMode.ManagedToUnmanagedIn, typeof(RenderBatchMarshaller))]
 [CustomMarshaller(typeof(RenderBatch), MarshalMode.ManagedToUnmanagedOut, typeof(RenderBatchMarshaller))]
-static unsafe class RenderBatchMarshaller
+internal static unsafe class RenderBatchMarshaller
 {
     // TODO: Fix this as it is not working yet
     public static UnmanagedRenderBatch ConvertToUnmanaged(RenderBatch managed)

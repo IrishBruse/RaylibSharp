@@ -4,8 +4,8 @@ using System.Text;
 
 public class FunctionProcessor
 {
-    static FunctionConfig config = FunctionConfig.Data;
-    const bool DebugOutput = false;
+    private static FunctionConfig config = FunctionConfig.Data;
+    private const bool DebugOutput = false;
 
     public static void Emit(RaylibApi api)
     {
@@ -13,14 +13,14 @@ public class FunctionProcessor
 
         StringBuilder sb = new();
 
-        sb.AppendLine($"namespace {api.Namespace};");
-        sb.AppendLine();
-        sb.AppendLine("using System.Runtime.InteropServices;");
-        sb.AppendLine("using System.Runtime.InteropServices.Marshalling;");
-        sb.AppendLine("using System.Numerics;");
-        sb.AppendLine();
-        sb.AppendLine($"public static unsafe partial class {api.ClassName}");
-        sb.AppendLine("{");
+        _ = sb.AppendLine($"namespace {api.Namespace};");
+        _ = sb.AppendLine();
+        _ = sb.AppendLine("using System.Runtime.InteropServices;");
+        _ = sb.AppendLine("using System.Runtime.InteropServices.Marshalling;");
+        _ = sb.AppendLine("using System.Numerics;");
+        _ = sb.AppendLine();
+        _ = sb.AppendLine($"public static unsafe partial class {api.ClassName}");
+        _ = sb.AppendLine("{");
 
         foreach (Function f in api.Functions)
         {
@@ -31,7 +31,7 @@ public class FunctionProcessor
 
             string pascalName = Utility.ToPascalCase(f.Name);
 
-            sb.AppendLine($"    /// <summary> {f.Description} </summary>");
+            _ = sb.AppendLine($"    /// <summary> {f.Description} </summary>");
             string parameters = "";
             if (f.Params is not null)
             {
@@ -49,24 +49,24 @@ public class FunctionProcessor
 
                 if (conversion.TryGetValue("@", out string? extraAttributes))
                 {
-                    sb.AppendLine("    " + extraAttributes);
+                    _ = sb.AppendLine("    " + extraAttributes);
                 }
             }
 
             string debug = string.Join(" ", f.Params?.Select(p => p.Type + " " + p.Name) ?? Array.Empty<string>());
             if (debug.Length > 0 && DebugOutput)
             {
-                sb.AppendLine($"    /// {debug}");
+                _ = sb.AppendLine($"    /// {debug}");
             }
-            sb.AppendLine($"    [LibraryImport(LIB, EntryPoint = \"{f.Name}\")]");
+            _ = sb.AppendLine($"    [LibraryImport(LIB, EntryPoint = \"{f.Name}\")]");
 
             if (type == "bool")
             {
-                sb.AppendLine($"    [return: {Utility.BoolMarshal}]");
+                _ = sb.AppendLine($"    [return: {Utility.BoolMarshal}]");
             }
             else if (type == "string")
             {
-                sb.AppendLine($"    [return: {Utility.StringMarshal}]");
+                _ = sb.AppendLine($"    [return: {Utility.StringMarshal}]");
             }
 
             f.Name = ConvertFunctionToUseOverloading(f.Name);
@@ -76,22 +76,22 @@ public class FunctionProcessor
                 f.Name = f.Name[2..];
             }
 
-            sb.AppendLine($"    public static partial {type} {f.Name}({parameters});");
+            _ = sb.AppendLine($"    public static partial {type} {f.Name}({parameters});");
 
             Log($"{type} {f.Name}(...)");
 
-            sb.AppendLine("");
+            _ = sb.AppendLine("");
         }
 
-        sb.AppendLine("}");
-        sb.AppendLine();
+        _ = sb.AppendLine("}");
+        _ = sb.AppendLine();
 
         File.WriteAllText(Path.Join("../RaylibSharp/gen/", api.ClassName + ".cs"), sb.ToString());
 
         Console.WriteLine();
     }
 
-    static string ConvertFunctionToUseOverloading(string name)
+    private static string ConvertFunctionToUseOverloading(string name)
     {
         if (name.EndsWith('V') && char.IsAsciiLetterLower(name[^2]))
         {
@@ -109,7 +109,7 @@ public class FunctionProcessor
         return name;
     }
 
-    static string EmitParameter(Param p, Function f)
+    private static string EmitParameter(Param p, Function f)
     {
         if (config.FunctionTypeConversion.TryGetValue(f.Name, out Dictionary<string, string>? conversion))
         {

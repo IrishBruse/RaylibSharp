@@ -23,23 +23,53 @@ public struct Rectangle : IEquatable<Rectangle>
 
     /// <summary> Is Empty </summary>
     [Browsable(false)]
-    public readonly bool IsEmpty => Height == 0 && Width == 0 && X == 0 && Y == 0;
+    public readonly bool IsEmpty
+    {
+        get
+        {
+            return Height == 0 && Width == 0 && X == 0 && Y == 0;
+        }
+    }
 
     /// <summary> Bottom of Rectangle </summary>
     [Browsable(false)]
-    public readonly float Bottom => Y + Height;
+    public readonly float Bottom
+    {
+        get
+        {
+            return Y + Height;
+        }
+    }
 
     /// <summary> Top of Rectangle </summary>
     [Browsable(false)]
-    public readonly float Top => Y;
+    public readonly float Top
+    {
+        get
+        {
+            return Y;
+        }
+    }
 
     /// <summary> Left of Rectangle </summary>
     [Browsable(false)]
-    public readonly float Left => X;
+    public readonly float Left
+    {
+        get
+        {
+            return X;
+        }
+    }
 
     /// <summary> Right of Rectangle </summary>
     [Browsable(false)]
-    public readonly float Right => X + Width;
+    public readonly float Right
+    {
+        get
+        {
+            return X + Width;
+        }
+    }
 
     /// <summary> Rectangle Constructor with Vector4 </summary>
     public Rectangle(Vector4 vector)

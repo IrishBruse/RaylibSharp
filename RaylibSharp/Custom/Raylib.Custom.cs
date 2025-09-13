@@ -8,7 +8,7 @@ using System.Runtime.Versioning;
 
 public static unsafe partial class Raylib
 {
-    const string LIB = "raylib";
+    private const string LIB = "raylib";
 
     /// <summary> Initialize window and OpenGL context </summary>
     [LibraryImport(LIB, EntryPoint = "InitWindow")]
@@ -37,7 +37,7 @@ public static unsafe partial class Raylib
         return (T*)MemAlloc((uint)(elements * sizeof(T)));
     }
 
-    static void LoadIcon()
+    private static void LoadIcon()
     {
         Assembly assembly = Assembly.GetEntryAssembly()!;
 
@@ -94,13 +94,19 @@ public static unsafe partial class Raylib
     }
 
     /// <summary> Converts degrees to radians </summary>
-    public static float DEG2RAD => MathF.PI / 180.0f;
+    public static float DEG2RAD
+    {
+        get
+        {
+            return MathF.PI / 180.0f;
+        }
+    }
 
     /// <summary> Set custom trace log </summary>
     [UnsupportedOSPlatform("browser")]
     public static void SetTraceLogCallback(TraceLogCallback callback)
     {
-        traceLogCallback = callback;
+        TraceLogCallback = callback;
     }
 
     /// <summary> Load shader from file and bind default locations </summary>

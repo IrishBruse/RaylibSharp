@@ -5,7 +5,7 @@ using System.Runtime.InteropServices.Marshalling;
 [CustomMarshaller(typeof(ModelAnimation), MarshalMode.ManagedToUnmanagedIn, typeof(ModelAnimationMarshaller))]
 [CustomMarshaller(typeof(ModelAnimation), MarshalMode.ManagedToUnmanagedOut, typeof(ModelAnimationMarshaller))]
 [CustomMarshaller(typeof(ModelAnimation), MarshalMode.ElementOut, typeof(Out))]
-static unsafe class ModelAnimationMarshaller
+internal static unsafe class ModelAnimationMarshaller
 {
     public static UnmanagedModelAnimation ConvertToUnmanaged(ModelAnimation managed)
     {

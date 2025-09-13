@@ -5,10 +5,22 @@ using System.Numerics;
 public partial struct Camera3D
 {
     /// <summary> Camera Forward Vector </summary>
-    public readonly Vector3 Forward => Vector3.Normalize(Target - Position);
+    public readonly Vector3 Forward
+    {
+        get
+        {
+            return Vector3.Normalize(Target - Position);
+        }
+    }
 
     /// <summary> Camera Right Vector </summary>
-    public readonly Vector3 Right => Vector3.Cross(Forward, Up);
+    public readonly Vector3 Right
+    {
+        get
+        {
+            return Vector3.Cross(Forward, Up);
+        }
+    }
 
     /// <summary>
     /// Rotates the camera around its up vector <br/>
