@@ -176,6 +176,12 @@ public struct Rectangle : IEquatable<Rectangle>
         Y += y;
     }
 
+    /// <summary> Center of Rectangle </summary>
+    public readonly Vector2 Center()
+    {
+        return new(X + (Width / 2), Y + (Height / 2));
+    }
+
     /// <summary> Operator Overloading </summary>
     public static explicit operator Vector4(Rectangle rectangle)
     {

@@ -51,6 +51,18 @@ public struct Color
         R = (byte)((rgba >> 24) & 0xFF);
     }
 
+    /// <summary> Returns a copy of the color with the new alpha </summary>
+    public readonly Color Alpha(int alpha)
+    {
+        return new Color(R, G, B, alpha);
+    }
+
+    /// <summary> Returns a copy of the color with the new alpha </summary>
+    public readonly Color Scale(float percent)
+    {
+        return new Color((byte)(R * percent), (byte)(G * percent), (byte)(B * percent), A);
+    }
+
     /// <summary> Returns hexadecimal value for a Color </summary>
     public override readonly string ToString()
     {
